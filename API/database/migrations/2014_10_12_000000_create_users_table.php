@@ -19,7 +19,6 @@ return new class extends Migration{
             $table->string('password', 50);
             $table->date('birth_date');
             $table->enum('type', ['customer', 'owner', 'admin']);
-            $table->string('image', 100);
             //$table->rememberToken();
             $table->timestamps();
         });
