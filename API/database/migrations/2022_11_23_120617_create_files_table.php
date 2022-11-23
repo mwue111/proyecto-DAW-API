@@ -8,15 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->string('url', 1000);
+            $table->int('user_id');      //foreign key
             $table->timestamps();
         });
     }
 
-    public function down()
-    {
-        Schema::dropIfExists('images');
+    public function down(){
+        Schema::dropIfExists('files');
     }
 };
