@@ -10,7 +10,9 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->int('user_id');      //foreign key
+            $table->integer('user_id');      //foreign key
+            $table->string('url', 1000);
+            $table->enum('type', ['document', 'store_img', 'product_img', 'profile_img', 'brands_img']);
             $table->timestamps();
         });
     }
