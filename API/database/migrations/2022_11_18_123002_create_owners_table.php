@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
+            $table->boolval('verified')->default(false);
             $table->timestamps();
         });
     }
