@@ -6,28 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('timeslots', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->integer('day_of_week');
-            $table->integer('timeslot_id');
+            $table->time('open_time');
+            $table->time('closed_time');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('timeslots');
     }
 };
