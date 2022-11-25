@@ -15,22 +15,22 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('products')->insert([
+        DB::table('categories')->insert([
             'name' => 'Alimentación',
-            'parent_category_id' => 1,
+            'parent_category_id' => null,
         ]);
 
-        DB::table('products')->insert([
+        DB::table('categories')->insert([
             'name' => 'Lácteos',
             'parent_category_id' => 1,
         ]);
 
-        DB::table('products')->insert([
+        DB::table('categories')->insert([
             'name' => 'Frutas',
             'parent_category_id' => 1,
         ]);
 
-        DB::table('products')->insert([
+        DB::table('categories')->insert([
             'name' => 'Salsas',
             'parent_category_id' => 1,
         ]);
