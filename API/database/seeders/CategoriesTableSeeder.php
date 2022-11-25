@@ -17,22 +17,22 @@ class CategoriesTableSeeder extends Seeder
     {
         DB::table('categories')->insert([
             'name' => 'Alimentación',
-            'parent_category_id' => null,
+            'parent_category_id' => null
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Lácteos',
-            'parent_category_id' => 1,
+            'parent_category_id' => 1
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Frutas',
-            'parent_category_id' => 1,
+            'parent_category_id' => 1
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Salsas',
-            'parent_category_id' => 1,
+            'parent_category_id' => 1
         ]);
     }
 }

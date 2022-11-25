@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsTableSeeder::class);
         $this->call(StoresTableSeeder::class);
         $this->call(TagsTableSeeder::class);
-        //$this->call(CategoriesTableSeeder::class);    comentado porque hay que arreglarlo
+        $this->call(CategoriesTableSeeder::class);    
         // \App\Models\User::factory(10)->create();
         $this->call(UsersTableSeeder::class);
         $this->call(DocumentsTableSeeder::class);
