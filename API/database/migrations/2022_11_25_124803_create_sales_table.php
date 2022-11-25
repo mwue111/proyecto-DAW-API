@@ -8,14 +8,19 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('profiles_img', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
+            $table->integer('stores_id');
+            $table->integer('products_id');
+            $table->date('date_start');
+            $table->date('date_end');
+            $table->float('final_price');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('profiles_img');
+        Schema::dropIfExists('sales');
     }
 };
