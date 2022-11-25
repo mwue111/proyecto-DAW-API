@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriesTableSeeder::class);
         $this->call(BrandsTableSeeder::class);
         $this->call(UnitsTableSeeder::class);
+        $this->call(Special_daysTableSeeder::class);
         // \App\Models\User::factory(10)->create();
         $this->call(UsersTableSeeder::class);
         $this->call(DocumentsTableSeeder::class);
