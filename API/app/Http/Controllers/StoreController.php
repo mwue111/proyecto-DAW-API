@@ -10,20 +10,12 @@ class StoreController extends Controller{
         return Store::all();
     }
 
-    public function create(){
-        //La vista de inserción se hará en next
-    }
-
     public function store(Request $request){
         Store::create($request->all());
     }
 
     public function show($id){
         return Store::find($id);
-    }
-
-    public function edit($id){
-        //La vista de edición se hará en next
     }
 
     public function update(Request $request, $id){

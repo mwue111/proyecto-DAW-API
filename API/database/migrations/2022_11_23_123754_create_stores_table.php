@@ -22,8 +22,6 @@ return new class extends Migration
             $table->char('telephone2', 20);
             $table->double('length');
             $table->double('latitude');
-            $table->integer('store_hours_id');
-            $table->integer('special_days_id');
             $table->timestamps();
         });
     }
