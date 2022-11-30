@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::resource('/direccion', 'AddressController');
 Route::resource('/ciudad', 'TownController');
 Route::resource('/provincia', 'StateController');
+Route::resource('/documentos', 'DocumentController');
+Route::resource('/archivos', 'FileController');
