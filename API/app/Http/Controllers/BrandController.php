@@ -3,28 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Unit;
+use App\Models\Brand;
 
-class UnitController extends Controller
+class BrandController extends Controller
 {
     public function index(){
-        return Unit::all();
+        return Brand::all();
     }
 
     public function store(Request $request){
-        Unit::create($request->all());
+        Brand::create($request->all());
     }
 
     public function show($id){
-        return Unit::find($id);
+        return Brand::find($id);
     }
 
     public function update(Request $request, $id){
-        $unit = Unit::find($id);
-        $unit->update($request->all());
+        $brand = Brand::find($id);
+        $brand->update($request->all());
     }
 
     public function destroy($id){
-        return Unit::destroy($id);
+        return Brand::destroy($id);
     }
 }

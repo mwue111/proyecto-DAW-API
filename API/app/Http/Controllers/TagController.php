@@ -3,28 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Unit;
+use App\Models\Tag;
 
-class UnitController extends Controller
+class TagController extends Controller
 {
     public function index(){
-        return Unit::all();
+        return Tag::all();
     }
 
     public function store(Request $request){
-        Unit::create($request->all());
+        Tag::create($request->all());
     }
 
     public function show($id){
-        return Unit::find($id);
+        return Tag::find($id);
     }
 
     public function update(Request $request, $id){
-        $unit = Unit::find($id);
-        $unit->update($request->all());
+        $tag = Tag::find($id);
+        $tag->update($request->all());
     }
 
     public function destroy($id){
-        return Unit::destroy($id);
+        return Tag::destroy($id);
     }
+
 }
