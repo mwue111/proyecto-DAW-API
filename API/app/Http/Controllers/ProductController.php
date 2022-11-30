@@ -35,7 +35,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create($request->all());
+        return response()->json($product, 201);
     }
 
     /**
@@ -69,7 +70,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $p = Product::find($id);
+        $p->name = $r->name;
+        $p->description = $r->description;
+        $p->price = $r->price;
+        $p->save();
+        return redirect()->route('product.index');
     }
 
     /**
