@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('addresses', 'AddressController');
-Route::resource('towns', 'TownController');
-Route::resource('states', 'StateController');
+Route::resource('/direccion', 'AddressController');
+Route::resource('/ciudad', 'TownController');
+Route::resource('/provincia', 'StateController');
