@@ -14,3 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('/tienda', 'StoreController');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::resource('/producto', 'ProductController');
