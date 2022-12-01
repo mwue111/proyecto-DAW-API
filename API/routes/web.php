@@ -22,3 +22,10 @@ Route::resource('/ciudad', 'TownController');
 Route::resource('/provincia', 'StateController');
 Route::resource('/documentos', 'DocumentController');
 Route::resource('/archivos', 'FileController');
+Route::resource('/tienda', 'StoreController');
+Route::resource('/producto', 'ProductController');
+Route::resource('/unidad', 'UnitController');
+Route::resource('/marca', 'BrandController');
+Route::resource('/categoria', 'CategoryController');
+Route::resource('/etiqueta', 'TagController');
+

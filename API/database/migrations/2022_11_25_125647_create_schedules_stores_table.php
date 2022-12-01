@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('schedules_stores', function (Blueprint $table) {
+            $table->bigIncrements('id')->index();
             $table->integer('schedules_id');
             $table->integer('stores_id');
         });
