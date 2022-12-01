@@ -20,8 +20,8 @@ Route::get('/', function () {
 Route::resource('/direccion', 'AddressController');
 Route::resource('/ciudad', 'TownController');
 Route::resource('/provincia', 'StateController');
-Route::resource('/documentos', 'DocumentController');
-Route::resource('/archivos', 'FileController');
+Route::resource('/documento', 'DocumentController');
+Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
 Route::resource('/producto', 'ProductController');
 Route::resource('/unidad', 'UnitController');
