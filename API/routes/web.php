@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::resource('/tienda', 'StoreController');
 Route::resource('/producto', 'ProductController');
+Route::resource('/franja_horaria', 'TimeSlotController');
