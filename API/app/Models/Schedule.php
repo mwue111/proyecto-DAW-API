@@ -10,6 +10,7 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        
+        'day_of_week',
+        'timeslot_id'
     ];
 }

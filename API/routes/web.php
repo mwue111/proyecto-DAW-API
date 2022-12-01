@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 Route::resource('/tienda', 'StoreController');
+Route::resource('/horario', 'ScheduleController');
 Route::resource('/producto', 'ProductController');
