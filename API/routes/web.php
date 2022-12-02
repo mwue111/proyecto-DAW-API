@@ -21,6 +21,7 @@ Route::resource('/tienda', 'StoreController');
 Route::resource('/horario', 'ScheduleController');
 Route::resource('/producto', 'ProductController');
 Route::resource('/unidad', 'UnitController');
+Route::get('/marca/productos/{id}', 'BrandController@getProducts');
 Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
 Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
