@@ -25,3 +25,4 @@ Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
 Route::resource('/etiqueta', 'TagController');
 
+Route::resource('/franja_horaria', 'TimeSlotController');
