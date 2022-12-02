@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('timeslots', function (Blueprint $table) {
+        Schema::create('time_slots', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
             $table->time('open_time');
             $table->time('closed_time');
@@ -18,6 +18,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('timeslots');
+        Schema::dropIfExists('time_slots');
     }
 };

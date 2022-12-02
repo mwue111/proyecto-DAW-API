@@ -16,6 +16,7 @@ class TimeSlot extends Model
     ];
 
     public function schedules(){
-        return $this->hasMany('App\Models\Schedule');
+        //return $this->hasMany('App\Models\Schedule');
+        return $this->hasMany(Schedule::class);
     }
 }
