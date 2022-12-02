@@ -24,5 +24,5 @@ Route::resource('/unidad', 'UnitController');
 Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
 Route::resource('/etiqueta', 'TagController');
-
 Route::resource('/franja_horaria', 'TimeSlotController');
+Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');

@@ -26,4 +26,10 @@ class TimeSlotController extends Controller{
     public function destroy($id){
         return TimeSlot::destroy($id);
     }
+
+    //para obtener los días en los que están las franjas horarias con un id concreto
+    public function getSchedules($id){
+        $schedules = TimeSlot::find($id)->schedules;
+        return $schedules;
+    }
 }

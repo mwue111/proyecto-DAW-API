@@ -18,7 +18,7 @@ class VerifyCsrfToken extends Middleware
         "marca*",
         "categoria*",
         "etiqueta*",
-        'horario*'
+        'horario*',
         "producto*", 
         'franja_horaria*'
     ];
