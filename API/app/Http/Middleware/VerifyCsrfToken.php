@@ -20,6 +20,8 @@ class VerifyCsrfToken extends Middleware
         "etiqueta*",
         "provincia*",
         "documento*",
-        "archivo*"
+        "archivo*",
+        "ciudad*",
+        "direccion*"
     ];
 }
