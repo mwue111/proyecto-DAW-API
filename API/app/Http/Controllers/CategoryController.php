@@ -18,6 +18,7 @@ class CategoryController extends Controller
     public function show($id){
         return Category::find($id);
     }
+    
     public function getChildren($id){
         $category = Category::find($id);
         return $category->children;
