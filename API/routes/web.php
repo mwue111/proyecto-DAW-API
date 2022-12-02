@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/tienda', 'StoreController');
+Route::resource('/horario', 'ScheduleController');
 Route::resource('/producto', 'ProductController');
 Route::resource('/unidad', 'UnitController');
 Route::resource('/marca', 'BrandController');
@@ -25,3 +26,4 @@ Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/categoria', 'CategoryController');
 Route::resource('/etiqueta', 'TagController');
 
+Route::resource('/franja_horaria', 'TimeSlotController');
