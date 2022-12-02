@@ -23,6 +23,7 @@ Route::resource('/producto', 'ProductController');
 Route::resource('/unidad', 'UnitController');
 Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
+Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/etiqueta', 'TagController');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
