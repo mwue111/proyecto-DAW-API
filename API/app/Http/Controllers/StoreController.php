@@ -27,3 +27,5 @@ class StoreController extends Controller{
         return Store::destroy($id);
     }
 }
+
+
