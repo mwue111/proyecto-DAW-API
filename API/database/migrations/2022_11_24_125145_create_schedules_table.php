@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
             $table->integer('day_of_week');
-            $table->integer('timeslot_id');
+            $table->integer('time_slot_id');
             $table->timestamps();
         });
     }

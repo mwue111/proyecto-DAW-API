@@ -24,10 +24,14 @@ Route::resource('/provincia', 'StateController');
 Route::resource('/documento', 'DocumentController');
 Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
+Route::resource('/horario', 'ScheduleController');
 Route::resource('/producto', 'ProductController');
 Route::resource('/unidad', 'UnitController');
 Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
+Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/etiqueta', 'TagController');
 Route::get('/provincia/ciudades/{id}', 'StateController@getTowns');
-
+Route::resource('/franja_horaria', 'TimeSlotController');
+Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
+Route::resource('/dia_especial', 'SpecialDayController');
