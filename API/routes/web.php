@@ -27,3 +27,4 @@ Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/etiqueta', 'TagController');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
+Route::resource('/dia_especial', 'SpecialDayController');
