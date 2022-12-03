@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,4 +29,5 @@ Route::resource('/unidad', 'UnitController');
 Route::resource('/marca', 'BrandController');
 Route::resource('/categoria', 'CategoryController');
 Route::resource('/etiqueta', 'TagController');
+Route::get('/provincia/ciudades/{id}', 'StateController@getTowns');
 

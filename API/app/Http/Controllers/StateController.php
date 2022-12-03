@@ -12,6 +12,11 @@ class StateController extends Controller
         return $statesList;
     }
 
+    public function getTowns($id){
+        $townsList = State::find($id)->town;
+        return $townsList;
+    }
+
     public function store(Request $request)
     {
         State::create($request->all());
