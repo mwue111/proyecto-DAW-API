@@ -12,10 +12,10 @@ class TownController extends Controller
         return $townsList;
     }
 
-    // public function getStates(){
-    //     $townsList = Town::all();
-    //     return $townsList->state;
-    // }
+    public function getAddress($id){
+        $addressList = Town::find($id)->town;
+        return $addressList;
+    }
 
     public function store(Request $request){
         Town::create($request->all());
