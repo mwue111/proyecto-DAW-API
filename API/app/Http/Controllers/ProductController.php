@@ -37,6 +37,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = Product::create($request->all());
+        $product->tags()->attach($request->tags);
         return response()->json($product, 201);
     }
 
@@ -85,5 +86,15 @@ class ProductController extends Controller
     {
         Product::destroy($id);
         return redirect()->route('product.index');
+    }
+
+    public function getTags ($id){
+        $product = Product::find($id);
+        return $product->tags;
+    }
+
+    public function updateTags($id, Request $request){
+        $product = Product::find($id);
+        $product->tags()->sync($request->tags);
     }
 }

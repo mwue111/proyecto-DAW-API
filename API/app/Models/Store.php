@@ -16,4 +16,9 @@ class Store extends Model
         'telephone1',
         'telephone2'
     ];
+    
+    public function product()
+    {
+        return $this->belongsToMany(Product::class, 'product_store', 'stores_id', 'products_id');
+    }
 }

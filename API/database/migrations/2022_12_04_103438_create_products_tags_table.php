@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules_stores', function (Blueprint $table) {
+        Schema::create('products_tags', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->integer('schedules_id');
-            $table->integer('stores_id');
+            $table->integer('products_id');
+            $table->integer('tags_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules_stores');
+        Schema::dropIfExists('products_tags');
     }
 };

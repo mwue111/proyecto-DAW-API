@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SchedulesTableSeeder::class);
         $this->call(TimeslotsTableSeeder::class);
         $this->call(Products_storesTableSeeder::class);
+        $this->call(Products_tagsTableSeeder::class);
         $this->call(SalesTableSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
