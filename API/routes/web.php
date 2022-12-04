@@ -13,10 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('/direccion', 'AddressController');
+Route::resource('/ciudad', 'TownController');
+Route::get('/ciudad/calles/{id}', 'TownController@getAddress');
+Route::resource('/provincia', 'StateController');
+Route::get('/provincia/ciudades/{id}', 'StateController@getTowns');
+Route::resource('/documento', 'DocumentController');
+Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
 Route::resource('/horario', 'ScheduleController');
 Route::resource('/producto', 'ProductController');
@@ -27,3 +35,5 @@ Route::resource('/categoria', 'CategoryController');
 Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/etiqueta', 'TagController');
 Route::resource('/franja_horaria', 'TimeSlotController');
+Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
+Route::resource('/dia_especial', 'SpecialDayController');

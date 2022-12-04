@@ -9,8 +9,14 @@ class TimeSlot extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    //pertenece a varios días
+    protected $fillable = [
         'open_time',
         'closed_time'
     ];
+
+    public function schedules(){
+        //return $this->hasMany('App\Models\Schedule');
+        return $this->hasMany(Schedule::class);
+    }
 }

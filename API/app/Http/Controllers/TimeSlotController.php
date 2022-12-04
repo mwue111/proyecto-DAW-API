@@ -26,4 +26,10 @@ class TimeSlotController extends Controller{
     public function destroy($id){
         return TimeSlot::destroy($id);
     }
+
+    //se pasa el id que será de timeSlots para que devuelva todos los días que tienen esa franja concreta
+    public function getSchedules($id){
+        $schedules = TimeSlot::find($id)->schedules;
+        return $schedules;
+    }
 }

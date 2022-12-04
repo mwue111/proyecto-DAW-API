@@ -6,11 +6,11 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
 
-class AddressTableSeeder extends Seeder
+class addressesTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'road_type' => 'calle',
             'zip_code' => '04000',
             'number' => '2',
@@ -18,7 +18,7 @@ class AddressTableSeeder extends Seeder
             'town_id' => '1',
             'remarks' => 'ninguno'
         ]);
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'road_type' => 'avenida',
             'zip_code' => '04002',
             'number' => '1',
@@ -26,7 +26,7 @@ class AddressTableSeeder extends Seeder
             'town_id' => '1',
             'remarks' => 'una avenida real'
         ]);
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'road_type' => 'boulevard',
             'zip_code' => '04004',
             'number' => '19',
@@ -34,7 +34,7 @@ class AddressTableSeeder extends Seeder
             'town_id' => '1',
             'remarks' => 'esta sí que existe'
         ]);
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'road_type' => 'calle',
             'zip_code' => '04003',
             'number' => '10',
@@ -42,7 +42,7 @@ class AddressTableSeeder extends Seeder
             'town_id' => '1',
             'remarks' => 'esta igual no existe'
         ]);
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'road_type' => 'callejón',
             'zip_code' => '04001',
             'number' => '0',
