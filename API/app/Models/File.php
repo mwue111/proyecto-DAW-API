@@ -13,4 +13,8 @@ class File extends Model
         'url',
         'type'
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }

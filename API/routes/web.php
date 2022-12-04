@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::resource('/direccion', 'AddressController');
 Route::resource('/ciudad', 'TownController');
-Route::get('/ciudad/calles/{id}', 'TownController@getAddress');
+Route::get('/ciudad/direcciones/{id}', 'TownController@getAddress');
 Route::resource('/provincia', 'StateController');
 Route::get('/provincia/ciudades/{id}', 'StateController@getTowns');
 Route::resource('/documento', 'DocumentController');

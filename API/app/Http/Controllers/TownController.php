@@ -13,7 +13,7 @@ class TownController extends Controller
     }
 
     public function getAddress($id){
-        $addressList = Town::find($id)->town;
+        $addressList = Town::find($id)->addtress;
         return $addressList;
     }
 
