@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Products_imgTableSeeder::class);
         $this->call(Profiles_imgTableSeeder::class);
         $this->call(Brands_imgTableSeeder::class);
-        $this->call(AddressTableSeeder::class);
+        $this->call(AddressesTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);
         $this->call(TimeslotsTableSeeder::class);
         $this->call(Products_storesTableSeeder::class);

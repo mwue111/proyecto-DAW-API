@@ -12,7 +12,7 @@ class AddressController extends Controller
         return $addressesList;
     }
 
-    public function address(Request $request){
+    public function store(Request $request){
         Address::create($request->all());
     }
 
