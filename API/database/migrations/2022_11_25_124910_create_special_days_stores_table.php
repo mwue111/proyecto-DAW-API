@@ -14,9 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('special_days_stores', function (Blueprint $table) {
-            $table->id();
-            $table->integer('special_day_id');
-            $table->integer('store_id');
+            $table->bigIncrements('id')->index();
+            //$table->integer('special_day_id');
+            //$table->integer('store_id');
+
+            $table->foreignId('special_day_id')->constrained()->onDelete('cascade');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

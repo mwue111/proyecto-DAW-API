@@ -33,7 +33,7 @@ class Special_days_storesTableSeeder extends Seeder
         ]);
         DB::table('special_days_stores')->insert([
              'special_day_id' => 5,
-             'store_id' => 5,
+             'store_id' => 4,
         ]);
     }
 }

@@ -20,6 +20,10 @@ class Store extends Model{
         return $this->belongsToMany(Schedule::class);
     }
 
+    public function specialDays(){
+        return $this->belongsToMany(SpecialDay::class, 'special_days_stores');
+    }
+
 }
 
 
