@@ -27,10 +27,15 @@ Route::resource('/documento', 'DocumentController');
 Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
 Route::resource('/horario', 'ScheduleController');
+//rutas de producto
 Route::resource('/producto', 'ProductController');
+//producto y tienda
+
+// producto y etiquetas
 Route::get('/producto/etiquetas/{id}', 'ProductController@getTags');
 Route::patch('/producto/etiquetas/{id}', 'ProductController@updateTags');
 Route::delete('/producto/etiquetas/{id}', 'ProductController@removeTags');
+
 Route::resource('/unidad', 'UnitController');
 Route::get('/marca/productos/{id}', 'BrandController@getProducts');
 Route::resource('/marca', 'BrandController');
