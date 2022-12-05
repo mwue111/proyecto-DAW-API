@@ -27,6 +27,7 @@ class StoreController extends Controller{
         return Store::destroy($id);
     }
 
+    //obtener todos los tramos horarios de una tienda:
     public function getStores($id){
         $store = Store::find($id);
         return $store->schedules;
@@ -34,9 +35,23 @@ class StoreController extends Controller{
 
     //insertar un tramo horario al crear una tienda
     public function createSchedules(Request $request){
-        $store = new Store($request->all());
+        $store = Store::create($request->all());
         $store->schedules()->attach($request->schedules);
+    }
+
+    //actualizar un registro
+    public function setSchedule(Request $request, $id){
+        $store = Store::find($id);
+        $store->fill($request->all());
+        $store->schedules()->sync($request->schedules);
         $store->save();
+    }
+
+    //eliminar los horarios de una tienda
+    public function deleteSchedule($id){
+        $store = Store::find($id);
+        $store->schedules()->detach();
+        //$store->delete();
     }
 
 }
