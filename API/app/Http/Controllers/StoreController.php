@@ -26,6 +26,9 @@ class StoreController extends Controller{
     public function destroy($id){
         return Store::destroy($id);
     }
+
+    //insertar un tramo horario al crear una tienda
+    
 }
 
 
