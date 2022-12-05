@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules_stores', function (Blueprint $table) {
+        Schema::create('schedule_store', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
             //$table->integer('schedule_id');
             //$table->integer('store_id');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules_stores');
+        Schema::dropIfExists('schedule_store');
     }
 };
