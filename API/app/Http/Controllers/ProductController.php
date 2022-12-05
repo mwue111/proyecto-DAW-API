@@ -74,6 +74,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->update($request->all());
+        $product->tags()->sync($request->tags);
     }
 
     /**
@@ -96,5 +97,10 @@ class ProductController extends Controller
     public function updateTags($id, Request $request){
         $product = Product::find($id);
         $product->tags()->sync($request->tags);
+    }
+
+    public function removeTags($id, Request $request){
+        $product = Product::find($id);
+        $product->tags()->detach($request->tags);
     }
 }
