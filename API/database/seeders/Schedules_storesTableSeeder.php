@@ -16,18 +16,18 @@ class Schedules_storesTableSeeder extends Seeder
     public function run()
     {
         DB::table('schedules_stores')->insert([
-            'schedules_id' => 2,
-            'stores_id' => 3,
+            'schedule_id' => 2,
+            'store_id' => 3,
         ]); 
 
         DB::table('schedules_stores')->insert([
-            'schedules_id' => 4,
-            'stores_id' => 3,
+            'schedule_id' => 4,
+            'store_id' => 3,
         ]); 
 
         DB::table('schedules_stores')->insert([
-            'schedules_id' => 1,
-            'stores_id' => 3,
+            'schedule_id' => 1,
+            'store_id' => 3,
         ]); 
     }
 }
