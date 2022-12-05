@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id')->index();
             $table->string('name', 100);
             $table->string('description', 1000);
-            $table->integer('brands_id');
+            $table->integer('brand_id');
             $table->timestamps();
         });
     }

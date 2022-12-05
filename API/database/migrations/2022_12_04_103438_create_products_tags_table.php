@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('products_tags', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->integer('products_id');
-            $table->integer('tags_id');
+            $table->integer('product_id');
+            $table->integer('tag_id');
             $table->timestamps();
         });
     }

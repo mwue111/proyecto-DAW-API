@@ -14,11 +14,13 @@ class Store extends Model
         'address_id',
         'email',
         'telephone1',
-        'telephone2'
+        'telephone2',
+        'latitude',
+        'longitude',
     ];
     
-    public function product()
+    public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_store', 'stores_id', 'products_id');
+        return $this->belongsToMany(Product::class, 'products_stores');
     }
 }

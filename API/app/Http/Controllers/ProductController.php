@@ -38,6 +38,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
         $product->tags()->attach($request->tags);
+        $product->stores()->attach($request->stores);
         return response()->json($product, 201);
     }
 
@@ -75,6 +76,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->update($request->all());
         $product->tags()->sync($request->tags);
+        $product->stores()->sync($request->stores);
     }
 
     /**
@@ -86,7 +88,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::destroy($id);
-        return redirect()->route('product.index');
     }
 
     public function getTags ($id){
@@ -94,13 +95,28 @@ class ProductController extends Controller
         return $product->tags;
     }
 
+    public function getStores($id){
+        $product = Product::find($id);
+        return $product->stores;
+    }
+
     public function updateTags($id, Request $request){
         $product = Product::find($id);
         $product->tags()->sync($request->tags);
     }
 
+    public function updateStores($id, Request $request){
+        $product = Product::find($id);
+        $product->stores()->sync($request->stores);
+    }
+
     public function removeTags($id, Request $request){
         $product = Product::find($id);
         $product->tags()->detach($request->tags);
+    }
+
+    public function removeStores($id, Request $request){
+        $product = Product::find($id);
+        $product->stores()->detach($request->stores);
     }
 }

@@ -16,28 +16,28 @@ class Products_tagsTableSeeder extends Seeder
     public function run()
     {
         DB::table('products_tags')->insert([
-            'products_id' => 1,
-            'tags_id' => 1,
+            'product_id' => 1,
+            'tag_id' => 1,
         ]); 
 
         DB::table('products_tags')->insert([
-            'products_id' => 1,
-            'tags_id' => 2,
+            'product_id' => 1,
+            'tag_id' => 2,
         ]); 
 
         DB::table('products_tags')->insert([
-            'products_id' => 1,
-            'tags_id' => 3,
+            'product_id' => 1,
+            'tag_id' => 3,
         ]); 
 
         DB::table('products_tags')->insert([
-            'products_id' => 2,
-            'tags_id' => 1,
+            'product_id' => 2,
+            'tag_id' => 1,
         ]); 
 
         DB::table('products_tags')->insert([
-            'products_id' => 2,
-            'tags_id' => 2,
+            'product_id' => 2,
+            'tag_id' => 2,
         ]); 
     }
 }

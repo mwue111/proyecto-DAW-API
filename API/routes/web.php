@@ -30,6 +30,11 @@ Route::resource('/horario', 'ScheduleController');
 //rutas de producto
 Route::resource('/producto', 'ProductController');
 //producto y tienda
+Route::get('/producto/tiendas/{id}', 'ProductController@getStores');
+Route::get('/tienda/productos/{id}', 'StoreController@getProducts');
+Route::post('/tienda/productos/{id}', 'StoreController@addProducts');
+Route::patch('/tienda/productos/{id}', 'StoreController@updateProducts');
+Route::delete('/tienda/productos/{id}', 'StoreController@deleteProducts');
 
 // producto y etiquetas
 Route::get('/producto/etiquetas/{id}', 'ProductController@getTags');

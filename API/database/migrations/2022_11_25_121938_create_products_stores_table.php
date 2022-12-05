@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('products_stores', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->integer('products_id');
-            $table->integer('stores_id');
-            $table->integer('units_id'); //unidad de medida
+            $table->integer('product_id');
+            $table->integer('store_id');
+            $table->integer('unit_id'); //unidad de medida
             $table->integer('stock');
             $table->float('value');
             $table->string('remarks', 1000);

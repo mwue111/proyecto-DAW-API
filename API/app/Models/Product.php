@@ -12,19 +12,19 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'brands_id',
+        'brand_id',
     ];
     public function brand()
     {
-        return $this->belongsTo(Brand::class, 'brands_id');
+        return $this->belongsTo(Brand::class);
     }
     public function tags ()
     {
-        return $this->belongsToMany(Tag::class, 'products_tags', 'products_id', 'tags_id');
+        return $this->belongsToMany(Tag::class, 'products_tags');
     }
 
-    public function store()
+    public function stores()
     {
-        return $this->belongsToMany(Store::class, 'product_store', 'products_id', 'stores_id');
+        return $this->belongsToMany(Store::class, 'products_stores');
     }
 }
