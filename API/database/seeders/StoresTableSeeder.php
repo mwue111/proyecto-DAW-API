@@ -21,7 +21,7 @@ class StoresTableSeeder extends Seeder
             'email' => 'frutamaria@msn.com',
             'telephone1' => '950222222',
             'telephone2' => '647895325',
-            'length' => 41.40338,
+            'longitude' => 41.40338,
             'latitude' => 2.17403,
         ]);
 
@@ -31,7 +31,7 @@ class StoresTableSeeder extends Seeder
             'email' => 'ankalaencarna@hotmail.com',
             'telephone1' => '950984509',
             'telephone2' => '612654789',
-            'length' => 41.40338,
+            'longitude' => 41.40338,
             'latitude' => 2.17403,
         ]);
 
@@ -41,7 +41,7 @@ class StoresTableSeeder extends Seeder
             'email' => 'juanverdulero@msn.com',
             'telephone1' => '950192837',
             'telephone2' => '647564738',
-            'length' => 41.40338,
+            'longitude' => 41.40338,
             'latitude' => 2.17403,
         ]);
 
@@ -51,7 +51,7 @@ class StoresTableSeeder extends Seeder
             'email' => 'bazardelalimento@gmail.com',
             'telephone1' => '950839265',
             'telephone2' => '643091287',
-            'length' => 41.40338,
+            'longitude' => 41.40338,
             'latitude' => 2.17403,
         ]);
     }

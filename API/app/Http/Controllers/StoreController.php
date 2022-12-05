@@ -11,11 +11,22 @@ class StoreController extends Controller{
     }
 
     public function store(Request $request){
-        Store::create($request->all());
+        $store = Store::create($request->all());
+        $store->products()->attach($request->products);
     }
 
     public function show($id){
         return Store::find($id);
+    }
+
+    public function getProducts($id){
+        $store = Store::find($id);
+        return $store->products;
+    }
+
+    public function addProducts(Request $request, $id){
+        $store = Store::find($id);
+        $store->products()->attach($request->products);
     }
 
     public function update(Request $request, $id){
@@ -54,4 +65,13 @@ class StoreController extends Controller{
         //$store->delete();
     }
 
+    public function updateProducts(Request $request, $id){
+        $store = Store::find($id);
+        $store->products()->sync($request->products);
+    }
+
+    public function deleteProducts(Request $request, $id){
+        $store = Store::find($id);
+        $store->products()->detach($request->products);
+    }
 }

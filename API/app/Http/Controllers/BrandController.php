@@ -18,6 +18,10 @@ class BrandController extends Controller
     public function show($id){
         return Brand::find($id);
     }
+    
+    public function getProducts($id){
+        return Brand::find($id)->products;
+    }
 
     public function update(Request $request, $id){
         $brand = Brand::find($id);

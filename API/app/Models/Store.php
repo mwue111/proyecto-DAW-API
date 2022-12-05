@@ -13,13 +13,20 @@ class Store extends Model{
         'address_id',
         'email',
         'telephone1',
-        'telephone2'
+        'telephone2',
+        'latitude',
+        'longitude',
     ];
 
     public function schedules(){
         return $this->belongsToMany(Schedule::class);
     }
 
+    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'products_stores');
+    }
 }
 
 

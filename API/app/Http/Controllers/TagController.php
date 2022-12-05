@@ -19,6 +19,11 @@ class TagController extends Controller
         return Tag::find($id);
     }
 
+    public function getProducts($id){
+        $tag = Tag::find($id);
+        return $tag->products;
+    }
+
     public function update(Request $request, $id){
         $tag = Tag::find($id);
         $tag->update($request->all());
