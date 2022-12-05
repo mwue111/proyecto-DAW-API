@@ -36,3 +36,9 @@ Route::resource('/etiqueta', 'TagController');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
 Route::resource('/dia_especial', 'SpecialDayController');
+
+Route::get('tienda/horario/{id}', 'StoreController@getStores');
+Route::post('/tienda/horario', 'StoreController@createSchedules');
+Route::put('/tienda/editar-horario/{id}', 'StoreController@setSchedule');
+Route::delete('/tienda/borrar-horario/{id}', 'StoreController@deleteSchedule');
+

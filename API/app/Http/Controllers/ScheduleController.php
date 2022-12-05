@@ -27,3 +27,5 @@ class ScheduleController extends Controller{
         return Schedule::destroy($id);
     }
 }
+
+

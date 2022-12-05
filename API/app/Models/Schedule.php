@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Schedule extends Model
-{
+class Schedule extends Model{
     use HasFactory;
 
     //días tienen una sola franja horaria
@@ -19,5 +18,10 @@ class Schedule extends Model
         //return $this->belongsTo('App\Models\TimeSlot');
         return $this->belongsTo(TimeSlot::class);
     }
+
+    public function stores(){
+        return $this->belongsToMany(Store::class);
+    }
 }
-                                                                                                                                                                                                                                                                      
+                                   
+
