@@ -28,7 +28,12 @@ class StoreController extends Controller{
     }
 
     //insertar un tramo horario al crear una tienda
-    
+    public function createSchedules(Request $request){
+        $store = new Store($request->all());
+        $store->schedules()->attach($request->schedules);
+        $store->save();
+    }
+
 }
 
 

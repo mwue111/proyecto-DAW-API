@@ -28,6 +28,6 @@ Route::resource('/etiqueta', 'TagController');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
 Route::resource('/dia_especial', 'SpecialDayController');
-Route::resource('/horarios_tienda', 'SchedulesStoreController');
-Route::get('horarios/tienda/{id}', 'SchedulesStoreController@getStores');
-Route::get('tiendas/horario/{id}', 'StoreController@getSchedules');
+
+Route::post('/tienda/horario', 'StoreController@createSchedules');
+

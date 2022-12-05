@@ -19,6 +19,7 @@ class Store extends Model{
     public function schedules(){
         return $this->belongsToMany(Schedule::class);
     }
+
 }
 
 
