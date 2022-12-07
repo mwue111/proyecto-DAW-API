@@ -23,6 +23,8 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '647895325',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'schedule_id' => 2,
+            'special_day_id'=> 2,
         ]);
 
         DB::table('stores')->insert([
@@ -33,6 +35,8 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '612654789',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'schedule_id' => 2,
+            'special_day_id'=> 2,
         ]);
 
         DB::table('stores')->insert([
@@ -43,6 +47,8 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '647564738',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'schedule_id' => 2,
+            'special_day_id'=> 2,
         ]);
 
         DB::table('stores')->insert([
@@ -53,6 +59,8 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '643091287',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'schedule_id' => 2,
+            'special_day_id'=> 2,
         ]);
     }
 }

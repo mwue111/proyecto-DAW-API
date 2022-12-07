@@ -16,6 +16,8 @@ class Store extends Model{
         'telephone2',
         'latitude',
         'longitude',
+        'schedule_id',
+        'special_day_id',
     ];
 
 

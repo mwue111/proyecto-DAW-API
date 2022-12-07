@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
             $table->string('name', 100);
-            $table->string('address_id', 500);
+            $table->integer('address_id');
             $table->string('email', 45);
             $table->char('telephone1', 20);
             $table->char('telephone2', 20);
             $table->double('longitude');
             $table->double('latitude');
+            $table->integer('schedule_id');
+            $table->integer('special_day_id');
             $table->timestamps();
         });
     }
