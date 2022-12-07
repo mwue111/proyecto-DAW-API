@@ -18,18 +18,23 @@ class Store extends Model{
         'longitude',
     ];
 
+
     public function schedules(){
         return $this->belongsToMany(Schedule::class);
     }
 
-    
     public function products()
     {
         return $this->belongsToMany(Product::class, 'products_stores');
     }
+
     public function specialDays(){
         return $this->belongsToMany(SpecialDay::class, 'special_days_stores');
     }
+
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }    
 
 }
 

@@ -21,6 +21,7 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->schedules;
         $store->specialDays;
+        $store->address;
         return $store;
     }
 
@@ -81,6 +82,7 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->products()->detach($request->products);
     }
+
     /*
     public function getSpecialDays($id){
         $store = Store::find($id);

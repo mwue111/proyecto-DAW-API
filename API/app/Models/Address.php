@@ -21,4 +21,8 @@ class Address extends Model
     public function town() {
         return $this->belongsTo('App\Models\Town');
     }
+
+    public function store(){
+        return $this->hasOne(Store::class);
+    }
 }
