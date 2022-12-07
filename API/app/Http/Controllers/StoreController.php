@@ -13,10 +13,15 @@ class StoreController extends Controller{
     public function store(Request $request){
         $store = Store::create($request->all());
         $store->products()->attach($request->products);
+        $store->schedules()->attach($request->schedules);
+        $store->specialDays()->attach($request->specialDays);
     }
 
     public function show($id){
-        return Store::find($id);
+        $store = Store::find($id);
+        $store->schedules;
+        $store->specialDays;
+        return $store;
     }
 
     public function getProducts($id){
@@ -35,22 +40,24 @@ class StoreController extends Controller{
     }
 
     public function destroy($id){
-        return Store::destroy($id);
+        $store = Store::destroy($id);
+        return $store;
     }
 
-    //obtener todos los tramos horarios de una tienda:
+    //Los métodos que podían pasarse a las funciones store, show, update y destroy se han comentado.
+    /*
     public function getStores($id){
         $store = Store::find($id);
         return $store->schedules;
     }
 
-    //insertar un tramo horario al crear una tienda
     public function createSchedules(Request $request){
         $store = Store::create($request->all());
         $store->schedules()->attach($request->schedules);
     }
+    */
 
-    //actualizar un registro
+    //actualizar un registro (aparte porque puede que al actualizar una tienda no sea necesario actualizar su horario)
     public function setSchedule(Request $request, $id){
         $store = Store::find($id);
         $store->fill($request->all());
@@ -58,7 +65,7 @@ class StoreController extends Controller{
         $store->save();
     }
 
-    //eliminar los horarios de una tienda
+    //eliminar los horarios de una tienda (hay persistencia de datos: al borrar la tienda se borran)
     public function deleteSchedule($id){
         $store = Store::find($id);
         $store->schedules()->detach();
@@ -73,5 +80,32 @@ class StoreController extends Controller{
     public function deleteProducts(Request $request, $id){
         $store = Store::find($id);
         $store->products()->detach($request->products);
+    }
+}
+    /*
+    public function getSpecialDays($id){
+        $store = Store::find($id);
+        return $store->specialDays;
+    }
+
+    //insertar un día especial a la tienda: pasado a la función store.
+    public function createSpecialDay(Request $request){
+        $store = Store::create($request->all());
+        $store->specialDays()->attach($request->specialDays);
+    }
+    */
+    
+    //dejado aparte porque al actualizar una tienda puede que no sea necesario cambiar sus días de horario especial
+    public function setSpecialDay(Request $request, $id){
+        $store = Store::find($id);
+        $store->fill($request->all());
+        $store->specialDays()->sync($request->specialDays);
+        $store->save();
+    }
+
+    //Hay persistencia de datos
+    public function deleteSpecialDay($id){
+        $store = Store::find($id);
+        $store->specialDays()->detach();
     }
 }

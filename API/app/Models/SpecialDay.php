@@ -14,4 +14,8 @@ class SpecialDay extends Model
         'date',
         'remarks'
     ];
+
+    public function stores(){
+        return $this->belongsToMany(Store::class, 'special_days_stores');
+    }
 }
