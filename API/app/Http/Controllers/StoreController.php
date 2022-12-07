@@ -81,13 +81,12 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->products()->detach($request->products);
     }
-}
     /*
     public function getSpecialDays($id){
         $store = Store::find($id);
         return $store->specialDays;
     }
-
+    
     //insertar un día especial a la tienda: pasado a la función store.
     public function createSpecialDay(Request $request){
         $store = Store::create($request->all());
@@ -102,7 +101,7 @@ class StoreController extends Controller{
         $store->specialDays()->sync($request->specialDays);
         $store->save();
     }
-
+    
     //Hay persistencia de datos
     public function deleteSpecialDay($id){
         $store = Store::find($id);
