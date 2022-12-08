@@ -41,6 +41,12 @@ Route::get('/producto/etiquetas/{id}', 'ProductController@getTags');
 Route::patch('/producto/etiquetas/{id}', 'ProductController@updateTags');
 Route::delete('/producto/etiquetas/{id}', 'ProductController@removeTags');
 
+//producto y ofertas
+Route::get('/producto/ofertas/{id}', 'ProductController@getSales');
+//tienda y ofertas
+Route::get('/tienda/ofertas/{id}', 'StoreController@getSales');
+Route::resource('/oferta', 'SaleController');
+
 Route::resource('/unidad', 'UnitController');
 Route::get('/marca/productos/{id}', 'BrandController@getProducts');
 Route::resource('/marca', 'BrandController');
@@ -51,3 +57,4 @@ Route::get('/etiqueta/productos/{id}', 'TagController@getProducts');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
 Route::resource('/dia_especial', 'SpecialDayController');
+

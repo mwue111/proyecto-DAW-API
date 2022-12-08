@@ -100,6 +100,11 @@ class ProductController extends Controller
         return $product->stores;
     }
 
+    public function getSales($id){
+        $product = Product::find($id);
+        return $product->sales;
+    }
+
     public function updateTags($id, Request $request){
         $product = Product::find($id);
         $product->tags()->sync($request->tags);

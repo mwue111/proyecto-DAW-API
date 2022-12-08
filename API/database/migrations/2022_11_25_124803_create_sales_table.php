@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->integer('stores_id');
-            $table->integer('products_id');
+            $table->integer('store_id');
+            $table->integer('product_id');
             $table->date('date_start');
             $table->date('date_end');
             $table->float('final_price');
