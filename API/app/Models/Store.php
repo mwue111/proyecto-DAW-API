@@ -38,6 +38,10 @@ class Store extends Model{
         return $this->belongsTo(Address::class);
     }    
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }
 
 

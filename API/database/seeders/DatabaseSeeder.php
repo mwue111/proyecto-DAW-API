@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitsTableSeeder::class);
         $this->call(Special_daysTableSeeder::class);
         $this->call(Special_days_storesTableSeeder::class);
-        $this->call(Categories_productsTableSeeder::class);
         // \App\Models\User::factory(10)->create();
         $this->call(UsersTableSeeder::class);
         $this->call(DocumentsTableSeeder::class);

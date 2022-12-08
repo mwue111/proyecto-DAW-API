@@ -34,5 +34,15 @@ class CategoriesTableSeeder extends Seeder
             'name' => 'Salsas',
             'parent_category_id' => 1
         ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Yogures',
+            'parent_category_id' => 2
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Sin bífidus',
+            'parent_category_id' => 5
+        ]);
     }
 }

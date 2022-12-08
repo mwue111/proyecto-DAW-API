@@ -30,6 +30,11 @@ class StoreController extends Controller{
         return $store->products;
     }
 
+    public function getSales($id){
+        $store = Store::find($id);
+        return $store->sales;
+    }
+
     public function addProducts(Request $request, $id){
         $store = Store::find($id);
         $store->products()->attach($request->products);

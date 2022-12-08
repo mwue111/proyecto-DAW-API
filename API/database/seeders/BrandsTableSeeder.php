@@ -27,5 +27,9 @@ class BrandsTableSeeder extends Seeder
             'name' => 'Danone',
             'description' => 'Lácteos de la mejor calidad',
         ]);
+        DB::table('brands')->insert([
+            'name' => 'Cocacola',
+            'description' => 'Bebidas refrescantes',
+        ]);
     }
 }

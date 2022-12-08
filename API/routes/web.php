@@ -27,8 +27,8 @@ Route::resource('/documento', 'DocumentController');
 Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
 Route::resource('/horario', 'ScheduleController');
-//rutas de producto
 Route::resource('/producto', 'ProductController');
+
 //producto y tienda
 Route::get('/producto/tiendas/{id}', 'ProductController@getStores');
 Route::get('/tienda/productos/{id}', 'StoreController@getProducts');
@@ -41,6 +41,16 @@ Route::get('/producto/etiquetas/{id}', 'ProductController@getTags');
 Route::patch('/producto/etiquetas/{id}', 'ProductController@updateTags');
 Route::delete('/producto/etiquetas/{id}', 'ProductController@removeTags');
 
+//producto y ofertas
+Route::get('/producto/ofertas/{id}', 'ProductController@getSales');
+
+//tienda y ofertas
+Route::get('/tienda/ofertas/{id}', 'StoreController@getSales');
+
+//producto y categorias
+Route::get('/producto/categorias/{id}', 'ProductController@getCategories');
+
+Route::resource('/oferta', 'SaleController');
 Route::resource('/unidad', 'UnitController');
 Route::get('/marca/productos/{id}', 'BrandController@getProducts');
 Route::resource('/marca', 'BrandController');
