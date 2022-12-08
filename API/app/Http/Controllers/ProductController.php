@@ -105,6 +105,17 @@ class ProductController extends Controller
         return $product->sales;
     }
 
+    public function getCategories($id){
+        $product = Product::find($id);
+        $category= $product->category;
+        $categories = array();
+        while($category != null){
+            array_push($categories, $category);
+            $category = $category->parent;
+        }
+        return $categories[0];
+    }
+
     public function updateTags($id, Request $request){
         $product = Product::find($id);
         $product->tags()->sync($request->tags);
