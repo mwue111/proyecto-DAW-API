@@ -7,7 +7,11 @@ use App\Models\Store;
 
 class StoreController extends Controller{
     public function index(){
-        return Store::all();
+        $stores= Store::all();
+        foreach($stores as $store){
+            $store->products;
+        }
+        return $stores;
     }
 
     public function store(Request $request){
