@@ -28,5 +28,6 @@ class VerifyCsrfToken extends Middleware
         "franja_horaria*",
         "dia_especial*",
         "usuario*",
+        "cliente*"
     ];
 }
