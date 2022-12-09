@@ -59,7 +59,6 @@ Route::get('/categoria/hijos/{id}', 'CategoryController@getChildren');
 Route::resource('/etiqueta', 'TagController');
 Route::get('/etiqueta/productos/{id}', 'TagController@getProducts');
 Route::resource('/franja_horaria', 'TimeSlotController');
-//Route::resource('/franja-horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
 Route::resource('/dia_especial', 'SpecialDayController');
 //Route::get('tienda/horario/{id}', 'StoreController@getStores');
