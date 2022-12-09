@@ -17,7 +17,9 @@ class AddressController extends Controller
     }
 
     public function show($id){
-        return Address::find($id);
+        $address = Address::find($id);
+        $address->store;
+        return $address;
     }
 
     public function update(Request $request, $id){
@@ -28,4 +30,6 @@ class AddressController extends Controller
     public function destroy($id){
         return Address::destroy($id);
     }
+
+    //public function getStores()
 }

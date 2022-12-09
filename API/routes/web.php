@@ -61,4 +61,13 @@ Route::get('/etiqueta/productos/{id}', 'TagController@getProducts');
 Route::resource('/franja_horaria', 'TimeSlotController');
 Route::get('/franja_horaria/dias/{id}', 'TimeSlotController@getSchedules');
 Route::resource('/dia_especial', 'SpecialDayController');
-
+//Route::get('tienda/horario/{id}', 'StoreController@getStores');
+//Route::post('/tienda/horario', 'StoreController@createSchedules');
+Route::put('/tienda/editar_horario/{id}', 'StoreController@setSchedule');
+Route::delete('/tienda/borrar_horario/{id}', 'StoreController@deleteSchedule');
+//Route::get('tienda/dias-especiales/{id}', 'StoreController@getSpecialDays');
+//Route::post('/tienda/dias-especiales', 'StoreController@createSpecialDay');
+Route::put('/tienda/dias_especiales/{id}', 'StoreController@setSpecialDay');
+Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecialDay');
+Route::resource('/usuario', 'UserController');
+Route::resource('/cliente', 'ClientController');

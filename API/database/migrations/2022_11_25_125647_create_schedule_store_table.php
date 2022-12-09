@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('special_days_stores', function (Blueprint $table) {
+        Schema::create('schedule_store', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
-            //$table->integer('special_day_id');
+            //$table->integer('schedule_id');
             //$table->integer('store_id');
 
-            $table->foreignId('special_day_id')->constrained(); //->onDelete('cascade');
+            //restricciones de claves foráneas (para que coja ids que existan y para que borre la relación si se borran los ids a los que se referencia). En lugar de lo anterior, se pone esto: 
+            $table->foreignId('schedule_id')->constrained(); //->onDelete('cascade');
             $table->foreignId('store_id')->constrained(); //->onDelete('cascade');
 
             $table->timestamps();
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('special_days_stores');
+        Schema::dropIfExists('schedule_store');
     }
 };

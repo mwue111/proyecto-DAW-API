@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Products_storesTableSeeder::class);
         $this->call(Products_tagsTableSeeder::class);
         $this->call(SalesTableSeeder::class);
+        //Seeder añadido para poder hacer el CRUD:
+        $this->call(Schedules_storesTableSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

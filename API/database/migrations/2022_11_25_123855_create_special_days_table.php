@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('special_days', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id')->index();
             $table->string('name', 100);
             $table->date('date');
             $table->string('remarks', 255)->nullable();
