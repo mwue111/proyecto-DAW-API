@@ -8,6 +8,7 @@ use App\Models\Store;
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
+        
         foreach($stores as $store){
             $store->schedules;
             $store->specialDays;
