@@ -19,8 +19,8 @@ return new class extends Migration
             //$table->integer('store_id');
 
             //restricciones de claves foráneas (para que coja ids que existan y para que borre la relación si se borran los ids a los que se referencia). En lugar de lo anterior, se pone esto: 
-            $table->foreignId('schedule_id')->constrained()->onDelete('cascade');
-            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->foreignId('schedule_id')->constrained(); //->onDelete('cascade');
+            $table->foreignId('store_id')->constrained(); //->onDelete('cascade');
 
             $table->timestamps();
         });

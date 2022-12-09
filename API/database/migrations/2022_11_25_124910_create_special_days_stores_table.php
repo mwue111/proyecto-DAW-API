@@ -18,8 +18,8 @@ return new class extends Migration
             //$table->integer('special_day_id');
             //$table->integer('store_id');
 
-            $table->foreignId('special_day_id')->constrained()->onDelete('cascade');
-            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->foreignId('special_day_id')->constrained(); //->onDelete('cascade');
+            $table->foreignId('store_id')->constrained(); //->onDelete('cascade');
 
             $table->timestamps();
         });
