@@ -71,3 +71,5 @@ Route::put('/tienda/dias_especiales/{id}', 'StoreController@setSpecialDay');
 Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecialDay');
 Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
+
+Route::resource('/files', 'FileController');
