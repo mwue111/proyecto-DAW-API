@@ -9,6 +9,9 @@ class Client extends Model{
     
     use HasFactory;
     
+    //Hacerlo con todas las tablas relacionadas con usuario
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'user_id',
     ];

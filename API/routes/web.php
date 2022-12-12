@@ -73,3 +73,4 @@ Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
 
 Route::resource('/files', 'FileController');
+Route::resource('/cliente', 'ClientController');

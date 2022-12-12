@@ -16,7 +16,6 @@ class ClientsTableSeeder extends Seeder
     public function run()
     {
         DB::table('clients')->insert([
-            'id' => 1,
             'user_id' => 1
         ]);
     }

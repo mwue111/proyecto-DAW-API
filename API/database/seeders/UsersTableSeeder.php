@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder{
             'email' => 'ivan@nombrereal.com',
             'password' => 'password',
             'birth_date' => '2020-09-03',
-            'type' => 'customer'
+            'type' => 'client'
         ]);
         DB::table('users')->insert([
             'username' => 'EmilioMartinez',
