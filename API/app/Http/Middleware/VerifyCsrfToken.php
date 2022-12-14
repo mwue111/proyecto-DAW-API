@@ -30,5 +30,6 @@ class VerifyCsrfToken extends Middleware
         "usuario*",
         "oferta*",
         "cliente*",
+        "administrator*",
     ];
 }

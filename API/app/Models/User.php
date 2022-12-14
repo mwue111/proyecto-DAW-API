@@ -35,4 +35,8 @@ class User extends Authenticatable
     public function client(){
         return $this->hasOne(Client::class);
     }
+
+    public function administrator(){
+        return $this->hasOne(Administrator::class);
+    }
 }
