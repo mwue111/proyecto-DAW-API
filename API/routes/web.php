@@ -69,6 +69,8 @@ Route::delete('/tienda/borrar_horario/{id}', 'StoreController@deleteSchedule');
 //Route::post('/tienda/dias-especiales', 'StoreController@createSpecialDay');
 Route::put('/tienda/dias_especiales/{id}', 'StoreController@setSpecialDay');
 Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecialDay');
+
+//Usuarios:
 Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
-Route::resource('/cliente', 'ClientController');
+Route::resource('/propietario', 'OwnerController');

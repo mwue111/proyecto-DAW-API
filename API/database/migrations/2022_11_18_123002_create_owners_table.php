@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('owners', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('verified')->default(false);
+            $table->foreignId('user_id')->constrained()->primary();
+            $table->tinyInteger('verified');
             $table->timestamps();
         });
     }
