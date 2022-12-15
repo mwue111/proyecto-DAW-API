@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Owner;
+use App\Models\Administrator;
 
 class UserController extends Controller{
     
@@ -15,7 +17,7 @@ class UserController extends Controller{
             switch($user->type){
                 case 'client': $user->client; break;
                 case 'owner': $user->owner; break;
-                case 'admin': $user->admin; break;
+                case 'administrator': $user->administrator; break;
             }
             
         }
@@ -24,12 +26,28 @@ class UserController extends Controller{
 
     public function store(Request $request){
         $user = User::create($request->all());
+    
+        switch($user->type){
+            case 'client': $client = new Client(); 
+                        $client->user_id = $user->id;
+                        $client->save(); break;
+            case 'owner': $owner = new Owner();
+                        $owner->user_id = $user->id;
+                        $owner->verified = 0;
+                        $owner->save(); break;
+            case 'administrator': $admin = new Administrator();
+                        $admin->user_id = $user->id;
+                        $admin->last_login = date('Y-m-d H:i:s');
+                        $admin->save(); break;
+        }
         
+        /*
         if($user->type == 'client'){
             $client = new Client();
             $client->user_id = $user->id;
             $client->save();
         }
+        */
         //convertirlo en switch con los datos 
     }
 

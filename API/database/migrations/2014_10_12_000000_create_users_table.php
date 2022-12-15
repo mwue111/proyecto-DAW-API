@@ -18,7 +18,7 @@ return new class extends Migration{
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password', 50);
             $table->date('birth_date');
-            $table->enum('type', ['client', 'owner', 'admin']);
+            $table->enum('type', ['client', 'owner', 'administrator']);
             //$table->rememberToken();
             $table->timestamps();
         });

@@ -36,7 +36,14 @@ class User extends Authenticatable
         return $this->hasOne(Client::class);
     }
 
+
     public function files(){
         return $this->hasMany(File::class);
+    public function owner(){
+        return $this->hasOne(Owner::class);
+    }
+
+    public function administrator(){
+        return $this->hasOne(Administrator::class);
     }
 }

@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder{
             'email' => 'emilio@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1875-09-03',
-            'type' => 'admin'
+            'type' => 'administrator'
         ]);
         DB::table('users')->insert([
             'username' => 'juanLuis',
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder{
             'email' => 'josealberto@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1794-09-03',
-            'type' => 'admin'
+            'type' => 'administrator'
         ]);
         DB::table('users')->insert([
             'username' => 'ari',
@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder{
             'email' => 'ari@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1955-09-03',
-            'type' => 'admin'
+            'type' => 'administrator'
         ]);
         DB::table('users')->insert([
             'username' => 'jackieChan',

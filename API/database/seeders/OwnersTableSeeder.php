@@ -16,16 +16,8 @@ class OwnersTableSeeder extends Seeder
     public function run()
     {
         DB::table('owners')->insert([
-            'id' => 1,
-            'verified' => true
-        ]);
-        DB::table('owners')->insert([
-            'id' => 3,
-            'verified' => false
-        ]);
-        DB::table('owners')->insert([
-            'id' => 5,
-            'verified' => true
+            'user_id' => 5,
+            'verified' => 0
         ]);
     }
 }
