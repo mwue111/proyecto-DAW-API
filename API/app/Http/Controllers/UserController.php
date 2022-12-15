@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Owner;
 use App\Models\Administrator;
 
 class UserController extends Controller{
@@ -16,7 +17,7 @@ class UserController extends Controller{
             switch($user->type){
                 case 'client': $user->client; break;
                 case 'owner': $user->owner; break;
-                case 'administrator': $user->admin; break;
+                case 'administrator': $user->administrator; break;
             }
             
         }
@@ -34,10 +35,10 @@ class UserController extends Controller{
                         $owner->user_id = $user->id;
                         $owner->verified = 0;
                         $owner->save(); break;
-            case 'admin': $admin = new Admin();
+            case 'administrator': $admin = new Administrator();
                         $admin->user_id = $user->id;
                         $admin->last_login = date('Y-m-d H:i:s');
-                        $admin->save();break;
+                        $admin->save(); break;
         }
         
         /*
