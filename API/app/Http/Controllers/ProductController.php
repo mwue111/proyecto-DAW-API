@@ -48,8 +48,7 @@ class ProductController extends Controller
         $product->stores()->attach($request->stores, [
             'stock' => $request->stock, 
             'value' => $request->value,
-            'remarks' => $request->remarks,
-            'unit_id' => $request->unit
+            'remarks' => $request->remarks
         ]);
         return response()->json($product, 201);
     }
