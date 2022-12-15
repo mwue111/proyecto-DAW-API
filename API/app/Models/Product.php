@@ -28,11 +28,6 @@ class Product extends Model
         return $this->belongsToMany(Store::class, 'products_stores');
     }
 
-    public function unit()
-    {
-        return $this->belongsTo(Unit::class);
-    }
-
     public function sales()
     {
         return $this->hasMany(Sale::class);

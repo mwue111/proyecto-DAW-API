@@ -9,7 +9,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->bigIncrements('id')->index();
             $table->integer('store_id');
             $table->integer('product_id');
             $table->date('date_start');

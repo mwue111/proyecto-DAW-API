@@ -9,6 +9,9 @@ class TownController extends Controller
 {
     public function index(){
         $townsList = Town::all();
+        foreach($townsList as $town){
+            $town->state;
+        }
         return $townsList;
     }
 

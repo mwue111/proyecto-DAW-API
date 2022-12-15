@@ -9,7 +9,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('products_stores', function (Blueprint $table) {
-            $table->bigIncrements('id')->index();
             $table->integer('product_id');
             $table->integer('store_id');
             $table->integer('unit_id'); //unidad de medida
@@ -17,6 +16,7 @@ return new class extends Migration
             $table->float('value');
             $table->string('remarks', 1000);
             $table->timestamps();
+            $table->primary(['product_id', 'store_id']);
         });
     }
    public function down()

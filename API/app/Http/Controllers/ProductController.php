@@ -15,7 +15,14 @@ class ProductController extends Controller
     public function index()
     {
         $data['productos'] = Product::all();
-        return view('producto', $data);
+        foreach($data['productos'] as $producto){
+            $producto->tags;
+            $producto->stores;
+            $producto->sales;
+            $producto->category;
+        }
+        return $data;
+        //return view('producto', $data);
     }
 
     /**
@@ -38,7 +45,11 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
         $product->tags()->attach($request->tags);
-        $product->stores()->attach($request->stores);
+        $product->stores()->attach($request->stores, [
+            'stock' => $request->stock, 
+            'value' => $request->value,
+            'remarks' => $request->remarks
+        ]);
         return response()->json($product, 201);
     }
 
