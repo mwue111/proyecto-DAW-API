@@ -10,7 +10,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('brands_img', function (Blueprint $table) {
-            $table->bigIncrements('id')->index();
+            $table->foreignId('file_id')->constrained()->primary();
             $table->integer('brand_id');
             $table->timestamps();
         });

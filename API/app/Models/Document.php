@@ -9,6 +9,8 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'file_id';
+
     protected $fillable =[
         'expiration_date'
     ];
