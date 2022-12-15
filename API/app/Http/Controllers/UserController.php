@@ -16,7 +16,7 @@ class UserController extends Controller{
             switch($user->type){
                 case 'client': $user->client; break;
                 case 'owner': $user->owner; break;
-                case 'admin': $user->admin; break;
+                case 'administrator': $user->admin; break;
             }
             
         }

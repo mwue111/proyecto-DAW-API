@@ -74,4 +74,4 @@ Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecial
 Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
 Route::resource('/propietario', 'OwnerController');
-Route::resource('/admin', 'AdminController');
+Route::resource('/admin', 'AdministratorController');
