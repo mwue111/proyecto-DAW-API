@@ -13,10 +13,10 @@ class SaleController extends Controller
         return response()->json($sales);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $sale = Sale::find($id);
-        return response()->json($sale);
+        $sales = Sale::where($request->field, $id)->get();
+        return response()->json($sales);
     }
 
     public function store(Request $request)

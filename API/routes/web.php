@@ -79,3 +79,4 @@ Route::resource('/cliente', 'ClientController');
 Route::resource('/propietario', 'OwnerController');
 Route::resource('/admin', 'AdministratorController');
 
+Route::get('/producto/buscar', 'ProductController@findFromFields');

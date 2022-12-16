@@ -16,10 +16,16 @@ class ProductController extends Controller
     {
         $data['productos'] = Product::all();
         foreach($data['productos'] as $producto){
+            $producto->brand;
             $producto->tags;
-            $producto->stores;
             $producto->sales;
             $producto->category;
+            $producto->stores;
+            foreach($producto->stores as $store){
+                $store->pivot->stock;
+                $store->pivot->value;
+                $store->pivot->remarks;
+            }
         }
         return $data;
         //return view('producto', $data);
@@ -61,7 +67,17 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::find($id);
+        $producto=Product::find($id);
+        $producto->tags;
+        $producto->sales;
+        $producto->category;
+        $producto->stores;
+        foreach($producto->stores as $store){
+            $store->pivot->stock;
+            $store->pivot->value;
+            $store->pivot->remarks;
+        }
+        return $producto;
     }
 
     /**
@@ -87,7 +103,14 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->update($request->all());
         $product->tags()->sync($request->tags);
-        $product->stores()->sync($request->stores);
+        $product->stores()->sync([
+            $request->stores => [
+                'stock' => $request->stock,
+                'unit' => $request->unit, 
+                'value' => $request->value,
+                'remarks' => $request->remarks
+            ]
+        ], false);
     }
 
     /**
@@ -145,5 +168,23 @@ class ProductController extends Controller
     public function removeStores($id, Request $request){
         $product = Product::find($id);
         $product->stores()->detach($request->stores);
+    }
+
+    public function findFromFields(Request $request){
+        $products = Product::where($request->field, 'like', '%'.$request->value.'%')
+        ->get();
+        foreach($products as $product){
+            $product->brand;
+            $product->tags;
+            $product->sales;
+            $product->category;
+            $product->stores;
+            foreach($product->stores as $store){
+                $store->pivot->stock;
+                $store->pivot->value;
+                $store->pivot->remarks;
+            }
+        }
+        return $products;
     }
 }

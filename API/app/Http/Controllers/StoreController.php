@@ -13,6 +13,7 @@ class StoreController extends Controller{
             $store->schedules;
             $store->specialDays;
             $store->address;
+            $store->sales;
         }
         return $stores;
     }

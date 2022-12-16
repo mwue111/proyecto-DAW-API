@@ -31,5 +31,19 @@ class SalesTableSeeder extends Seeder
             'date_end' => '2020-01-31',
             'final_price' => 10
         ]);
+        DB::table('sales')->insert([
+            'store_id' => 6,
+            'product_id' => 2,
+            'date_start' => '2022-01-01',
+            'date_end' => '2020-01-31',
+            'final_price' => 5
+        ]);
+        DB::table('sales')->insert([
+            'store_id' => 1,
+            'product_id' => 3,
+            'date_start' => '2022-01-01',
+            'date_end' => '2020-01-31',
+            'final_price' => 20
+        ]);
     }
 }
