@@ -11,6 +11,10 @@ class File extends Model
 
     protected $fillable = [
         'url',
-        'type'
+        'type',
     ];
+
+    public function document(){
+        return $this->hasOne(Document::class);
+    }
 }

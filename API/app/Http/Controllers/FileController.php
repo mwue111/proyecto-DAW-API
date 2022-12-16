@@ -12,7 +12,7 @@ class FileController extends Controller
     public function index(){
         $files = File::all();
         foreach($files as $file){
-            switch($files->type){
+            switch($file->type){
                 case 'document': $file->document; break;
                 case 'stores_img': $file->stores_img; break;
                 case 'products_img': $file->products_img; break;

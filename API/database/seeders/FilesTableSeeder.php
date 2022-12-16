@@ -33,6 +33,12 @@ class FilesTableSeeder extends Seeder
                 'user_id' => 3,
                 'url' => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.elle.com%2Fculture%2Fmovies-tv%2Fa24276316%2Fseina-shimabukuro-terrace-house%2F&psig=AOvVaw0LqFdEMFityrR5xMsdbNpM&ust=1668861448905000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCODct8Lft_sCFQAAAAAdAAAAABAD',
                 'type' => 'profiles_img'
-           ]);   
+           ]);
+           
+           DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://sede.agenciatributaria.gob.es/Sede/procedimientoini/G323.shtml',
+            'type' => 'document'
+           ]);
     }
 }

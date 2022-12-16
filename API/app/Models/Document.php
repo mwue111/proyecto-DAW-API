@@ -12,6 +12,11 @@ class Document extends Model
     protected $primaryKey = 'file_id';
 
     protected $fillable =[
-        'expiration_date'
+        'file_id',
+        'expiration_date',
     ];
+
+    public function file(){
+        return $this->belongsTo(File::class);
+    }
 }
