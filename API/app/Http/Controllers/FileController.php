@@ -42,8 +42,18 @@ class FileController extends Controller
         return File::find($id);
     }
 
-    //update borrado
-    
+    public function update(Request $request, $id){
+        $file = File::find($id);
+        switch($file->type){
+            case 'document': $document = Document::find($id);
+                            $document->update($request->all()); break;
+            case 'stores_img': $file->stores_img; break;
+            case 'products_img': $file->products_img; break;
+            case 'profiles_img': $file->profiles_img; break;
+            case 'brands_img': $file->brands_img; break;
+        }
+    }
+
     public function destroy($id){
         return File::destroy($id);
     }

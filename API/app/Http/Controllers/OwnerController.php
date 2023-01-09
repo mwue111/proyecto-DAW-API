@@ -20,7 +20,7 @@ class OwnerController extends Controller{
     //modificar el valor de la variable verified
     public function update(Request $request, $id){
         $owner = Owner::find($id);
-        $owner->update($request->verified);
+        $owner->update($request->all());
         return $owner;
     }
 }
