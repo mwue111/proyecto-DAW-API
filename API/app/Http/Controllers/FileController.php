@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\ProfileImg;
 //Ir añadiendo los modelos que correspondan
 
 class FileController extends Controller
@@ -14,9 +15,10 @@ class FileController extends Controller
         foreach($files as $file){
             switch($file->type){
                 case 'document': $file->document; break;
+                //cambiar nombres a xxx_imgs en lugar de xxx_img
                 case 'stores_img': $file->stores_img; break;
-                case 'products_img': $file->products_img; break;
-                case 'profiles_img': $file->profiles_img; break;
+                case 'products_img': $file->product_imgs; break;
+                case 'profile_imgs': $file->profile_imgs; break;
                 case 'brands_img': $file->brands_img; break;
             }
         }
@@ -29,12 +31,18 @@ class FileController extends Controller
         switch($file->type){
             case 'document': $document = new Document();
                             $document->file_id = $file->id;
-                            $document->expiration_date = date('Y-m-d H:i:s');
+                            //$document->expiration_date = date('Y-m-d H:i:s');
+                            $document->expiration_date = $request->expiration_date;
                             $document->save(); break;
-            case 'stores_img': $file->stores_img; break;
+
+            case 'profile_imgs': $profile = new ProfileImg();
+                                $profile->file_id = $file->id;
+                                $profile->save(); break;
+            //ir editando las siguientes tablas - no requieren controlador
+            /*case 'stores_img': $file->stores_img; break;
             case 'products_img': $file->products_img; break;
-            case 'profiles_img': $file->profiles_img; break;
             case 'brands_img': $file->brands_img; break;
+            */
         }
     }
 
@@ -44,14 +52,25 @@ class FileController extends Controller
 
     public function update(Request $request, $id){
         $file = File::find($id);
+        
+        
         switch($file->type){
             case 'document': $document = Document::find($id);
-                            $document->update($request->all()); break;
-            case 'stores_img': $file->stores_img; break;
+            $document->update($request->all()); break;
+
+            case 'profile_imgs': $profile = ProfileImg::find($id);
+            $profile->update($request->all()); break;
+            //ir editando las siguientes tablas
+            /*case 'stores_img': $file->stores_img; break;
             case 'products_img': $file->products_img; break;
             case 'profiles_img': $file->profiles_img; break;
             case 'brands_img': $file->brands_img; break;
+            */
         }
+        
+        $file->update($request->all()); //para modificar el campo deleted dentro de un file concreto
+        $file->deleted = $request->deleted;
+        $file->save();
     }
 
     public function destroy($id){

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         //Tablas de Dany:
         //$this->call(Stores_imgTableSeeder::class);
         //$this->call(Products_imgTableSeeder::class);
-        //$this->call(Profiles_imgTableSeeder::class);
+        $this->call(Profile_imgsTableSeeder::class);
         //$this->call(Brands_imgTableSeeder::class);
         $this->call(AddressesTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);

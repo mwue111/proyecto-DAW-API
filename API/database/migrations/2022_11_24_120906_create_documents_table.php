@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->foreignId('file_id')->constrained()->primary();
+            $table->foreignId('file_id')->constrained()->primary()->onDelete('cascade');
             $table->date('expiration_date');
             $table->timestamps();
         });

@@ -11,10 +11,15 @@ class File extends Model
 
     protected $fillable = [
         'url',
+        'user_id',
         'type',
     ];
 
     public function document(){
         return $this->hasOne(Document::class);
+    }
+
+    public function profileImg(){
+        return $this->hasOne(ProfileImg::class);
     }
 }

@@ -35,6 +35,6 @@ class VerifyCsrfToken extends Middleware
         "propietario*",
         "archivo*",
         "documento*",
-
+        "perfil*",
     ];
 }

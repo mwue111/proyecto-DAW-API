@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('profiles_img', function (Blueprint $table) {
+        Schema::create('profile_imgs', function (Blueprint $table) {
             $table->foreignId('file_id')->constrained()->primary();
             $table->timestamps();
         });
@@ -16,6 +16,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('profiles_img');
+        Schema::dropIfExists('profile_imgs');
     }
 };
