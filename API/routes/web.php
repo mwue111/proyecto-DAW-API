@@ -79,3 +79,4 @@ Route::resource('/admin', 'AdministratorController');
 //Archivos (tabla File):
 Route::resource('/archivo', 'FileController');
 Route::resource('/documento', 'DocumentController');
+

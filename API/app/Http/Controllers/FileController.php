@@ -42,11 +42,8 @@ class FileController extends Controller
         return File::find($id);
     }
 
-    public function update(Request $request, $id){
-        $file = File::find($id);
-        $file->update($request->all());
-    }
-
+    //update borrado
+    
     public function destroy($id){
         return File::destroy($id);
     }
