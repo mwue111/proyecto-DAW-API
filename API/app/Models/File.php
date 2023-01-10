@@ -28,6 +28,10 @@ class File extends Model
         return $this->hasOne(ProfileImg::class);
     }
 
+    public function productImgs(){
+        return $this->hasOne(ProductImg::class);
+    }
+
     public function storeImgs(){
         return $this->hasOne(StoreImg::class);
     }
