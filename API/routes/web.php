@@ -76,6 +76,6 @@ Route::resource('/cliente', 'ClientController');
 Route::resource('/propietario', 'OwnerController');
 Route::resource('/admin', 'AdministratorController');
 
-//Archivos (tabla File):
+//Archivos (File):
 Route::resource('/archivo', 'FileController');
 
