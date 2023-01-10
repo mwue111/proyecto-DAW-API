@@ -27,4 +27,8 @@ class File extends Model
     public function profileImgs(){
         return $this->hasOne(ProfileImg::class);
     }
+
+    public function storeImgs(){
+        return $this->hasOne(StoreImg::class);
+    }
 }
