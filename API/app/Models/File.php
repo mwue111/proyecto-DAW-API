@@ -31,4 +31,8 @@ class File extends Model
     public function storeImgs(){
         return $this->hasOne(StoreImg::class);
     }
+
+    public function brandImgs(){
+        return $this->hasOne(BrandImg::class);
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Document extends Model
+class BrandImg extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class Document extends Model
 
     protected $fillable = [
         'file_id',
-        'expiration_date',
+        'brand_id',
     ];
 
     public function file(){

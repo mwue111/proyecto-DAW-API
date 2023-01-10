@@ -8,6 +8,7 @@ use App\Models\Document;
 use App\Models\ProfileImg;
 use App\Models\StoreImg;
 use App\Models\Store;
+use App\Models\BrandImg;
 //Ir añadiendo los modelos que correspondan
 
 class FileController extends Controller
@@ -19,9 +20,9 @@ class FileController extends Controller
                 case 'document': $file->document; break;
                 case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
                 case 'store_imgs': $file->storeImgs; break;
+                case 'brands_img': $file->brandImgs; break;
                 //cambiar nombres a xxx_imgs en lugar de xxx_img
                 case 'products_img': $file->product_imgs; break;
-                case 'brands_img': $file->brands_img; break;
                 //case 'logo': $file->logo;break;
             }
         }
