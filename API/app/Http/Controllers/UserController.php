@@ -57,10 +57,10 @@ class UserController extends Controller{
         return $user;
     }
 
+    
     public function update(Request $request, $id){
         $user = User::find($id);
         $user->update($request->all());
-
     }
 
     public function destroy($id){

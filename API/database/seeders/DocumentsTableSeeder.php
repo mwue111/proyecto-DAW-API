@@ -11,19 +11,8 @@ class DocumentsTableSeeder extends Seeder
     public function run()
     {
        DB::table('documents')->insert([
-            'expiration_date' => '2052-11-24'
-       ]);
-       DB::table('documents')->insert([
-            'expiration_date' => '2040-01-05'
-       ]);
-       DB::table('documents')->insert([
-            'expiration_date' => '2025-01-15'
-       ]);
-       DB::table('documents')->insert([
-            'expiration_date' => '2030-05-01'
-       ]);
-       DB::table('documents')->insert([
-            'expiration_date' => '2036-09-18'
+          'file_id' => 6,
+          'expiration_date' => '2036-09-18'
        ]);
     }
 }

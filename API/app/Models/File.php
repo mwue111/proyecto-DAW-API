@@ -12,10 +12,19 @@ class File extends Model
     protected $fillable = [
         'user_id',
         'url',
-        'type'
+        'user_id',
+        'type',
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    
+    public function document(){
+        return $this->hasOne(Document::class);
+    }
+
+    public function profileImgs(){
+        return $this->hasOne(ProfileImg::class);
     }
 }

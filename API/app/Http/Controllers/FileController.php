@@ -4,16 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use App\Models\Document;
+use App\Models\ProfileImg;
+//Ir añadiendo los modelos que correspondan
 
 class FileController extends Controller
 {
     public function index(){
-        $filesList = File::all();
-        return $filesList;
+        $files = File::all();
+        foreach($files as $file){
+            switch($file->type){
+                case 'document': $file->document; break;
+                case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
+                //cambiar nombres a xxx_imgs en lugar de xxx_img
+                case 'stores_img': $file->stores_img; break;
+                case 'products_img': $file->product_imgs; break;
+                case 'brands_img': $file->brands_img; break;
+            }
+        }
+        return $files;
     }
 
     public function store(Request $request){
-        File::create($request->all());
+        $file = File::create($request->all());
+
+        switch($file->type){
+            case 'document': $document = new Document();
+                            $document->file_id = $file->id;
+                            //$document->expiration_date = date('Y-m-d H:i:s');
+                            $document->expiration_date = $request->expiration_date;
+                            $document->save(); break;
+
+            case 'profile_imgs': $profile = new ProfileImg();
+                                $profile->file_id = $file->id;
+                                $profile->save(); break;
+            //ir editando las siguientes tablas - no requieren controlador
+            /*case 'stores_img': $file->stores_img; break;
+            case 'products_img': $file->products_img; break;
+            case 'brands_img': $file->brands_img; break;
+            */
+        }
     }
 
     public function show($id){
@@ -22,7 +52,25 @@ class FileController extends Controller
 
     public function update(Request $request, $id){
         $file = File::find($id);
-        $file->update($request->all());
+        
+        $file->update($request->all()); //para modificar el campo deleted dentro de un file concreto
+        
+        switch($file->type){
+            case 'document': $document = Document::find($id);
+            $document->update($request->all()); break;
+
+            case 'profile_imgs': $profile = ProfileImg::find($id);
+            $profile->update($request->all()); break;
+            //ir editando las siguientes tablas
+            /*case 'stores_img': $file->stores_img; break;
+            case 'products_img': $file->products_img; break;
+            case 'profiles_img': $file->profiles_img; break;
+            case 'brands_img': $file->brands_img; break;
+            */
+        }
+        
+        $file->deleted = $request->deleted;
+        $file->save();
     }
 
     public function destroy($id){

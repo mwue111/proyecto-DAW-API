@@ -12,7 +12,8 @@ return new class extends Migration
             $table->bigIncrements('id')->index();
             $table->integer('user_id');      //foreign key
             $table->string('url', 1000);
-            $table->enum('type', ['document', 'store_img', 'product_img', 'profile_img', 'brands_img']);
+            $table->enum('type', ['document', 'store_imgs', 'product_imgs', 'profile_imgs', 'brand_imgs']);
+            $table->tinyInteger('deleted');
             $table->timestamps();
         });
     }

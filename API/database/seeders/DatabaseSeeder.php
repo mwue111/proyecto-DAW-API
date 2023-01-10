@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Special_days_storesTableSeeder::class);
         // \App\Models\User::factory(10)->create();
         $this->call(UsersTableSeeder::class);
+        $this->call(FilesTableSeeder::class);
         $this->call(DocumentsTableSeeder::class);
         $this->call(AdministratorsTableSeeder::class);
         $this->call(OwnersTableSeeder::class);
@@ -30,12 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->call(StatesTableSeeder::class);
         $this->call(TownsTableSeeder::class);
         //Tablas de Dany:
-        $this->call(FilesTableSeeder::class);
-        $this->call(Stores_imgTableSeeder::class);
-        $this->call(DocumentsTableSeeder::class);
-        $this->call(Products_imgTableSeeder::class);
-        $this->call(Profiles_imgTableSeeder::class);
-        $this->call(Brands_imgTableSeeder::class);
+        //$this->call(Stores_imgTableSeeder::class);
+        //$this->call(Products_imgTableSeeder::class);
+        $this->call(Profile_imgsTableSeeder::class);
+        //$this->call(Brands_imgTableSeeder::class);
         $this->call(AddressesTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);
         $this->call(TimeslotsTableSeeder::class);

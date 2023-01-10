@@ -23,7 +23,7 @@ Route::resource('/ciudad', 'TownController');
 Route::get('/ciudad/calles/{id}', 'TownController@getAddress');
 Route::resource('/provincia', 'StateController');
 Route::get('/provincia/ciudades/{id}', 'StateController@getTowns');
-Route::resource('/documento', 'DocumentController');
+//Route::resource('/documento', 'DocumentController');
 Route::resource('/archivo', 'FileController');
 Route::resource('/tienda', 'StoreController');
 Route::resource('/horario', 'ScheduleController');
@@ -73,9 +73,9 @@ Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecial
 //Usuarios:
 Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
-
-Route::resource('/archivos', 'FileController');
-Route::resource('/cliente', 'ClientController');
 Route::resource('/propietario', 'OwnerController');
 Route::resource('/admin', 'AdministratorController');
+
+//Archivos (tabla File):
+Route::resource('/archivo', 'FileController');
 
