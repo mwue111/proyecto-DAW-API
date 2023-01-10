@@ -42,6 +42,10 @@ class Store extends Model{
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function storeImgs(){
+        return $this->hasMany(StoreImg::class);
+    }
 }
 
 

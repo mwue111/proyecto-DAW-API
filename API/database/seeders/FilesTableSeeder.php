@@ -46,5 +46,12 @@ class FilesTableSeeder extends Seeder
             'type' => 'document',
             'deleted' => 0,
            ]);
+
+           DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://latiendadejackiechan.com/foto',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+           ]);
     }
 }
