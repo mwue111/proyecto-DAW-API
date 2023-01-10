@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('profile_imgs', function (Blueprint $table) {
-            $table->foreignId('file_id')->constrained()->primary();
+            $table->foreignId('file_id')->constrained()->primary()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ class File extends Model
         return $this->hasOne(Document::class);
     }
 
-    public function profileImg(){
+    public function profileImgs(){
         return $this->hasOne(ProfileImg::class);
     }
 }

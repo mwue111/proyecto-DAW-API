@@ -15,10 +15,10 @@ class FileController extends Controller
         foreach($files as $file){
             switch($file->type){
                 case 'document': $file->document; break;
+                case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
                 //cambiar nombres a xxx_imgs en lugar de xxx_img
                 case 'stores_img': $file->stores_img; break;
                 case 'products_img': $file->product_imgs; break;
-                case 'profile_imgs': $file->profile_imgs; break;
                 case 'brands_img': $file->brands_img; break;
             }
         }
@@ -53,6 +53,7 @@ class FileController extends Controller
     public function update(Request $request, $id){
         $file = File::find($id);
         
+        $file->update($request->all()); //para modificar el campo deleted dentro de un file concreto
         
         switch($file->type){
             case 'document': $document = Document::find($id);
@@ -68,7 +69,6 @@ class FileController extends Controller
             */
         }
         
-        $file->update($request->all()); //para modificar el campo deleted dentro de un file concreto
         $file->deleted = $request->deleted;
         $file->save();
     }
