@@ -20,10 +20,8 @@ class FileController extends Controller
                 case 'document': $file->document; break;
                 case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
                 case 'store_imgs': $file->storeImgs; break;
-                case 'brands_img': $file->brandImgs; break;
-                //cambiar nombres a xxx_imgs en lugar de xxx_img
-                case 'products_img': $file->product_imgs; break;
-                //case 'logo': $file->logo;break;
+                case 'product_imgs': $file->product_imgs; break;
+                case 'brand_imgs': $file->brandImgs; break;
             }
         }
         return $files;

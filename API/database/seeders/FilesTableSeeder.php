@@ -57,5 +57,11 @@ class FilesTableSeeder extends Seeder
             'type' => 'store_imgs',
             'deleted' => 0,
         ]);
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => 'logotipo de una marca',
+            'type' => 'brand_imgs',
+            'deleted' => 0,
+        ]);
     }
 }
