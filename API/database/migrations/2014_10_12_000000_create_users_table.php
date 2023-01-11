@@ -19,6 +19,7 @@ return new class extends Migration{
             $table->string('password', 50);
             $table->date('birth_date');
             $table->enum('type', ['client', 'owner', 'administrator']);
+            $table->tinyInteger('deleted');
             //$table->rememberToken();
             $table->timestamps();
         });

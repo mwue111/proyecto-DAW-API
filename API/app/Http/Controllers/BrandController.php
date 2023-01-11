@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\BrandImg;
 
 class BrandController extends Controller
 {
     public function index(){
-        return Brand::all();
+        $brands = Brand::all();
+        foreach($brands as $brand){
+            $brand->brandImg;
+        }
+        return $brands;
     }
 
     public function store(Request $request){

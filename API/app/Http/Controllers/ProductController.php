@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductImg;
 
 class ProductController extends Controller
 {
@@ -20,6 +21,7 @@ class ProductController extends Controller
             $producto->stores;
             $producto->sales;
             $producto->category;
+            $producto->productImgs;
         }
         return $data;
         //return view('producto', $data);

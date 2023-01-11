@@ -22,5 +22,7 @@ class ClientController extends Controller{
         $client = Client::find($id);
         $client->user;
         return $client;
-    }   
+    }
+    
+    //Este controlador se mantiene para la gestión de las reservas
 }

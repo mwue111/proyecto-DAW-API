@@ -12,7 +12,6 @@ use App\Models\BrandImg;
 use App\Models\Brand;
 use App\Models\ProductImg;
 use App\Models\Product;
-//Ir añadiendo los modelos que correspondan
 
 class FileController extends Controller
 {

@@ -17,8 +17,10 @@ class UsersTableSeeder extends Seeder{
             'email' => 'ivan@nombrereal.com',
             'password' => 'password',
             'birth_date' => '2020-09-03',
-            'type' => 'client'
+            'type' => 'client',
+            'deleted' => 0,
         ]);
+
         DB::table('users')->insert([
             'username' => 'EmilioMartinez',
             'name' => 'Emilio',
@@ -27,8 +29,10 @@ class UsersTableSeeder extends Seeder{
             'email' => 'emilio@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1875-09-03',
-            'type' => 'administrator'
+            'type' => 'administrator',
+            'deleted' => 0,
         ]);
+
         DB::table('users')->insert([
             'username' => 'juanLuis',
             'name' => 'Juan Pedro',
@@ -37,8 +41,10 @@ class UsersTableSeeder extends Seeder{
             'email' => 'josealberto@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1794-09-03',
-            'type' => 'administrator'
+            'type' => 'administrator',
+            'deleted' => 0,
         ]);
+
         DB::table('users')->insert([
             'username' => 'ari',
             'name' => 'Irene',
@@ -47,8 +53,10 @@ class UsersTableSeeder extends Seeder{
             'email' => 'ari@nombrereal.com',
             'password' => 'password',
             'birth_date' => '1955-09-03',
-            'type' => 'administrator'
+            'type' => 'administrator',
+            'deleted' => 0,
         ]);
+
         DB::table('users')->insert([
             'username' => 'jackieChan',
             'name' => 'Quian',
@@ -57,7 +65,8 @@ class UsersTableSeeder extends Seeder{
             'email' => 'chanchitofeliz@nombrereal.com',
             'password' => 'password',
             'birth_date' => '2020-09-03',
-            'type' => 'owner'
+            'type' => 'owner',
+            'deleted' => 0,
         ]);
     }
 }
