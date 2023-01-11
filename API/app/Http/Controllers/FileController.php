@@ -9,6 +9,7 @@ use App\Models\ProfileImg;
 use App\Models\StoreImg;
 use App\Models\Store;
 use App\Models\BrandImg;
+use App\Models\Brand;
 use App\Models\ProductImg;
 use App\Models\Product;
 //Ir añadiendo los modelos que correspondan
@@ -25,10 +26,6 @@ class FileController extends Controller
                 case 'product_imgs': $file->product_imgs; break;
                 case 'brand_imgs': $file->brandImgs; break;
                 case 'product_imgs': $file->productImgs; break;
-
-                //cambiar nombres a xxx_imgs en lugar de xxx_img
-                case 'brands_img': $file->brands_img; break;
-                //case 'logo': $file->logo;break;
             }
         }
         return $files;
@@ -61,11 +58,13 @@ class FileController extends Controller
                                 $productId = Product::find($request->product_id);
                                 $product->product_id = $productId->id;
                                 $product->save(); break;
-            //ir editando las siguientes tablas - no requieren controlador
-            /*
-            case 'brands_img': $file->brands_img; break;
-            case 'logo': $file->logo;break;
-            */
+            
+            case 'brand_imgs': $brand = new BrandImg();
+                                $brand->file_id = $file->id;
+
+                                $brandId = Brand::find($request->brand_id);
+                                $brand->brand_id = $brandId->id;
+                                $brand->save(); break;
         }
     }
 
@@ -73,6 +72,7 @@ class FileController extends Controller
         return File::find($id);
     }
 
+    //Función planteada por si es necesario cambiar el tipo de documento, pero en realidad servirá para marcar documentos como eliminados o no (deleted).
     public function update(Request $request, $id){
         $file = File::find($id);
         
@@ -91,11 +91,8 @@ class FileController extends Controller
             case 'product_imgs': $product = ProductImg::find($id);
                                 $product->update($request->all()); break;
             
-            //ir editando las siguientes tablas
-            /*
-            case 'brands_img': $file->brands_img; break;
-            case 'logo': $file->logo;break;
-            */
+            case 'brand_imgs': $brand = BrandImg::find($id);
+                                $brand->update($request->all()); break;
         }
         
         $file->deleted = $request->deleted;

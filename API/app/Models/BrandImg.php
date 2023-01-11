@@ -19,4 +19,8 @@ class BrandImg extends Model
     public function file(){
         return $this->belongsTo(File::class);
     }
+
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
 }

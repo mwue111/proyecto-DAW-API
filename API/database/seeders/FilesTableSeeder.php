@@ -42,7 +42,6 @@ class FilesTableSeeder extends Seeder
             'url' => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.elle.com%2Fculture%2Fmovies-tv%2Fa24276316%2Fseina-shimabukuro-terrace-house%2F&psig=AOvVaw0LqFdEMFityrR5xMsdbNpM&ust=1668861448905000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCODct8Lft_sCFQAAAAAdAAAAABAD',
             'type' => 'profile_imgs',
             'deleted' => 0,
-        ]);   
         ]);
                    
         DB::table('files')->insert([
@@ -68,6 +67,7 @@ class FilesTableSeeder extends Seeder
             'user_id' => 4,
             'url' => 'logotipo de una marca',
             'type' => 'brand_imgs',
+        ]);
 
         DB::table('files')->insert([
             'user_id' => 5,

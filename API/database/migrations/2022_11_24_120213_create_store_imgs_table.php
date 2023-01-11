@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('store_imgs', function (Blueprint $table) {
-            $table->foreignId('file_id')->constrained()->primary()->onDelete('cascade');
+            $table->foreignId('file_id')->constrained()->primary()->onDelete('cascade')->onUpdate('cascade');;
             $table->integer('store_id');
             $table->timestamps();
         });
