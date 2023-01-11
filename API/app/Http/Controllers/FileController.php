@@ -9,6 +9,8 @@ use App\Models\ProfileImg;
 use App\Models\StoreImg;
 use App\Models\Store;
 use App\Models\BrandImg;
+use App\Models\ProductImg;
+use App\Models\Product;
 //Ir añadiendo los modelos que correspondan
 
 class FileController extends Controller
@@ -22,6 +24,11 @@ class FileController extends Controller
                 case 'store_imgs': $file->storeImgs; break;
                 case 'product_imgs': $file->product_imgs; break;
                 case 'brand_imgs': $file->brandImgs; break;
+                case 'product_imgs': $file->productImgs; break;
+
+                //cambiar nombres a xxx_imgs en lugar de xxx_img
+                case 'brands_img': $file->brands_img; break;
+                //case 'logo': $file->logo;break;
             }
         }
         return $files;
@@ -47,9 +54,15 @@ class FileController extends Controller
                             $storeId = Store::find($request->store_id);
                             $store->store_id = $storeId->id;                            
                             $store->save(); break;
+
+            case 'product_imgs': $product = new ProductImg();
+                                $product->file_id = $file->id;
+
+                                $productId = Product::find($request->product_id);
+                                $product->product_id = $productId->id;
+                                $product->save(); break;
             //ir editando las siguientes tablas - no requieren controlador
             /*
-            case 'products_img': $file->products_img; break;
             case 'brands_img': $file->brands_img; break;
             case 'logo': $file->logo;break;
             */
@@ -74,9 +87,12 @@ class FileController extends Controller
 
             case 'store_imgs': $store = StoreImg::find($id);
                                 $store->update($request->all()); break;
+
+            case 'product_imgs': $product = ProductImg::find($id);
+                                $product->update($request->all()); break;
+            
             //ir editando las siguientes tablas
             /*
-            case 'products_img': $file->products_img; break;
             case 'brands_img': $file->brands_img; break;
             case 'logo': $file->logo;break;
             */

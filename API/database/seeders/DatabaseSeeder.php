@@ -31,10 +31,11 @@ class DatabaseSeeder extends Seeder
         $this->call(StatesTableSeeder::class);
         $this->call(TownsTableSeeder::class);
         //Tablas de Dany:
-        //$this->call(Products_imgTableSeeder::class);
         $this->call(Profile_imgsTableSeeder::class);
         $this->call(Store_imgsTableSeeder::class);
         $this->call(Brand_imgsTableSeeder::class);
+        //$this->call(Brands_imgTableSeeder::class);
+        $this->call(Product_imgsTableSeeder::class);
         $this->call(AddressesTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);
         $this->call(TimeslotsTableSeeder::class);
