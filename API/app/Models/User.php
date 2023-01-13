@@ -39,6 +39,7 @@ class User extends Authenticatable
 
     public function files(){
         return $this->hasMany(File::class);
+    }
     public function owner(){
         return $this->hasOne(Owner::class);
     }

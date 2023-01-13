@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
-    return view('welcome');
+    return ['Laravel' => app()->version()];
 });
-
 Route::resource('/direccion', 'AddressController');
 Route::resource('/ciudad', 'TownController');
 Route::get('/ciudad/calles/{id}', 'TownController@getAddress');
@@ -78,4 +76,4 @@ Route::resource('/admin', 'AdministratorController');
 
 //Archivos (File):
 Route::resource('/archivo', 'FileController');
-
+require __DIR__.'/auth.php';
