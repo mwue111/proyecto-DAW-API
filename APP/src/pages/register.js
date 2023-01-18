@@ -17,7 +17,10 @@ const Register = () => {
 
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
+    const [surname1, setSurname1] = useState('')
+    const [surname2, setSurname2] = useState('')
     const [email, setEmail] = useState('')
+    const [type, setType] = useState('client')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
@@ -28,6 +31,9 @@ const Register = () => {
         register({
             name,
             username,
+            surname1,
+            surname2,
+            type,
             email,
             password,
             password_confirmation: passwordConfirmation,
@@ -46,7 +52,7 @@ const Register = () => {
                 <form onSubmit={submitForm}>
                     {/* Name */}
                     <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Nombre</Label>
 
                         <Input
                             id="name"
@@ -59,6 +65,43 @@ const Register = () => {
                         />
 
                         <InputError messages={errors.name} className="mt-2" />
+                    </div>
+
+                    {/* Surname1 */}
+                    <div className="mt-4">
+                        <Label htmlFor="surname1">Apellido 1</Label>
+
+                        <Input
+                            id="surname1"
+                            type="text"
+                            value={surname1}
+                            className="block mt-1 w-full"
+                            onChange={event => setSurname1(event.target.value)}
+                            required
+                        />
+
+                        <InputError
+                            messages={errors.surname1}
+                            className="mt-2"
+                        />
+                    </div>
+
+                    {/* Surname2 */}
+                    <div className="mt-4">
+                        <Label htmlFor="surname2">Apellido 2</Label>
+
+                        <Input
+                            id="surname2"
+                            type="text"
+                            value={surname2}
+                            className="block mt-1 w-full"
+                            onChange={event => setSurname2(event.target.value)}
+                        />
+
+                        <InputError
+                            messages={errors.surname2}
+                            className="mt-2"
+                        />
                     </div>
 
                     {/* Username */}
@@ -79,7 +122,7 @@ const Register = () => {
                             className="mt-2"
                         />
                     </div>
-
+                    <input type="hidden" name="role" value="user" />
                     {/* Email Address */}
                     <div className="mt-4">
                         <Label htmlFor="email">Email</Label>

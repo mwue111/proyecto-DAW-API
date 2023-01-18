@@ -21,7 +21,7 @@ class ProductController extends Controller
             $producto->sales;
             $producto->category;
         }
-        return $data;
+        return $data['productos'];
         //return view('producto', $data);
     }
 
