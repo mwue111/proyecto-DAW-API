@@ -27,12 +27,11 @@ const Table = ({ fetchUrl }) => {
   }
 
   const headers = Object.keys(data[0]);
-  console.log(data)
 
   return (
     <table className="table-auto w-full text-left">
       <thead className="bg-gray-200">
-        <tr className="text-gray-700">
+        <tr className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
           {headers.map(header => (
             <th key={header} className="px-4 py-2">{header}</th>
           ))}
@@ -43,7 +42,7 @@ const Table = ({ fetchUrl }) => {
             <tr key={item.id}>
               {headers.map(header => (
                 typeof item[header] === 'object' ? null : (
-                <td key={`${header}-${item.id}`} className="border px-4 py-2">{item[header]}</td>
+                <td key={`${header}-${item.id}`} className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{item[header]}</td>
                 )
               ))} 
             </tr>
