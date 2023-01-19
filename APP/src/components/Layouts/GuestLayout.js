@@ -19,7 +19,7 @@ const GuestLayout = ({ header, children }) => {
             </header>
 
             {/* Page Content */}
-            <main>{children}</main>
+            <main className="bg-gray-100">{children}</main>
         </div>
         </div>
     )

@@ -38,9 +38,17 @@ const Navigation = ({ user }) => {
                                 Dashboard
                             </NavLink>
                         </div>
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink
+                                href="/test"
+                                active={router.pathname === '/test'}>
+                                Test
+                            </NavLink>
+                        </div>
                     </div>
 
                     {/* Settings Dropdown */}
+                    {user ? (
                     <div className="hidden sm:flex sm:items-center sm:ml-6">
                         <Dropdown
                             align="right"
@@ -69,6 +77,15 @@ const Navigation = ({ user }) => {
                             </DropdownButton>
                         </Dropdown>
                     </div>
+                    ) : (
+                        <div className="hidden sm:flex sm:items-center sm:ml-6">
+                            <NavLink
+                                href="/login"
+                                active={router.pathname === '/login'}>
+                                Login
+                            </NavLink>
+                        </div>
+                    )}
 
                     {/* Hamburger */}
                     <div className="-mr-2 flex items-center sm:hidden">
