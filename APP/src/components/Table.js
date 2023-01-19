@@ -6,48 +6,51 @@ const Table = ({ fetchUrl }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     fetch(fetchUrl)
       .then(response => response.json())
       .then(data => {
         setData(data);
         setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setIsLoading(false);
       });
-  }, []);
+  }, [fetchUrl]);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Cargando...</div>
   }
   
   if (!data.length) {
-    console.log(data)
-    return <div>No data found</div>
+    return <div>No se han encontrado datos</div>
   }
 
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Brand ID</th>
-            <th>Category ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(item => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-              <td>{item.brand_id}</td>
-              <td>{item.category_id}</td>
-            </tr>
+  const headers = Object.keys(data[0]);
+  console.log(data)
+
+  return (
+    <table className="table-auto w-full text-left">
+      <thead className="bg-gray-200">
+        <tr className="text-gray-700">
+          {headers.map(header => (
+            <th key={header} className="px-4 py-2">{header}</th>
           ))}
-        </tbody>
-      </table>
-    );
-  }
+        </tr>
+      </thead>
+      <tbody>
+        {data.map(item => (
+            <tr key={item.id}>
+              {headers.map(header => (
+                typeof item[header] === 'object' ? null : (
+                <td key={`${header}-${item.id}`} className="border px-4 py-2">{item[header]}</td>
+                )
+              ))} 
+            </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
 export default Table
