@@ -5,7 +5,7 @@ const GuestLayout = ({ header, children }) => {
     return (
         <div>
             <Head>
-                <title>Laravel</title>
+                <title>Guest Layout</title>
             </Head>
 
             <div className="min-h-screen bg-gray-100">

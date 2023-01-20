@@ -2,13 +2,13 @@ import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 
-const AppLayout = ({ header, children }) => {
+const AdminLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     return (
         <div>
             <Head>
-                    <title>User Layout</title>
+                    <title>Administrator Layout</title>
             </Head>
 
             <div className="min-h-screen bg-gray-100">
@@ -28,4 +28,4 @@ const AppLayout = ({ header, children }) => {
     )
 }
 
-export default AppLayout
+export default AdminLayout

@@ -27,6 +27,7 @@ const Table = ({ fetchUrl }) => {
   }
 
   const headers = Object.keys(data[0]);
+  headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
   return (
     <table className="table-auto w-full text-left bg-gray-200">
