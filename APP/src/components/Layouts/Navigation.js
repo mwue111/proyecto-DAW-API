@@ -42,9 +42,18 @@ const Navigation = ({ user }) => {
                             <NavLink
                                 href="/test"
                                 active={router.pathname === '/test'}>
-                                Test
+                                Guest
                             </NavLink>
                         </div>
+                        {user?.type === 'administrator' && (
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <NavLink
+                                href="/admin-panel"
+                                active={router.pathname === '/admin-panel'}>
+                                Admin panel
+                            </NavLink>
+                        </div>
+                        )}
                     </div>
 
                     {/* Settings Dropdown */}

@@ -20,12 +20,12 @@ class UsersTableSeeder extends Seeder{
             'type' => 'client'
         ]);
         DB::table('users')->insert([
-            'username' => 'EmilioMartinez',
+            'username' => 'Emilio',
             'name' => 'Emilio',
             'surname1' => 'Martínez',
             'surname2' => 'Sánchez',
-            'email' => 'emilio@nombrereal.com',
-            'password' => 'password',
+            'email' => 'emarsan708@g.educaand.es',
+            'password' => '$2y$10$A.xuiPBFhgJ63gO2F8b.GO9D23qn811TSyy9N9RXElhX3n871DlOq',
             'birth_date' => '1875-09-03',
             'type' => 'administrator'
         ]);
