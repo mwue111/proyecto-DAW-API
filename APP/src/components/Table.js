@@ -21,12 +21,15 @@ const Table = ({ fetchUrl }) => {
   if (isLoading) {
     return <div>Cargando...</div>
   }
-  
+
   if (!data.length) {
     return <div>No se han encontrado datos</div>
   }
 
+  //Objects.keys se queda con la llave del objeto.
   const headers = Object.keys(data[0]);
+
+  //Corta headers a partir de la llave created_at para que no se muestre
   headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
   return (
@@ -42,10 +45,8 @@ const Table = ({ fetchUrl }) => {
         {data.map(item => (
             <tr key={item.id}>
               {headers.map(header => (
-                typeof item[header] === 'object' ? null : (
                 <td key={`${header}-${item.id}`} className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{item[header]}</td>
-                )
-              ))} 
+              ))}
             </tr>
         ))}
       </tbody>

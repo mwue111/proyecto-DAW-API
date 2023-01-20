@@ -1,10 +1,11 @@
 import AdminLayout from '@/components/Layouts/AdminLayout'
-
+import ApplicationLogo from '@/components/ApplicationLogo';
+import NavLink from '@/components/NavLink';
 
 const AdminPanel = () => {
 
     return (
-        <AdminLayout 
+        <AdminLayout
         header={
           <h2 className="font-semibold text-xl text-gray-800 leading-tight">
               Admin Panel
@@ -14,12 +15,12 @@ const AdminPanel = () => {
             <div className="py-8">
               <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden bg-white">
-                    Cosas de admin
                 </div>
               </div>
             </div>
           </div>
         </AdminLayout>
+
     );
   }
 

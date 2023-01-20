@@ -2,6 +2,8 @@ import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 
+//Cuando hay un usuario registrado
+
 const AppLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
