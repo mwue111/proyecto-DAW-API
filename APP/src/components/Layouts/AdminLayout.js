@@ -1,7 +1,7 @@
 import Navigation from '@/components/Layouts/Navigation'
+import SideDrawer from '@/components/Layouts/SideDrawer'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
-import SideDrawer from '@/components/Layouts/SideDrawer'
 
 // Cuando hay un usuario admin registrado
 
@@ -15,7 +15,7 @@ const AdminLayout = ({ header, children }) => {
             </Head>
 
             <div className="min-h-screen bg-gray-100">
-                <Navigation user={user} />
+                <Navigation user={user}/>
                 <SideDrawer />
 
                 {/* Page Heading */}
