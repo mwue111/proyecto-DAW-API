@@ -1,11 +1,12 @@
 import Navigation from '@/components/Layouts/Navigation'
-import SideDrawer from '@/components/Layouts/SideDrawer'
+import AdminNavigation from '@/components/Layouts/AdminNavigation'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 
 // Cuando hay un usuario admin registrado
+//Cambios hechos en la línea 20 para mostrar un nav u otro - DUDA: cómo añadir que el usuario sea admin
 
-const AdminLayout = ({ header, children }) => {
+const AdminLayout = ({ header, children, route }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     return (
@@ -15,8 +16,8 @@ const AdminLayout = ({ header, children }) => {
             </Head>
 
             <div className="min-h-screen bg-gray-100">
-                <Navigation user={user}/>
-                <SideDrawer />
+
+                {route === 'adminPanel' ? <AdminNavigation /> : <Navigation user={user}/>}
 
                 {/* Page Heading */}
                 <header className="bg-white shadow">

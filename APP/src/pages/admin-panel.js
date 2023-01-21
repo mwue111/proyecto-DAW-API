@@ -2,10 +2,13 @@ import AdminLayout from '@/components/Layouts/AdminLayout'
 import ApplicationLogo from '@/components/ApplicationLogo';
 import NavLink from '@/components/NavLink';
 
+//Cambios: añadido un atributo route en línea 11
+
 const AdminPanel = () => {
 
     return (
         <AdminLayout
+        route='adminPanel'
         header={
           <h2 className="font-semibold text-xl text-gray-800 leading-tight">
               Admin Panel

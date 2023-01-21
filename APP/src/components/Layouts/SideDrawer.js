@@ -3,12 +3,14 @@ import { useAuth } from '@/hooks/auth'
 import { Sidebar } from 'primereact/sidebar'
 import { Button } from 'primereact/button'
 
+//Cambios aquí: añadida la clase mx-8 en la línea 13
+
 const SideDrawer = () => {
     const [visibleLeft, setVisibleLeft] = useState(false);
 
     return(
         <div>
-            <div className="card">
+            <div className="card mx-8">
                 <Sidebar visible={visibleLeft} onHide={() => setVisibleLeft(false)}>
                     <h3>Sidebarrrr</h3>
                 </Sidebar>

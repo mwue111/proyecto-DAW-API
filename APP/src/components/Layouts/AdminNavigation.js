@@ -2,6 +2,7 @@ import ApplicationLogo from '@/components/ApplicationLogo'
 import Dropdown from '@/components/Dropdown'
 import Link from 'next/link'
 import NavLink from '@/components/NavLink'
+import SideDrawer from '@/components/Layouts/SideDrawer'
 import ResponsiveNavLink, {
     ResponsiveNavButton,
 } from '@/components/ResponsiveNavLink'
@@ -26,7 +27,7 @@ const Navigation = ({ user, route }) => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
 
-                            {/* aquí  */}
+                        <SideDrawer />
 
                             <Link href="/dashboard">
                                 <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
