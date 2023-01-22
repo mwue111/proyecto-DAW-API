@@ -10,7 +10,7 @@ import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-const Navigation = ({ user, route }) => {
+const Navigation = ({ user }) => {
     const router = useRouter()
 
     const { logout } = useAuth()
