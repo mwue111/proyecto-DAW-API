@@ -1,7 +1,22 @@
+import { useAuth } from '@/hooks/auth';
 import React, { useState, useEffect } from 'react';
+import { classNames } from 'primereact/utils';
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+import { InputNumber } from 'primereact/inputnumber';
+import { Button } from 'primereact/button';
+import { ProgressBar } from 'primereact/progressbar';
+import { Calendar } from 'primereact/calendar';
+import { MultiSelect } from 'primereact/multiselect';
+import { Slider } from 'primereact/slider';
+import { TriStateCheckbox } from 'primereact/tristatecheckbox';
+import { CustomerService } from '../service/CustomerService';
 
 const Table = ({ fetchUrl }) => {
-
+    const { user } = useAuth(); //Para poder utilizar la información del usuario (si está conectado, el tipo...)
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,6 +54,8 @@ const Table = ({ fetchUrl }) => {
           {headers.map(header => (
             <th key={header} className="px-4 py-2">{header}</th>
           ))}
+          {/*Si el usuario existe y si es tipo admin que se muestre una columna nueva de acciones */}
+          {user && user.type === 'administrator' && <th>Acciones</th>}
         </tr>
       </thead>
       <tbody>
@@ -47,6 +64,9 @@ const Table = ({ fetchUrl }) => {
               {headers.map(header => (
                 <td key={`${header}-${item.id}`} className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{item[header]}</td>
               ))}
+              <td>
+                {/*Acciones aquí*/}
+              </td>
             </tr>
         ))}
       </tbody>

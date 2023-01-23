@@ -12,8 +12,11 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
 import AdminTabMenu from '@/components/AdminTabMenu'
+//import CrudTabView from 'components/TabView'
 
-const AdminNavigation = ({ user, onTabChange }) => {
+
+
+const AdminNavigation = ({ user, setContent }) => {
     const router = useRouter()
 
     const { logout } = useAuth()
@@ -29,7 +32,7 @@ const AdminNavigation = ({ user, onTabChange }) => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <SideDrawer />
-                            <AdminTabMenu />
+                            <AdminTabMenu setContent={setContent} />
                         </div>
                     </div>
 
