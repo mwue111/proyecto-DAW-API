@@ -1,24 +1,11 @@
 import { useAuth } from '@/hooks/auth';
 import React, { useState, useEffect } from 'react';
-import { classNames } from 'primereact/utils';
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
-import { InputNumber } from 'primereact/inputnumber';
-import { Button } from 'primereact/button';
-import { ProgressBar } from 'primereact/progressbar';
-import { Calendar } from 'primereact/calendar';
-import { MultiSelect } from 'primereact/multiselect';
-import { Slider } from 'primereact/slider';
-import { TriStateCheckbox } from 'primereact/tristatecheckbox';
-import { CustomerService } from '../service/CustomerService';
 
 const Table = ({ fetchUrl }) => {
     const { user } = useAuth(); //Para poder utilizar la información del usuario (si está conectado, el tipo...)
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     fetch(fetchUrl)

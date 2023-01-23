@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 import { useState } from 'react';
 import Table from '@/components/Table'
+import TableAdmin from '@/components/TableAdmin'
 
 // Cuando hay un usuario admin registrado
 
@@ -34,7 +35,8 @@ const AdminLayout = () => {
                 {/* Page Content */}
                 <main>
                     {/*El content por defecto (tienda) es el que aparece al entrar en esta vista y cambiará según el setState que recibe admin navigation */}
-                    <Table fetchUrl={`http://localhost:8000/${content}`} />
+                    {/*<Table fetchUrl={`http://localhost:8000/${content}`} />*/}
+                    <TableAdmin fetchUrl={`http://localhost:8000/${content}`}/>
                 </main>
             </div>
         </div>

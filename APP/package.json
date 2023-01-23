@@ -10,6 +10,7 @@
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "axios": "^0.21.1",
+    "classname": "^0.0.0",
     "next": "^13.1.2",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.3",
