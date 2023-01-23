@@ -9,8 +9,9 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
+import DialogStore from 'components/DialogStore';
 
-const TableAdmin = ({ fetchUrl }) => {
+const TableAdmin = ({ fetchUrl, table }) => {
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [item, setItem] = useState([]);
@@ -33,6 +34,8 @@ const TableAdmin = ({ fetchUrl }) => {
         return <div>No se han encontrado datos</div>
     }
 
+    const JSONaddress = JSON.stringify(item.address);
+
     const headers = Object.keys(data[0]);
     headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
@@ -41,7 +44,7 @@ const TableAdmin = ({ fetchUrl }) => {
     }
 
     const editData = (data) => {
-        console.log(data);
+        //console.log(data);
         setItem({...data});
         setCruDialog(true);
     }
@@ -81,24 +84,41 @@ const TableAdmin = ({ fetchUrl }) => {
                 {headers.map(header => (
                     <Column field={header} header={header} key={data.id}/>
                 ))}
-                <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }}/>
+                    <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>
                 </DataTable>
                 }
             </div>
 
             <Dialog visible={cruDialog} style={{ width: '450px' }} header="Añadir nuevo" modal className="p-fluid" onHide={hideDialog}>
 
+                {table === 'tienda' && <DialogStore store={item} address={JSONaddress} />}
+
+
+{/*
                 <div className="field">
                     <label htmlFor="name">Nombre</label>
-                    <InputText id="name" value={item.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus/>
+                    <InputText id="name" value={item.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus />
                 </div>
-                {/*
-
                 <div className="field">
-                    <label htmlFor="description">Description</label>
-                    <InputTextarea id="description" value={data.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
+                    <label htmlFor="address">Dirección</label>
+                    <InputTextarea id="address" value={JSONaddress} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
                 </div>
-
+                <div className="field">
+                    <label htmlFor="email">Email</label>
+                    <InputText id="email" value={item.email} onChange={(e) => onInputChange(e, 'email')} required rows={3} cols={20} />
+                </div>
+                <div className="field">
+                    <label htmlFor="telephone1">Teléfono</label>
+                    <InputText id="telephone1" value={item.telephone1} onChange={(e) => onInputChange(e, 'telephone1')} required rows={3} cols={20} />
+                </div>
+                <div className="field">
+                    <label htmlFor="telephone2">Teléfono 2</label>
+                    <InputText id="telephone2" value={item.telephone2} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
+                </div>
+                <div className="field">
+                    <label htmlFor="location">Localización</label>
+                    <InputText id="location" value={`${item.longitude} - ${item.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
+                </div>
                 <div className="field">
                     <label className="mb-3">Category</label>
                     <div className="formgrid grid">
@@ -135,7 +155,7 @@ const TableAdmin = ({ fetchUrl }) => {
 
             </Dialog>
             <Dialog>
-                {/** PENDIENTE: hacer el cuadro de diálogo de cofnirmación de borrado */}
+                {/** PENDIENTE: hacer el cuadro de diálogo de confirmación de borrado */}
             </Dialog>
 
         </div>
