@@ -3,15 +3,6 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 
 const DialogSore = ({ store, address }) =>{
-    const [item, setItem] = useState([]);
-
-    const onInputChange = (e, name) => {
-        const val = (e.target && e.target.value) || '';
-        let _item = {...item};
-        _item[`${name}`] = val;
-
-        setItem(_item);
-    }
 
     return(
         <div>
@@ -21,8 +12,14 @@ const DialogSore = ({ store, address }) =>{
             </div>
 
             <div className="field">
-                <label htmlFor="address">Dirección</label>
-                <InputTextarea id="address" value={address} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
+                    <label htmlFor="address">Dirección</label>
+                <fieldset>
+                    <select>
+                        <option>opción</option>
+                    </select>
+                    <InputTextarea id="address" value={address} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
+
+                </fieldset>
             </div>
 
             <div className="field">

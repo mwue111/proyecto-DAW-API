@@ -135,7 +135,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return id;
     }
 
-    {/* En DialogStore.js
+    {/**Aquí */}
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _item = {...item};
@@ -143,7 +143,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         setItem(_item);
     }
-    */}
+
 
     {/*
     const onInputPriceChange = (e, name) =>{
