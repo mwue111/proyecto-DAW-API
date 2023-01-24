@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from '@/hooks/auth';
@@ -10,13 +10,20 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
+import { Toast } from 'primereact/toast';
 
 const TableAdmin = ({ fetchUrl, table }) => {
     const { user } = useAuth();
     const [data, setData] = useState([]);
+    const [itemDialog, setItemDialog] = useState(false);
+    const [deleteItemDialog, setDeleteItemDialog] = useState(false);
+    const [deleteDataDialog, setDeleteDataDialog] = useState(false);
     const [item, setItem] = useState([]);
-    const [cruDialog, setCruDialog] = useState(false);
-    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [selectedData, setSelectedData] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
+    const [globalFilter, setGlobalFilter] = useState(null);
+    const toast = useRef(null);
+    const dt = useRef(null);
 
     useEffect(() => {
         fetch(fetchUrl)
@@ -39,125 +46,180 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const headers = Object.keys(data[0]);
     headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
+    const openNew = () => {
+        setItem('');
+        setSubmitted(false);
+        setItemDialog(true);
+    }
+
     const hideDialog = () => {
-        setCruDialog(false);
+        setSubmitted(false);
+        setItemDialog(false);
     }
 
-    const editData = (data) => {
+    const hideDeleteItemDialog = () => {
+        setDeleteItemDialog(false);
+    }
+
+    const saveItem = () =>{
+        setSubmitted(true);
+        setItemDialog(false);
+
+        console.log(item.name);
+
+        if (item.name) {
+            let _data = [...data];
+            let _item = {...item};
+            if (item.id) {
+                const index = findIndexById(item.id);
+
+                _data[index] = _item;
+                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto actualizado', life: 3000 });
+            }
+            else {
+                _item.id = createId();
+                _data.push(_item);
+                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto guardado', life: 3000 });
+            }
+
+            setData(_data);
+            setItemDialog(false);
+            setItem('');
+        }
+    }
+
+    const editItem = (item) => {
         //console.log(data);
-        setItem({...data});
-        setCruDialog(true);
+        setItem({...item});
+        setItemDialog(true);
     }
 
+    const confirmDeleteItem = (item) => {
+        setItem(item);
+        setDeleteItemDialog(true);
+    }
+
+    const deleteItem = () => {
+        setDeleteItemDialog(false);
+        toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto eliminado', life: 3000 });
+    {/*
+        let _data = data.filter(val => val.id !== item.id);
+        setData(_data);
+        setDeleteDataDialog(false);
+        setItem('');
+    }
+    */}
+    }
+
+    const findIndexById = (id) => {
+        let index = -1;
+
+        for(let i = 0; i < data.length; i++){
+            if(data[i].id === id){
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    const createId = () => {
+        let id = '';
+        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for(let i = 0; i < 5; i++){
+            id += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        return id;
+    }
+
+    {/* En DialogStore.js
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _data = {...data};
-        _data[`${name}`] = val;
+        let _item = {...item};
+        _item[`${name}`] = val;
 
-        setData(_data);
+        setItem(_item);
     }
+    */}
 
-    const paginatorButton = () => {
-        return(
-            <React.Fragment>
-                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Nuevo" onClick={() => setCruDialog(true)} />
-            </React.Fragment>
-        )
+    {/*
+    const onInputPriceChange = (e, name) =>{
+         Para cambiar el precio de los productos (está en la tabla products_stores)
+        const val = e.value || 0;
+        let _item = {...item};
+        _item[`${name}`] = val;
+
+        setItem(_item);
+
+
     }
+    */}
 
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
                 <div className="space-x-4">
-                    <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editData(rowData)} />
-                    <Button icon="pi pi-trash" className="p-button-rounded p-button-warning "  onClick={() => confirmDeleteData(rowData)} />
+                    <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editItem(rowData)} />
+                    <Button icon="pi pi-trash" className="p-button-rounded p-button-warning "  onClick={() => confirmDeleteItem(rowData)} />
                 </div>
             </React.Fragment>
         );
     }
 
+    const itemDialogFooter = (
+        <React.Fragment>
+            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveItem} />
+        </React.Fragment>
+    );
+
+    const deleteItemDialogFooter = (
+        <React.Fragment>
+            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteItemDialog} />
+            <Button label="Sí" icon="pi pi-check" className="p-button-text" onClick={deleteItem} />
+        </React.Fragment>
+    );
+
+    const paginatorButton = () => {
+        return(
+            <React.Fragment>
+                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Nuevo" onClick={openNew} />
+            </React.Fragment>
+        )
+    }
+
     return (
-        <div>
+        <div className="dataTable-crud">
+            <Toast ref={toast} />
+
             <div className="card">
+
                 {user && user.type === 'administrator' &&
                 <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5}>
+
                 {headers.map(header => (
                     <Column field={header} header={header} key={data.id}/>
                 ))}
                     <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>
                 </DataTable>
                 }
+
             </div>
 
-            <Dialog visible={cruDialog} style={{ width: '450px' }} header="Añadir nuevo" modal className="p-fluid" onHide={hideDialog}>
+            <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
 
                 {table === 'tienda' && <DialogStore store={item} address={JSONaddress} />}
-
-
-{/*
-                <div className="field">
-                    <label htmlFor="name">Nombre</label>
-                    <InputText id="name" value={item.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus />
-                </div>
-                <div className="field">
-                    <label htmlFor="address">Dirección</label>
-                    <InputTextarea id="address" value={JSONaddress} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="email">Email</label>
-                    <InputText id="email" value={item.email} onChange={(e) => onInputChange(e, 'email')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="telephone1">Teléfono</label>
-                    <InputText id="telephone1" value={item.telephone1} onChange={(e) => onInputChange(e, 'telephone1')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="telephone2">Teléfono 2</label>
-                    <InputText id="telephone2" value={item.telephone2} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="location">Localización</label>
-                    <InputText id="location" value={`${item.longitude} - ${item.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label className="mb-3">Category</label>
-                    <div className="formgrid grid">
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={data.category === 'Accessories'} />
-                            <label htmlFor="category1">Accessories</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={data.category === 'Clothing'} />
-                            <label htmlFor="category2">Clothing</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={data.category === 'Electronics'} />
-                            <label htmlFor="category3">Electronics</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={data.category === 'Fitness'} />
-                            <label htmlFor="category4">Fitness</label>
-                        </div>
-                    </div>
-                </div>
-                <div className="formgrid grid">
-                    <div className="field col">
-                        <label htmlFor="price">Price</label>
-                        <InputNumber id="price" value={data.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                    </div>
-                    <div className="field col">
-                        <label htmlFor="quantity">Quantity</label>
-                        <InputNumber id="quantity" value={data.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                    </div>
-                </div>
-
-                */}
-
-            </Dialog>
-            <Dialog>
-                {/** PENDIENTE: hacer el cuadro de diálogo de confirmación de borrado */}
             </Dialog>
 
+            <Dialog visible={deleteItemDialog} style={{ width: '450px' }} header="Confirmar borrado" modal footer={deleteItemDialogFooter} onHide={hideDeleteItemDialog}>
+                <div className="confirmation-content">
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem'}}/>
+                    {item && <span>¿Seguro/a que quieres eliminar este item?</span>}
+                </div>
+            </Dialog>
         </div>
     )
 }
