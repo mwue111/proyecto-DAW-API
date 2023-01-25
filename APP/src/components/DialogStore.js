@@ -1,108 +1,108 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Fieldset } from 'primereact/fieldset';
+import { Dropdown } from 'primereact/dropdown';
+import { InputNumber } from 'primereact/inputnumber';
 
 const DialogSore = ({ store, address }) =>{
+    {/*
+    Tienda:
+    -id
+    -road_type
+    -zip_code
+    -number
+    -name
+    -town_id
+    -remarks
+
+    Producto:
+    -id
+    -name
+    -description
+    -brand_id
+    -category_id
+    -estaría bien poner fotos, están en otra tabla
+
+    Usuario:
+    -id
+    -username
+    -name
+    -surname1
+    -surname2
+    -email
+    -birth-date
+    -type
+    */}
+
+    const [name, setName] = useState('');
+    const [roadType, setRoadType] = useState(null);
+    const [streetName, setStreetName] = useState('');
+    const [streetNumber, setStreetNumber] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [city, setCity] = useState('');
+    const [remarks, setRemarks] = useState('');
+    const [email, setEmail] = useState('');
+    const [telephone1, setTelephone1] = useState('');
+    const [telephone2, setTelephone2] = useState('');
+
+    {/*El Dropdown podría ser editable para no limitar al usuario*/}
+    const optionsRoadType = [
+        {name: 'Calle'},
+        {name: 'Avenida'},
+        {name: 'Paseo'},
+        {name: 'Boulevard'},
+        {name: 'Carretera'}
+    ];
 
     return(
         <div>
-            <div className="field">
-                <label htmlFor="name">Nombre</label>
-                <InputText id="name" value={store.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus />
+            <div className='field'>
+                <Fieldset legend='Nombre de la tienda'>
+                    <InputText id='name' name='name' defaultValue={store.name} onChange={e => setName(e.target.value)} required autoFocus />
+                    {/*<InputText id='name' name='name' value={store.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus />*/}
+                </Fieldset>
             </div>
+            <br/>
+            <div className='field'>
+                <Fieldset legend='Dirección'>
+                    <Dropdown value={roadType} options={optionsRoadType} onChange={e => setRoadType(e.value)} optionLabel='name'/>
 
-            <div className="field">
-                    <label htmlFor="address">Dirección</label>
-                <fieldset>
-                    <select>
-                        <option>opción</option>
-                    </select>
-                    <InputTextarea id="address" value={address} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
+                    <label htmlFor='streetName'>Nombre de la calle:</label>
+                    <InputText id='streetName' defaultValue={address} name='streetName' onChange={e => setStreetName(e.target.value)} required autoFocus />
 
-                </fieldset>
+                    <label htmlFor='streetNumber'>Número</label>
+                    <InputNumber inputId='streetNumber' value={address} onValueChange={e => setStreetNumber(e.value)} mode='decimal' useGrouping={false}/>
+
+                    <label htmlFor='zipCode'>Código postal</label>
+                    <InputText id='zipCode' name='zipCode' defaultValue={address} onChange={e => setZipCode(e.target.value)} required autoFocus />
+
+                    <label htmlFor='city'>Ciudad</label>
+                    <InputText id='city' name='city' defaultValue={address} onChange={e => setCity(e.target.value)} required autoFocus />
+
+                    <label htmlFor='location'>Localización</label>
+                    <InputText id='location' value={`${store.longitude} - ${store.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
+
+                    <label htmlFor='remarks'>Comentarios adicionales:</label>
+                    <InputTextarea defaultValue={address} onChange={e => setRemarks(e.target.value)} rows={5}/>
+
+                </Fieldset>
             </div>
+            <br/>
+            <div className='field'>
+                <Fieldset legend='Datos de contacto'>
+                    <label htmlFor='email'>Email</label>
+                    <InputText id='email' value={store.email} onChange={(e) => setEmail(e.target.value)} required rows={3} cols={20} />
 
-            <div className="field">
-                <label htmlFor="email">Email</label>
-                <InputText id="email" value={store.email} onChange={(e) => onInputChange(e, 'email')} required rows={3} cols={20} />
-            </div>
+                    <label htmlFor='telephone1'>Teléfono 1</label>
+                    <InputNumber inputId='telephone1' value={store.telephone1} onValueChange={e => setTelephone1(e.value)} mode='decimal' useGrouping={false}/>
 
-            <div className="field">
-                <label htmlFor="telephone1">Teléfono</label>
-                <InputText id="telephone1" value={store.telephone1} onChange={(e) => onInputChange(e, 'telephone1')} required rows={3} cols={20} />
-            </div>
-
-            <div className="field">
-                <label htmlFor="telephone2">Teléfono 2</label>
-                <InputText id="telephone2" value={store.telephone2} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
-            </div>
-
-            <div className="field">
-                <label htmlFor="location">Localización</label>
-                <InputText id="location" value={`${store.longitude} - ${store.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
+                    <label htmlFor='telephone2'>Teléfono 2</label>
+                    <InputNumber inputId='telephone2' value={store.telephone2} onValueChange={e => setTelephone2(e.value)} mode='decimal' useGrouping={false}/>
+                </Fieldset>
             </div>
         </div>
     )
 }
 
 export default DialogSore;
-
-
-{/*
-                <div className="field">
-                    <label htmlFor="name">Nombre</label>
-                    <InputText id="name" value={item.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus />
-                </div>
-                <div className="field">
-                    <label htmlFor="address">Dirección</label>
-                    <InputTextarea id="address" value={JSONaddress} onChange={(e) => onInputChange(e, 'address')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="email">Email</label>
-                    <InputText id="email" value={item.email} onChange={(e) => onInputChange(e, 'email')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="telephone1">Teléfono</label>
-                    <InputText id="telephone1" value={item.telephone1} onChange={(e) => onInputChange(e, 'telephone1')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="telephone2">Teléfono 2</label>
-                    <InputText id="telephone2" value={item.telephone2} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label htmlFor="location">Localización</label>
-                    <InputText id="location" value={`${item.longitude} - ${item.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
-                </div>
-                <div className="field">
-                    <label className="mb-3">Category</label>
-                    <div className="formgrid grid">
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={data.category === 'Accessories'} />
-                            <label htmlFor="category1">Accessories</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={data.category === 'Clothing'} />
-                            <label htmlFor="category2">Clothing</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={data.category === 'Electronics'} />
-                            <label htmlFor="category3">Electronics</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={data.category === 'Fitness'} />
-                            <label htmlFor="category4">Fitness</label>
-                        </div>
-                    </div>
-                </div>
-                <div className="formgrid grid">
-                    <div className="field col">
-                        <label htmlFor="price">Price</label>
-                        <InputNumber id="price" value={data.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                    </div>
-                    <div className="field col">
-                        <label htmlFor="quantity">Quantity</label>
-                        <InputNumber id="quantity" value={data.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                    </div>
-                </div>
-
-                */}

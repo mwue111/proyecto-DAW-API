@@ -42,6 +42,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const JSONaddress = JSON.stringify(item.address);
+    console.log(JSONaddress);
 
     const headers = Object.keys(data[0]);
     headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
@@ -61,11 +62,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(false);
     }
 
+    {/*No sale el toast cuando se "guarda" elemento */}
     const saveItem = () =>{
         setSubmitted(true);
         setItemDialog(false);
-
-        console.log(item.name);
 
         if (item.name) {
             let _data = [...data];
@@ -135,7 +135,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return id;
     }
 
-    {/**Aquí */}
+    {/**Aquí -- hacer un crud funcional comunicándose con otro componente */}
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _item = {...item};
@@ -201,9 +201,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5}>
 
                 {headers.map(header => (
-                    <Column field={header} header={header} key={data.id}/>
+                    <Column field={header} header={header} key={item.id}/>
                 ))}
-                    <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>
+                    <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={item.id}/>
                 </DataTable>
                 }
 
