@@ -76,12 +76,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 const index = findIndexById(item.id);
 
                 _data[index] = _item;
-                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto actualizado', life: 3000 });
+                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
             }
             else {
                 _item.id = createId();
                 _data.push(_item);
-                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto guardado', life: 3000 });
+                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
             }
 
             setData(_data);
@@ -103,7 +103,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const deleteItem = () => {
         setDeleteItemDialog(false);
-        toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Producto eliminado', life: 3000 });
+        toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
     {/*
         let _data = data.filter(val => val.id !== item.id);
         setData(_data);
@@ -214,7 +214,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
 
                 {table === 'tienda' && <DialogStore store={item} />}
-                {table === 'producto' && <DialogProduct store={item} />}
+                {table === 'producto' && <DialogProduct product={item} />}
 
             </Dialog>
 
