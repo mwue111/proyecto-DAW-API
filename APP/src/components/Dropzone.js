@@ -17,6 +17,6 @@ const DropZone = () => {
       <FilePreview fileData={data} />
     </>
   );
-};
+}; 
 
 export default DropZone;
