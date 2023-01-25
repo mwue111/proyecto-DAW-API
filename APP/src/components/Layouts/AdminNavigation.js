@@ -36,6 +36,7 @@ const AdminNavigation = ({ user, setContent }) => {
                         </div>
                     </div>
 
+
                     {/* Settings Dropdown */}
                     {user ? (
                     <div className="hidden sm:flex sm:items-center sm:ml-6">

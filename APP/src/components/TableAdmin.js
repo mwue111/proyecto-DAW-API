@@ -36,6 +36,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
           });
       }, [fetchUrl]);
 
+      console.log({table});
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -211,7 +212,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
 
-                {table === 'tienda' && <DialogStore store={item} address={JSONaddress} />}
+                {table === 'tienda' && <DialogStore store={item} />}
             </Dialog>
 
             <Dialog visible={deleteItemDialog} style={{ width: '450px' }} header="Confirmar borrado" modal footer={deleteItemDialogFooter} onHide={hideDeleteItemDialog}>
