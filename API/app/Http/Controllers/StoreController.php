@@ -8,8 +8,9 @@ use App\Models\Store;
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
-        
+
         foreach($stores as $store){
+            $store->owner;
             $store->schedules;
             $store->specialDays;
             $store->address;
@@ -26,6 +27,7 @@ class StoreController extends Controller{
 
     public function show($id){
         $store = Store::find($id);
+        $store->owner;
         $store->schedules;
         $store->specialDays;
         $store->address;
@@ -100,14 +102,14 @@ class StoreController extends Controller{
         $store = Store::find($id);
         return $store->specialDays;
     }
-    
+
     //insertar un día especial a la tienda: pasado a la función store.
     public function createSpecialDay(Request $request){
         $store = Store::create($request->all());
         $store->specialDays()->attach($request->specialDays);
     }
     */
-    
+
     //dejado aparte porque al actualizar una tienda puede que no sea necesario cambiar sus días de horario especial
     public function setSpecialDay(Request $request, $id){
         $store = Store::find($id);
@@ -115,7 +117,7 @@ class StoreController extends Controller{
         $store->specialDays()->sync($request->specialDays);
         $store->save();
     }
-    
+
     //Hay persistencia de datos
     public function deleteSpecialDay($id){
         $store = Store::find($id);

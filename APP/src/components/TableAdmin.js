@@ -10,6 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
+import DialogProduct from 'components/DialogProduct';
 import { Toast } from 'primereact/toast';
 
 const TableAdmin = ({ fetchUrl, table }) => {
@@ -213,6 +214,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
 
                 {table === 'tienda' && <DialogStore store={item} />}
+                {table === 'producto' && <DialogProduct store={item} />}
+
             </Dialog>
 
             <Dialog visible={deleteItemDialog} style={{ width: '450px' }} header="Confirmar borrado" modal footer={deleteItemDialogFooter} onHide={hideDeleteItemDialog}>

@@ -17,14 +17,6 @@ const DialogSore = ({ store }) =>{
     -town_id
     -remarks
 
-    Producto:
-    -id
-    -name
-    -description
-    -brand_id
-    -category_id
-    -estaría bien poner fotos, están en otra tabla
-
     Usuario:
     -id
     -username
@@ -37,7 +29,8 @@ const DialogSore = ({ store }) =>{
     */}
 
     const [name, setName] = useState('');
-    const [roadType, setRoadType] = useState(null);
+    {/*Esto no funciona al modificar: no encuentra road_type ni ningún elemento dentro de store */}
+    const [roadType, setRoadType] = useState({name: store.address.road_type.charAt(0).toUpperCase() + store.address.road_type.slice(1)});
     const [streetName, setStreetName] = useState('');
     const [streetNumber, setStreetNumber] = useState('');
     const [zipCode, setZipCode] = useState('');
@@ -46,9 +39,10 @@ const DialogSore = ({ store }) =>{
     const [email, setEmail] = useState('');
     const [telephone1, setTelephone1] = useState('');
     const [telephone2, setTelephone2] = useState('');
+    console.log(store.address.road_type);
 
     const optionsRoadType = [
-        {name: 'Calle'},
+        {name: 'calle'},
         {name: 'Avenida'},
         {name: 'Paseo'},
         {name: 'Boulevard'},
@@ -66,19 +60,19 @@ const DialogSore = ({ store }) =>{
             <div className='field'>
                 <Fieldset legend='Dirección'>
                     {/*El Dropdown podría ser editable para no limitar al usuario*/}
-                    <Dropdown value={roadType} options={optionsRoadType} onChange={e => setRoadType(e.value)} optionLabel='name'/>
+                    <Dropdown value={roadType} options={optionsRoadType} onChange={e => {setRoadType(e.value); console.log(e.value)}} optionLabel='name' />
 
                     <label htmlFor='streetName'>Nombre de la calle:</label>
-                    <InputText id='streetName' defaultValue={store.address.name} name='streetName' onChange={e => setStreetName(e.target.value)} required autoFocus />
+                    <InputText id='streetName' defaultValue={store.address.name} name='streetName' onChange={e => setStreetName(e.target.value)} required />
 
                     <label htmlFor='streetNumber'>Número</label>
                     <InputNumber inputId='streetNumber' value={store.address.number} onValueChange={e => setStreetNumber(e.value)} mode='decimal' useGrouping={false}/>
 
                     <label htmlFor='zipCode'>Código postal</label>
-                    <InputText id='zipCode' name='zipCode' defaultValue={store.address.zip_code} onChange={e => setZipCode(e.target.value)} required autoFocus />
+                    <InputText id='zipCode' name='zipCode' defaultValue={store.address.zip_code} onChange={e => setZipCode(e.target.value)} required />
 
                     <label htmlFor='city'>Ciudad</label>
-                    <InputText id='city' name='city' defaultValue={store.address.town_id} onChange={e => setCity(e.target.value)} required autoFocus />
+                    <InputText id='city' name='city' defaultValue={store.address.town_id} onChange={e => setCity(e.target.value)} required />
 
                     <label htmlFor='location'>Localización</label>
                     <InputText id='location' value={`${store.longitude} - ${store.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->char('telephone2', 20);
             $table->double('longitude');
             $table->double('latitude');
+            $table->Integer('user_id');
             $table->timestamps();
         });
     }
