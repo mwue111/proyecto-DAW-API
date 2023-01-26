@@ -8,11 +8,12 @@ use App\Models\Store;
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
-        
         foreach($stores as $store){
-            $store->schedules;
+            $store->schedules->each(function($schedule){
+                $schedule->timeSlot;
+            });
             $store->specialDays;
-            $store->address;
+            $store->address->town->state;
         }
         return $stores;
     }
@@ -26,7 +27,9 @@ class StoreController extends Controller{
 
     public function show($id){
         $store = Store::find($id);
-        $store->schedules;
+        $store->schedules->each(function($schedule){
+            $schedule->timeSlot;
+        });
         $store->specialDays;
         $store->address;
         return $store;

@@ -16,7 +16,7 @@ class Schedule extends Model{
 
     public function timeSlot(){
         //return $this->belongsTo('App\Models\TimeSlot');
-        return $this->belongsTo(TimeSlot::class);
+        return $this->belongsTo(TimeSlot::class, 'time_slot_id');
     }
 
     public function stores(){

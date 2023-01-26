@@ -23,6 +23,7 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '647895325',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'description' => 'Fruteria de María, la mejor fruteria de la ciudad',
         ]);
 
         DB::table('stores')->insert([
@@ -33,6 +34,7 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '612654789',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'description' => 'Anka la Encarna, la mejor tienda de alimentación de la ciudad',
         ]);
 
         DB::table('stores')->insert([
@@ -43,6 +45,7 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '647564738',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'description' => 'El verdulero, la mejor tienda de verduras de la ciudad',
         ]);
 
         DB::table('stores')->insert([
@@ -53,6 +56,7 @@ class StoresTableSeeder extends Seeder
             'telephone2' => '643091287',
             'longitude' => 41.40338,
             'latitude' => 2.17403,
+            'description' => 'El bazar del alimento, la mejor tienda de alimentación de la ciudad',
         ]);
     }
 }
