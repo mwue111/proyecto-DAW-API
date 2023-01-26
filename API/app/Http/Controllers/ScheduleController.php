@@ -7,7 +7,13 @@ use App\Models\Schedule;
 
 class ScheduleController extends Controller{
     public function index(){
-        return Schedule::all();
+        //return Schedule::all();
+        $schedules = Schedule::all();
+        foreach($schedules as $schedule){
+            $schedule->timeSlot;
+            $schedule->stores;
+        }
+        return $schedules;
     }
 
     public function store(Request $request){

@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use App\Models\Schedule;
 
 class StoreController extends Controller{
     public function index(){
+        //$stores = Store::with('schedulesStore')->get();
         $stores = Store::all();
 
         foreach($stores as $store){
             $store->owner;
-            $store->schedules;
+            $store->schedulesStore;
             $store->specialDays;
             $store->address;
         }
+
         return $stores;
+
+        //return $stores = Store::with('schedulesStore')->get();
     }
 
     public function store(Request $request){

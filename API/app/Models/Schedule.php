@@ -23,5 +23,5 @@ class Schedule extends Model{
         return $this->belongsToMany(Store::class);
     }
 }
-                                   
+
 
