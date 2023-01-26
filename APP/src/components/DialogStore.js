@@ -39,11 +39,15 @@ const DialogSore = ({ store }) =>{
         {name: 'Carretera'}
     ];
 
+    const onChangeStoreName = (e) => {
+        setName(e.target.value);
+    }
+
     return(
         <div>
             <div className='field'>
                 <Fieldset legend='Nombre de la tienda'>
-                    <InputText id='name' name='name' defaultValue={store.name} onChange={e => setName(e.target.value)} required autoFocus />
+                    <InputText id='storeName' name='name' defaultValue={store.name} onChange={onChangeStoreName} required autoFocus />
                 </Fieldset>
             </div>
             <br/>

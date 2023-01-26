@@ -11,6 +11,7 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
 import DialogProduct from 'components/DialogProduct';
+import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
 
 const TableAdmin = ({ fetchUrl, table }) => {
@@ -242,6 +243,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                 {table === 'tienda' && <DialogStore store={item} />}
                 {table === 'producto' && <DialogProduct product={item} />}
+                {table === 'usuario' && <DialogUser user={item} />}
 
             </Dialog>
 

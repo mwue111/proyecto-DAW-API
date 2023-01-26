@@ -4,11 +4,6 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
 import { Image } from 'primereact/image';
 import { FileUpload } from 'primereact/fileupload';
-import { Toast } from 'primereact/toast';
-import { ProgressBar } from 'primereact/progressbar';
-import { Button } from 'primereact/button';
-import { Tooltip } from 'primereact/tooltip';
-import { Tag } from 'primereact/tag';
 
 const DialogProduct = ({ product }) => {
     {/*
