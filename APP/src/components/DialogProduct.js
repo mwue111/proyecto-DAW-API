@@ -2,8 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
-import { Dropdown } from 'primereact/dropdown';
-import { InputNumber } from 'primereact/inputnumber';
+import { Image } from 'primereact/image';
+import { FileUpload } from 'primereact/fileupload';
+import { Toast } from 'primereact/toast';
+import { ProgressBar } from 'primereact/progressbar';
+import { Button } from 'primereact/button';
+import { Tooltip } from 'primereact/tooltip';
+import { Tag } from 'primereact/tag';
 
 const DialogProduct = ({ product }) => {
     {/*
@@ -19,6 +24,16 @@ const DialogProduct = ({ product }) => {
     const [productDesc, setProductDesc] = useState('');
     const [productBrand, setProductBrand] = useState('');
     const [productCat, setProductCat] = useState('');
+    const [productPic, setProductPic] = useState('');
+    const toast = useRef(null);
+
+    {/*Esto debería ser product.image o algo similiar, usado como ejemplo*/}
+    let picture = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg/640px-Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg';
+
+    const onProductPicUpload = (e) => {
+        setProductPic(e);
+        toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
+    }
 
     console.log('producto: ', product);
     return(
@@ -38,7 +53,22 @@ const DialogProduct = ({ product }) => {
                     <br/>
                     <br/>
                     <label htmlFor='productCat'>Categoría:</label>
-                    <InputText id='productCat' name='productCat' defaultValue={product.category.name} onChange={e => setProductCat(e.target.value)}/>
+                    <InputText id='productCat' name='productCat' defaultValue={product.category} onChange={e => setProductCat(e.target.value)}/>
+                </Fieldset>
+                <br/>
+                <Fieldset legend='Imagen del producto'>
+                    <label htmlFor='productPic'>Nueva imagen:</label>
+                    <br/>
+                    <br/>
+                    <FileUpload mode='basic' name='productPic[]' url='https://primefaces.org/primereact/showcase/upload.php' accept='image/*' maxFileSize={1000000} onUpload={onProductPicUpload}/>
+                    <br/>
+                    {/*Esto debería ser dependiendo de si hay una imagen guardada para el producto, puesto .name para que haga el condicional */}
+                    {product.name &&
+                        <div>
+                            <label htmlFor='oldProductPic'>Imagen guardada:</label>
+                            <Image name='oldProductPic' src={picture} alt={`Imagen de ${product.name}`} width='250' preview/>
+                        </div>
+                    }
                 </Fieldset>
             </div>
         </div>

@@ -200,29 +200,64 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <div className="card">
 
                 {user && user.type === 'administrator' &&
-                <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5}>
+                    <DataTable
+                        value={data}
+                        responsiveLayout="scroll"
+                        paginator
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        paginatorLeft={paginatorButton}
+                        paginatorRight={' '}
+                        rows={5}
+                    >
 
-                {headers.map(header => (
-                    <Column field={header} header={header} key={item.id}/>
-                ))}
-                    <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={item.id}/>
-                </DataTable>
+                    {headers.map(header => (
+                        <Column
+                            field={header}
+                            header={header}
+                            key={item.id}
+                        />
+                    ))}
+
+                        <Column
+                            body={actionBodyTemplate}
+                            header='Acciones'
+                            exportable={false}
+                            style={{ minWidth: '8rem' }}
+                            key={item.id}
+                        />
+
+                    </DataTable>
                 }
 
             </div>
 
-            <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
+            <Dialog
+                visible={itemDialog}
+                style={{ width: '450px' }}
+                header={item.name ? `Modificar ${item.name}` : `Nuevo ${table}`}
+                modal className="p-fluid"
+                footer={itemDialogFooter}
+                onHide={hideDialog}
+            >
 
                 {table === 'tienda' && <DialogStore store={item} />}
                 {table === 'producto' && <DialogProduct product={item} />}
 
             </Dialog>
 
-            <Dialog visible={deleteItemDialog} style={{ width: '450px' }} header="Confirmar borrado" modal footer={deleteItemDialogFooter} onHide={hideDeleteItemDialog}>
+            <Dialog
+                visible={deleteItemDialog}
+                style={{ width: '450px' }}
+                header="Confirmar borrado"
+                modal
+                footer={deleteItemDialogFooter}
+                onHide={hideDeleteItemDialog}
+            >
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem'}}/>
                     {item && <span>¿Seguro/a que quieres eliminar este item?</span>}
                 </div>
+
             </Dialog>
         </div>
     )

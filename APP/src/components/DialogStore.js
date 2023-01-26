@@ -16,16 +16,6 @@ const DialogSore = ({ store }) =>{
     -name
     -town_id
     -remarks
-
-    Usuario:
-    -id
-    -username
-    -name
-    -surname1
-    -surname2
-    -email
-    -birth-date
-    -type
     */}
 
     const [name, setName] = useState('');
