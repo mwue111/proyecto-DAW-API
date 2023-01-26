@@ -2,7 +2,6 @@ import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 import Table from '@/components/Table'
 
-
 const Dashboard = () => {
     return (
         <AppLayout
@@ -23,7 +22,6 @@ const Dashboard = () => {
                             <Table
                                 fetchUrl="http://localhost:8000/producto"
                             />
-                            
                         </div>
                     </div>
                 </div>
