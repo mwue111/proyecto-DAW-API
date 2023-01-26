@@ -46,6 +46,10 @@ class Store extends Model{
     public function storeImgs(){
         return $this->hasMany(StoreImg::class);
     }
+
+    public function owner(){
+        return $this->belongsTo(Owner::class, 'user_id');
+    }
 }
 
 

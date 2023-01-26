@@ -13,6 +13,7 @@ class StoreController extends Controller{
                 $schedule->timeSlot;
             });
             $store->specialDays;
+            $store->owner->user;
             $store->address->town->state;
         }
         return $stores;
@@ -31,6 +32,7 @@ class StoreController extends Controller{
             $schedule->timeSlot;
         });
         $store->specialDays;
+        $store->owner->user;
         $store->address;
         return $store;
     }

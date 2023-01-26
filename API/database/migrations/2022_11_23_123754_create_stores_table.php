@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('longitude');
             $table->double('latitude');
             $table->string('description', 500);
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

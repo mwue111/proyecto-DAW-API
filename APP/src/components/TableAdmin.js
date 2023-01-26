@@ -11,6 +11,7 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
 import { Toast } from 'primereact/toast';
+import { formatJson } from '@/helpers/helper';
 
 const TableAdmin = ({ fetchUrl, table }) => {
     const { user } = useAuth();
@@ -29,22 +30,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
         fetch(fetchUrl)
           .then(response => response.json())
           .then(data => {
-            setData(data);
+            setData(formatJson(data, table));
           })
           .catch(error => {
             console.log(error);
           });
       }, [fetchUrl]);
 
-
     if (!data.length) {
         return <div>No se han encontrado datos</div>
     }
 
     const JSONaddress = JSON.stringify(item.address);
-
-    const headers = Object.keys(data[0]);
-    headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
     const openNew = () => {
         setItem('');
@@ -157,6 +154,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     }
     */}
+    
 
     const actionBodyTemplate = (rowData) => {
         return (
@@ -191,6 +189,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
+    const filteredData = data.map(item => {
+        return Object.entries(item).reduce((acc, [key, value]) => {
+          if (typeof value !== "object") {
+            acc[key] = value;
+          }
+          return acc;
+        }, {});
+      });
+
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -200,9 +207,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {user && user.type === 'administrator' &&
                 <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5}>
 
-                {headers.map(header => (
-                    <Column field={header} header={header} key={data.id}/>
-                ))}
+                {Object.keys(filteredData[0]).map((key) => (
+                        <Column field={key} header={key} key={key}/>
+                    ))
+                }
                     <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>
                 </DataTable>
                 }
