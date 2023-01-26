@@ -65,7 +65,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(false);
     }
 
-    {/*No sale el toast cuando se "guarda" elemento */}
+    {/*No sale el toast cuando se "guarda" un nuevo elemento */}
     const saveItem = () =>{
         setSubmitted(true);
         setItemDialog(false);

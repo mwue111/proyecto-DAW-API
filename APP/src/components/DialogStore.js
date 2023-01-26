@@ -43,6 +43,47 @@ const DialogSore = ({ store }) =>{
         setName(e.target.value);
     }
 
+    const onChangeRoadType = (e) => {
+        setRoadType(e.value);
+        console.log(e.value);
+    }
+
+    const onChangeStreetName = (e) => {
+        setStreetName(e.target.value);
+    }
+
+    const onChangeStreetNumber = (e) => {
+        setStreetNumber(e.value);
+    }
+
+    const onChangeZipCode = (e) => {
+        setZipCode(e.target.value);
+    }
+
+    const onChangeCity = (e) => {
+        setCity(e.target.value);
+    }
+
+    const onChangeLocation = (e) => {
+        {/*Cambiar la localización - mapa */}
+    }
+
+    const onChangeRemarks = () => {
+        setRemarks(e.target.value);
+    }
+
+    const onChangeStoreEmail = () => {
+        setEmail(e.target.value);
+    }
+
+    const onChangeTelephone1 = () => {
+        setTelephone1(e.value);
+    }
+
+    const onChangeTelephone2 = () => {
+        setTelephone2(e.value);
+    }
+
     return(
         <div>
             <div className='field'>
@@ -54,25 +95,25 @@ const DialogSore = ({ store }) =>{
             <div className='field'>
                 <Fieldset legend='Dirección'>
                     {/*El Dropdown podría ser editable para no limitar al usuario*/}
-                    <Dropdown value={roadType} options={optionsRoadType} onChange={e => {setRoadType(e.value); console.log(e.value)}} optionLabel='name' />
+                    <Dropdown value={roadType} options={optionsRoadType} onChange={onChangeRoadType} optionLabel='name' />
 
                     <label htmlFor='streetName'>Nombre de la calle:</label>
-                    <InputText id='streetName' defaultValue={store.address.name} name='streetName' onChange={e => setStreetName(e.target.value)} required />
+                    <InputText id='streetName' defaultValue={store.address.name} name='streetName' onChange={onChangeStreetName} required />
 
                     <label htmlFor='streetNumber'>Número</label>
-                    <InputNumber inputId='streetNumber' value={store.address.number} onValueChange={e => setStreetNumber(e.value)} mode='decimal' useGrouping={false}/>
+                    <InputNumber inputId='streetNumber' value={store.address.number} onValueChange={onChangeStreetNumber} mode='decimal' useGrouping={false}/>
 
                     <label htmlFor='zipCode'>Código postal</label>
-                    <InputText id='zipCode' name='zipCode' defaultValue={store.address.zip_code} onChange={e => setZipCode(e.target.value)} required />
+                    <InputText id='zipCode' name='zipCode' defaultValue={store.address.zip_code} onChange={onChangeZipCode} required />
 
                     <label htmlFor='city'>Ciudad</label>
-                    <InputText id='city' name='city' defaultValue={store.address.town_id} onChange={e => setCity(e.target.value)} required />
+                    <InputText id='city' name='city' defaultValue={store.address.town_id} onChange={onChangeCity} required />
 
                     <label htmlFor='location'>Localización</label>
-                    <InputText id='location' value={`${store.longitude} - ${store.latitude}`} onChange={(e) => onInputChange(e, 'telephone2')} required rows={3} cols={20} />
+                    <InputText id='location' value={`${store.longitude} - ${store.latitude}`} onChange={onChangeLocation} required rows={3} cols={20} />
 
                     <label htmlFor='remarks'>Comentarios adicionales:</label>
-                    <InputTextarea defaultValue={store.address.remarks} onChange={e => setRemarks(e.target.value)} rows={5}/>
+                    <InputTextarea defaultValue={store.address.remarks} onChange={onChangeRemarks} rows={5}/>
 
                 </Fieldset>
             </div>
@@ -80,13 +121,13 @@ const DialogSore = ({ store }) =>{
             <div className='field'>
                 <Fieldset legend='Datos de contacto'>
                     <label htmlFor='email'>Email</label>
-                    <InputText id='email' value={store.email} onChange={(e) => setEmail(e.target.value)} required rows={3} cols={20} />
+                    <InputText id='email' value={store.email} onChange={onChangeStoreEmail} required rows={3} cols={20} />
 
                     <label htmlFor='telephone1'>Teléfono 1</label>
-                    <InputNumber inputId='telephone1' value={store.telephone1} onValueChange={e => setTelephone1(e.value)} mode='decimal' useGrouping={false}/>
+                    <InputNumber inputId='telephone1' value={store.telephone1} onValueChange={onChangeTelephone1} mode='decimal' useGrouping={false}/>
 
                     <label htmlFor='telephone2'>Teléfono 2</label>
-                    <InputNumber inputId='telephone2' value={store.telephone2} onValueChange={e => setTelephone2(e.value)} mode='decimal' useGrouping={false}/>
+                    <InputNumber inputId='telephone2' value={store.telephone2} onValueChange={onChangeTelephone2} mode='decimal' useGrouping={false}/>
                 </Fieldset>
             </div>
         </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Fieldset } from 'primereact/fieldset';
 import { Input } from 'postcss';
+import { Toast } from 'primereact/toast';
+import { Calendar } from 'primereact/calendar';
 
 const DialogUser = ({ user }) => {
     {/*
@@ -18,12 +20,18 @@ const DialogUser = ({ user }) => {
     */}
     console.log('user: ', user);
 
+    {/*Para obtener la fecha de nacimiento de los usuarios*/}
+    let milisec = Date.parse(user.birth_date);
+    let BirthDate = new Date(milisec);
+
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
     const [surname1, setSurname1] = useState('');
     const [surname2, setSurname2] = useState('');
     const [email, setEmail] = useState('');
-    const [birthDate, setBirthDate] = useState('');
+    const [birthDate, setBirthDate] = useState(BirthDate);
+    const toast = useRef(null);
+
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
@@ -42,7 +50,12 @@ const DialogUser = ({ user }) => {
     }
 
     const onChangeEmail = (e) => {
+        {/*Habría que comprobar que el email sea válido*/}
         setEmail(e.target.value);
+    }
+
+    const onBirthDayChange = (e) => {
+        setBirthDate(e.value);
     }
 
     return(
@@ -67,6 +80,13 @@ const DialogUser = ({ user }) => {
                     <br/>
                     <label htmlFor='email'>Email: </label>
                     <InputText name='email' id='userEmail' defaultValue={user.email} onChange={onChangeEmail} />
+                    <br/>
+                    <br/>
+                    <label htmlFor='birthDate'>Fecha de nacimiento: </label>
+                    <Calendar id='birthDate' name='birthDate' value={birthDate} onChange={onBirthDayChange} showIcon/>
+                    <br/>
+                    <label htmlFor='userType'>Tipo:</label>
+                    <InputText value={user.type} disabled/>
                 </Fieldset>
             </div>
         </div>
