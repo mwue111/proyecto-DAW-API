@@ -20,6 +20,7 @@ class ProductController extends Controller
             $producto->stores;
             $producto->sales;
             $producto->category;
+            $producto->images;
         }
         return $data['productos'];
         //return view('producto', $data);

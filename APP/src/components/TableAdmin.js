@@ -44,7 +44,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const JSONaddress = JSON.stringify(item.address);
 
     const openNew = () => {
-        setItem('');
+        setItem(emptyStore);
         setSubmitted(false);
         setItemDialog(true);
     }
@@ -166,6 +166,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
             </React.Fragment>
         );
     }
+    const tiendasBodyTemplate = (rowData) => {
+        return(
+            <React.Fragment>
+                <div className="space-x-4">
+                    <Button label="Success" className="p-button-success p-button-text" onClick={() => openStores(rowData)} />
+                </div>
+            </React.Fragment>
+        )
+    }
 
     const itemDialogFooter = (
         <React.Fragment>
@@ -191,7 +200,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acc, [key, value]) => {
-          if (typeof value !== "object") {
+          if (typeof value !== "object" || key === "tiendas" || key === "imágenes") {
             acc[key] = value;
           }
           return acc;
@@ -211,12 +220,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         <Column field={key} header={key} key={key}/>
                     ))
                 }
+                {<Column field={'tiendas'} header={'tiendas'} key={'tiendas'} body={tiendasBodyTemplate}/>}
+                {<Column field={'imágenes'} header={'imágenes'} key={'imágenes'} body={imagesBodyTemplate}/>}
+
                     <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>
                 </DataTable>
                 }
 
             </div>
 
+            <Dialog visible={openStoresDialog} style={{ width: '450px' }} header="Tiendas" modal className="p-fluid" footer={openStoresFooter} onHide={hideOpenStoresDialog}>
+
+            </Dialog>
             <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
 
                 {table === 'tienda' && <DialogStore store={item} address={JSONaddress} />}

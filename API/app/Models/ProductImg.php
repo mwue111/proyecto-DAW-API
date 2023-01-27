@@ -20,4 +20,8 @@ class ProductImg extends Model
         return $this->belongsTo(File::class);
     }
 
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
+
 }

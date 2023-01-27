@@ -90,16 +90,16 @@ function formatJsonDia(day){
 ///////////////////////////////////////////
 function formatJsonProducto (productos){
     const data = productos.map((item) => {
-        console.log(tienda)
+        console.log(item)
         return {
             id: item.id,
             nombre: item.name,
             descripcion: item.description,
-            precio: item.price,
-            imagen: item.image,
-            tienda: item.store.name,
-            store: item.store,
+            imágenes: item.images,
+            tienda: item.stores,
         }
     })
+    console.log(data)
     return data;
 }
+
