@@ -37,4 +37,6 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    //Aquí tiene que haber una relación con productImg para que devuelva los datos de las fotos + un foreach en el controlador
 }

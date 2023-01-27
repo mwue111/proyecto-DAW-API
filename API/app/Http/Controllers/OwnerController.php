@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Owner;
 
 class OwnerController extends Controller{
-    
+
     public function index(){
-        return Owner::all();
+        $owners = Owner::all();
+        foreach($owners as $owner){
+            $owner->user;
+            $owner->each(function($owner){
+                $owner->stores;
+            });
+        }
+        return $owners;
+
     }
 
     public function show($id){

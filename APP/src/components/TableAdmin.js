@@ -3,16 +3,12 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from '@/hooks/auth';
 import { Button } from 'primereact/button';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
-import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
 import DialogProduct from 'components/DialogProduct';
 import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
+import { formatJson } from '@/helpers/helper';
 
 const TableAdmin = ({ fetchUrl, table }) => {
     const { user } = useAuth();
@@ -29,9 +25,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     useEffect(() => {
         fetch(fetchUrl)
-          .then(response => response.json())
-          .then(data => {
-            setData(data);
+          .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
+          .then(data => {   //data contiene un array con los datos de response
+            setData(formatJson(data, table));
           })
           .catch(error => {
             console.log(error);
@@ -45,13 +41,40 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const JSONaddress = JSON.stringify(item.address);
-    console.log(JSONaddress);
+    //console.log(JSONaddress);
+
+    const emptyStore = {
+        nombre: '',
+        address: {
+            road_type: '',
+            name: '',
+            number: '',
+            zip_code: '',
+            town: {
+                name: ''
+            },
+            remarks: ''
+        },
+        telefono1: '',
+        email: '',
+        telephone1: '',
+        telephone2: '',
+        descripcion: '',
+    }
+
+    const emptyProduct = {
+        //Cambiar estructura en DialogProduct
+    }
+
+    const emptyUser = {
+        //Cambiar estructura en DialogUser
+    }
 
     const headers = Object.keys(data[0]);
     headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
     const openNew = () => {
-        setItem('');
+        setItem(emptyStore);
         setSubmitted(false);
         setItemDialog(true);
     }
@@ -65,11 +88,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(false);
     }
 
-    {/*No sale el toast cuando se "guarda" un nuevo elemento */}
+    {/*No sale el toast cuando se "guarda" o "actualiza" un nuevo elemento */}
     const saveItem = () =>{
         setSubmitted(true);
         setItemDialog(false);
 
+        console.log('item: ', item.id);
+        console.log('data: ', data);
         if (item.name) {
             let _data = [...data];
             let _item = {...item};
@@ -161,6 +186,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
     */}
 
+    {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -194,6 +220,22 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
+    {/**item: array de arrays, con llave-valor de cada elemento de data. */}
+
+    {/**.reduce(acumulador (objeto), valor actual(cada elemento de item, cada array llave-valor que contiene))
+    la primera vuelta sería acum['nombre'] = 'frutería'. Guarda eso en acum. En 'address' no guarda nada porque el contenido de address es un objeto. Devuelve por tanto un objeto filtrado que no tiene objetos dentro. */}
+
+    {/** el último parámetro, {}, indica el valor inicial del acumulador acum (y se declara que será un objeto además) */}
+    const filteredData = data.map(item => {
+        return Object.entries(item).reduce((acum, [key, value]) => {
+            if(typeof value !== 'object'){
+                acum[key] = value;
+            }
+            return acum;
+        }, {});
+    });
+    {/**FilteredData es un ARRAY que no contiene objetos */}
+
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -211,6 +253,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         rows={5}
                     >
 
+                    {/*
+
                     {headers.map(header => (
                         <Column
                             field={header}
@@ -218,6 +262,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             key={item.id}
                         />
                     ))}
+                    */}
+
+                    {/**filteredData es [tienda1, tienda2, tienda3...]. Coge [0] para coger las cabeceras (los nombres de la columna) de la primera tienda, porque todas tienen lo mismo. Con .map asigna cada llave a un elemento del componente Column*/}
+                    {Object.keys(filteredData[0]).map((key) => (
+                        <Column field={key} header={key} key={key} />
+                        )
+                    )}
 
                         <Column
                             body={actionBodyTemplate}
@@ -235,13 +286,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <Dialog
                 visible={itemDialog}
                 style={{ width: '450px' }}
-                header={item.name ? `Modificar ${item.name}` : `Nuevo ${table}`}
+                header={item.name ? `Modificar ${item.name}` : `Nuevo/a ${table}`}
                 modal className="p-fluid"
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
 
-                {table === 'tienda' && <DialogStore store={item} />}
+                {table === 'tienda' && <DialogStore store={item}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 

@@ -11,7 +11,7 @@ class ScheduleController extends Controller{
         $schedules = Schedule::all();
         foreach($schedules as $schedule){
             $schedule->timeSlot;
-            $schedule->stores;
+            //$schedule->stores;
         }
         return $schedules;
     }

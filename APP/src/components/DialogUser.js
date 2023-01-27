@@ -6,18 +6,6 @@ import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
 
 const DialogUser = ({ user }) => {
-    {/*
-    Usuario:
-        -id
-        -username
-        -name
-        -surname1
-        -surname2
-        -email
-        -birth-date
-        -type
-
-    */}
     console.log('user: ', user);
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}

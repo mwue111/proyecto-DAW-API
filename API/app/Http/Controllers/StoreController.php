@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
-use App\Models\Schedule;
 
 class StoreController extends Controller{
     public function index(){
@@ -12,10 +11,12 @@ class StoreController extends Controller{
         $stores = Store::all();
 
         foreach($stores as $store){
-            $store->owner;
-            $store->schedulesStore;
+            $store->owner->user;
+            $store->schedules->each(function($schedule){
+                $schedule->timeSlot;
+            });
             $store->specialDays;
-            $store->address;
+            $store->address->town->state;
         }
 
         return $stores;
@@ -33,9 +34,11 @@ class StoreController extends Controller{
     public function show($id){
         $store = Store::find($id);
         $store->owner;
-        $store->schedules;
+        $store->schedules->each(function($schedule){
+            $schedule->timeSlot;
+        });
         $store->specialDays;
-        $store->address;
+        $store->address->town->state;
         return $store;
     }
 

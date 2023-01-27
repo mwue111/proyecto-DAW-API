@@ -6,16 +6,9 @@ import { Image } from 'primereact/image';
 import { FileUpload } from 'primereact/fileupload';
 
 const DialogProduct = ({ product }) => {
-    {/*
-    Producto:
-    -id
-    -name
-    -description
-    -brand_id
-    -category_id
-    -estaría bien poner fotos, están en otra tabla
-    */}
-    const [productName, setProductName] = useState('');
+    {/*estaría bien poner fotos, están en otra tabla*/}
+
+    const [productName, setProductName] = useState(product.name);
     const [productDesc, setProductDesc] = useState('');
     const [productBrand, setProductBrand] = useState('');
     const [productCat, setProductCat] = useState('');
@@ -30,13 +23,17 @@ const DialogProduct = ({ product }) => {
         toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
     }
 
+    const onChangeProductName = (e) => {
+        setProductName(e.target.value);
+    }
+
     console.log('producto: ', product);
     return(
         <div>
             <div className='field'>
                 <Fieldset legend='Datos del producto'>
                     <label htmlFor='productName'>Nombre:</label>
-                    <InputText id='productName' name='productName' defaultValue={product.name} onChange={e => setProductName(e.target.value)}/>
+                    <InputText id='productName' name='productName' defaultValue={productName} onChange={onChangeProductName}/>
                     <br/>
                     <br/>
                     <label htmlFor='productDesc'>Descripción:</label>
