@@ -9,7 +9,7 @@ export function formatJson (cosa, tipo){
             data=formatJsonTienda(cosa);
             break;
         case 'producto': 
-            //data=formatProducto(cosa)
+            data=formatJsonProducto(cosa)
             break;
         case 'usuario':
             //data=formatUsuario(cosa)
@@ -21,6 +21,9 @@ export function formatJson (cosa, tipo){
     return data
 }
 
+///////////////////////////////////////////
+// TIENDA
+///////////////////////////////////////////
 function formatJsonTienda (tiendas){
     const data = tiendas.map((item) => {
         return {
@@ -80,4 +83,23 @@ function formatJsonDia(day){
             break;
     }
     return dia;
+}
+
+///////////////////////////////////////////
+// PRODUCTO
+///////////////////////////////////////////
+function formatJsonProducto (productos){
+    const data = productos.map((item) => {
+        console.log(tienda)
+        return {
+            id: item.id,
+            nombre: item.name,
+            descripcion: item.description,
+            precio: item.price,
+            imagen: item.image,
+            tienda: item.store.name,
+            store: item.store,
+        }
+    })
+    return data;
 }
