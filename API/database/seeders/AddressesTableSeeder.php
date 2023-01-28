@@ -11,42 +11,42 @@ class addressesTableSeeder extends Seeder
     public function run()
     {
         DB::table('addresses')->insert([
-            'road_type' => 'calle',
+            'road_type' => 'Calle',
             'zip_code' => '04000',
             'number' => '2',
-            'name' => 'falsa',
+            'name' => 'Falsa',
             'town_id' => '1',
             'remarks' => 'ninguno'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'avenida',
+            'road_type' => 'Avenida',
             'zip_code' => '04002',
             'number' => '1',
-            'name' => 'falsísima',
+            'name' => 'Falsísima',
             'town_id' => '1',
             'remarks' => 'una avenida real'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'boulevard',
+            'road_type' => 'Boulevard',
             'zip_code' => '04004',
             'number' => '19',
-            'name' => 'súper falsa',
+            'name' => 'Súper Falsa',
             'town_id' => '1',
             'remarks' => 'esta sí que existe'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'calle',
+            'road_type' => 'Calle',
             'zip_code' => '04003',
             'number' => '10',
-            'name' => 'de verdad',
+            'name' => 'De Verdad',
             'town_id' => '1',
             'remarks' => 'esta igual no existe'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'callejón',
+            'road_type' => 'Callejón',
             'zip_code' => '04001',
             'number' => '0',
-            'name' => 'real',
+            'name' => 'Real',
             'town_id' => '1',
             'remarks' => 'esta existe'
         ]);

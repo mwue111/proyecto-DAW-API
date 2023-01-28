@@ -9,9 +9,9 @@ const DialogProduct = ({ product }) => {
     {/*estaría bien poner fotos, están en otra tabla*/}
 
     const [productName, setProductName] = useState(product.name);
-    const [productDesc, setProductDesc] = useState('');
-    const [productBrand, setProductBrand] = useState('');
-    const [productCat, setProductCat] = useState('');
+    const [productDesc, setProductDesc] = useState(product.description);
+    const [productBrand, setProductBrand] = useState(product.brand_id);
+    const [productCat, setProductCat] = useState(product.category);
     const [productPic, setProductPic] = useState('');
     const toast = useRef(null);
 
@@ -27,6 +27,18 @@ const DialogProduct = ({ product }) => {
         setProductName(e.target.value);
     }
 
+    const onProductDescChange = (e) => {
+        setProductDesc(e.target.value);
+    }
+
+    const onProductBrandChange = (e) => {
+        setProductBrand(e.target.value);
+    }
+
+    const onProductCatChange = (e) => {
+        setProductCat(e.target.value);
+    }
+
     console.log('producto: ', product);
     return(
         <div>
@@ -37,15 +49,15 @@ const DialogProduct = ({ product }) => {
                     <br/>
                     <br/>
                     <label htmlFor='productDesc'>Descripción:</label>
-                    <InputTextarea id='productDesc' name='productDesc' defaultValue={product.description} rows={5} onChange={e => setProductDesc(e.target.value)}/>
+                    <InputTextarea id='productDesc' name='productDesc' defaultValue={productDesc} rows={5} onChange={onProductDescChange}/>
                     <br/>
                     <br/>
                     <label htmlFor='productBrand'>Marca:</label>
-                    <InputText id='productBrand' name='productBrand' defaultValue={product.brand_id} onChange={e => setProductBrand(e.target.value)}/>
+                    <InputText id='productBrand' name='productBrand' defaultValue={productBrand} onChange={onProductBrandChange}/>
                     <br/>
                     <br/>
                     <label htmlFor='productCat'>Categoría:</label>
-                    <InputText id='productCat' name='productCat' defaultValue={product.category} onChange={e => setProductCat(e.target.value)}/>
+                    <InputText id='productCat' name='productCat' defaultValue={productCat} onChange={onProductCatChange}/>
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
@@ -55,10 +67,10 @@ const DialogProduct = ({ product }) => {
                     <FileUpload mode='basic' name='productPic[]' url='https://primefaces.org/primereact/showcase/upload.php' accept='image/*' maxFileSize={1000000} onUpload={onProductPicUpload}/>
                     <br/>
                     {/*Esto debería ser dependiendo de si hay una imagen guardada para el producto, puesto .name para que haga el condicional */}
-                    {product.name &&
+                    {productName &&
                         <div>
                             <label htmlFor='oldProductPic'>Imagen guardada:</label>
-                            <Image name='oldProductPic' src={picture} alt={`Imagen de ${product.name}`} width='250' preview/>
+                            <Image name='oldProductPic' src={picture} alt={`Imagen de ${productName}`} width='250' preview/>
                         </div>
                     }
                 </Fieldset>

@@ -20,6 +20,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [storeData, setStoreData] = useState([]); //para recibir datos de DialogStore
     const toast = useRef(null);
     const dt = useRef(null);
 
@@ -74,6 +75,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
 
     const openNew = () => {
+        //switch para emptyProduct y emptyUser según el tipo
         setItem(emptyStore);
         setSubmitted(false);
         setItemDialog(true);
@@ -93,9 +95,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        console.log('item: ', item.id);
-        console.log('data: ', data);
-        if (item.name) {
+        console.log('storeData en TableAdmin: ', storeData);
+
+        //if ()
+        if (storeData.length) {
+            console.log('entró');
             let _data = [...data];
             let _item = {...item};
             if (item.id) {
@@ -172,7 +176,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem(_item);
     }
 
-
     {/*
     const onInputPriceChange = (e, name) =>{
          Para cambiar el precio de los productos (está en la tabla products_stores)
@@ -185,6 +188,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     }
     */}
+
+    //Para obtener datos desde DialogStore
+    const getStoreData = (storeData) =>{
+        setStoreData(storeData);
+    }
 
     {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
@@ -291,8 +299,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-
-                {table === 'tienda' && <DialogStore store={item}/>}
+                {/*Se le pasa getStoreData al hijo */}
+                {table === 'tienda' && <DialogStore store={item} getStoreData={getStoreData}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
@@ -312,6 +320,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 </div>
 
             </Dialog>
+
+            <div>{storeData}</div>
         </div>
     )
 }

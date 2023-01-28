@@ -5,17 +5,21 @@ import { Fieldset } from 'primereact/fieldset';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 
-const DialogStore = ({ store }) =>{
+const DialogStore = ({ store, getStoreData }) =>{
 
     console.log('item: ', store);
+    console.log('item.address: ', store.direccion);
+    const stringAddress = store.direccion;
+    const arrayAddress = stringAddress.split(' ');
+    console.log('string: ', stringAddress, ' \narray: ', arrayAddress)
 
     const [name, setName] = useState(store.nombre);
     const [storeDescription, setStoreDescription] = useState(store.descripcion);
-    const [roadType, setRoadType] = useState({name: store.address.road_type.charAt(0).toUpperCase() + store.address.road_type.slice(1)});
-    const [streetName, setStreetName] = useState(store.address.name);
-    const [streetNumber, setStreetNumber] = useState(store.address.number);
-    const [zipCode, setZipCode] = useState(store.address.zip_code);
-    const [city, setCity] = useState(store.address.town.name);
+    const [roadType, setRoadType] = useState({name: arrayAddress[0]});
+    const [streetName, setStreetName] = useState(arrayAddress[1]);
+    const [streetNumber, setStreetNumber] = useState(parseInt(arrayAddress[2]));
+    const [zipCode, setZipCode] = useState(arrayAddress[3]);
+    const [city, setCity] = useState(arrayAddress[4]);
     const [remarks, setRemarks] = useState(store.address.remarks);
     const [email, setEmail] = useState(store.email);
     const [telephone1, setTelephone1] = useState(store.telefono1);
@@ -29,8 +33,16 @@ const DialogStore = ({ store }) =>{
         {name: 'Carretera'}
     ];
 
+    useEffect(() => {
+        console.log('en useEffect: ', name);
+        getStoreData([name, storeDescription]);
+    }, [name, storeDescription]);
+
     const onChangeStoreName = (e) => {
-        setName(e.target.value);
+        const newName = e.target.value;
+        console.log('newName: ', newName);  //coge todo
+        setName(newName);
+        console.log('en dialogStore 2:', name)  //falta el último carácter
     }
 
     const onChangeStoreDescription = (e) => {
