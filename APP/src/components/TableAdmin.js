@@ -20,18 +20,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [storeData, setStoreData] = useState([]); //para recibir datos de DialogStore
+    const [storeData, setStoreData] = useState({}); //para recibir datos de DialogStore
     const toast = useRef(null);
     const dt = useRef(null);
+//    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetch(fetchUrl)
           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
           .then(data => {   //data contiene un array con los datos de response
             setData(formatJson(data, table));
+  //          setIsLoading(false);
           })
           .catch(error => {
             console.log(error);
+    //        setIsLoading(true);
           });
       }, [fetchUrl]);
 
@@ -95,9 +98,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        console.log('storeData en TableAdmin: ', storeData);
+        console.log('storeData en TableAdmin: ', storeData);    //sólo se almacena un campo, no todos
 
-        //if ()
         if (storeData.length) {
             console.log('entró');
             let _data = [...data];
@@ -189,11 +191,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
     */}
 
-    //Para obtener datos desde DialogStore
-    const getStoreData = (storeData) =>{
-        setStoreData(storeData);
-    }
-
     {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
@@ -244,6 +241,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     });
     {/**FilteredData es un ARRAY que no contiene objetos */}
 
+    // if(isLoading){
+    //     return(<div>No hay datos</div>);
+    // }
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -294,13 +294,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <Dialog
                 visible={itemDialog}
                 style={{ width: '450px' }}
-                header={item.name ? `Modificar ${item.name}` : `Nuevo/a ${table}`}
+                header={item.nombre ? `Modificar ${item.nombre}` : `Crear ${table}`}
                 modal className="p-fluid"
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-                {/*Se le pasa getStoreData al hijo */}
-                {table === 'tienda' && <DialogStore store={item} getStoreData={getStoreData}/>}
+                {/*Se le pasa setStoreData al hijo */}
+                {table === 'tienda' && <DialogStore store={item} setStoreData={setStoreData}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
@@ -320,8 +320,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 </div>
 
             </Dialog>
-
-            <div>{storeData}</div>
         </div>
     )
 }
