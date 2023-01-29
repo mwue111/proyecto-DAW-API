@@ -19,6 +19,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [itemDialog, setItemDialog] = useState(false);
     const [deleteItemDialog, setDeleteItemDialog] = useState(false);
     const [deleteDataDialog, setDeleteDataDialog] = useState(false);
+    const [storesDialog, setStoresDialog] = useState(false);
+    const [openImagesDialog, setOpenImagesDialog] = useState(false);
     const [item, setItem] = useState([]);
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
@@ -42,6 +44,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const JSONaddress = JSON.stringify(item.address);
+
+    const openStores = () => {
+        setStoresDialog(true);
+    }
+
+    const openImages = () => {
+        setItemDialog(true);
+    }
+
+    const hidestoresDialog = () => {
+        setStoresDialog(false);
+    }
 
     const openNew = () => {
         setItem(emptyStore);
@@ -175,6 +189,22 @@ const TableAdmin = ({ fetchUrl, table }) => {
             </React.Fragment>
         )
     }
+    const imagesBodyTemplate = (rowData) => {
+        return(
+            <React.Fragment>
+                <div className="space-x-4">
+                    <Button label="Success" className="p-button-success p-button-text" onClick={() => openImages(rowData)} />
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    const storesDialogFooter = (
+        <React.Fragment>
+            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveItem} />
+        </React.Fragment>
+    );
 
     const itemDialogFooter = (
         <React.Fragment>
@@ -229,7 +259,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             </div>
 
-            <Dialog visible={openStoresDialog} style={{ width: '450px' }} header="Tiendas" modal className="p-fluid" footer={openStoresFooter} onHide={hideOpenStoresDialog}>
+            <Dialog visible={storesDialog} style={{ width: '450px' }} header="Tiendas" modal className="p-fluid" footer={storesDialogFooter} onHide={hidestoresDialog}>
 
             </Dialog>
             <Dialog visible={itemDialog} style={{ width: '450px' }} header="CAMBIAR SEGÚN CORRESPONDA" modal className="p-fluid" footer={itemDialogFooter} onHide={hideDialog}>
