@@ -28,6 +28,12 @@ const SideDrawer = () => {
                         active={router.pathname === '/test'}>
                         Guest
                     </NavLink>
+                    <br/>
+                    <NavLink
+                        href="/store"
+                        active={router.pathname === '/store'}>
+                        Tienda
+                    </NavLink>
                 </Sidebar>
                 <Button icon="pi pi-arrow-right" onClick={() => setVisibleLeft(true)} className="mr-2" />
             </div>

@@ -3,17 +3,41 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from '@/hooks/auth';
 import { Button } from 'primereact/button';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
-import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { classNames } from 'primereact/utils';
 import DialogStore from 'components/DialogStore';
 import { Toast } from 'primereact/toast';
 import { formatJson } from '@/helpers/helper';
+import { Galleria } from 'primereact/galleria';
 
 const TableAdmin = ({ fetchUrl, table }) => {
+
+    const defaultImages= [
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria1.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria1s.jpg',
+            alt: 'Description for Image 1',
+            title: 'Title 1'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria2.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria2s.jpg',
+            alt: 'Description for Image 2',
+            title: 'Title 2'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria3.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria3s.jpg',
+            alt: 'Description for Image 3',
+            title: 'Title 3'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria4.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria4s.jpg',
+            alt: 'Description for Image 4',
+            title: 'Title 4'
+        },
+    ]
+
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
@@ -24,9 +48,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [item, setItem] = useState([]);
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
+    const [images, setImages] = useState(defaultImages);
+    const galleria = useRef(null);
 
     useEffect(() => {
         fetch(fetchUrl)
@@ -156,18 +181,32 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
 
-    {/*
-    const onInputPriceChange = (e, name) =>{
-         Para cambiar el precio de los productos (está en la tabla products_stores)
-        const val = e.value || 0;
-        let _item = {...item};
-        _item[`${name}`] = val;
+    const responsiveOptions = [
+        {
+            breakpoint: '1500px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '1024px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 2
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
 
-        setItem(_item);
-
-
+    const itemTemplate = (item) => {
+        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
     }
-    */}
+
+    const thumbnailTemplate = (item) => {
+        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+    }
     
 
     const actionBodyTemplate = (rowData) => {
@@ -193,7 +232,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className="space-x-4">
-                    <Button label="Success" className="p-button-success p-button-text" onClick={() => openImages(rowData)} />
+                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
+                circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
+
+            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => galleria.current.show()} />
                 </div>
             </React.Fragment>
         )

@@ -9,6 +9,7 @@ class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
         foreach($stores as $store){
+            $store->products;
             $store->schedules->each(function($schedule){
                 $schedule->timeSlot;
             });
