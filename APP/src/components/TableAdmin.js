@@ -9,6 +9,8 @@ import DialogProduct from 'components/DialogProduct';
 import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
 import { formatJson } from '@/helpers/helper';
+import axios from 'axios';
+import { changedJson } from '@/helpers/helper';
 
 const TableAdmin = ({ fetchUrl, table }) => {
     const { user } = useAuth();
@@ -20,7 +22,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [storeData, setStoreData] = useState({}); //para recibir datos de DialogStore
+    //const [storeData, setStoreData] = useState({}); //para recibir datos de DialogStore
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
@@ -28,26 +30,27 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
 
     useEffect(() => {
-        fetch(fetchUrl)
-          .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
-          .then(data => {   //data contiene un array con los datos de response
-            setData(formatJson(data, table));
-  //          setIsLoading(false);
-          })
-          .catch(error => {
-            console.log(error);
-    //        setIsLoading(true);
-          });
-      }, [fetchUrl, oldItem]);
+
+        axios.get(fetchUrl)
+            .then(res => setData(formatJson(res.data, table)))
+
+//         fetch(fetchUrl)
+//           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
+//           .then(data => {   //data contiene un array con los datos de response
+//             setData(formatJson(data, table));
+//   //          setIsLoading(false);
+//           })
+//           .catch(error => {
+//             console.log(error);
+//     //        setIsLoading(true);
+//           });
+       }, [fetchUrl, oldItem]);
 
       console.log({table});
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
     }
-
-    const JSONaddress = JSON.stringify(item.address);
-    //console.log(JSONaddress);
 
     const emptyStore = {
             "nombre": "",
@@ -96,39 +99,62 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        console.log('storeData en TableAdmin: ', storeData);    //sólo se almacena un campo, no todos
-        console.log('item en TableAdmin: ', oldItem);    //sólo se almacena un campo, no todos
+        console.log('data en saveItem: ', data);
 
+        // let _data = [...data];
+        //let _item = {...item};
+        //console.log('_data fuera del if: ', _data)
 
+        if (item.id) {
+            console.log('llaves de item: ', Object.keys(item));
+            console.log('values de item: ', Object.values(item));
+            Object.values(item).map(i => {
+                if(typeof(i) === 'object'){
+                    console.log('prueba: ', i);
+                    //Esto me muestra todos los elementos con objetos (después de cambiar en helper dirección por address)
+                }
+            })
 
-        if (storeData !== oldItem) {
-            console.log('entró');
+            const jsonDB = changedJson(oldItem, item);
+            console.log('oldItem: ', oldItem);
+            console.log('item: ', item);
+            console.log(jsonDB);
 
-            let _data = [...data];
-            let _item = {...item};
+            const headers = {
+                'Content-Type': 'application/json'
+            };
 
-            if (item.id) {
-                const index = findIndexById(item.id);
+            axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
-                _data[index] = _item;
-                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
-            }
-            else {
-                _item.id = createId();
-                _data.push(_item);
-                toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
-            }
-
-            setData(_data);
-            setItemDialog(false);
-            setItem('');
+            toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
+        else {
+                // _item.id = createId();
+                // _data.push(_item);
+                // toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
+            }
+
+            //setData(_data);
+            setItemDialog(false);
+            setItem(emptyStore);
+    }
+
+    const findIndexById = (id) => {
+        let index = -1;
+
+        for(let i = 0; i < data.length; i++){
+            if(data[i].id === id){
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
     const editItem = (item) => {
-        //console.log(data);
-        setItem({...item});
-        setOldItem(item);
+        setItem({...item})
+        setOldItem(item);   //Aquí item ya tiene el address actualizado
         setItemDialog(true);
     }
 
@@ -147,30 +173,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem('');
     }
     */}
-    }
-
-    const findIndexById = (id) => {
-        let index = -1;
-
-        for(let i = 0; i < data.length; i++){
-            if(data[i].id === id){
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for(let i = 0; i < 5; i++){
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-
-        return id;
     }
 
     {/**Aquí -- hacer un crud funcional comunicándose con otro componente */}
@@ -304,7 +306,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {/*Se le pasa setStoreData al hijo */}
-                {table === 'tienda' && <DialogStore store={item} setStoreData={setStoreData}/>}
+                {table === 'tienda' && <DialogStore store={item} setItem={setItem}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 

@@ -32,7 +32,7 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            direccion: formatJsonDireccion(item.address),
+            address: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,
@@ -85,6 +85,44 @@ function formatJsonDia(day){
             break;
     }
     return dia;
+}
+
+//2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
+export function changedJson(oldData, newData){
+    let changed = {};
+    //console.log('viejo en helper: ', oldData);
+    //console.log('nuevo en helper: ', newData);
+
+    Object.keys(oldData).map(item => {
+        if(typeof(oldData[item]) === 'object'){
+            Object.keys(item).map(subItem => {
+                if(oldData[item][subItem] !== newData[item][subItem]){
+                    changed[item][subItem] = newData[item][subItem];
+                }
+            })
+        }
+        else{
+            if(oldData[item] !== newData[item]){
+                changed[item] = newData[item];
+            }
+        }
+    })
+
+    changed = headersDB(changed);
+
+    return changed;
+
+}
+
+function headersDB(oldHeaders){
+    Object.keys(oldHeaders).map(item => {
+        switch(item){
+            case 'nombre': oldHeaders['name'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'telefono1': oldHeaders['telephone1'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'telefono2': oldHeaders['telephone2'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
+        }});
+    return oldHeaders;
 }
 
 //2. Función para borrar datos (confirmación de) con fetch: ruta + delete
