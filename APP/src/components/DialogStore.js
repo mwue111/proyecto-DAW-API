@@ -8,12 +8,11 @@ import axios from 'axios';
 
 const DialogStore = ({ store, setStoreData }) =>{
 
-    //console.log('item: ', store);
+    console.log('item: ', store);
 
     const [dataForm, setDataForm] = useState(store);
     const [storeAddress, setStoreAddress] = useState('');
-    const [emptyForm, setEmptyForm] = useState({});
-    const [dropdownValue, setDropdownValue] = useState(null);
+    const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
     // const getAllAddress = () => {
     //     setStoreAddress(store.address);
     // }
@@ -28,20 +27,8 @@ const DialogStore = ({ store, setStoreData }) =>{
     //     {name: 'Carretera'}
     // ];
 
-    const emptyStore = {
-        name:'',
-        description:'',
-        address: {
-            road_type: '',
-            zip_code: '',
-            number: 0,
-            name: '',
-            remarks: ''
-        },
-        email: '',
-        telephone1: '',
-        telephone2: ''
-    }
+    const newStore = store;
+
     useEffect(() => {
         console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
         setStoreAddress(store.address);
@@ -50,22 +37,31 @@ const DialogStore = ({ store, setStoreData }) =>{
 
     const handleInputChange = (e) => {
         const target = e.target;
-        console.log('target en HIC:', target);
+       // console.log('target en HIC:', target);
         const val = target.value;
-        console.log('value en HIC: ', val);
+        //console.log('value en HIC: ', val);
         const name = target.name;
-        console.log('name en HIC: ', name);
+        //console.log('name en HIC: ', name);
 
-//        setStoreAddress(value);
-   //     console.log('road type 2: ', storeAddress.road_type);   //no actualiza
-        if(name === 'address.road_type'){
-            console.log('entró');
-            setDropdownValue(e.value);
+        if(name !== null){
+            if(name === 'address.road_type'){
+             //   console.log('entró');
+                setDropdownValue(e.value);
+            }
+
+            //comprobación del nombre que viene: si tiene un punto son dos elementos
+            const checkName = name.split('.');
+            if(checkName.length == 2){
+                //console.log(checkName);
+
+                newStore[checkName[0]][checkName[1]] = val;
+            }
+            else{
+                newStore[name] = val;
+            }
+
+            setDataForm(newStore);
         }
-
-        setDataForm({
-            [name]: val
-        });
     }
 
     return(
@@ -76,8 +72,8 @@ const DialogStore = ({ store, setStoreData }) =>{
                     <InputText id='storeName' name='nombre' defaultValue={dataForm.nombre} onChange={handleInputChange} required autoFocus />
                     <br/>
                     <br/>
-                    <label htmlFor='descripcion'>Descripción de la tienda:</label>
-                    <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} />
+                    <label htmlFor='description'>Descripción de la tienda:</label>
+                    <InputTextarea name='description' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} />
                 </Fieldset>
             </div>
             <br/>
@@ -85,45 +81,36 @@ const DialogStore = ({ store, setStoreData }) =>{
             <div className='field'>
                 <Fieldset legend='Dirección'>
                     {/**No cambia la selección */}
-                    <Dropdown name='address.road_type' value={storeAddress.road_type} options={optionsRoadType} onChange={handleInputChange} placeholder='Selecciona un tipo de vía'/>
+                    <Dropdown name='address.road_type' value={dropdownValue} options={optionsRoadType} onChange={handleInputChange} placeholder='Selecciona un tipo de vía'/>
                     <br/>
                     <label htmlFor='address.name'>Nombre de la calle:</label>
                     <InputText name='address.name' defaultValue={storeAddress.name} onChange={handleInputChange} required />
                     <br/>
-
-                    {/**
-
                     <label htmlFor='adress.number'>Número</label>
-                    <InputNumber name='address.number' inputId='address.number' value={streetNumber} onValueChange={onChangeStreetNumber} mode='decimal' useGrouping={false}/>
-
-                    <label htmlFor='zipCode'>Código postal</label>
-                    <InputText id='zipCode' name='zipCode' defaultValue={zipCode} onChange={onChangeZipCode} required />
-
-                    <label htmlFor='city'>Ciudad</label>
-                    <InputText id='city' name='city' defaultValue={city} onChange={onChangeCity} required />
-
-                    <label htmlFor='remarks'>Comentarios adicionales:</label>
-                    <InputTextarea defaultValue={remarks} onChange={onChangeRemarks} rows={5}/>
-*/}
+                    <InputNumber name='address.number' value={storeAddress.number} onValueChange={handleInputChange} mode='decimal' useGrouping={false}/>
+                    <br/>
+                    <label htmlFor='address.zip_code'>Código postal</label>
+                    <InputText name='address.zip_code' defaultValue={storeAddress.zip_code} onChange={handleInputChange} required />
+                    <br/>
+                    <label htmlFor='address.remarks'>Comentarios adicionales:</label>
+                    <InputTextarea defaultValue={storeAddress.remarks} onChange={handleInputChange} rows={5}/>
                 </Fieldset>
             </div>
-
-            {/*
             <br/>
             <div className='field'>
                 <Fieldset legend='Datos de contacto'>
                     <label htmlFor='email'>Email</label>
-                    <InputText id='email' value={email} onChange={onChangeStoreEmail} required rows={3} cols={20} />
-
+                    <InputText name='email' value={dataForm.email} onChange={handleInputChange} required />
+                    <br/>
                     <label htmlFor='telephone1'>Teléfono 1</label>
-                    <InputNumber inputId='telephone1' value={telephone1} onValueChange={onChangeTelephone1} mode='decimal' useGrouping={false}/>
-
+                    <InputNumber name='telephone1' value={dataForm.telefono1} onValueChange={handleInputChange} mode='decimal' useGrouping={false}/>
+                    <br/>
                     <label htmlFor='telephone2'>Teléfono 2</label>
-                    <InputNumber inputId='telephone2' value={telephone2} onValueChange={onChangeTelephone2} mode='decimal' useGrouping={false}/>
+                    <InputNumber name='telephone2' value={dataForm.telefono2} onValueChange={handleInputChange} mode='decimal' useGrouping={false}/>
                 </Fieldset>
             </div>
 
-            */}
+
             </div>
     )
 }

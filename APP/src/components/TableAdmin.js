@@ -16,14 +16,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [itemDialog, setItemDialog] = useState(false);
     const [deleteItemDialog, setDeleteItemDialog] = useState(false);
     const [deleteDataDialog, setDeleteDataDialog] = useState(false);
-    const [item, setItem] = useState([]);
+    const [item, setItem] = useState({});
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [storeData, setStoreData] = useState({}); //para recibir datos de DialogStore
     const toast = useRef(null);
     const dt = useRef(null);
+    const [oldItem, setOldItem] = useState({});
 //    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         fetch(fetchUrl)
@@ -36,7 +38,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             console.log(error);
     //        setIsLoading(true);
           });
-      }, [fetchUrl]);
+      }, [fetchUrl, oldItem]);
 
       console.log({table});
 
@@ -48,22 +50,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
     //console.log(JSONaddress);
 
     const emptyStore = {
-        nombre: '',
-        address: {
-            road_type: '',
-            name: '',
-            number: '',
-            zip_code: '',
-            town: {
-                name: ''
-            },
-            remarks: ''
-        },
-        telefono1: '',
-        email: '',
-        telephone1: '',
-        telephone2: '',
-        descripcion: '',
+            "nombre": "",
+            "telefono1": "",
+            "telefono2": "",
+            "email": "",
+            "descripcion": "",
+            "address": {
+                "road_type": "",
+                "zip_code": "",
+                "number": 0,
+                "name": "",
+                "remarks": "",
+            }
     }
 
     const emptyProduct = {
@@ -99,11 +97,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItemDialog(false);
 
         console.log('storeData en TableAdmin: ', storeData);    //sólo se almacena un campo, no todos
+        console.log('item en TableAdmin: ', oldItem);    //sólo se almacena un campo, no todos
 
-        if (storeData.length) {
+
+
+        if (storeData !== oldItem) {
             console.log('entró');
+
             let _data = [...data];
             let _item = {...item};
+
             if (item.id) {
                 const index = findIndexById(item.id);
 
@@ -125,6 +128,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const editItem = (item) => {
         //console.log(data);
         setItem({...item});
+        setOldItem(item);
         setItemDialog(true);
     }
 
