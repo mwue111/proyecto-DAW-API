@@ -106,19 +106,19 @@ const TableAdmin = ({ fetchUrl, table }) => {
         //console.log('_data fuera del if: ', _data)
 
         if (item.id) {
-            console.log('llaves de item: ', Object.keys(item));
-            console.log('values de item: ', Object.values(item));
-            Object.values(item).map(i => {
-                if(typeof(i) === 'object'){
-                    console.log('prueba: ', i);
-                    //Esto me muestra todos los elementos con objetos (después de cambiar en helper dirección por address)
-                }
-            })
+            // console.log('llaves de item: ', Object.keys(item));
+            // console.log('values de item: ', Object.values(item));
+            // Object.values(item).map(i => {
+            //     if(typeof(i) === 'object'){
+            //         console.log('prueba: ', i);
+            //         //Esto me muestra todos los elementos con objetos (después de cambiar en helper dirección por address)
+            //     }
+            // })
 
             const jsonDB = changedJson(oldItem, item);
             console.log('oldItem: ', oldItem);
             console.log('item: ', item);
-            console.log(jsonDB);
+            console.log('jsonDB: ', jsonDB);
 
             const headers = {
                 'Content-Type': 'application/json'
@@ -139,22 +139,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
             setItem(emptyStore);
     }
 
-    const findIndexById = (id) => {
-        let index = -1;
-
-        for(let i = 0; i < data.length; i++){
-            if(data[i].id === id){
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
     const editItem = (item) => {
         setItem({...item})
-        setOldItem(item);   //Aquí item ya tiene el address actualizado
+        console.log('oldItem en editItem: ', item);
+        setOldItem({...item});   //Aquí item ya tiene el address actualizado
         setItemDialog(true);
     }
 

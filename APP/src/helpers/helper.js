@@ -10,7 +10,7 @@ export function formatJson (cosa, tipo){
             data=formatJsonTienda(cosa);
             break;
         case 'producto':
-            data=formatProducto(cosa)
+            //data=formatProducto(cosa)
             break;
         case 'usuario':
             //data=formatUsuario(cosa)
@@ -32,7 +32,7 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            address: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
+            direccion: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,

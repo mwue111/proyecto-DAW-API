@@ -33,7 +33,7 @@ const DialogStore = ({ store, setItem }) =>{
 
     useEffect(() => {
         console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
-        setStoreAddress(store.address);
+        //setStoreAddress(store.address);
         setItem(dataForm);
     }, [dataForm]);
 
