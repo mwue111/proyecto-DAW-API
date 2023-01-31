@@ -219,15 +219,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             </React.Fragment>
         );
     }
-    const tiendasBodyTemplate = (rowData) => {
-        return(
-            <React.Fragment>
-                <div className="space-x-4">
-                    <Button label="Success" className="p-button-success p-button-text" onClick={() => openStores(rowData)} />
-                </div>
-            </React.Fragment>
-        )
-    }
+
     const imagesBodyTemplate = (rowData) => {
         return(
             <React.Fragment>
@@ -292,7 +284,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         <Column field={key} header={key} key={key}/>
                     ))
                 }
-                {<Column field={'tiendas'} header={'tiendas'} key={'tiendas'} body={tiendasBodyTemplate}/>}
                 {<Column field={'imágenes'} header={'imágenes'} key={'imágenes'} body={imagesBodyTemplate}/>}
 
                     <Column body={actionBodyTemplate} header='Acciones' exportable={false} style={{ minWidth: '8rem' }} key={data.id}/>

@@ -70,19 +70,22 @@ const Store = () => {
     return (
         <AppLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Ejemplo de tienda
-                </h2>
+                <div>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        {selectedStore? selectedStore.name : "Tienda"}
+                    </h2>
+                    <Dropdown value={selectedStore} options={stores} onChange={(e) => setSelectedStore(e.value)} optionLabel="name" placeholder="Select a Store" />
+                </div>
+
             }>
 
             <Head>
-                <title>Ejemplo de tienda</title>
+                <title>{selectedStore? selectedStore.name : "Tienda"}</title>
             </Head>
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                       <Dropdown value={selectedStore} options={stores} onChange={(e) => setSelectedStore(e.value)} optionLabel="name" placeholder="Select a Store" />
                        {selectedStore && 
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />
                        }
