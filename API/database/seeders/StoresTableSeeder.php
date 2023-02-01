@@ -24,6 +24,10 @@ class StoresTableSeeder extends Seeder
             'longitude' => 41.40338,
             'latitude' => 2.17403,
             'deleted' => 0,
+            'description' => 'Fruteria de María, la mejor fruteria de la ciudad',
+            'user_id' => 4,
+            'created_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -35,6 +39,10 @@ class StoresTableSeeder extends Seeder
             'longitude' => 41.40338,
             'latitude' => 2.17403,
             'deleted' => 0,
+            'description' => 'Anka la Encarna, la mejor tienda de alimentación de la ciudad',
+            'user_id' => 4,
+            'created_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -46,6 +54,10 @@ class StoresTableSeeder extends Seeder
             'longitude' => 41.40338,
             'latitude' => 2.17403,
             'deleted' => 0,
+            'description' => 'El verdulero, la mejor tienda de verduras de la ciudad',
+            'user_id' => 4,
+            'created_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -57,6 +69,10 @@ class StoresTableSeeder extends Seeder
             'longitude' => 41.40338,
             'latitude' => 2.17403,
             'deleted' => 0,
+            'description' => 'El bazar del alimento, la mejor tienda de alimentación de la ciudad',
+            'user_id' => 4,
+            'created_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-01-01 00:00:00',
         ]);
     }
 }

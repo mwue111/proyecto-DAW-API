@@ -18,6 +18,7 @@ class Store extends Model{
         'longitude',
         'schedule_id',
         'special_day_id',
+        'user_id',
     ];
 
 
@@ -36,7 +37,7 @@ class Store extends Model{
 
     public function address(){
         return $this->belongsTo(Address::class);
-    }    
+    }
 
     public function sales()
     {
@@ -45,6 +46,10 @@ class Store extends Model{
 
     public function storeImgs(){
         return $this->hasMany(StoreImg::class);
+    }
+
+    public function owner(){
+        return $this->belongsTo(Owner::class, 'user_id');
     }
 }
 

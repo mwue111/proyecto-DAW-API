@@ -16,7 +16,7 @@ return new class extends Migration{
             $table->string('surname2', 100)->nullable();
             $table->string('email', 50)->unique();
             //$table->timestamp('email_verified_at')->nullable();
-            $table->string('password', 50);
+            $table->string('password', 1000);
             $table->date('birth_date');
             $table->enum('type', ['client', 'owner', 'administrator']);
             $table->tinyInteger('deleted');

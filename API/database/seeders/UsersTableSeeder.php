@@ -22,12 +22,12 @@ class UsersTableSeeder extends Seeder{
         ]);
 
         DB::table('users')->insert([
-            'username' => 'EmilioMartinez',
+            'username' => 'Emilio',
             'name' => 'Emilio',
             'surname1' => 'Martínez',
             'surname2' => 'Sánchez',
-            'email' => 'emilio@nombrereal.com',
-            'password' => 'password',
+            'email' => 'emarsan708@g.educaand.es',
+            'password' => '$2y$10$A.xuiPBFhgJ63gO2F8b.GO9D23qn811TSyy9N9RXElhX3n871DlOq',
             'birth_date' => '1875-09-03',
             'type' => 'administrator',
             'deleted' => 0,
@@ -46,18 +46,6 @@ class UsersTableSeeder extends Seeder{
         ]);
 
         DB::table('users')->insert([
-            'username' => 'ari',
-            'name' => 'Irene',
-            'surname1' => 'Montero',
-            'surname2' => 'Ayuso',
-            'email' => 'ari@nombrereal.com',
-            'password' => 'password',
-            'birth_date' => '1955-09-03',
-            'type' => 'administrator',
-            'deleted' => 0,
-        ]);
-
-        DB::table('users')->insert([
             'username' => 'jackieChan',
             'name' => 'Quian',
             'surname1' => 'Martínez',
@@ -67,6 +55,26 @@ class UsersTableSeeder extends Seeder{
             'birth_date' => '2020-09-03',
             'type' => 'owner',
             'deleted' => 0,
+        ]);
+        DB::table('users')->insert([
+            'username' => 'ari',
+            'name' => 'irene',
+            'surname1' => 'montero',
+            'surname2' => 'admin',
+            'email' => 'ari@admin.com',
+            'password' => '12345678',
+            'birth_date' => '1952-09-03',
+            'type' => 'administrator'
+        ]);
+        DB::table('users')->insert([
+            'username' => 'dany',
+            'name' => 'irene',
+            'surname1' => 'montero',
+            'surname2' => 'admin',
+            'email' => 'dany@admin.com',
+            'password' => '$2y$10$NqlpmGukcRA9rlG0IC2dgOG2l5Sp290xmDUZZ.62Qg.LXj6n6mkpe',
+            'birth_date' => '1952-09-03',
+            'type' => 'administrator'
         ]);
     }
 }

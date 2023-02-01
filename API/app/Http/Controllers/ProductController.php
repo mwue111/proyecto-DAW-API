@@ -23,7 +23,7 @@ class ProductController extends Controller
             $producto->category;
             $producto->productImgs;
         }
-        return $data;
+        return $data['productos'];
         //return view('producto', $data);
     }
 

@@ -9,13 +9,17 @@ use App\Models\StoreImg;
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
-        
+
         foreach($stores as $store){
-            $store->schedules;
+            $store->owner->user;
+            $store->schedules->each(function($schedule){
+                $schedule->timeSlot;
+            });
             $store->specialDays;
-            $store->address;
             $store->storeImgs;
+            $store->address->town->state;
         }
+
         return $stores;
     }
 
@@ -28,9 +32,12 @@ class StoreController extends Controller{
 
     public function show($id){
         $store = Store::find($id);
-        $store->schedules;
+        $store->owner;
+        $store->schedules->each(function($schedule){
+            $schedule->timeSlot;
+        });
         $store->specialDays;
-        $store->address;
+        $store->address->town->state;
         return $store;
     }
 
@@ -52,6 +59,8 @@ class StoreController extends Controller{
     public function update(Request $request, $id){
         $store = Store::find($id);
         $store->update($request->all());
+        $store->address()->update($request->address, $request->address_id);
+        //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
     }
 
     public function destroy($id){
@@ -102,14 +111,14 @@ class StoreController extends Controller{
         $store = Store::find($id);
         return $store->specialDays;
     }
-    
+
     //insertar un día especial a la tienda: pasado a la función store.
     public function createSpecialDay(Request $request){
         $store = Store::create($request->all());
         $store->specialDays()->attach($request->specialDays);
     }
     */
-    
+
     //dejado aparte porque al actualizar una tienda puede que no sea necesario cambiar sus días de horario especial
     public function setSpecialDay(Request $request, $id){
         $store = Store::find($id);
@@ -117,7 +126,7 @@ class StoreController extends Controller{
         $store->specialDays()->sync($request->specialDays);
         $store->save();
     }
-    
+
     //Hay persistencia de datos
     public function deleteSpecialDay($id){
         $store = Store::find($id);

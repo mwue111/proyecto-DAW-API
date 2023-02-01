@@ -7,7 +7,12 @@ use App\Models\TimeSlot;
 
 class TimeSlotController extends Controller{
     public function index(){
-        return TimeSlot::all();
+        //return TimeSlot::all();
+        $tss = TimeSlot::all();
+        foreach($tss as $ts){
+            $ts->schedules;
+        }
+        return $tss;
     }
 
     public function store(Request $request){
