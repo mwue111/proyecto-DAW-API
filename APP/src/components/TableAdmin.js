@@ -8,11 +8,11 @@ import DialogStore from 'components/DialogStore';
 import DialogProduct from 'components/DialogProduct';
 import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
-import { formatJson } from '@/helpers/helper';
+import { formatJson, changedJson, objectProfoundCopy} from '@/helpers/helper';
 import axios from 'axios';
-import { changedJson } from '@/helpers/helper';
 
 const TableAdmin = ({ fetchUrl, table }) => {
+
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
@@ -26,13 +26,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
-//    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
 
         axios.get(fetchUrl)
-            .then(res => setData(formatJson(res.data, table)))
+            .then(res => setData(formatJson(res.data, table)));
 
 //         fetch(fetchUrl)
 //           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
@@ -44,6 +43,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 //             console.log(error);
 //     //        setIsLoading(true);
 //           });
+
        }, [fetchUrl, oldItem]);
 
       console.log({table});
@@ -94,30 +94,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(false);
     }
 
-    {/*No sale el toast cuando se "guarda" o "actualiza" un nuevo elemento */}
     const saveItem = () =>{
         setSubmitted(true);
         setItemDialog(false);
-
-        console.log('data en saveItem: ', data);
 
         // let _data = [...data];
         //let _item = {...item};
         //console.log('_data fuera del if: ', _data)
 
         if (item.id) {
-            // console.log('llaves de item: ', Object.keys(item));
-            // console.log('values de item: ', Object.values(item));
-            // Object.values(item).map(i => {
-            //     if(typeof(i) === 'object'){
-            //         console.log('prueba: ', i);
-            //         //Esto me muestra todos los elementos con objetos (después de cambiar en helper dirección por address)
-            //     }
-            // })
-
             const jsonDB = changedJson(oldItem, item);
-            console.log('oldItem: ', oldItem);
-            console.log('item: ', item);
+            console.log('oldItem en saveItem: ', oldItem);
+            console.log('item en saveItem: ', item);
             console.log('jsonDB: ', jsonDB);
 
             const headers = {
@@ -140,9 +128,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const editItem = (item) => {
-        setItem({...item})
-        console.log('oldItem en editItem: ', item);
-        setOldItem({...item});   //Aquí item ya tiene el address actualizado
+        const _item = objectProfoundCopy(item); //copia profunda del item (incluyendo el objeto address)
+        setItem(item);
+        setOldItem(_item);   //Aquí item ya tiene el address actualizado
         setItemDialog(true);
     }
 
@@ -161,15 +149,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem('');
     }
     */}
-    }
-
-    {/**Aquí -- hacer un crud funcional comunicándose con otro componente */}
-    const onInputChange = (e, name) => {
-        const val = (e.target && e.target.value) || '';
-        let _item = {...item};
-        _item[`${name}`] = val;
-
-        setItem(_item);
     }
 
     {/*
@@ -293,8 +272,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-                {/*Se le pasa setStoreData al hijo */}
-                {table === 'tienda' && <DialogStore store={item} setItem={setItem}/>}
+                {/*Se le pasa setStoreData (setItem ahora) al hijo */}
+                {table === 'tienda' && <DialogStore store={item} setItem={setItem} oldItem={oldItem}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 

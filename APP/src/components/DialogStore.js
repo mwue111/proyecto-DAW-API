@@ -7,12 +7,12 @@ import { InputNumber } from 'primereact/inputnumber';
 import axios from 'axios';
 
 
-const DialogStore = ({ store, setItem }) =>{
+const DialogStore = ({ store, setItem, oldItem }) =>{
 
-    //console.log('item en DialogStore: ', store);
+    console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
-    const [storeAddress, setStoreAddress] = useState({});
+//  const [storeAddress, setStoreAddress] = useState({});
     const [oldAddress, setOldAddress] = useState({});
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
     // const getAllAddress = () => {
@@ -20,14 +20,6 @@ const DialogStore = ({ store, setItem }) =>{
     // }
 
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
-
-    // const optionsRoadType = [
-    //     {name: 'Calle'},
-    //     {name: 'Avenida'},
-    //     {name: 'Paseo'},
-    //     {name: 'Boulevard'},
-    //     {name: 'Carretera'}
-    // ];
 
     const newStore = store;
 
@@ -43,15 +35,15 @@ const DialogStore = ({ store, setItem }) =>{
         const name = target.name;
 
         if(name !== null){
-            if(name === 'address.road_type'){
-                setDropdownValue(e.value);
-            }
-
-            //comprobación del nombre que viene: si tiene un punto son dos elementos
+                        //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
             if(checkName.length == 2){
-                //console.log(checkName);
+                console.log('checkname: ', checkName, 'val: ', val);
                 newStore[checkName[0]][checkName[1]] = val;
+
+                if(name === 'address.road_type'){
+                    setDropdownValue(e.value);
+                }
             }
             else{
                 newStore[name] = val;
@@ -77,20 +69,19 @@ const DialogStore = ({ store, setItem }) =>{
 
             <div className='field'>
                 <Fieldset legend='Dirección'>
-                    {/**No cambia la selección */}
                     <Dropdown name='address.road_type' value={dropdownValue} options={optionsRoadType} onChange={handleInputChange} placeholder='Selecciona un tipo de vía' required/>
                     <br/>
                     <label htmlFor='address.name'>Nombre de la calle:</label>
-                    <InputText name='address.name' defaultValue={storeAddress.name} onChange={handleInputChange} required />
+                    <InputText name='address.name' defaultValue={dataForm.address.name} onChange={handleInputChange} required />
                     <br/>
                     <label htmlFor='adress.number'>Número</label>
-                    <InputNumber name='address.number' value={storeAddress.number} onValueChange={handleInputChange} mode='decimal' useGrouping={false} required />
+                    <InputNumber name='address.number' value={dataForm.address.number} onValueChange={handleInputChange} mode='decimal' useGrouping={false} required />
                     <br/>
                     <label htmlFor='address.zip_code'>Código postal</label>
-                    <InputText name='address.zip_code' defaultValue={storeAddress.zip_code} onChange={handleInputChange} required />
+                    <InputText name='address.zip_code' defaultValue={dataForm.address.zip_code} onChange={handleInputChange} required />
                     <br/>
                     <label htmlFor='address.remarks'>Comentarios adicionales:</label>
-                    <InputTextarea defaultValue={storeAddress.remarks} onChange={handleInputChange} rows={5}/>
+                    <InputTextarea defaultValue={dataForm.address.remarks} onChange={handleInputChange} rows={5}/>
                 </Fieldset>
             </div>
             <br/>

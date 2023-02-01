@@ -7,7 +7,6 @@ use App\Models\Store;
 
 class StoreController extends Controller{
     public function index(){
-        //$stores = Store::with('schedulesStore')->get();
         $stores = Store::all();
 
         foreach($stores as $store){
@@ -20,8 +19,6 @@ class StoreController extends Controller{
         }
 
         return $stores;
-
-        //return $stores = Store::with('schedulesStore')->get();
     }
 
     public function store(Request $request){
@@ -60,6 +57,8 @@ class StoreController extends Controller{
     public function update(Request $request, $id){
         $store = Store::find($id);
         $store->update($request->all());
+        $store->address()->update($request->address, $request->address_id);
+        //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
     }
 
     public function destroy($id){

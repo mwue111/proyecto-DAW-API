@@ -90,20 +90,23 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-    //console.log('viejo en helper: ', oldData);
-    //console.log('nuevo en helper: ', newData);
 
     Object.keys(oldData).map(item => {
-        if(typeof(oldData[item]) === 'object'){
-            Object.keys(item).map(subItem => {
-                if(oldData[item][subItem] !== newData[item][subItem]){
-                    changed[item][subItem] = newData[item][subItem];
+        if(!Array.isArray(oldData[item])){
+            if(typeof(oldData[item]) === 'object'){ //address
+                Object.keys(oldData[item]).map(subItem => {
+                    if(oldData[item][subItem] !== newData[item][subItem] && subItem !== 'town'){  //store[address][name, ...]
+                        if(!changed[item]){
+                            changed[item] = {};
+                        }
+                        changed[item][subItem] = newData[item][subItem];
+                    }
+                })
+            }
+            else{
+                if(oldData[item] !== newData[item]){
+                    changed[item] = newData[item];
                 }
-            })
-        }
-        else{
-            if(oldData[item] !== newData[item]){
-                changed[item] = newData[item];
             }
         }
     })
@@ -123,6 +126,10 @@ function headersDB(oldHeaders){
             case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
     return oldHeaders;
+}
+
+export function objectProfoundCopy(object){
+    return JSON.parse(JSON.stringify(object));
 }
 
 //2. Función para borrar datos (confirmación de) con fetch: ruta + delete
