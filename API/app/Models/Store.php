@@ -19,6 +19,8 @@ class Store extends Model{
         'schedule_id',
         'special_day_id',
         'user_id',
+        'description',
+        'deleted',
     ];
 
 

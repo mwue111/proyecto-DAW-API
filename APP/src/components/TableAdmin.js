@@ -75,9 +75,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         //Cambiar estructura en DialogUser
     }
 
-    const headers = Object.keys(data[0]);
-    headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
-
     const openNew = () => {
         //switch para emptyProduct y emptyUser según el tipo
         setItem(emptyStore);
@@ -124,7 +121,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             //setData(_data);
             setItemDialog(false);
-            setItem(emptyStore);
+            setItem({});
+            setOldItem({});
     }
 
     const editItem = (item) => {
@@ -206,7 +204,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     {/** el último parámetro, {}, indica el valor inicial del acumulador acum (y se declara que será un objeto además) */}
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if(typeof value !== 'object'){
+            if(typeof value !== 'object' && key != 'deleted'){
                 acum[key] = value;
             }
             return acum;
@@ -217,6 +215,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
     // if(isLoading){
     //     return(<div>No hay datos</div>);
     // }
+
+    const rowClass = (data) => {
+        console.log('data: ', data);
+        return {
+            'bg-black-alpha-10': data.deleted == 0
+        }
+    }
+
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -226,6 +232,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {user && user.type === 'administrator' &&
                     <DataTable
                         value={data}
+                        rowClassName={rowClass}
                         responsiveLayout="scroll"
                         paginator
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
