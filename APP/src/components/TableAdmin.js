@@ -17,6 +17,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
     const [deleteItemDialog, setDeleteItemDialog] = useState(false);
+    const [undoDeleteDialog, setUndoDeleteDialog] = useState(false);
+    const [deleteOldDialog, setDeleteOldDialog] = useState(false);
+    const [erasedData, setErasedData] = useState(false);
     const [deleteDataDialog, setDeleteDataDialog] = useState(false);
     const [item, setItem] = useState({});
     const [selectedData, setSelectedData] = useState(null);
@@ -26,6 +29,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
+    const [changedItem, setChangedItem] = useState({});
 
 
     useEffect(() => {
@@ -44,7 +48,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 //     //        setIsLoading(true);
 //           });
 
-       }, [fetchUrl, oldItem]);
+       }, [fetchUrl, changedItem]);
 
       console.log({table});
 
@@ -91,6 +95,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(false);
     }
 
+    const hideUndoDeleteDialog = () => {
+        setUndoDeleteDialog(false);
+    }
+
+    const hideDeleteOldDialog = () => {
+        setDeleteOldDialog(false);
+    }
+
     const saveItem = () =>{
         setSubmitted(true);
         setItemDialog(false);
@@ -101,9 +113,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         if (item.id) {
             const jsonDB = changedJson(oldItem, item);
-            console.log('oldItem en saveItem: ', oldItem);
-            console.log('item en saveItem: ', item);
-            console.log('jsonDB: ', jsonDB);
+            //console.log('oldItem en saveItem: ', oldItem);
+            //console.log('item en saveItem: ', item);
+            //console.log('jsonDB: ', jsonDB);
 
             const headers = {
                 'Content-Type': 'application/json'
@@ -120,9 +132,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             //setData(_data);
+            setChangedItem(item);
             setItemDialog(false);
             setItem({});
             setOldItem({});
+
+
+            // axios.get(fetchUrl)
+            // .then(res => setData(formatJson(res.data, table)));
     }
 
     const editItem = (item) => {
@@ -133,20 +150,71 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const confirmDeleteItem = (item) => {
+        const _item = objectProfoundCopy(item);
+        console.log('item en delete: ', item);
         setItem(item);
+        setOldItem(_item);
         setDeleteItemDialog(true);
     }
 
     const deleteItem = () => {
+
+        if(item.id){
+            item.deleted = 1;
+            const jsonDB = changedJson(oldItem, item);
+
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
+
+        }
+
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
-    {/*
+        {/*
         let _data = data.filter(val => val.id !== item.id);
         setData(_data);
         setDeleteDataDialog(false);
         setItem('');
     }
-    */}
+*/}
+}
+
+    const confirmUndoDelete = (item) => {
+        const _item = objectProfoundCopy(item);
+        console.log('item en delete: ', item);
+        setItem(item);
+        setOldItem(_item);
+        setUndoDeleteDialog(true);
+    }
+
+    const undoDelete = () => {
+
+        if(item.id){
+            item.deleted = 0;
+            const jsonDB = changedJson(oldItem, item);
+
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
+        }
+
+        setUndoDeleteDialog(false);
+        toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item recuperado', life: 3000 });
+    }
+
+    const confirmDeleteOld = () => {
+        console.log('data en confirmDeleteOld: ', data);
+        setDeleteOldDialog(true);
+    }
+
+    const deleteOld = () => {
+        //toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Registros eliminados', life: 3000 });
+        setDeleteOldDialog(false);
     }
 
     {/*
@@ -157,8 +225,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         _item[`${name}`] = val;
 
         setItem(_item);
-
-
     }
     */}
 
@@ -166,10 +232,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <div className="space-x-4">
-                    <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editItem(rowData)} />
-                    <Button icon="pi pi-trash" className="p-button-rounded p-button-warning "  onClick={() => confirmDeleteItem(rowData)} />
-                </div>
+                {rowData.deleted == 0 ? <div className="space-x-4"><Button icon="pi pi-pencil" className="p-button-rounded p-button-success" onClick={() => editItem(rowData)} />
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning "  onClick={() => confirmDeleteItem(rowData)} /></div>
+                 :
+                <div className="flex justify-center"><Button icon="pi pi-refresh" label="Undo" className="p-button-raised p-button-outlined p-button-plain" onClick={() => confirmUndoDelete(rowData)} /></div>
+                }
             </React.Fragment>
         );
     }
@@ -183,15 +250,37 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const deleteItemDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteItemDialog} />
+            <Button label="No" icon="pi pi-times" className="p-button-danger p-button-text" onClick={hideDeleteItemDialog} />
             <Button label="Sí" icon="pi pi-check" className="p-button-text" onClick={deleteItem} />
         </React.Fragment>
     );
 
+    const undoDeleteDialogFooter = (
+        <React.Fragment>
+            <Button label="No" icon="pi pi-times" className="p-button-danger p-button-text" onClick={hideUndoDeleteDialog} />
+            <Button label="Sí" icon="pi pi-check" className="p-button-text" onClick={undoDelete} />
+        </React.Fragment>
+    )
+
+    const deleteOldFooter = (
+        <React.Fragment>
+            <Button label="No" icon="pi pi-times" className="p-button-danger p-button-text" onClick={hideDeleteOldDialog} />
+            <Button label="Sí" icon="pi pi-check" className="p-button-text" onClick={deleteOld} />
+        </React.Fragment>
+    )
+
     const paginatorButton = () => {
         return(
             <React.Fragment>
-                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Nuevo" onClick={openNew} />
+                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nueva tienda" onClick={openNew} />
+            </React.Fragment>
+        )
+    }
+
+    const deleteOldItemsButton = () => {
+        return(
+            <React.Fragment>
+                <Button icon="pi pi-trash" className="p-button p-button-danger mr-2" label="Eliminar registros antiguos" onClick={confirmDeleteOld}></Button>
             </React.Fragment>
         )
     }
@@ -217,9 +306,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     // }
 
     const rowClass = (data) => {
-        console.log('data: ', data);
+        //console.log('data: ', data);
         return {
-            'bg-black-alpha-10': data.deleted == 0
+            'deleted': data.deleted == 1
         }
     }
 
@@ -237,12 +326,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         paginator
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                         paginatorLeft={paginatorButton}
-                        paginatorRight={' '}
+                        paginatorRight={deleteOldItemsButton}
                         rows={5}
                     >
 
                     {/*
-
                     {headers.map(header => (
                         <Column
                             field={header}
@@ -258,13 +346,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         )
                     )}
 
-                        <Column
-                            body={actionBodyTemplate}
-                            header='Acciones'
-                            exportable={false}
-                            style={{ minWidth: '8rem' }}
-                            key={item.id}
-                        />
+                    <Column
+                        body={actionBodyTemplate}
+                        header='Acciones'
+                        exportable={false}
+                        style={{ minWidth: '8rem' }}
+                        key={item.id}
+                    />
 
                     </DataTable>
                 }
@@ -280,7 +368,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {/*Se le pasa setStoreData (setItem ahora) al hijo */}
-                {table === 'tienda' && <DialogStore store={item} setItem={setItem} oldItem={oldItem}/>}
+                {table === 'tienda' && <DialogStore store={item} setItem={setItem}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
@@ -299,6 +387,47 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     {item && <span>¿Seguro/a que quieres eliminar este item?</span>}
                 </div>
 
+            </Dialog>
+
+            <Dialog
+                visible={undoDeleteDialog}
+                style={{ width: '450px '}}
+                header='Recuperar elemento'
+                modal
+                footer={undoDeleteDialogFooter}
+                onHide={hideUndoDeleteDialog}
+            >
+                <div className='confirmation-content'>
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    {item && <span>¿Quieres recuperar este elemento?</span>}
+                </div>
+            </Dialog>
+
+            <Dialog
+                visible={deleteOldDialog}
+                style={{ width: '80%' }}
+                modal
+                header='¡Cuidado!'
+                footer={deleteOldFooter}
+                onHide={hideDeleteOldDialog}
+            >
+                <div className='confirmation-content'>
+                    <div className='flex align-items justify-center bg-yellow-200 p-6 rounded-2xl'>
+                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }}/>
+                        <span>Vas a borrar permanentemente estos registros antiguos. ¿Estás seguro/a?</span>
+                    </div>
+                    <br/>
+                    <DataTable
+                        value={data}
+                        size='small'
+                        responsiveLayout='scroll'
+                    >
+                        {Object.keys(filteredData[0]).map((key) => (
+                            <Column field={key} header={key} key={key} />
+                            )
+                        )}
+                    </DataTable>
+                </div>
             </Dialog>
         </div>
     )

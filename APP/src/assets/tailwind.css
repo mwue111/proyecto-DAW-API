@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    .deleted{
+        background-color: rgb(255, 205, 205)!important;
+    }
+}
+
+
+/*Usar la capa de compoenntes para clases más complicadas como card, btn, badge...
+
+@layer components{
+    .card{
+        background-color: theme('colors.white);
+    }
+}*/

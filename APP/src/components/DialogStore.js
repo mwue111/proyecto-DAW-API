@@ -6,10 +6,9 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import axios from 'axios';
 
+const DialogStore = ({ store, setItem }) =>{
 
-const DialogStore = ({ store, setItem, oldItem }) =>{
-
-    console.log('item en DialogStore: ', store);
+    //console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
 //  const [storeAddress, setStoreAddress] = useState({});
@@ -24,7 +23,7 @@ const DialogStore = ({ store, setItem, oldItem }) =>{
     const newStore = store;
 
     useEffect(() => {
-        console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
+        //console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
         //setStoreAddress(store.address);
         setItem(dataForm);
     }, [dataForm]);
@@ -35,7 +34,8 @@ const DialogStore = ({ store, setItem, oldItem }) =>{
         const name = target.name;
 
         if(name !== null){
-                        //comprobación del nombre que viene: si tiene un punto son dos elementos
+
+            //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
             if(checkName.length == 2){
                 console.log('checkname: ', checkName, 'val: ', val);
