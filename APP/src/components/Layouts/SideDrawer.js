@@ -30,8 +30,8 @@ const SideDrawer = () => {
                     </NavLink>
                     <br/>
                     <NavLink
-                        href="/store"
-                        active={router.pathname === '/store'}>
+                        href="/tienda/1"
+                        active={router.pathname === '/tienda'}>
                         Tienda
                     </NavLink>
                 </Sidebar>

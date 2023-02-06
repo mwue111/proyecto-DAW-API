@@ -278,7 +278,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             <div className="card">
 
                 {user && user.type === 'administrator' &&
-                <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5}>
+                <DataTable value={data} responsiveLayout="scroll" paginator paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" paginatorLeft={paginatorButton} paginatorRight={' '} rows={5} >
 
                 {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key}/>

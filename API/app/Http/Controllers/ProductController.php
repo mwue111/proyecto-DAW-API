@@ -147,4 +147,8 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->stores()->detach($request->stores);
     }
+    // funcion para recibir todos los nombres de los productos
+    public function getNames(){
+        return Product::select('name', 'id')->get();
+    }
 }

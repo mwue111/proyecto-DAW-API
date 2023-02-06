@@ -9,6 +9,7 @@ import { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import SearchBar from '@/components/SearchBar'
 
 const Navigation = ({ user }) => {
     const router = useRouter()
@@ -59,10 +60,15 @@ const Navigation = ({ user }) => {
                         )}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <NavLink
-                            href="/store"
-                            active={router.pathname === '/store'}>
+                            href="/tienda/1"
+                            active={router.pathname === '/tienda'}>
                             Tienda
                         </NavLink>
+                        </div>
+                    </div>
+                    <div className="hidden sm:flex sm:items-center sm:ml-6">
+                        <div className="flex items-center">
+                            <SearchBar />
                         </div>
                     </div>
 

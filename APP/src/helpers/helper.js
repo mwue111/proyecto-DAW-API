@@ -103,3 +103,39 @@ function formatJsonProducto (productos){
     return data;
 }
 
+///////////////////////////////////////////
+// SearchBar
+///////////////////////////////////////////
+
+export function productStoreFilterFormatter(productList, storeList){
+    let data = [
+        {
+            label: 'Productos',
+            items: []
+        },
+        {
+            label: 'Tiendas',
+            items: []
+        }
+
+    ];
+    if(storeList.length >0 && productList.length >0){
+        storeList.map((item) => {
+            data[1].items.push({
+                label: item.name,
+                value: item.name,
+                id: item.id,
+                type: 'tienda'
+            })
+        })
+        productList.map((item) => {
+            data[0].items.push({
+                label: item.name,
+                value: item.name,
+                id: item.id,
+                type: 'producto'
+            })
+        })
+    }
+    return data;
+}

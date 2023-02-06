@@ -32,6 +32,7 @@ class StoreController extends Controller{
         $store->schedules->each(function($schedule){
             $schedule->timeSlot;
         });
+        $store->products;
         $store->specialDays;
         $store->owner->user;
         $store->address;
@@ -126,5 +127,10 @@ class StoreController extends Controller{
     public function deleteSpecialDay($id){
         $store = Store::find($id);
         $store->specialDays()->detach();
+    }
+
+    // funcion para recibir todos los nombres de las tiendas
+    public function getNames(){
+        return Store::select('name', 'id')->get();
     }
 }
