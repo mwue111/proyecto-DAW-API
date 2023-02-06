@@ -41,7 +41,8 @@ function formatJsonTienda (tiendas){
             descripcion: item.description,
             address: item.address,
             schedules: item.schedules,
-            deleted: item.deleted
+            deleted: item.deleted,
+            updated_at: item.updated_at
         }
     })
     return data;

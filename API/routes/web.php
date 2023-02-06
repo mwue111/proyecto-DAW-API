@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/tienda/borrar', 'StoreController@deleteOldStores');
+
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });

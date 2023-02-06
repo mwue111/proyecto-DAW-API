@@ -30,12 +30,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
     const [changedItem, setChangedItem] = useState({});
+    const [dataToDelete, setDataToDelete] = useState({});
 
 
     useEffect(() => {
-
         axios.get(fetchUrl)
-            .then(res => setData(formatJson(res.data, table)));
+            .then(res => setData(formatJson(res.data, table)))
+        {/*
+        axios.get(fetchUrl)
+            .then(res => setAllData(res.data));
+        */}
 
 //         fetch(fetchUrl)
 //           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
@@ -48,7 +52,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 //     //        setIsLoading(true);
 //           });
 
-       }, [fetchUrl, changedItem]);
+       }, [fetchUrl, changedItem, dataToDelete]);
 
       console.log({table});
 
@@ -107,7 +111,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        // let _data = [...data];
+        //let _data = [...data];
         //let _item = {...item};
         //console.log('_data fuera del if: ', _data)
 
@@ -136,10 +140,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             setItemDialog(false);
             setItem({});
             setOldItem({});
-
-
-            // axios.get(fetchUrl)
-            // .then(res => setData(formatJson(res.data, table)));
     }
 
     const editItem = (item) => {
@@ -178,8 +178,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setData(_data);
         setDeleteDataDialog(false);
         setItem('');
-    }
-*/}
+        }
+        */}
 }
 
     const confirmUndoDelete = (item) => {
@@ -208,12 +208,44 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const confirmDeleteOld = () => {
-        console.log('data en confirmDeleteOld: ', data);
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        //se envía a back la dirección /borrar + meses (body) + cabeceras
+        axios.post(fetchUrl + '/borrar', {"data": 3}, { headers })
+            .then(res => setDataToDelete(formatJson(res.data, table))
+                // if(!Array.isArray(res)){
+                //     let arrayRes = [];
+                //     arrayRes.push(res);
+                //     console.log('ArrayRes: ', arrayRes);
+                //     setDataToDelete(arrayRes);
+                // }
+                // else{
+                //     setDataToDelete(res)}
+                // });
+
+            );
         setDeleteOldDialog(true);
     }
 
     const deleteOld = () => {
-        //toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Registros eliminados', life: 3000 });
+        const arrayToDelete = [];
+        console.log('datatodelete: ', dataToDelete);
+        dataToDelete.map((item) => {
+            arrayToDelete.push(item.id)
+        });
+        //console.log('arrayToDelete: ', arrayToDelete);
+        arrayToDelete.map((item) => {
+            axios.delete(fetchUrl + '/' + item)
+                .then(response => {
+                    console.log(response.data + ' - eliminado');
+                    setDataToDelete(arrayToDelete)
+                    })
+                .catch(error => console.log(error + ' - ha habido un error'))
+        })
+
+        toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Registros eliminados', life: 3000 });
         setDeleteOldDialog(false);
     }
 
@@ -280,7 +312,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const deleteOldItemsButton = () => {
         return(
             <React.Fragment>
-                <Button icon="pi pi-trash" className="p-button p-button-danger mr-2" label="Eliminar registros antiguos" onClick={confirmDeleteOld}></Button>
+                <Button icon="pi pi-trash" className="p-button p-button-danger mr-2" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()}></Button>
             </React.Fragment>
         )
     }
@@ -293,12 +325,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
     {/** el último parámetro, {}, indica el valor inicial del acumulador acum (y se declara que será un objeto además) */}
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if(typeof value !== 'object' && key != 'deleted'){
+            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at'){
                 acum[key] = value;
             }
             return acum;
         }, {});
     });
+
     {/**FilteredData es un ARRAY que no contiene objetos */}
 
     // if(isLoading){
@@ -418,9 +451,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     </div>
                     <br/>
                     <DataTable
-                        value={data}
+                        value={dataToDelete}
                         size='small'
                         responsiveLayout='scroll'
+
                     >
                         {Object.keys(filteredData[0]).map((key) => (
                             <Column field={key} header={key} key={key} />

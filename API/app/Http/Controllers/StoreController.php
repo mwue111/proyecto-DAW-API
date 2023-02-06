@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
 class StoreController extends Controller{
     public function index(){
@@ -11,6 +14,7 @@ class StoreController extends Controller{
 
         foreach($stores as $store){
             $store->owner->user;
+            $store->owner;
             $store->schedules->each(function($schedule){
                 $schedule->timeSlot;
             });
@@ -64,8 +68,7 @@ class StoreController extends Controller{
     }
 
     public function destroy($id){
-        $store = Store::destroy($id);
-        return $store;
+       return Store::destroy($id);
     }
 
     //Los métodos que podían pasarse a las funciones store, show, update y destroy se han comentado.
@@ -131,5 +134,24 @@ class StoreController extends Controller{
     public function deleteSpecialDay($id){
         $store = Store::find($id);
         $store->specialDays()->detach();
+    }
+
+    public function deleteOldStores(Request $request){
+        //todo en formato fechas
+        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));     //now() con horario en España
+        $date->sub(DateInterval::createFromDateString($request->data . ' months')); //llamada al método sub, a la clase dateinterval que recoge data y lo interpreta como meses
+        $test = $date->format('Y-m-d H:i:s');
+
+        $oldStores = Store::where("updated_at", "<", $test)->where("deleted", "=", "1")->get();
+        foreach($oldStores as $store){
+            $store->owner->user;
+            $store->schedules->each(function($schedule){
+                $schedule->timeSlot;
+            });
+            $store->specialDays;
+            $store->address->town->state;
+        }
+
+        return $oldStores;
     }
 }
