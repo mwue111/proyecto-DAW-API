@@ -4,7 +4,6 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
-import axios from 'axios';
 
 const DialogStore = ({ store, setItem }) =>{
 

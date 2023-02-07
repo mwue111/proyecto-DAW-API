@@ -10,6 +10,9 @@ import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
 import { formatJson, changedJson, objectProfoundCopy} from '@/helpers/helper';
 import axios from 'axios';
+//import Dropdown from './Dropdown';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
@@ -31,6 +34,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [oldItem, setOldItem] = useState({});
     const [changedItem, setChangedItem] = useState({});
     const [dataToDelete, setDataToDelete] = useState({});
+    const [months, setMonths] = useState();
+    const [dropdownValue, setDropdownValue] = useState();
 
 
     useEffect(() => {
@@ -229,6 +234,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteOldDialog(true);
     }
 
+    {/**here */}
     const deleteOld = () => {
         const arrayToDelete = [];
         console.log('datatodelete: ', dataToDelete);
@@ -310,9 +316,19 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const deleteOldItemsButton = () => {
+        const monthAmount = [3, 6, 12];
+
+        const handleInputChange = (e) => {
+            setMonths(e.value);
+            setDropdownValue(e.value);
+        }
+
         return(
             <React.Fragment>
-                <Button icon="pi pi-trash" className="p-button p-button-danger mr-2" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()}></Button>
+                <div className='flex items-center space-x-2'>
+                    <Dropdown value={dropdownValue} options={monthAmount} onChange={handleInputChange} placeholder='Selecciona la antiguedad' />
+                    <Button icon="pi pi-trash" className="p-button p-button-danger" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()}/>
+                </div>
             </React.Fragment>
         )
     }
@@ -357,7 +373,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         rowClassName={rowClass}
                         responsiveLayout="scroll"
                         paginator
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
                         paginatorLeft={paginatorButton}
                         paginatorRight={deleteOldItemsButton}
                         rows={5}
