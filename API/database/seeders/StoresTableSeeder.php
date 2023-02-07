@@ -55,7 +55,7 @@ class StoresTableSeeder extends Seeder
             'latitude' => 2.17403,
             'description' => 'El verdulero, la mejor tienda de verduras de la ciudad',
             'user_id' => 4,
-            'deleted' => 0,
+            'deleted' => 1,
             'created_at' => '2021-01-01 00:00:00',
             'updated_at' => '2021-07-08 00:00:00',
         ]);

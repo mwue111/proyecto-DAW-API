@@ -36,6 +36,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [dataToDelete, setDataToDelete] = useState({});
     const [months, setMonths] = useState(3);
     const [dropdownValue, setDropdownValue] = useState();
+    const [singleDeleted, setSingleDeleted] = useState(false);
 
 
     useEffect(() => {
@@ -56,8 +57,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 //             console.log(error);
 //     //        setIsLoading(true);
 //           });
-
-       }, [fetchUrl, changedItem, dataToDelete]);
+        setSingleDeleted(false)
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
 
       console.log({table});
 
@@ -256,16 +257,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteOldDialog(false);
     }
 
-    {/*
-    const onInputPriceChange = (e, name) =>{
-         Para cambiar el precio de los productos (está en la tabla products_stores)
-        const val = e.value || 0;
-        let _item = {...item};
-        _item[`${name}`] = val;
-
-        setItem(_item);
+    const deleteSingleItem = (item) => {
+        axios.delete(fetchUrl + '/' + item.id)
+            .then(response => {
+                console.log(response.data + ' - eliminado');
+                setSingleDeleted(true);
+            })
+            .catch(error => console.log(error + ' - ha habido un error'))
+        setDeleteOldDialog(false);
     }
-    */}
+
+    const deleteSingleOldItem = (rowData) => {
+        return(
+           <Button icon='pi pi-trash' className='p-button p-button-danger' label='Eliminar registro' onClick={() => {deleteSingleItem(rowData)}} />
+        )
+    }
 
     {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
@@ -477,6 +483,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             <Column field={key} header={key} key={key} />
                             )
                         )}
+                        <Column  body={deleteSingleOldItem}/>
                     </DataTable>
                 </div>
             </Dialog>
