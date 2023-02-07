@@ -27,7 +27,7 @@ class StoresTableSeeder extends Seeder
             'user_id' => 4,
             'deleted' => 1,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2023-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -42,7 +42,7 @@ class StoresTableSeeder extends Seeder
             'user_id' => 4,
             'deleted' => 0,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2022-11-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -57,7 +57,7 @@ class StoresTableSeeder extends Seeder
             'user_id' => 4,
             'deleted' => 0,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-07-08 00:00:00',
         ]);
 
         DB::table('stores')->insert([

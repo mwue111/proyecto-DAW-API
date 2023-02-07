@@ -34,7 +34,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [oldItem, setOldItem] = useState({});
     const [changedItem, setChangedItem] = useState({});
     const [dataToDelete, setDataToDelete] = useState({});
-    const [months, setMonths] = useState();
+    const [months, setMonths] = useState(3);
     const [dropdownValue, setDropdownValue] = useState();
 
 
@@ -217,8 +217,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
+        console.log('months: ', months);
+
         //se envía a back la dirección /borrar + meses (body) + cabeceras
-        axios.post(fetchUrl + '/borrar', {"data": 3}, { headers })
+        axios.post(fetchUrl + '/borrar', {"data": months}, { headers })
             .then(res => setDataToDelete(formatJson(res.data, table))
                 // if(!Array.isArray(res)){
                 //     let arrayRes = [];
@@ -234,14 +236,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteOldDialog(true);
     }
 
-    {/**here */}
     const deleteOld = () => {
         const arrayToDelete = [];
         console.log('datatodelete: ', dataToDelete);
         dataToDelete.map((item) => {
             arrayToDelete.push(item.id)
         });
-        //console.log('arrayToDelete: ', arrayToDelete);
+
         arrayToDelete.map((item) => {
             axios.delete(fetchUrl + '/' + item)
                 .then(response => {
@@ -326,7 +327,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className='flex items-center space-x-2'>
-                    <Dropdown value={dropdownValue} options={monthAmount} onChange={handleInputChange} placeholder='Selecciona la antiguedad' />
+                    <Dropdown value={dropdownValue} options={monthAmount} editable onChange={handleInputChange} placeholder='Meses de antiguedad' />
                     <Button icon="pi pi-trash" className="p-button p-button-danger" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()}/>
                 </div>
             </React.Fragment>
