@@ -6,34 +6,23 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import axios from 'axios';
 
-const DialogStore = ({ store, setItem }) =>{
+const DialogStore = ({ store, setItem, cities }) =>{
+    const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
+    const newStore = store;
+    const optionsCity = [...cities];
 
     console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
-    const [dropdownCities, setDropdownCities] = useState(store.address?.town.name); //store.address.town ? store.address.town.name : 'Ciudad'
-
-    //console.log('ciudad: ', store.address.town.name);
-
-    const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
-    const optionsCity = [];
-
-    console.log('optionsCity: ', optionsCity);
-
-    const newStore = store;
+    const [dropdownCities, setDropdownCities] = useState(store.address?.town ? store.address.town.name : 'Ciudad');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/ciudad')
-            .then(res => {res.data.map((item) => {
-                optionsCity.push(item.name)
-            })
-        })
         setItem(dataForm);
-        setDropdownCities(store.address.town.name)
-        console.log('ciudad: ', store.address.town.name)
+        //setDropdownCities(store.address.town.name)
+        console.log('ciudad: ', dropdownCities)
 
-    }, [dataForm]);
+    }, [dataForm, dropdownCities]);
 
     const handleInputChange = (e) => {
         const target = e.target;
@@ -96,7 +85,7 @@ const DialogStore = ({ store, setItem }) =>{
                     <InputTextarea defaultValue={dataForm.address.remarks} onChange={handleInputChange} rows={5}/>
                     <br />
                     <label htmlFor='address.town.name'>Ciudad:</label>
-                    <Dropdown name='address.town.name' value={dropdownCities} options={optionsCity} onChange={handleInputChange} placeholder='Selecciona una ciudad' onClick={e => console.log('evento: ', e)} required/>
+                    <Dropdown name='address.town.name' value={dropdownCities} options={optionsCity} onChange={handleInputChange} placeholder='Selecciona una ciudad' required/>
                 </Fieldset>
             </div>
             <br/>

@@ -37,11 +37,20 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [months, setMonths] = useState(3);
     const [dropdownValue, setDropdownValue] = useState();
     const [singleDeleted, setSingleDeleted] = useState(false);
-
+    const [cities, setCities] = useState([])
 
     useEffect(() => {
         axios.get(fetchUrl)
             .then(res => setData(formatJson(res.data, table)))
+
+        let cityOptions = [];
+        axios.get('http://localhost:8000/ciudad')
+                .then(res => {res.data.map((item) => {
+                    cityOptions.push(item.name)
+                })
+        })
+        setCities(cityOptions);
+
         {/*
         axios.get(fetchUrl)
             .then(res => setAllData(res.data));
@@ -424,7 +433,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {/*Se le pasa setStoreData (setItem ahora) al hijo */}
-                {table === 'tienda' && <DialogStore store={item} setItem={setItem}/>}
+                {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 

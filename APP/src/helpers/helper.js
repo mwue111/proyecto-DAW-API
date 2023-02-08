@@ -97,7 +97,7 @@ export function changedJson(oldData, newData){
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){ //address
                 Object.keys(oldData[item]).map(subItem => {
-                    if(oldData[item][subItem] !== newData[item][subItem] && subItem !== 'town'){  //store[address][name, ...]
+                    if(oldData[item][subItem] !== newData[item][subItem] && subItem !== 'town'){  //store[address][name, ...] //here
                         if(!changed[item]){
                             changed[item] = {};
                         }
