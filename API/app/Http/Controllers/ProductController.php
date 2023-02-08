@@ -20,7 +20,7 @@ class ProductController extends Controller
             $producto->stores;
             $producto->sales;
             $producto->category;
-            $producto->images;
+            $producto->images->file;
         }
         return $data['productos'];
         //return view('producto', $data);
@@ -62,7 +62,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::find($id);
+        $producto = Product::find($id);
+        $producto->tags;
+        $producto->stores;
+        $producto->sales;
+        $producto->category;
+        $producto->images->each(function($image){
+            $image->file;
+        });
+        return $producto;
     }
 
     /**
