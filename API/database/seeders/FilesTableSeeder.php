@@ -71,7 +71,25 @@ class FilesTableSeeder extends Seeder
 
         DB::table('files')->insert([
             'user_id' => 5,
-            'url' => 'foto de un pomelo',
+            'url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg/640px-Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/2021-04/pomelo.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://actualfruveg.com/wp-content/uploads/2022/02/bea-pomelo-c-e1646326027737.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://images.ecestaticos.com/NQnGXX3dmMx3xZ9nKoxfFQNvTOQ=/75x40:1910x1411/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F703%2Fbce%2F642%2F703bce6420de19f2078f6a62c005bcf0.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);

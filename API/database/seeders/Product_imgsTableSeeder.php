@@ -16,17 +16,17 @@ class Product_imgsTableSeeder extends Seeder
        
        DB::table('product_imgs')->insert([
         'file_id' => 9,
-        'product_id' => 2,
+        'product_id' => 1,
        ]); 
        
        DB::table('product_imgs')->insert([
         'file_id' => 10,
-        'product_id' => 3,
+        'product_id' => 1,
        ]); 
        
        DB::table('product_imgs')->insert([
         'file_id' => 11,
-        'product_id' => 4,
+        'product_id' => 1,
        ]); 
        
        DB::table('product_imgs')->insert([

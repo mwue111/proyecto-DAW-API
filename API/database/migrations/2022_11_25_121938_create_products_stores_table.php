@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('products_stores', function (Blueprint $table) {
             $table->integer('product_id');
             $table->integer('store_id');
-            $table->integer('unit'); //unidad de medida
+            $table->string('unit', 100); //unidad de medida
             $table->integer('stock');
             $table->float('value');
             $table->string('remarks', 1000);

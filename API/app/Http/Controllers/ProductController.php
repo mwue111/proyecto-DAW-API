@@ -21,7 +21,7 @@ class ProductController extends Controller
             $producto->stores;
             $producto->sales;
             $producto->category;
-            $producto->productImgs;
+            $producto->images->file;
         }
         return $data['productos'];
         //return view('producto', $data);
@@ -34,7 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
         $product = Product::create($request->all());
         $product->tags()->attach($request->tags);
         $product->stores()->attach($request->stores, [
-            'stock' => $request->stock, 
+            'stock' => $request->stock,
             'value' => $request->value,
             'remarks' => $request->remarks
         ]);
@@ -63,7 +63,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::find($id);
+        $producto = Product::find($id);
+        $producto->tags;
+        $producto->stores;
+        $producto->sales;
+        $producto->category;
+        $producto->images->each(function($image){
+            $image->file;
+        });
+        return $producto;
     }
 
     /**
@@ -147,5 +155,9 @@ class ProductController extends Controller
     public function removeStores($id, Request $request){
         $product = Product::find($id);
         $product->stores()->detach($request->stores);
+    }
+    // funcion para recibir todos los nombres de los productos
+    public function getNames(){
+        return Product::select('name', 'id')->get();
     }
 }

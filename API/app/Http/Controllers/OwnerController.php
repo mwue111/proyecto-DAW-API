@@ -8,20 +8,19 @@ use App\Models\Owner;
 class OwnerController extends Controller{
 
     public function index(){
-        $owners = Owner::all();
-        foreach($owners as $owner){
+        $owner=Owner::all();
+        foreach($owner as $owner){
             $owner->user;
             $owner->each(function($owner){
                 $owner->stores;
             });
         }
-        return $owners;
-
     }
 
     public function show($id){
         $owner = Owner::find($id);
         $owner->user;
+        $owner->stores;
         return $owner;
     }
 

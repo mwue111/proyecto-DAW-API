@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id')->index();
             $table->string('road_type', 45);
-            $table->string('zip_code');
+            $table->string('zip_code', 5);
             $table->integer('number');
             $table->string('name', 100);
             $table->integer('town_id');

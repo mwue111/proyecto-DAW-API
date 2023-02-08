@@ -9,14 +9,13 @@ use App\Models\StoreImg;
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
-
         foreach($stores as $store){
-            $store->owner->user;
+            $store->products;
             $store->schedules->each(function($schedule){
                 $schedule->timeSlot;
             });
             $store->specialDays;
-            $store->storeImgs;
+            $store->owner->user;
             $store->address->town->state;
         }
 
@@ -32,12 +31,13 @@ class StoreController extends Controller{
 
     public function show($id){
         $store = Store::find($id);
-        $store->owner;
         $store->schedules->each(function($schedule){
             $schedule->timeSlot;
         });
+        $store->products;
         $store->specialDays;
-        $store->address->town->state;
+        $store->owner->user;
+        $store->address;
         return $store;
     }
 
@@ -131,5 +131,10 @@ class StoreController extends Controller{
     public function deleteSpecialDay($id){
         $store = Store::find($id);
         $store->specialDays()->detach();
+    }
+
+    // funcion para recibir todos los nombres de las tiendas
+    public function getNames(){
+        return Store::select('name', 'id')->get();
     }
 }

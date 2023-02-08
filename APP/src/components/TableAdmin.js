@@ -10,8 +10,36 @@ import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
 import { formatJson, changedJson, objectProfoundCopy} from '@/helpers/helper';
 import axios from 'axios';
+import { Galleria } from 'primereact/galleria';
 
 const TableAdmin = ({ fetchUrl, table }) => {
+
+    const defaultImages= [
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria1.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria1s.jpg',
+            alt: 'Description for Image 1',
+            title: 'Title 1'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria2.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria2s.jpg',
+            alt: 'Description for Image 2',
+            title: 'Title 2'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria3.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria3s.jpg',
+            alt: 'Description for Image 3',
+            title: 'Title 3'
+        },
+        {
+            itemImageSrc: 'https://primereact.org/images/galleria/galleria4.jpg',
+            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria4s.jpg',
+            alt: 'Description for Image 4',
+            title: 'Title 4'
+        },
+    ]
 
     const { user } = useAuth();
     const [data, setData] = useState([]);
@@ -26,7 +54,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
-
+    const [images, setImages] = useState(defaultImages);
+    const galleria = useRef(null);
 
     useEffect(() => {
 
@@ -75,8 +104,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
         //Cambiar estructura en DialogUser
     }
 
-    const headers = Object.keys(data[0]);
-    headers.splice(headers.indexOf('created_at'), headers.length - headers.indexOf('created_at'));
+    const openStores = () => {
+        setStoresDialog(true);
+    }
+
+    const openImages = () => {
+        setItemDialog(true);
+    }
+
+    const hidestoresDialog = () => {
+        setStoresDialog(false);
+    }
 
     const openNew = () => {
         //switch para emptyProduct y emptyUser según el tipo
@@ -151,18 +189,33 @@ const TableAdmin = ({ fetchUrl, table }) => {
     */}
     }
 
-    {/*
-    const onInputPriceChange = (e, name) =>{
-         Para cambiar el precio de los productos (está en la tabla products_stores)
-        const val = e.value || 0;
-        let _item = {...item};
-        _item[`${name}`] = val;
+    const responsiveOptions = [
+        {
+            breakpoint: '1500px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '1024px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 2
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
 
-        setItem(_item);
-
-
+    const itemTemplate = (item) => {
+        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
     }
-    */}
+
+    const thumbnailTemplate = (item) => {
+        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+    }
+
 
     {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
@@ -175,6 +228,26 @@ const TableAdmin = ({ fetchUrl, table }) => {
             </React.Fragment>
         );
     }
+
+    const imagesBodyTemplate = (rowData) => {
+        return(
+            <React.Fragment>
+                <div className="space-x-4">
+                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
+                circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
+
+            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => galleria.current.show()} />
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    const storesDialogFooter = (
+        <React.Fragment>
+            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveItem} />
+        </React.Fragment>
+    );
 
     const itemDialogFooter = (
         <React.Fragment>
@@ -223,7 +296,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <div className="card">
 
-                {user && user.type === 'administrator' &&
                     <DataTable
                         value={data}
                         responsiveLayout="scroll"
@@ -234,23 +306,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         rows={5}
                     >
 
-                    {/*
-
-                    {headers.map(header => (
-                        <Column
-                            field={header}
-                            header={header}
-                            key={item.id}
-                        />
-                    ))}
-                    */}
-
                     {/**filteredData es [tienda1, tienda2, tienda3...]. Coge [0] para coger las cabeceras (los nombres de la columna) de la primera tienda, porque todas tienen lo mismo. Con .map asigna cada llave a un elemento del componente Column*/}
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
                         )
                     )}
 
+                        {<Column field={'imágenes'} header={'imágenes'} key={'imágenes'} body={imagesBodyTemplate}/>}
                         <Column
                             body={actionBodyTemplate}
                             header='Acciones'
@@ -260,8 +322,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         />
 
                     </DataTable>
-                }
-
             </div>
 
             <Dialog

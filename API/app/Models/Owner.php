@@ -23,5 +23,4 @@ class Owner extends Model
     public function stores(){
         return $this->hasMany(Store::class, 'user_id');
     }
-
 }

@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/tienda/nombre', 'StoreController@getNames');
+Route::get('/producto/nombre', 'ProductController@getNames');
+
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
@@ -67,6 +70,8 @@ Route::delete('/tienda/borrar_horario/{id}', 'StoreController@deleteSchedule');
 //Route::post('/tienda/dias-especiales', 'StoreController@createSpecialDay');
 Route::put('/tienda/dias_especiales/{id}', 'StoreController@setSpecialDay');
 Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecialDay');
+
+
 
 //Usuarios:
 Route::resource('/usuario', 'UserController');
