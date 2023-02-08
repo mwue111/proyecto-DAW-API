@@ -58,21 +58,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const galleria = useRef(null);
 
     useEffect(() => {
-
         axios.get(fetchUrl)
             .then(res => setData(formatJson(res.data, table)));
-
-//         fetch(fetchUrl)
-//           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
-//           .then(data => {   //data contiene un array con los datos de response
-//             setData(formatJson(data, table));
-//   //          setIsLoading(false);
-//           })
-//           .catch(error => {
-//             console.log(error);
-//     //        setIsLoading(true);
-//           });
-
        }, [fetchUrl, oldItem]);
 
       console.log({table});
@@ -136,10 +123,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        // let _data = [...data];
-        //let _item = {...item};
-        //console.log('_data fuera del if: ', _data)
-
         if (item.id) {
             const jsonDB = changedJson(oldItem, item);
             console.log('oldItem en saveItem: ', oldItem);
@@ -155,9 +138,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-                // _item.id = createId();
-                // _data.push(_item);
-                // toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
+                //toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
             }
 
             //setData(_data);
@@ -180,13 +161,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const deleteItem = () => {
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
-    {/*
-        let _data = data.filter(val => val.id !== item.id);
-        setData(_data);
-        setDeleteDataDialog(false);
-        setItem('');
-    }
-    */}
     }
 
     const responsiveOptions = [
@@ -271,12 +245,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    {/**item: array de arrays, con llave-valor de cada elemento de data. */}
-
-    {/**.reduce(acumulador (objeto), valor actual(cada elemento de item, cada array llave-valor que contiene))
-    la primera vuelta sería acum['nombre'] = 'frutería'. Guarda eso en acum. En 'address' no guarda nada porque el contenido de address es un objeto. Devuelve por tanto un objeto filtrado que no tiene objetos dentro. */}
-
-    {/** el último parámetro, {}, indica el valor inicial del acumulador acum (y se declara que será un objeto además) */}
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
             if(typeof value !== 'object'){
@@ -285,11 +253,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             return acum;
         }, {});
     });
-    {/**FilteredData es un ARRAY que no contiene objetos */}
 
-    // if(isLoading){
-    //     return(<div>No hay datos</div>);
-    // }
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -305,8 +269,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         paginatorRight={' '}
                         rows={5}
                     >
-
-                    {/**filteredData es [tienda1, tienda2, tienda3...]. Coge [0] para coger las cabeceras (los nombres de la columna) de la primera tienda, porque todas tienen lo mismo. Con .map asigna cada llave a un elemento del componente Column*/}
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
                         )
@@ -332,7 +294,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-                {/*Se le pasa setStoreData (setItem ahora) al hijo */}
+
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} oldItem={oldItem}/>}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}

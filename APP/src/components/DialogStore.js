@@ -12,12 +12,8 @@ const DialogStore = ({ store, setItem, oldItem }) =>{
     console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
-//  const [storeAddress, setStoreAddress] = useState({});
     const [oldAddress, setOldAddress] = useState({});
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
-    // const getAllAddress = () => {
-    //     setStoreAddress(store.address);
-    // }
 
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
 
@@ -25,7 +21,6 @@ const DialogStore = ({ store, setItem, oldItem }) =>{
 
     useEffect(() => {
         console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
-        //setStoreAddress(store.address);
         setItem(dataForm);
     }, [dataForm]);
 
@@ -35,7 +30,6 @@ const DialogStore = ({ store, setItem, oldItem }) =>{
         const name = target.name;
 
         if(name !== null){
-                        //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
             if(checkName.length == 2){
                 console.log('checkname: ', checkName, 'val: ', val);
