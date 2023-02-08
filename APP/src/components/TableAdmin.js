@@ -119,13 +119,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         //let _data = [...data];
         //let _item = {...item};
-        //console.log('_data fuera del if: ', _data)
 
         if (item.id) {
             const jsonDB = changedJson(oldItem, item);
-            //console.log('oldItem en saveItem: ', oldItem);
-            //console.log('item en saveItem: ', item);
-            //console.log('jsonDB: ', jsonDB);
 
             const headers = {
                 'Content-Type': 'application/json'
@@ -136,10 +132,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-                // _item.id = createId();
-                // _data.push(_item);
-                // toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
-            }
+            console.log('item en saveItem: ' , item);
+            // const headers = {
+            //     'Content-Type': 'application/json'
+            // };
+
+            //axios.post(fetchUrl +  + headers)
+            toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
+        }
 
             //setData(_data);
             setChangedItem(item);
@@ -417,7 +417,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <Dialog
                 visible={itemDialog}
-                style={{ width: '450px' }}
+                style={{ width: '700px' }}
                 header={item.nombre ? `Modificar ${item.nombre}` : `Crear ${table}`}
                 modal className="p-fluid"
                 footer={itemDialogFooter}

@@ -4,27 +4,35 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
+import axios from 'axios';
 
 const DialogStore = ({ store, setItem }) =>{
 
-    //console.log('item en DialogStore: ', store);
+    console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
-//  const [storeAddress, setStoreAddress] = useState({});
-    const [oldAddress, setOldAddress] = useState({});
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
-    // const getAllAddress = () => {
-    //     setStoreAddress(store.address);
-    // }
+    const [dropdownCities, setDropdownCities] = useState(store.address?.town.name); //store.address.town ? store.address.town.name : 'Ciudad'
+
+    //console.log('ciudad: ', store.address.town.name);
 
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
+    const optionsCity = [];
+
+    console.log('optionsCity: ', optionsCity);
 
     const newStore = store;
 
     useEffect(() => {
-        //console.log('dataForm dentro del usseEffect en DialogStore: ', dataForm);
-        //setStoreAddress(store.address);
+        axios.get('http://localhost:8000/ciudad')
+            .then(res => {res.data.map((item) => {
+                optionsCity.push(item.name)
+            })
+        })
         setItem(dataForm);
+        setDropdownCities(store.address.town.name)
+        console.log('ciudad: ', store.address.town.name)
+
     }, [dataForm]);
 
     const handleInputChange = (e) => {
@@ -36,12 +44,16 @@ const DialogStore = ({ store, setItem }) =>{
 
             //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
-            if(checkName.length == 2){
+            if(checkName.length >= 2){
                 console.log('checkname: ', checkName, 'val: ', val);
                 newStore[checkName[0]][checkName[1]] = val;
 
                 if(name === 'address.road_type'){
                     setDropdownValue(e.value);
+                }
+
+                if(name === 'address.town.name'){
+                    setDropdownCities(e.value);
                 }
             }
             else{
@@ -49,6 +61,7 @@ const DialogStore = ({ store, setItem }) =>{
             }
 
             setDataForm(newStore);
+            console.log('newstore: ', dataForm);
         }
     }
 
@@ -81,6 +94,9 @@ const DialogStore = ({ store, setItem }) =>{
                     <br/>
                     <label htmlFor='address.remarks'>Comentarios adicionales:</label>
                     <InputTextarea defaultValue={dataForm.address.remarks} onChange={handleInputChange} rows={5}/>
+                    <br />
+                    <label htmlFor='address.town.name'>Ciudad:</label>
+                    <Dropdown name='address.town.name' value={dropdownCities} options={optionsCity} onChange={handleInputChange} placeholder='Selecciona una ciudad' onClick={e => console.log('evento: ', e)} required/>
                 </Fieldset>
             </div>
             <br/>

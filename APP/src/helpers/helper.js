@@ -32,7 +32,7 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            direccion: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
+            direccion: formatJsonDireccion(item.address),
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,
@@ -133,5 +133,3 @@ function headersDB(oldHeaders){
 export function objectProfoundCopy(object){
     return JSON.parse(JSON.stringify(object));
 }
-
-//2. Función para borrar datos (confirmación de) con fetch: ruta + delete
