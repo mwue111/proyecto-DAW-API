@@ -93,14 +93,29 @@ export function changedJson(oldData, newData){
     let changed = {};
 
     Object.keys(oldData).map(item => {
+        console.log('1. oldData[item]: ', oldData[item]);
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){ //address
                 Object.keys(oldData[item]).map(subItem => {
-                    if(oldData[item][subItem] !== newData[item][subItem] && subItem !== 'town'){  //store[address][name, ...]
-                        if(!changed[item]){
-                            changed[item] = {};
+                    console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem])
+                    if(oldData[item][subItem] !== newData[item][subItem]){  //store[address][name, ...]
+                        console.log(typeof(oldData[item][subItem]));
+                        //para acceder a town:
+                        if(oldData[item][subItem] === 'object'){
+                            //no entra
+                            console.log('entra');
+                            Object.keys(oldData[item][subItem].map(infraItem => {
+                                console.log('3. Objetos de oldData[item][subitem]: ', oldData[item][subItem][infraItem])
+                                if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem]){
+                                    //Esto estaba fuera de lo nuevo
+                                    if(!changed[item]){
+                                        changed[item] = {};
+                                    }
+                                    changed[item][subItem][infraItem] = newData[item][subItem][infraItem];
+                                    //changed[item][subItem] = ...
+                                }
+                            }))
                         }
-                        changed[item][subItem] = newData[item][subItem];
                     }
                 })
             }
@@ -130,6 +145,7 @@ function headersDB(oldHeaders){
 }
 
 export function objectProfoundCopy(object){
+    console.log('objeto que llega desde edit item: ', object)
     return JSON.parse(JSON.stringify(object));
 }
 

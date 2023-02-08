@@ -159,6 +159,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const editItem = (item) => {
         const _item = objectProfoundCopy(item); //copia profunda del item (incluyendo el objeto address)
+        console.log('item dentro de edit item: ', item);
         setItem(item);
         setOldItem(_item);   //Aquí item ya tiene el address actualizado
         setItemDialog(true);
