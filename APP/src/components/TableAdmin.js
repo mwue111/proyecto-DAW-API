@@ -13,6 +13,7 @@ import axios from 'axios';
 //import Dropdown from './Dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
+import { headersDB } from 'helpers/helper.js';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
@@ -46,7 +47,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         let cityOptions = [];
         axios.get('http://localhost:8000/ciudad')
                 .then(res => {res.data.map((item) => {
-                    cityOptions.push(item.name)
+                    cityOptions.push({
+                        'name': item.name,
+                        'id': item.id
+                    })
                 })
         })
         setCities(cityOptions);
@@ -87,7 +91,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 "number": 0,
                 "name": "",
                 "remarks": "",
-            }
+                "town_id": "",
+                "town": {
+                    "name": "",
+                    "id": ""
+                }
+            },
     }
 
     const emptyProduct = {
@@ -141,12 +150,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-            console.log('item en saveItem: ' , item);
-            // const headers = {
-            //     'Content-Type': 'application/json'
-            // };
+            //console.log('item en saveItem: ' , item);
+            const headers = {
+                'Content-Type': 'application/json'
+            };
 
-            //axios.post(fetchUrl +  + headers)
+            const itemDB = headersDB(item);
+            
+            //console.log(itemDB);
+            axios.post(fetchUrl, itemDB, headers);
+
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 

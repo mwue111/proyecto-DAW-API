@@ -93,29 +93,36 @@ export function changedJson(oldData, newData){
     let changed = {};
 
     Object.keys(oldData).map(item => {
-        console.log('1. oldData[item]: ', oldData[item]);
+        //console.log('1. oldData[item]: ', oldData[item]);
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){ //address
                 Object.keys(oldData[item]).map(subItem => {
-                    console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem])
+                    //console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem]);
                     if(oldData[item][subItem] !== newData[item][subItem]){  //store[address][name, ...]
-                        console.log(typeof(oldData[item][subItem]));
+                        if(!changed[item]){ //si no existe [item] en changed, lo crea
+                            changed[item] = {};
+                        }
+                        if(subItem !== 'town'){
+                            changed[item][subItem] = newData[item][subItem];
+                        }
+                        //console.log('tipo: ', typeof(oldData[item][subItem]));
                         //para acceder a town:
-                        if(oldData[item][subItem] === 'object'){
-                            //no entra
-                            console.log('entra');
-                            Object.keys(oldData[item][subItem].map(infraItem => {
-                                console.log('3. Objetos de oldData[item][subitem]: ', oldData[item][subItem][infraItem])
-                                if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem]){
+                        else{
+                            //nuevo
+                            Object.keys(oldData[item][subItem]).map(infraItem => {
+                                if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
+                                    //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
+                                    //console.log('entra');
                                     //Esto estaba fuera de lo nuevo
-                                    if(!changed[item]){
-                                        changed[item] = {};
+                                    if(!changed[item]['town_id']){
+                                        changed[item]['town_id'] = {};
                                     }
-                                    changed[item][subItem][infraItem] = newData[item][subItem][infraItem];
+                                    changed[item]['town_id'] = newData[item][subItem]['id'];
                                     //changed[item][subItem] = ...
                                 }
-                            }))
+                            })
                         }
+
                     }
                 })
             }
@@ -127,13 +134,15 @@ export function changedJson(oldData, newData){
         }
     })
 
+    //console.log('changed: ', changed);
     changed = headersDB(changed);
 
     return changed;
 
 }
 
-function headersDB(oldHeaders){
+export function headersDB(oldHeaders){
+    console.log('oldHeaders: ', oldHeaders);
     Object.keys(oldHeaders).map(item => {
         switch(item){
             case 'nombre': oldHeaders['name'] = oldHeaders[item]; delete oldHeaders[item]; break;
@@ -145,7 +154,7 @@ function headersDB(oldHeaders){
 }
 
 export function objectProfoundCopy(object){
-    console.log('objeto que llega desde edit item: ', object)
+    console.log('lo que devuelve objectProfoundCopy: ', JSON.parse(JSON.stringify(object)));
     return JSON.parse(JSON.stringify(object));
 }
 

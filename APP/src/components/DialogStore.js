@@ -13,13 +13,13 @@ const DialogStore = ({ store, setItem, cities }) =>{
     console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
-    const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : 'Calle');
-    const [dropdownCities, setDropdownCities] = useState(store.address?.town ? store.address.town.name : 'Ciudad');
+    const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
+    const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null); //useState(store.address?.town ? store.address.town.name : 'Ciudad');
 
     useEffect(() => {
         setItem(dataForm);
         //setDropdownCities(store.address.town.name)
-        console.log('ciudad: ', dropdownCities)
+        //console.log('ciudad: ', dropdownCities)
 
     }, [dataForm, dropdownCities]);
 
@@ -32,13 +32,18 @@ const DialogStore = ({ store, setItem, cities }) =>{
 
             //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
-            if(checkName.length >= 2){
-                console.log('checkname: ', checkName, 'val: ', val);
+            if(checkName.length == 2){
+                //console.log('checkname: ', checkName, 'val: ', val);    //para comprobar si se está guardando lo que necesitamos hay que comprobar newStore, no checkname
                 newStore[checkName[0]][checkName[1]] = val;
 
                 if(name === 'address.road_type'){
                     setDropdownValue(e.value);
                 }
+            }
+            else if(checkName.length == 3){
+                newStore[checkName[0]][checkName[1]][checkName[2]] = val.name;   //con esto almacenamos en store[address][town][name] = la ciudad
+                newStore[checkName[0]][checkName[1]]['id'] = val.id;
+                console.log(e.value);
 
                 if(name === 'address.town.name'){
                     setDropdownCities(e.value);
@@ -81,10 +86,10 @@ const DialogStore = ({ store, setItem, cities }) =>{
                     <InputText name='address.zip_code' defaultValue={dataForm.address.zip_code} onChange={handleInputChange} required />
                     <br/>
                     <label htmlFor='address.remarks'>Comentarios adicionales:</label>
-                    <InputTextarea defaultValue={dataForm.address.remarks} onChange={handleInputChange} rows={5}/>
+                    <InputTextarea name='address.remarks' defaultValue={dataForm.address.remarks} onChange={handleInputChange} rows={5}/>
                     <br />
                     <label htmlFor='address.town.name'>Ciudad:</label>
-                    <Dropdown name='address.town.name' value={dropdownCities} options={optionsCity} onChange={handleInputChange} placeholder='Selecciona una ciudad' required/>
+                    <Dropdown name='address.town.name' value={dropdownCities} options={optionsCity} onChange={handleInputChange} placeholder='Selecciona una ciudad' optionLabel='name' required/>
                 </Fieldset>
             </div>
             <br/>

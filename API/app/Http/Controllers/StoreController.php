@@ -26,10 +26,12 @@ class StoreController extends Controller{
     }
 
     public function store(Request $request){
+        
         $store = Store::create($request->all());
         $store->products()->attach($request->products);
         $store->schedules()->attach($request->schedules);
         $store->specialDays()->attach($request->specialDays);
+
     }
 
     public function show($id){
