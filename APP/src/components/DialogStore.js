@@ -5,17 +5,19 @@ import { Fieldset } from 'primereact/fieldset';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 
-const DialogStore = ({ store, setItem, cities }) =>{
+const DialogStore = ({ store, setItem, cities, owners }) =>{
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
     const newStore = store;
     const optionsCity = [...cities];
+    const optionsOwner = [...owners]
 
     console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
     const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null); //useState(store.address?.town ? store.address.town.name : 'Ciudad');
-
+    const [dropdownOwner, setDropdownOwner] = useState(store.user_id? {'name': optionsOwner[0].name, 'id': optionsOwner[0].id} : null);
+    
     useEffect(() => {
         setItem(dataForm);
         //setDropdownCities(store.address.town.name)
@@ -35,15 +37,16 @@ const DialogStore = ({ store, setItem, cities }) =>{
             if(checkName.length == 2){
                 //console.log('checkname: ', checkName, 'val: ', val);    //para comprobar si se está guardando lo que necesitamos hay que comprobar newStore, no checkname
                 newStore[checkName[0]][checkName[1]] = val;
+                //console.log('newStore[checkName[0]][checkName[1]]: ', newStore[checkName[0]][checkName[1]]);
 
                 if(name === 'address.road_type'){
                     setDropdownValue(e.value);
                 }
             }
             else if(checkName.length == 3){
-                newStore[checkName[0]][checkName[1]][checkName[2]] = val.name;   //con esto almacenamos en store[address][town][name] = la ciudad
-                newStore[checkName[0]][checkName[1]]['id'] = val.id;
-                console.log(e.value);
+                newStore[checkName[0]][checkName[1]][checkName[2]] = val.name;  //con esto almacenamos en store[address][town][name] = la ciudad
+                newStore[checkName[0]][checkName[1]]['id'] = val.id;            //store[addres][town]['id'] = id
+                //console.log('e.value: ', e.value); //{name:'Almería', id: 1}
 
                 if(name === 'address.town.name'){
                     setDropdownCities(e.value);
@@ -51,6 +54,11 @@ const DialogStore = ({ store, setItem, cities }) =>{
             }
             else{
                 newStore[name] = val;
+                
+                if(newStore[name] === 'user_id'){
+                    newStore[checkName[0]] = val.id;
+                }
+                setDropdownOwner(e.value);
             }
 
             setDataForm(newStore);
@@ -65,6 +73,9 @@ const DialogStore = ({ store, setItem, cities }) =>{
                     <label htmlFor='storeName'>Nombre de la tienda:</label>
                     <InputText id='storeName' name='nombre' defaultValue={dataForm.nombre} onChange={handleInputChange} required autoFocus />
                     <br/>
+                    <br/>
+                    <label htmlFor='user_id'>Propietario/a:</label>
+                    <Dropdown name='user_id' value={dropdownOwner} options={optionsOwner} onChange={handleInputChange} placeholder='Seleccione el/la propietario/a' optionLabel='name' required/>
                     <br/>
                     <label htmlFor='description'>Descripción de la tienda:</label>
                     <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} required />

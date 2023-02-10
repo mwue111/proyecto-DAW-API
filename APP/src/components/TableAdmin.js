@@ -39,12 +39,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [dropdownValue, setDropdownValue] = useState();
     const [singleDeleted, setSingleDeleted] = useState(false);
     const [cities, setCities] = useState([])
+    const [owners, setOwners] = useState([])
 
     useEffect(() => {
         axios.get(fetchUrl)
             .then(res => setData(formatJson(res.data, table)))
 
-        let cityOptions = [];
+        let cityOptions = [];   //array de objetos
         axios.get('http://localhost:8000/ciudad')
                 .then(res => {res.data.map((item) => {
                     cityOptions.push({
@@ -54,6 +55,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 })
         })
         setCities(cityOptions);
+
+        let ownerOptions = [];
+        axios.get('http://localhost:8000/propietario')
+                .then(res => {res.data.map((item) => {
+                    ownerOptions.push({
+                        'name': item.user.name,
+                        'id': item.user.id
+                    })
+                })
+        })
+
+        setOwners(ownerOptions);
 
         {/*
         axios.get(fetchUrl)
@@ -97,6 +110,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     "id": ""
                 }
             },
+            "user_id": "",
+            "deleted": 0
     }
 
     const emptyProduct = {
@@ -135,9 +150,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
-        //let _data = [...data];
-        //let _item = {...item};
-
         if (item.id) {
             const jsonDB = changedJson(oldItem, item);
 
@@ -157,7 +169,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             const itemDB = headersDB(item);
             
-            //console.log(itemDB);
+            itemDB.user_id = itemDB.user_id.id;
+            if(itemDB.address && itemDB.address.town){
+                itemDB.address.town_id = itemDB.address.town.id;
+                delete itemDB.address.town;
+            }
+
+
+            console.log('itemDB: ', itemDB);
             axios.post(fetchUrl, itemDB, headers);
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
@@ -447,7 +466,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {/*Se le pasa setStoreData (setItem ahora) al hijo */}
-                {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities}/>}
+                {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 

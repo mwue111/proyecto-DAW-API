@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+//use App\Models\Address;
+//use App\Http\Controllers\AddressController;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
@@ -26,12 +28,14 @@ class StoreController extends Controller{
     }
 
     public function store(Request $request){
-        
+        dd($request);
+
         $store = Store::create($request->all());
+        $store->address()->create($request->address);
+
         $store->products()->attach($request->products);
         $store->schedules()->attach($request->schedules);
         $store->specialDays()->attach($request->specialDays);
-
     }
 
     public function show($id){
@@ -64,9 +68,9 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->update($request->all());
         if(isset($request->address)){
+            //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
             $store->address()->update($request->address, $request->address_id);
         }
-        //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
     }
 
     public function destroy($id){

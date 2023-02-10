@@ -36,6 +36,7 @@ function formatJsonTienda (tiendas){
             telefono2: item.telephone2,
             email: item.email,
             propietario: item.owner.user.username,
+            user_id: item.user_id,
             horario: formatJsonHorario(item.schedules),
             descripcion: item.description,
             address: item.address,
@@ -91,7 +92,7 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-
+    console.log('newData: ', newData);
     Object.keys(oldData).map(item => {
         //console.log('1. oldData[item]: ', oldData[item]);
         if(!Array.isArray(oldData[item])){
@@ -99,14 +100,20 @@ export function changedJson(oldData, newData){
                 Object.keys(oldData[item]).map(subItem => {
                     //console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem]);
                     if(oldData[item][subItem] !== newData[item][subItem]){  //store[address][name, ...]
-                        if(!changed[item]){ //si no existe [item] en changed, lo crea
-                            changed[item] = {};
-                        }
+                        console.log('olData address: ', oldData['address'])
+                        console.log('newData address: ', newData['address'])
+
                         if(subItem !== 'town'){
+                            
+                            if(!changed[item]){ //si no existe [item] en changed, lo crea
+                                changed[item] = {};
+                            }
+
                             changed[item][subItem] = newData[item][subItem];
                         }
                         //console.log('tipo: ', typeof(oldData[item][subItem]));
                         //para acceder a town:
+
                         else{
                             //nuevo
                             Object.keys(oldData[item][subItem]).map(infraItem => {
@@ -117,6 +124,7 @@ export function changedJson(oldData, newData){
                                     if(!changed[item]['town_id']){
                                         changed[item]['town_id'] = {};
                                     }
+                                    //here: town_id llega vacío a BD
                                     changed[item]['town_id'] = newData[item][subItem]['id'];
                                     //changed[item][subItem] = ...
                                 }
@@ -128,13 +136,18 @@ export function changedJson(oldData, newData){
             }
             else{
                 if(oldData[item] !== newData[item]){
-                    changed[item] = newData[item];
+                    if(item == 'user_id'){
+                        changed[item] = newData[item]['id'];
+                    }
+                    else{
+                        changed[item] = newData[item];
+                    }
                 }
             }
         }
     })
 
-    //console.log('changed: ', changed);
+    console.log('changed: ', changed);
     changed = headersDB(changed);
 
     return changed;
@@ -142,7 +155,6 @@ export function changedJson(oldData, newData){
 }
 
 export function headersDB(oldHeaders){
-    console.log('oldHeaders: ', oldHeaders);
     Object.keys(oldHeaders).map(item => {
         switch(item){
             case 'nombre': oldHeaders['name'] = oldHeaders[item]; delete oldHeaders[item]; break;
