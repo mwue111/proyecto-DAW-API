@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\StoreImg;
+use App\Models\Address;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
 class StoreController extends Controller{
     public function index(){
         $stores = Store::all();
         foreach($stores as $store){
             $store->products;
+            $store->owner->user;
+            $store->owner;
             $store->schedules->each(function($schedule){
                 $schedule->timeSlot;
             });
@@ -23,7 +29,13 @@ class StoreController extends Controller{
     }
 
     public function store(Request $request){
-        $store = Store::create($request->all());
+
+        $address = Address::create($request->address);
+
+        $store = new Store($request->all());
+        $store->address_id = $address->id;
+        $store->save();
+
         $store->products()->attach($request->products);
         $store->schedules()->attach($request->schedules);
         $store->specialDays()->attach($request->specialDays);
@@ -59,13 +71,14 @@ class StoreController extends Controller{
     public function update(Request $request, $id){
         $store = Store::find($id);
         $store->update($request->all());
-        $store->address()->update($request->address, $request->address_id);
-        //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
+        if(isset($request->address)){
+            //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
+            $store->address()->update($request->address, $request->address_id);
+        }
     }
 
     public function destroy($id){
-        $store = Store::destroy($id);
-        return $store;
+       return Store::destroy($id);
     }
 
     //Los métodos que podían pasarse a las funciones store, show, update y destroy se han comentado.
@@ -136,5 +149,24 @@ class StoreController extends Controller{
     // funcion para recibir todos los nombres de las tiendas
     public function getNames(){
         return Store::select('name', 'id')->get();
+    }
+
+    public function deleteOldStores(Request $request){
+        //todo en formato fechas
+        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));     //now() con horario en España
+        $date->sub(DateInterval::createFromDateString($request->data . ' months')); //llamada al método sub, a la clase dateinterval que recoge data y lo interpreta como meses
+        $test = $date->format('Y-m-d H:i:s');
+
+        $oldStores = Store::where("updated_at", "<", $test)->where("deleted", "=", "1")->get();
+        foreach($oldStores as $store){
+            $store->owner->user;
+            $store->schedules->each(function($schedule){
+                $schedule->timeSlot;
+            });
+            $store->specialDays;
+            $store->address->town->state;
+        }
+
+        return $oldStores;
     }
 }

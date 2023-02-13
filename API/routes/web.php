@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/tienda/nombre', 'StoreController@getNames');
 Route::get('/producto/nombre', 'ProductController@getNames');
+Route::post('/tienda/borrar', 'StoreController@deleteOldStores');
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];

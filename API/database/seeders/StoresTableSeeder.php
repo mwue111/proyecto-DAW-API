@@ -26,8 +26,9 @@ class StoresTableSeeder extends Seeder
             'deleted' => 0,
             'description' => 'Fruteria de María, la mejor fruteria de la ciudad',
             'user_id' => 4,
+            'deleted' => 1,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2023-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -41,8 +42,9 @@ class StoresTableSeeder extends Seeder
             'deleted' => 0,
             'description' => 'Anka la Encarna, la mejor tienda de alimentación de la ciudad',
             'user_id' => 4,
+            'deleted' => 0,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2022-11-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -56,8 +58,9 @@ class StoresTableSeeder extends Seeder
             'deleted' => 0,
             'description' => 'El verdulero, la mejor tienda de verduras de la ciudad',
             'user_id' => 4,
+            'deleted' => 1,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2021-07-08 00:00:00',
         ]);
 
         DB::table('stores')->insert([
@@ -71,8 +74,9 @@ class StoresTableSeeder extends Seeder
             'deleted' => 0,
             'description' => 'El bazar del alimento, la mejor tienda de alimentación de la ciudad',
             'user_id' => 4,
+            'deleted' => 1,
             'created_at' => '2021-01-01 00:00:00',
-            'updated_at' => '2021-01-01 00:00:00',
+            'updated_at' => '2018-01-01 00:00:00',
         ]);
 
         DB::table('stores')->insert([

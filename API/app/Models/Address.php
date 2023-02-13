@@ -26,3 +26,4 @@ class Address extends Model
         return $this->hasOne(Store::class);
     }
 }
+

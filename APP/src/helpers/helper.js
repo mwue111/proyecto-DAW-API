@@ -36,6 +36,7 @@ function formatJsonTienda (tiendas){
             telefono2: item.telephone2,
             email: item.email,
             propietario: item.owner.user.username,
+            user_id: item.user_id,
             horario: formatJsonHorario(item.schedules),
             descripcion: item.description,
             address: item.address,
@@ -91,34 +92,69 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-
+    console.log('newData: ', newData);
     Object.keys(oldData).map(item => {
+        //console.log('1. oldData[item]: ', oldData[item]);
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){ //address
                 Object.keys(oldData[item]).map(subItem => {
-                    if(oldData[item][subItem] !== newData[item][subItem] && subItem !== 'town'){  //store[address][name, ...]
-                        if(!changed[item]){
-                            changed[item] = {};
+                    //console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem]);
+                    if(oldData[item][subItem] !== newData[item][subItem]){  //store[address][name, ...]
+                        console.log('olData address: ', oldData['address'])
+                        console.log('newData address: ', newData['address'])
+
+                        if(subItem !== 'town'){
+                            
+                            if(!changed[item]){ //si no existe [item] en changed, lo crea
+                                changed[item] = {};
+                            }
+
+                            changed[item][subItem] = newData[item][subItem];
                         }
-                        changed[item][subItem] = newData[item][subItem];
+                        //console.log('tipo: ', typeof(oldData[item][subItem]));
+                        //para acceder a town:
+
+                        else{
+                            //nuevo
+                            Object.keys(oldData[item][subItem]).map(infraItem => {
+                                if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
+                                    //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
+                                    //console.log('entra');
+                                    //Esto estaba fuera de lo nuevo
+                                    if(!changed[item]['town_id']){
+                                        changed[item]['town_id'] = {};
+                                    }
+                                    //here: town_id llega vacío a BD
+                                    changed[item]['town_id'] = newData[item][subItem]['id'];
+                                    //changed[item][subItem] = ...
+                                }
+                            })
+                        }
+
                     }
                 })
             }
             else{
                 if(oldData[item] !== newData[item]){
-                    changed[item] = newData[item];
+                    if(item == 'user_id'){
+                        changed[item] = newData[item]['id'];
+                    }
+                    else{
+                        changed[item] = newData[item];
+                    }
                 }
             }
         }
     })
 
+    console.log('changed: ', changed);
     changed = headersDB(changed);
 
     return changed;
 
 }
 
-function headersDB(oldHeaders){
+export function headersDB(oldHeaders){
     Object.keys(oldHeaders).map(item => {
         switch(item){
             case 'nombre': oldHeaders['name'] = oldHeaders[item]; delete oldHeaders[item]; break;
@@ -130,6 +166,7 @@ function headersDB(oldHeaders){
 }
 
 export function objectProfoundCopy(object){
+    console.log('lo que devuelve objectProfoundCopy: ', JSON.parse(JSON.stringify(object)));
     return JSON.parse(JSON.stringify(object));
 }
 

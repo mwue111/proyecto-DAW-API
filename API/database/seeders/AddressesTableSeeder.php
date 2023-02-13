@@ -15,7 +15,7 @@ class addressesTableSeeder extends Seeder
             'zip_code' => '04000',
             'number' => '2',
             'name' => 'Falsa',
-            'town_id' => '1',
+            'town_id' => '3',
             'remarks' => 'ninguno'
         ]);
         DB::table('addresses')->insert([
@@ -23,7 +23,7 @@ class addressesTableSeeder extends Seeder
             'zip_code' => '04002',
             'number' => '1',
             'name' => 'Falsísima',
-            'town_id' => '1',
+            'town_id' => '2',
             'remarks' => 'una avenida real'
         ]);
         DB::table('addresses')->insert([
