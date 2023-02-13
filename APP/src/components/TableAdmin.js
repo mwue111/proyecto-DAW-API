@@ -55,7 +55,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
-    //const [storeData, setStoreData] = useState({}); //para recibir datos de DialogStore
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
@@ -95,22 +94,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         })
 
         setOwners(ownerOptions);
-
-        {/*
-        axios.get(fetchUrl)
-            .then(res => setAllData(res.data));
-        */}
-
-//         fetch(fetchUrl)
-//           .then(response => response.json())    //response contiene todos los datos de la url que se le pasa
-//           .then(data => {   //data contiene un array con los datos de response
-//             setData(formatJson(data, table));
-//   //          setIsLoading(false);
-//           })
-//           .catch(error => {
-//             console.log(error);
-//     //        setIsLoading(true);
-//           });
         setSingleDeleted(false)
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
 
@@ -315,16 +298,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         //se envía a back la dirección /borrar + meses (body) + cabeceras
         axios.post(fetchUrl + '/borrar', {"data": months}, { headers })
             .then(res => setDataToDelete(formatJson(res.data, table))
-                // if(!Array.isArray(res)){
-                //     let arrayRes = [];
-                //     arrayRes.push(res);
-                //     console.log('ArrayRes: ', arrayRes);
-                //     setDataToDelete(arrayRes);
-                // }
-                // else{
-                //     setDataToDelete(res)}
-                // });
-
             );
         setDeleteOldDialog(true);
     }
@@ -484,17 +457,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         rows={5}
                     >
 
-                    {/*
-                    {headers.map(header => (
-                        <Column
-                            field={header}
-                            header={header}
-                            key={item.id}
-                        />
-                    ))}
-                    */}
-
-                    {/**filteredData es [tienda1, tienda2, tienda3...]. Coge [0] para coger las cabeceras (los nombres de la columna) de la primera tienda, porque todas tienen lo mismo. Con .map asigna cada llave a un elemento del componente Column*/}
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
                         )
@@ -520,7 +482,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-                {/*Se le pasa setStoreData (setItem ahora) al hijo */}
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
                 {table === 'producto' && <DialogProduct product={item} />}
                 {table === 'usuario' && <DialogUser user={item} />}
