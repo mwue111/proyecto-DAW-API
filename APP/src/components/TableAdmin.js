@@ -168,16 +168,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
             };
 
             const itemDB = headersDB(item);
-            
+
             itemDB.user_id = itemDB.user_id.id;
             if(itemDB.address && itemDB.address.town){
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;
             }
 
-
             console.log('itemDB: ', itemDB);
-            axios.post(fetchUrl, itemDB, headers);
+            axios.post(fetchUrl, itemDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }

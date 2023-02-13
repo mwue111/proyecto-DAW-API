@@ -1,3 +1,5 @@
+//Creado por mí para el CORS
+
 const cors=require("cors");
 const corsOptions ={
    origin:'*', 
