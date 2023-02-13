@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
@@ -17,7 +17,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
     const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null); //useState(store.address?.town ? store.address.town.name : 'Ciudad');
     const [dropdownOwner, setDropdownOwner] = useState(store.user_id? {'name': optionsOwner[0].name, 'id': optionsOwner[0].id} : null);
-    
+
     useEffect(() => {
         setItem(dataForm);
         //setDropdownCities(store.address.town.name)
@@ -54,7 +54,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
             }
             else{
                 newStore[name] = val;
-                
+
                 if(newStore[name] === 'user_id'){
                     newStore[checkName[0]] = val.id;
                 }

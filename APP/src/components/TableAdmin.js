@@ -10,8 +10,6 @@ import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
 import { formatJson, changedJson, objectProfoundCopy} from '@/helpers/helper';
 import axios from 'axios';
-//import Dropdown from './Dropdown';
-import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { headersDB } from 'helpers/helper.js';
 
@@ -85,8 +83,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 //           });
         setSingleDeleted(false)
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
-
-      console.log({table});
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -162,7 +158,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-            //console.log('item en saveItem: ' , item);
             const headers = {
                 'Content-Type': 'application/json'
             };
@@ -175,7 +170,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 delete itemDB.address.town;
             }
 
-            console.log('itemDB: ', itemDB);
             axios.post(fetchUrl, itemDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
@@ -190,7 +184,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const editItem = (item) => {
         const _item = objectProfoundCopy(item); //copia profunda del item (incluyendo el objeto address)
-        console.log('item dentro de edit item: ', item);
         setItem(item);
         setOldItem(_item);   //Aquí item ya tiene el address actualizado
         setItemDialog(true);
@@ -198,7 +191,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const confirmDeleteItem = (item) => {
         const _item = objectProfoundCopy(item);
-        console.log('item en delete: ', item);
         setItem(item);
         setOldItem(_item);
         setDeleteItemDialog(true);
@@ -231,7 +223,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const confirmUndoDelete = (item) => {
         const _item = objectProfoundCopy(item);
-        console.log('item en delete: ', item);
         setItem(item);
         setOldItem(_item);
         setUndoDeleteDialog(true);
@@ -259,8 +250,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
-        console.log('months: ', months);
-
         //se envía a back la dirección /borrar + meses (body) + cabeceras
         axios.post(fetchUrl + '/borrar', {"data": months}, { headers })
             .then(res => setDataToDelete(formatJson(res.data, table))
@@ -280,7 +269,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const deleteOld = () => {
         const arrayToDelete = [];
-        console.log('datatodelete: ', dataToDelete);
         dataToDelete.map((item) => {
             arrayToDelete.push(item.id)
         });
@@ -403,7 +391,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     // }
 
     const rowClass = (data) => {
-        //console.log('data: ', data);
         return {
             'deleted': data.deleted == 1
         }

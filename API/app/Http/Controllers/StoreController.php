@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\Address;
-//use App\Http\Controllers\AddressController;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
@@ -34,7 +33,6 @@ class StoreController extends Controller{
         $store = new Store($request->all());
         $store->address_id = $address->id;
         $store->save();
-        //$store->address()->create($request->address);
 
         $store->products()->attach($request->products);
         $store->schedules()->attach($request->schedules);
