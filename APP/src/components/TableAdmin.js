@@ -92,8 +92,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     })
                 })
         })
-
         setOwners(ownerOptions);
+
         setSingleDeleted(false)
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
 
