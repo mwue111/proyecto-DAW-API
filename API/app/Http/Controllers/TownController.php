@@ -36,4 +36,9 @@ class TownController extends Controller
     public function destroy($id){
         return Town::destroy($id);
     }
+
+    public function getId($name){
+        $town = Town::where('name', $name)->first();
+        return $town->id;
+    }
 }
