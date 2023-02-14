@@ -19,5 +19,9 @@ class OwnersTableSeeder extends Seeder
             'user_id' => 4,
             'verified' => 0
         ]);
+        DB::table('owners')->insert([
+            'user_id' => 5,
+            'verified' => 0
+        ]);
     }
 }

@@ -16,7 +16,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     const [dataForm, setDataForm] = useState(store);
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
     const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null); //useState(store.address?.town ? store.address.town.name : 'Ciudad');
-    const [dropdownOwner, setDropdownOwner] = useState(store.user_id? {'name': optionsOwner[0].name, 'id': optionsOwner[0].id} : null);
+    const [dropdownOwner, setDropdownOwner] = useState(store.user_id ? {'name': optionsOwner[0].name, 'id': optionsOwner[0].id} : null);
 
     useEffect(() => {
         setItem(dataForm);
@@ -53,12 +53,15 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                 }
             }
             else{
+
                 newStore[name] = val;
 
                 if(newStore[name] === 'user_id'){
                     newStore[checkName[0]] = val.id;
+                    console.log('newStore[checkName[0]]: ', newStore[checkName[0]]);
+                    setDropdownOwner(val.name);
                 }
-                setDropdownOwner(e.value);
+
             }
 
             setDataForm(newStore);

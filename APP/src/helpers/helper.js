@@ -105,7 +105,7 @@ export function changedJson(oldData, newData){
 
                         if(subItem !== 'town'){
 
-                            if(!changed[item]){ //si no existe [item] en changed, lo crea
+                            if(!changed[item]){                         //si no existe [item] en changed, lo crea
                                 changed[item] = {};
                             }
 
@@ -114,21 +114,19 @@ export function changedJson(oldData, newData){
                         //console.log('tipo: ', typeof(oldData[item][subItem]));
                         //para acceder a town:
 
-                        else{
-                            //nuevo
+                        else{   //si subItem ES town:
                             Object.keys(oldData[item][subItem]).map(infraItem => {
                                 if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
                                     //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
-                                    //console.log('entra');
-                                    //Esto estaba fuera de lo nuevo
-                                    if(!changed[item]){
+
+                                    if(!changed[item]){                 //crear primero [item]...
                                         changed[item] = {};
                                     }
 
-                                    if(!changed[item]['town_id']){
+                                    if(!changed[item]['town_id']){      //... y luego town_id
                                         changed[item]['town_id'] = {};
                                     }
-                                    //here: town_id llega vacío a BD
+
                                     changed[item]['town_id'] = newData[item][subItem]['id'];
                                     //changed[item][subItem] = ...
                                 }
@@ -140,7 +138,7 @@ export function changedJson(oldData, newData){
             }
             else{
                 if(oldData[item] !== newData[item]){
-                    if(item == 'user_id'){
+                    if(item === 'user_id'){
                         changed[item] = newData[item]['id'];
                     }
                     else{

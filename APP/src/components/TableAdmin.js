@@ -155,6 +155,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             console.log('jsonDB: ', jsonDB);
 
+            //jsonDB.user_id = jsonDB.user_id.id;
+
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
