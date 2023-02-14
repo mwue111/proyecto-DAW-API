@@ -73,10 +73,6 @@ class StoreController extends Controller{
             //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
             $store->address()->update($request->address, $request->address_id);
         }
-        if(isset($request->town_id)){
-            $address = Address::find($request->addresss->id);
-            $address->town()->update($request->town_id, $request->town_id);
-        }
     }
 
     public function destroy($id){
