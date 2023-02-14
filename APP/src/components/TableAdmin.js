@@ -153,6 +153,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
+            console.log('jsonDB: ', jsonDB);
+
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
@@ -165,6 +167,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             const itemDB = headersDB(item);
 
             itemDB.user_id = itemDB.user_id.id;
+
             if(itemDB.address && itemDB.address.town){
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;

@@ -104,7 +104,7 @@ export function changedJson(oldData, newData){
                         console.log('newData address: ', newData['address'])
 
                         if(subItem !== 'town'){
-                            
+
                             if(!changed[item]){ //si no existe [item] en changed, lo crea
                                 changed[item] = {};
                             }
@@ -121,6 +121,10 @@ export function changedJson(oldData, newData){
                                     //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
                                     //console.log('entra');
                                     //Esto estaba fuera de lo nuevo
+                                    if(!changed[item]){
+                                        changed[item] = {};
+                                    }
+
                                     if(!changed[item]['town_id']){
                                         changed[item]['town_id'] = {};
                                     }

@@ -19,7 +19,7 @@ class Address extends Model
     ];
 
     public function town() {
-        return $this->belongsTo('App\Models\Town');
+        return $this->belongsTo(Town::class);
     }
 
     public function store(){
