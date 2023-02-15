@@ -98,10 +98,9 @@ export function changedJson(oldData, newData){
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){ //address
                 Object.keys(oldData[item]).map(subItem => {
-                    //console.log('2. Objetos de oldData[item]: oldData[item][subItem]: ', oldData[item][subItem]);
                     if(oldData[item][subItem] !== newData[item][subItem]){  //store[address][name, ...]
-                        console.log('olData address: ', oldData['address'])
-                        console.log('newData address: ', newData['address'])
+                        //console.log('olData address: ', oldData['address'])
+                        //console.log('newData address: ', newData['address'])
 
                         if(subItem !== 'town'){
 
@@ -137,13 +136,15 @@ export function changedJson(oldData, newData){
                 })
             }
             else{
-                if(oldData[item] !== newData[item]){
-                    if(item === 'user_id'){
-                        changed[item] = newData[item]['id'];
-                    }
-                    else{
+                if(item === 'user_id'){
+                    newData[item] = newData[item]['id'];
+
+                    if(oldData[item] !== newData[item]){
                         changed[item] = newData[item];
                     }
+                }
+                else{
+                    changed[item] = newData[item];
                 }
             }
         }

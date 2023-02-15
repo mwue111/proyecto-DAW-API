@@ -59,8 +59,8 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                 if(newStore[name] === 'user_id'){
                     newStore[checkName[0]] = val.id;
                     console.log('newStore[checkName[0]]: ', newStore[checkName[0]]);
-                    setDropdownOwner(val.name);
                 }
+                setDropdownOwner(e.value);
 
             }
 
