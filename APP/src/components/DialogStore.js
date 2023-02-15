@@ -11,7 +11,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     const optionsCity = [...cities];
     const optionsOwner = [...owners]
 
-    console.log('item en DialogStore: ', store);
+    //console.log('item en DialogStore: ', store);
 
     const [dataForm, setDataForm] = useState(store);
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
@@ -20,9 +20,6 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
 
     useEffect(() => {
         setItem(dataForm);
-        //setDropdownCities(store.address.town.name)
-        //console.log('ciudad: ', dropdownCities)
-
     }, [dataForm, dropdownCities]);
 
     const handleInputChange = (e) => {
@@ -34,6 +31,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
 
             //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
+
             if(checkName.length == 2){
                 //console.log('checkname: ', checkName, 'val: ', val);    //para comprobar si se está guardando lo que necesitamos hay que comprobar newStore, no checkname
                 newStore[checkName[0]][checkName[1]] = val;
@@ -53,15 +51,13 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                 }
             }
             else{
-
-                newStore[name] = val;
-
-                if(newStore[name] === 'user_id'){
+                if(name === 'user_id'){
                     newStore[checkName[0]] = val.id;
-                    console.log('newStore[checkName[0]]: ', newStore[checkName[0]]);
+                    setDropdownOwner(e.value);
                 }
-                setDropdownOwner(e.value);
-
+                else{
+                    newStore[name] = val;
+                }
             }
 
             setDataForm(newStore);
@@ -79,6 +75,10 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                     <br/>
                     <label htmlFor='user_id'>Propietario/a:</label>
                     <Dropdown name='user_id' value={dropdownOwner} options={optionsOwner} onChange={handleInputChange} placeholder='Seleccione el/la propietario/a' optionLabel='name' required/>
+                    <br/>
+                    <label htmlFor='horario'>Horario de la tienda: </label>
+                    <InputText name='horario' placeholder='A ver cómo ponemos el horario xdd' onChange={handleInputChange} />
+                    <br/>
                     <br/>
                     <label htmlFor='description'>Descripción de la tienda:</label>
                     <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} required />
