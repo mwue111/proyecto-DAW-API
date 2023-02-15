@@ -180,10 +180,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
-            console.log('oldItem: ', oldItem);
-            console.log('item: ', item);
-            console.log('jsonDB: ', jsonDB);
-
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
@@ -202,8 +198,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 delete itemDB.address.town;
             }
 
-            console.log('itemDB: ', itemDB);
-
             axios.post(fetchUrl, itemDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
@@ -216,9 +210,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const editItem = (item) => {
-        const _item = objectProfoundCopy(item); //copia profunda del item (incluyendo el objeto address)
+        const _item = objectProfoundCopy(item);
         setItem(item);
-        setOldItem(_item);   //Aquí item ya tiene el address actualizado
+        setOldItem(_item);
         setItemDialog(true);
     }
 
@@ -303,7 +297,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
-        //se envía a back la dirección /borrar + meses (body) + cabeceras
         axios.post(fetchUrl + '/borrar', {"data": months}, { headers })
             .then(res => setDataToDelete(formatJson(res.data, table))
             );
@@ -345,7 +338,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -440,7 +432,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             return acum;
         }, {});
     });
-    {/**FilteredData es un ARRAY que no contiene objetos */}
 
     const rowClass = (data) => {
         return {

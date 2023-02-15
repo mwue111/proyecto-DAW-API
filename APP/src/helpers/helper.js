@@ -26,12 +26,11 @@ function formatProduct(producto){
 }
 
 function formatJsonTienda (tiendas){
-    //console.log('tiendas en helper: ', tiendas);
     const data = tiendas.map((item) => {
         return {
             id: item.id,
             nombre: item.name,
-            direccion: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
+            direccion: formatJsonDireccion(item.address),
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,
@@ -108,16 +107,15 @@ export function changedJson(oldData, newData){
                             changed[item][subItem] = newData[item][subItem];
                         }
 
-                        else{   //si subItem ES town:
+                        else{
                             Object.keys(oldData[item][subItem]).map(infraItem => {
                                 if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
-                                    //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
-
-                                    if(!changed[item]){                 //crear primero [item]...
+                
+                                    if(!changed[item]){                 
                                         changed[item] = {};
                                     }
 
-                                    if(!changed[item]['town_id']){      //... y luego town_id
+                                    if(!changed[item]['town_id']){      
                                         changed[item]['town_id'] = {};
                                     }
 
@@ -132,7 +130,6 @@ export function changedJson(oldData, newData){
             }
             else{
                 if(item === 'user_id' && oldData[item] !== newData[item]){
-                    //newData[item] = newData[item]['id'];// si se descomenta, quitar la línea 151 en tableAdmin
                     changed[item] = newData[item];
                 }
                 else{

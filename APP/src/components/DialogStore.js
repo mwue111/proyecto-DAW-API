@@ -13,9 +13,6 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     let ownerName;
     let ownerId;
 
-    //console.log('item en DialogStore: ', store);
-    //console.log('optionsOwner: ', optionsOwner);
-
     for(let i = 0; i < optionsOwner.length; i++){
         if(store.user_id === optionsOwner[i].id){
             ownerName = optionsOwner[i].name;
@@ -28,7 +25,6 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null);
     const [dropdownOwner, setDropdownOwner] = useState(store.user_id ? {'name': ownerName, 'id': ownerId} : null);
 
-
     useEffect(() => {
         setItem(dataForm);
     }, [dataForm, dropdownCities]);
@@ -39,8 +35,6 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
         const name = target.name;
 
         if(name !== null){
-
-            //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
 
             if(checkName.length == 2){
@@ -51,8 +45,8 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                 }
             }
             else if(checkName.length == 3){
-                newStore[checkName[0]][checkName[1]][checkName[2]] = val.name;  //con esto almacenamos en store[address][town][name] = la ciudad
-                newStore[checkName[0]][checkName[1]]['id'] = val.id;            //store[addres][town]['id'] = id
+                newStore[checkName[0]][checkName[1]][checkName[2]] = val.name;
+                newStore[checkName[0]][checkName[1]]['id'] = val.id;
 
                 if(name === 'address.town.name'){
                     setDropdownCities(e.value);
@@ -64,10 +58,8 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                     setDropdownOwner(e.value);
                 }
                 newStore[name] = val;
-                console.log('newStore[name]: ', newStore[name]);
             }
             setDataForm(newStore);
-            console.log('newstore: ', dataForm);
         }
     }
 
