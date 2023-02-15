@@ -172,11 +172,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItemDialog(false);
 
         if (item.id) {
+
+            item.user_id = item.user_id.id;
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
                 'Content-Type': 'application/json'
             };
+
+            console.log('oldItem: ', oldItem);
+            console.log('item: ', item);
+            console.log('jsonDB: ', jsonDB);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
@@ -195,6 +201,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;
             }
+
+            console.log('itemDB: ', itemDB);
 
             axios.post(fetchUrl, itemDB, { headers });
 

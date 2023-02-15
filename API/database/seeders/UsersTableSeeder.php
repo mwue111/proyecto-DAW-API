@@ -57,6 +57,16 @@ class UsersTableSeeder extends Seeder{
             'deleted' => 0,
         ]);
         DB::table('users')->insert([
+            'username' => 'jackieChan falso',
+            'name' => 'chang',
+            'surname1' => 'falso',
+            'surname2' => 'falsísimo',
+            'email' => 'chanchitofalso@nombrereal.com',
+            'password' => 'password',
+            'birth_date' => '2023-09-03',
+            'type' => 'owner'
+        ]);
+        DB::table('users')->insert([
             'username' => 'ari',
             'name' => 'irene',
             'surname1' => 'montero',

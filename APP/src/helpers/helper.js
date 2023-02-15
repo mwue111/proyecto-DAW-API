@@ -108,11 +108,16 @@ export function changedJson(oldData, newData){
                             changed[item][subItem] = newData[item][subItem];
                         }
 
-                        else{
+                        else{   //si subItem ES town:
                             Object.keys(oldData[item][subItem]).map(infraItem => {
                                 if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
+                                    //console.log('3. Objetos de oldData[item][subItem]: ', oldData[item][subItem][infraItem]);
 
-                                    if(!changed[item]['town_id']){
+                                    if(!changed[item]){                 //crear primero [item]...
+                                        changed[item] = {};
+                                    }
+
+                                    if(!changed[item]['town_id']){      //... y luego town_id
                                         changed[item]['town_id'] = {};
                                     }
 
@@ -126,11 +131,12 @@ export function changedJson(oldData, newData){
                 })
             }
             else{
-                if(oldData[item] !== newData[item]){
-                    if(item == 'user_id'){
-                        changed[item] = newData[item]['id'];
-                    }
-                    else{
+                if(item === 'user_id' && oldData[item] !== newData[item]){
+                    //newData[item] = newData[item]['id'];// si se descomenta, quitar la línea 151 en tableAdmin
+                    changed[item] = newData[item];
+                }
+                else{
+                    if(oldData[item] !== newData[item]){
                         changed[item] = newData[item];
                     }
                 }

@@ -10,19 +10,27 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     const newStore = store;
     const optionsCity = [...cities];
     const optionsOwner = [...owners]
+    let ownerName;
+    let ownerId;
 
-    console.log('item en DialogStore: ', store);
+    //console.log('item en DialogStore: ', store);
+    //console.log('optionsOwner: ', optionsOwner);
+
+    for(let i = 0; i < optionsOwner.length; i++){
+        if(store.user_id === optionsOwner[i].id){
+            ownerName = optionsOwner[i].name;
+            ownerId = optionsOwner[i].id;
+        }
+    }
 
     const [dataForm, setDataForm] = useState(store);
     const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
-    const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null); //useState(store.address?.town ? store.address.town.name : 'Ciudad');
-    const [dropdownOwner, setDropdownOwner] = useState(store.user_id? {'name': optionsOwner[0].name, 'id': optionsOwner[0].id} : null);
+    const [dropdownCities, setDropdownCities] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null);
+    const [dropdownOwner, setDropdownOwner] = useState(store.user_id ? {'name': ownerName, 'id': ownerId} : null);
+
 
     useEffect(() => {
         setItem(dataForm);
-        //setDropdownCities(store.address.town.name)
-        //console.log('ciudad: ', dropdownCities)
-
     }, [dataForm, dropdownCities]);
 
     const handleInputChange = (e) => {
@@ -34,6 +42,7 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
 
             //comprobación del nombre que viene: si tiene un punto son dos elementos
             const checkName = name.split('.');
+
             if(checkName.length == 2){
                 newStore[checkName[0]][checkName[1]] = val;
 
@@ -50,14 +59,13 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                 }
             }
             else{
-                newStore[name] = val;
-
-                if(newStore[name] === 'user_id'){
+                if(name === 'user_id'){
                     newStore[checkName[0]] = val.id;
+                    setDropdownOwner(e.value);
                 }
-                setDropdownOwner(e.value);
+                newStore[name] = val;
+                console.log('newStore[name]: ', newStore[name]);
             }
-
             setDataForm(newStore);
             console.log('newstore: ', dataForm);
         }
@@ -73,6 +81,10 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                     <br/>
                     <label htmlFor='user_id'>Propietario/a:</label>
                     <Dropdown name='user_id' value={dropdownOwner} options={optionsOwner} onChange={handleInputChange} placeholder='Seleccione el/la propietario/a' optionLabel='name' required/>
+                    <br/>
+                    <label htmlFor='horario'>Horario de la tienda: </label>
+                    <InputText name='horario' placeholder='A ver cómo ponemos el horario xdd' onChange={handleInputChange} />
+                    <br/>
                     <br/>
                     <label htmlFor='description'>Descripción de la tienda:</label>
                     <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} required />

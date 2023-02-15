@@ -19,7 +19,7 @@ class Town extends Model
     }
 
     public function address() {
-        return $this->hasMany('App\Models\Address');
+        return $this->hasMany(Address::class);
     }
 
 }
