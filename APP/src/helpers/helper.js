@@ -136,27 +136,15 @@ export function changedJson(oldData, newData){
                 })
             }
             else{
-                //no guarda bien changed (actualiza pero hace más intercambio de las necesarias con bd)
-                if(item === 'user_id'){
+                if(item === 'user_id' && oldData[item] !== newData[item]){
                     //newData[item] = newData[item]['id'];// si se descomenta, quitar la línea 151 en tableAdmin
-
+                    changed[item] = newData[item];
+                }
+                else{
                     if(oldData[item] !== newData[item]){
                         changed[item] = newData[item];
                     }
                 }
-                else{
-                    changed[item] = newData[item];
-                }
-
-                //Así estaba (no hace el cambio de dueño)
-                // if(oldData[item] !== newData[item]){
-                //     if(item == 'user_id'){
-                //         changed[item] = newData[item]['id'];
-                //     }
-                //     else{
-                //         changed[item] = newData[item];
-                //     }
-                // }
             }
         }
     })
