@@ -67,12 +67,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [singleDeleted, setSingleDeleted] = useState(false);
     const [cities, setCities] = useState([])
     const [owners, setOwners] = useState([])
+    const [prodCategories, setProdCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
 
     useEffect(() => {
         axios.get(fetchUrl)
             .then(res => setData(formatJson(res.data, table)))
 
-        let cityOptions = [];   //array de objetos
+        let cityOptions = [];
         axios.get('http://localhost:8000/ciudad')
                 .then(res => {res.data.map((item) => {
                     cityOptions.push({
@@ -94,7 +96,24 @@ const TableAdmin = ({ fetchUrl, table }) => {
         })
         setOwners(ownerOptions);
 
-        setSingleDeleted(false)
+        let categories = [];
+        axios.get('http://localhost:8000/categoria')
+                .then(res => {res.data.map((item) => {
+                    categories.push(item.name);
+                })})
+        setProdCategories(categories);
+
+        let brandList = [];
+        axios.get('http://localhost:8000/marca')
+                .then(res => {res.data.map((item) => {
+                        brandList.push(item.name);
+                    })})
+        setBrands(brandList);
+
+        setSingleDeleted(false);
+
+        console.log('tabla: ', table);
+
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
 
     if (!data.length) {
@@ -124,7 +143,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const emptyProduct = {
-        //Cambiar estructura en DialogProduct
+        "marca": "",
+        "categoria": {
+            "nombre": "",
+            "parent_category_id": ""
+        },
+        "descripcion": "",
+        "nombre": "",
+        "ofertas":[],
+        "tiendas": [],
+        "tags": [],
+        "imagen": "",
+        "deleted": 0
     }
 
     const emptyUser = {
@@ -144,8 +174,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const openNew = () => {
-        //switch para emptyProduct y emptyUser según el tipo
-        setItem(emptyStore);
+
+        switch(table){
+            case 'tienda': setItem(emptyStore); break;
+            case 'producto': setItem(emptyProduct); break;
+        }
+
         setSubmitted(false);
         setItemDialog(true);
     }
@@ -173,7 +207,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         if (item.id) {
 
-            item.user_id = item.user_id.id;
+            if(item.user_id){
+                item.user_id = item.user_id.id;
+            }
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
@@ -409,7 +445,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const paginatorButton = () => {
         return(
             <React.Fragment>
-                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nueva tienda" onClick={openNew} />
+                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nuevo registro" onClick={openNew} />
             </React.Fragment>
         )
     }
@@ -434,7 +470,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at'){
+            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id'){
                 acum[key] = value;
             }
             return acum;
@@ -491,7 +527,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
-                {table === 'producto' && <DialogProduct product={item} />}
+                {table === 'producto' && <DialogProduct product={item} setItem={setItem} categories={prodCategories} brands={brands} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
             </Dialog>

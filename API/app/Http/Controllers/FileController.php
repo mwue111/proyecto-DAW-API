@@ -22,7 +22,6 @@ class FileController extends Controller
                 case 'document': $file->document; break;
                 case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
                 case 'store_imgs': $file->storeImgs; break;
-                case 'product_imgs': $file->product_imgs; break;
                 case 'brand_imgs': $file->brandImgs; break;
                 case 'product_imgs': $file->productImgs; break;
             }
@@ -68,7 +67,16 @@ class FileController extends Controller
     }
 
     public function show($id){
-        return File::find($id);
+        $file = File::find($id);
+        switch($file->type){
+            case 'document': $file->document; break;
+            case 'profile_imgs': $file->profileImgs; break;
+            case 'product_imgs': $file->productImgs; break;
+            case 'store_imgs': $file->storeImgs; break;
+            case 'brand': $file->brandImgs; break;
+        }    
+        
+        return $file;
     }
 
     //Función planteada por si es necesario cambiar el tipo de documento, pero en realidad servirá para marcar documentos como eliminados o no (deleted).

@@ -15,15 +15,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['productos'] = Product::all();
-        foreach($data['productos'] as $producto){
-            $producto->tags;
-            $producto->stores;
-            $producto->sales;
-            $producto->category;
-            $producto->images->file;
+        $products = Product::all();
+        foreach($products as $product){
+            $product->productImg->each(function($url){
+                $url->file;
+            });
+            $product->brand;
+            $product->tags;
+            $product->stores;
+            $product->sales;
+            $product->category;
         }
-        return $data['productos'];
+        return $products;
         //return view('producto', $data);
     }
 
@@ -63,15 +66,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $producto = Product::find($id);
-        $producto->tags;
-        $producto->stores;
-        $producto->sales;
-        $producto->category;
-        $producto->images->each(function($image){
+        $product = Product::find($id);
+        $product->brand;
+        $product->tags;
+        $product->stores;
+        $product->sales;
+        $product->category;
+        $product->images->each(function($image){
             $image->file;
         });
-        return $producto;
+        return $product;
     }
 
     /**

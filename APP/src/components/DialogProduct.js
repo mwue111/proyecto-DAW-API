@@ -4,60 +4,74 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Fieldset } from 'primereact/fieldset';
 import { Image } from 'primereact/image';
 import { FileUpload } from 'primereact/fileupload';
+import { MultiSelect } from 'primereact/multiselect';
+import { Dropdown } from 'primereact/dropdown';
 
-const DialogProduct = ({ product }) => {
-    {/*estaría bien poner fotos, están en otra tabla*/}
+const DialogProduct = ({ product, setItem, categories, brands }) => {
+    const newProduct = product;
+    const categoriesList = [...categories];
+    const brandsList = [...brands];
 
-    const [productName, setProductName] = useState(product.name);
-    const [productDesc, setProductDesc] = useState(product.description);
-    const [productBrand, setProductBrand] = useState(product.brand_id);
-    const [productCat, setProductCat] = useState(product.category);
+    console.log('product: ', product)
+    const [dataForm, setDataForm] = useState(product);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [dropdownBrand, setDropdownBrand] = useState();
     const [productPic, setProductPic] = useState('');
-    const toast = useRef(null);
 
-    {/*Esto debería ser product.image o algo similiar, usado como ejemplo*/}
-    let picture = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg/640px-Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg';
+    useEffect(() => {
+        setItem(dataForm);
+    }, [dataForm]);
+
+    const handleInputChange = (e) => {
+        const target = e.target;
+        const val = target.value;
+        const name = target.name;
+
+        if(name !== null){
+            const checkName = name.split('.');
+            if(checkName.length == 2){
+                newProduct[checkName[0]][checkName[1]] = val;
+            }
+            else{
+                switch(name){
+                    case 'categoria': setSelectedCategory(e.value); break;
+                    case 'marca': setDropdownBrand(e.value); break;
+                }
+                // if(name === 'categoria'){
+                //     setSelectedCategory(e.value);
+                // }
+                newProduct[name] = val;
+            }
+        
+            setDataForm(newProduct);
+            console.log('newProduct: ', dataForm);
+        }
+    }
 
     const onProductPicUpload = (e) => {
         setProductPic(e);
         toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
     }
 
-    const onChangeProductName = (e) => {
-        setProductName(e.target.value);
-    }
-
-    const onProductDescChange = (e) => {
-        setProductDesc(e.target.value);
-    }
-
-    const onProductBrandChange = (e) => {
-        setProductBrand(e.target.value);
-    }
-
-    const onProductCatChange = (e) => {
-        setProductCat(e.target.value);
-    }
-
-    console.log('producto: ', product);
     return(
         <div>
             <div className='field'>
                 <Fieldset legend='Datos del producto'>
-                    <label htmlFor='productName'>Nombre:</label>
-                    <InputText id='productName' name='productName' defaultValue={productName} onChange={onChangeProductName}/>
+                    <label htmlFor='nombre'>Nombre:</label>
+                    <InputText name='nombre' defaultValue={dataForm.nombre} onChange={handleInputChange}/>
                     <br/>
                     <br/>
-                    <label htmlFor='productDesc'>Descripción:</label>
-                    <InputTextarea id='productDesc' name='productDesc' defaultValue={productDesc} rows={5} onChange={onProductDescChange}/>
+                    <label htmlFor='descripcion'>Descripción:</label>
+                    <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} rows={5} onChange={handleInputChange}/>
                     <br/>
                     <br/>
-                    <label htmlFor='productBrand'>Marca:</label>
-                    <InputText id='productBrand' name='productBrand' defaultValue={productBrand} onChange={onProductBrandChange}/>
+                    <label htmlFor='marca'>Marca:</label>
+                    <Dropdown name='marca' value={dataForm.marca} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange}/>
+                    {/* <InputText name='marca' defaultValue={dataForm.marca} onChange={handleInputChange}/> */}
                     <br/>
                     <br/>
-                    <label htmlFor='productCat'>Categoría:</label>
-                    <InputText id='productCat' name='productCat' defaultValue={productCat} onChange={onProductCatChange}/>
+                    <label htmlFor='categoria'>Categoría:</label>
+                    <MultiSelect name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList} display="chip" placeholder="Selecciona una o varias categorías" className="w-full md:w-20rem"/>
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
@@ -67,10 +81,10 @@ const DialogProduct = ({ product }) => {
                     <FileUpload mode='basic' name='productPic[]' url='https://primefaces.org/primereact/showcase/upload.php' accept='image/*' maxFileSize={1000000} onUpload={onProductPicUpload}/>
                     <br/>
                     {/*Esto debería ser dependiendo de si hay una imagen guardada para el producto, puesto .name para que haga el condicional */}
-                    {productName &&
+                    {dataForm.nombre &&
                         <div>
                             <label htmlFor='oldProductPic'>Imagen guardada:</label>
-                            <Image name='oldProductPic' src={picture} alt={`Imagen de ${productName}`} width='250' preview/>
+                            <Image name='oldProductPic' /*src={picture} alt={`Imagen de ${productName}`}*/ width='250' preview/>
                         </div>
                     }
                 </Fieldset>
