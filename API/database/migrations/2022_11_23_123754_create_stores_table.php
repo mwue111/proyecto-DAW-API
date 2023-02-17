@@ -25,7 +25,6 @@ return new class extends Migration
             $table->tinyInteger('deleted');
             $table->string('description', 500);
             $table->Integer('user_id');
-            $table->tinyInteger('deleted');
             $table->timestamps();
         });
     }
