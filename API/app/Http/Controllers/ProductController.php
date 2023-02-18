@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Brand;
+use App\Models\Category;
+use DB;
 use App\Models\ProductImg;
 
 class ProductController extends Controller
@@ -28,16 +31,6 @@ class ProductController extends Controller
         }
         return $products;
         //return view('producto', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -72,21 +65,10 @@ class ProductController extends Controller
         $product->stores;
         $product->sales;
         $product->category;
-        $product->images->each(function($image){
+        $product->productImg->each(function($image){
             $image->file;
         });
         return $product;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -99,9 +81,33 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
+
+        if(isset($request->categoria)){
+            $categoryId = DB::table("categories")
+                            ->select('id')
+                            ->where("name", $request->categoria)
+                            ->first()
+                            ->id;
+            $category = Category::find($categoryId);
+            $product->category_id = $category->id;
+        }
+
+        if(isset($request->marca)){
+            $brandId = DB::table("brands")
+                        ->select('id')
+                        ->where("name", $request->marca)
+                        ->first()
+                        ->id;
+    
+            $brand = Brand::find($brandId);
+            $product->brand_id = $brand->id;
+        }
+
         $product->update($request->all());
+
         $product->tags()->sync($request->tags);
         $product->stores()->sync($request->stores);
+        $product->save();
     }
 
     /**

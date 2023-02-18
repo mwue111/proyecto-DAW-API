@@ -166,15 +166,16 @@ export function objectProfoundCopy(object){
 ///////////////////////////////////////////
 function formatJsonProducto (productos){
     const data = productos.map((item) => {
-        console.log('item en helper: ', item)
+        //console.log('item en helper: ', item)
         return {
             id: item.id,
             nombre: item.name,
             descripcion: item.description,
             tienda: item.stores,
-            deleted: item.deleted, 
+            deleted: item.deleted,
             marca: item.brand.name,
-            categoria: item.category.name
+            categoria: item.category.name,
+            tags: item.tags
         }
     })
     //console.log('data: ', data)

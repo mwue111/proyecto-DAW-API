@@ -7,14 +7,22 @@ import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 
-const DialogProduct = ({ product, setItem, categories, brands }) => {
+const DialogProduct = ({ product, setItem, allCategories, brands }) => {
     const newProduct = product;
-    const categoriesList = [...categories];
+    const categoriesList = [...allCategories];
     const brandsList = [...brands];
 
     console.log('product: ', product)
+    //console.log('tags: ', product.tags);
+
+    // const selectedTags = product.tags.map((tag)=>{
+    //     return { name: tag.name}
+    // });
+
+    // console.log(selectedTags);
+
     const [dataForm, setDataForm] = useState(product);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState();
     const [productPic, setProductPic] = useState('');
 
@@ -42,7 +50,7 @@ const DialogProduct = ({ product, setItem, categories, brands }) => {
                 // }
                 newProduct[name] = val;
             }
-        
+
             setDataForm(newProduct);
             console.log('newProduct: ', dataForm);
         }
@@ -67,11 +75,13 @@ const DialogProduct = ({ product, setItem, categories, brands }) => {
                     <br/>
                     <label htmlFor='marca'>Marca:</label>
                     <Dropdown name='marca' value={dataForm.marca} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange}/>
-                    {/* <InputText name='marca' defaultValue={dataForm.marca} onChange={handleInputChange}/> */}
-                    <br/>
                     <br/>
                     <label htmlFor='categoria'>Categoría:</label>
-                    <MultiSelect name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList} display="chip" placeholder="Selecciona una o varias categorías" className="w-full md:w-20rem"/>
+                    <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList}/>
+                    <br/>
+                    <label htmlFor='tags'>Etiquetas:</label>
+                    <MultiSelect name='tags' display="chip" placeholder="Selecciona una o varias categorías" className="w-full md:w-20rem"/> 
+                    {/* aquí -- value={selectedCategory} onChange={handleInputChange} options={categoriesList} */}
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>

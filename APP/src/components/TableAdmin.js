@@ -527,7 +527,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
-                {table === 'producto' && <DialogProduct product={item} setItem={setItem} categories={prodCategories} brands={brands} />}
+                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
             </Dialog>
