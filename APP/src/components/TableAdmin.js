@@ -69,6 +69,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [owners, setOwners] = useState([])
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
+    const [tags, setTags] = useState([]);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -109,6 +110,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         brandList.push(item.name);
                     })})
         setBrands(brandList);
+
+        let tagList = [];
+        axios.get('http://localhost:8000/etiqueta')
+                .then(res => {res.data.map((tag) => {
+                    tagList.push(tag.name);
+                })})
+        setTags(tagList);
 
         setSingleDeleted(false);
 
@@ -527,7 +535,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
-                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} />}
+                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} />}
                 {table === 'usuario' && <DialogUser user={item} />}
 
             </Dialog>

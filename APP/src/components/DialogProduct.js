@@ -7,23 +7,28 @@ import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 
-const DialogProduct = ({ product, setItem, allCategories, brands }) => {
+const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => {
     const newProduct = product;
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
+    const tagList = [...allTags];
 
     console.log('product: ', product)
-    //console.log('tags: ', product.tags);
+    //console.log('tags: ', tagList);
 
-    // const selectedTags = product.tags.map((tag)=>{
-    //     return { name: tag.name}
-    // });
+    const selectedTags = [];
 
-    // console.log(selectedTags);
+    if(product.tags){
+
+        product.tags.map((tag)=>{
+             selectedTags.push(tag.name);
+        });
+    }
 
     const [dataForm, setDataForm] = useState(product);
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
-    const [dropdownBrand, setDropdownBrand] = useState();
+    const [dropdownBrand, setDropdownBrand] = useState(product.marca);
+    const [tags, setTags] = useState(product.tags ? selectedTags : null);
     const [productPic, setProductPic] = useState('');
 
     useEffect(() => {
@@ -44,10 +49,9 @@ const DialogProduct = ({ product, setItem, allCategories, brands }) => {
                 switch(name){
                     case 'categoria': setSelectedCategory(e.value); break;
                     case 'marca': setDropdownBrand(e.value); break;
+                    case 'tags': setTags(e.value); break;
                 }
-                // if(name === 'categoria'){
-                //     setSelectedCategory(e.value);
-                // }
+
                 newProduct[name] = val;
             }
 
@@ -74,13 +78,13 @@ const DialogProduct = ({ product, setItem, allCategories, brands }) => {
                     <br/>
                     <br/>
                     <label htmlFor='marca'>Marca:</label>
-                    <Dropdown name='marca' value={dataForm.marca} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange}/>
+                    <Dropdown name='marca' value={dropdownBrand} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange}/>
                     <br/>
                     <label htmlFor='categoria'>Categoría:</label>
                     <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList}/>
                     <br/>
                     <label htmlFor='tags'>Etiquetas:</label>
-                    <MultiSelect name='tags' display="chip" placeholder="Selecciona una o varias categorías" className="w-full md:w-20rem"/> 
+                    <MultiSelect name='tags' value={tags} display="chip" placeholder="Selecciona una o varias etiquetas" className="w-full md:w-20rem" onChange={handleInputChange} options={tagList}/>
                     {/* aquí -- value={selectedCategory} onChange={handleInputChange} options={categoriesList} */}
                 </Fieldset>
                 <br/>
