@@ -98,14 +98,21 @@ class ProductController extends Controller
                         ->where("name", $request->marca)
                         ->first()
                         ->id;
-    
+
             $brand = Brand::find($brandId);
             $product->brand_id = $brand->id;
         }
 
         $product->update($request->all());
 
-        $product->tags()->sync($request->tags);
+        //$product->tags()->sync($request->tags);
+        if(isset($request->tags)){
+            //Aquí: pasarle un objeto tag con su id (o sólo el id)
+            //$product->tags = $request->tags;
+            $product->fill($request->all());
+            $product->tags()->sync($request->tags);
+            dd($request->all());
+        }
         $product->stores()->sync($request->stores);
         $product->save();
     }

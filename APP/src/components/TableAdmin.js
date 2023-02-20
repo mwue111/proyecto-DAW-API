@@ -114,7 +114,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
         let tagList = [];
         axios.get('http://localhost:8000/etiqueta')
                 .then(res => {res.data.map((tag) => {
-                    tagList.push(tag.name);
+                    tagList.push({
+                        'name': tag.name,
+                        'id': tag.id});
                 })})
         setTags(tagList);
 

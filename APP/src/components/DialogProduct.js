@@ -14,21 +14,27 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
     const tagList = [...allTags];
 
     console.log('product: ', product)
-    //console.log('tags: ', tagList);
+    console.log('tagList: ', tagList);
 
     const selectedTags = [];
 
     if(product.tags){
 
         product.tags.map((tag)=>{
-             selectedTags.push(tag.name);
+             selectedTags.push({
+                'name': tag.name,
+                'id': tag.id
+             });
         });
     }
+
+    console.log('selectedTags: ', selectedTags);
 
     const [dataForm, setDataForm] = useState(product);
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca);
-    const [tags, setTags] = useState(product.tags ? selectedTags : null);
+    //Aquí: que se queden seleccionados varios elementos del array como etiquetas
+    const [tags, setTags] = useState(product.tags ? {'name': selectedTags.name, 'id': selectedTags.id} : null);
     const [productPic, setProductPic] = useState('');
 
     useEffect(() => {
