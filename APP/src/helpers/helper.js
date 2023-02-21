@@ -31,7 +31,7 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            direccion: formatJsonDireccion(item.address), //cambiado de direccion a address para recibir un objeto en TableAdmin
+            direccion: item.address != null ?formatJsonDireccion(item.address):"no hay dirección", //cambiado de direccion a address para recibir un objeto en TableAdmin
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,

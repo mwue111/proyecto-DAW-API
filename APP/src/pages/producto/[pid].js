@@ -57,12 +57,12 @@ const Producto = () => {
                 <HeaderProduct data={selectedProduct}/>
             }
         >
-
             <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                        <h1 className="text-3xl font-bold text-center">{!selectedProduct && <ProgressSpinner/>}</h1>
                     </div>
+                    
                 </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

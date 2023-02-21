@@ -22,6 +22,8 @@ class StoreController extends Controller{
             });
             $store->specialDays;
             $store->owner->user;
+            $store->address;
+            if($store->address !=null)
             $store->address->town->state;
         }
 

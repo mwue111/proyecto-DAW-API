@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react'
 import {DataView} from 'primereact/dataview'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import StoreMap from '@/components/StoreMap'
 
 
 const Tienda = () => {
@@ -60,6 +61,7 @@ const Tienda = () => {
                     selectedStore.name
                 }
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <StoreMap address={"plaza del pino 11 almeria"}/> 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                        {selectedStore && 
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />

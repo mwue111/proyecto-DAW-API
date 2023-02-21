@@ -73,7 +73,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             .then(res => setData(formatJson(res.data, table)))
 
         let cityOptions = [];   //array de objetos
-        axios.get('http://localhost:8000/ciudad')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/ciudad')
                 .then(res => {res.data.map((item) => {
                     cityOptions.push({
                         'name': item.name,
@@ -84,7 +84,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setCities(cityOptions);
 
         let ownerOptions = [];
-        axios.get('http://localhost:8000/propietario')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/propietario')
                 .then(res => {res.data.map((item) => {
                     ownerOptions.push({
                         'name': item.user.name,
