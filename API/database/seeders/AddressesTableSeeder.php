@@ -12,41 +12,41 @@ class addressesTableSeeder extends Seeder
     {
         DB::table('addresses')->insert([
             'road_type' => 'Calle',
-            'zip_code' => '04000',
-            'number' => '2',
-            'name' => 'Falsa',
-            'town_id' => '3',
+            'zip_code' => '04004',
+            'number' => '15',
+            'name' => 'José Artés de Arcos',
+            'town_id' => '1',
             'remarks' => 'ninguno'
         ]);
         DB::table('addresses')->insert([
             'road_type' => 'Avenida',
-            'zip_code' => '04002',
-            'number' => '1',
-            'name' => 'Falsísima',
-            'town_id' => '2',
+            'zip_code' => '04005',
+            'number' => '12',
+            'name' => 'de la Estación',
+            'town_id' => '1',
             'remarks' => 'una avenida real'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'Boulevard',
-            'zip_code' => '04004',
-            'number' => '19',
-            'name' => 'Súper Falsa',
+            'road_type' => 'Calle',
+            'zip_code' => '04002',
+            'number' => '16',
+            'name' => 'Pedro Jover',
             'town_id' => '1',
             'remarks' => 'esta sí que existe'
         ]);
         DB::table('addresses')->insert([
             'road_type' => 'Calle',
-            'zip_code' => '04003',
-            'number' => '10',
-            'name' => 'De Verdad',
+            'zip_code' => '04004',
+            'number' => '15',
+            'name' => 'Javier Sanz',
             'town_id' => '1',
-            'remarks' => 'esta igual no existe'
+            'remarks' => 'el celia'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'Callejón',
-            'zip_code' => '04001',
-            'number' => '0',
-            'name' => 'Real',
+            'road_type' => 'Calle',
+            'zip_code' => '04008',
+            'number' => '58',
+            'name' => 'Belén',
             'town_id' => '1',
             'remarks' => 'esta existe'
         ]);

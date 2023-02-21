@@ -5,6 +5,7 @@ import {DataView} from 'primereact/dataview'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import StoreMap from '@/components/StoreMap'
+import { formatJsonDireccion } from '@/helpers/helper'
 
 
 const Tienda = () => {
@@ -12,14 +13,19 @@ const Tienda = () => {
     const [selectedStore, setSelectedStore] = useState(null);
     const router = useRouter();
     const { pid } = router.query;  //id recibida por parametro
-
+    
 
     useEffect(() => {
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
-        .then((response) => {
-            console.log(response.data)
-            setSelectedStore(response.data)
-        })
+        try {
+            if(pid !=null)
+            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+            .then((response) => {
+                console.log(response.data)
+                setSelectedStore(response.data)
+            })
+        } catch (error) {
+            console.log("petó")
+        }
     }, [pid])
 
     const renderListItem = (data) => {
@@ -61,7 +67,7 @@ const Tienda = () => {
                     selectedStore.name
                 }
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <StoreMap address={"plaza del pino 11 almeria"}/> 
+                {selectedStore && <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey='AIzaSyBQ7YfohcWfByTbDJ1VdyNyrEEOY1pNI4s'/>} 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                        {selectedStore && 
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />

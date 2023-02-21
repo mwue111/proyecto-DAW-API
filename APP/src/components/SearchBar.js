@@ -27,14 +27,18 @@ const SearchBar = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8000/tienda/nombre')
-        .then((response) => {
-            setStores(response.data);
-        })
-        axios.get('http://localhost:8000/producto/nombre')
-        .then((response) => {
-            setProducts(response.data);
-        })
+        try{
+            axios.get('http://localhost:8000/tienda/nombre')
+            .then((response) => {
+                setStores(response.data);
+            })
+            axios.get('http://localhost:8000/producto/nombre')
+            .then((response) => {
+                setProducts(response.data);
+            })
+        } catch (error) {
+            console.log("petó")
+        }
     }, []);
 
     useEffect(() => {

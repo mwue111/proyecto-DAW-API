@@ -48,7 +48,7 @@ function formatJsonTienda (tiendas){
     return data;
 }
 
-function formatJsonDireccion (address){
+export function formatJsonDireccion (address){
     return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
 }
 
