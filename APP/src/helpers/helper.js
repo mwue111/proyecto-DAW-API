@@ -138,12 +138,11 @@ export function changedJson(oldData, newData){
             }
         }
         else{
-            if(oldData[item] != newData[item]){
+            //añadido 'tags' porque si no incluye tiendas aunque no haya ningún cambio en ellas (¿objetos?)
+            if(item === 'tags' && oldData[item] !== newData[item]){
                 changed[item] = newData[item];
             }
-            else{
-                changed[item] = oldData[changed];
-            }
+
             // console.log('item: ', item);
             // console.log('newData[item]: ', newData[item]);
             // console.log('oldData[item]: ', oldData[item]);

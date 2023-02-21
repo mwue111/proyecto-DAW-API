@@ -109,9 +109,12 @@ class ProductController extends Controller
         if(isset($request->tags)){
             //Aquí: pasarle un objeto tag con su id (o sólo el id)
             //$product->tags = $request->tags;
-            $product->fill($request->all());
-            $product->tags()->sync($request->tags);
-            dd($request->all());
+            //$product->fill($request->all());
+            foreach($request->tags as $tagId){
+                $product->tags()->sync($request->tags);
+            }
+            dd($product);
+            //Aquí: no guarda bien cuando se cambian los tags
         }
         $product->stores()->sync($request->stores);
         $product->save();

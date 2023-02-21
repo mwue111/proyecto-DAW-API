@@ -13,7 +13,8 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
     let ownerName;
     let ownerId;
 
-    //console.log('item en DialogStore: ', store);
+    console.log('item en DialogStore: ', store);
+
     //console.log('optionsOwner: ', optionsOwner);
 
     for(let i = 0; i < optionsOwner.length; i++){

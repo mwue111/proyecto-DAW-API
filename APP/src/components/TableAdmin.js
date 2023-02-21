@@ -220,6 +220,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
             if(item.user_id){
                 item.user_id = item.user_id.id;
             }
+
+
+            if(item.tags){
+                let tagId = [];
+                for(let i = 0; i < item.tags.length; i++){
+                    tagId.push({'id': item.tags[i].id});
+                }
+                console.log('tagId: ', tagId);
+                item.tags = tagId;
+            }
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
@@ -229,6 +239,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             console.log('oldItem: ', oldItem);
             console.log('item: ', item);
             console.log('jsonDB: ', jsonDB);
+
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 

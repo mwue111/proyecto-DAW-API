@@ -16,42 +16,20 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
     let tagId;
 
     console.log('product: ', product)
-    console.log('tagList: ', tagList);
-    console.log('tags del producto: ', product.tags);
 
     const selectedTags = [];
-    const actualTags = [];
 
     if(product.tags){
-
         product.tags.map((tag)=>{
-             selectedTags.push({
-                'name': tag.name,
-                'id': tag.id
-             });
+             selectedTags.push(tag.name);
         });
     }
 
-    console.log('selectedTags: ', selectedTags);
-
-    for(let i = 0; i < selectedTags.length; i++){
-        if(selectedTags[i].name === tagList[i].name){
-            // tagName = selectedTags[i].name;
-            // tagId = selectedTags[i].id;
-            actualTags.push(selectedTags[i].name);
-        }
-    }
-
-    console.log('actualTags: ', actualTags);
     const [dataForm, setDataForm] = useState(product);
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca);
-    const [tags, setTags] = useState(product.tags ? actualTags : null);
-    //const [dropdownOwner, setDropdownOwner] = useState(store.user_id ? {'name': ownerName, 'id': ownerId} : null);
+    const [tags, setTags] = useState([]);
     const [productPic, setProductPic] = useState('');
-
-    console.log('tags: ', tags);
-    //Aquí: coge tags pero el value no lo hace bien
 
     useEffect(() => {
         setItem(dataForm);
@@ -68,6 +46,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                 newProduct[checkName[0]][checkName[1]] = val;
             }
             else{
+
                 switch(name){
                     case 'categoria': setSelectedCategory(e.value); break;
                     case 'marca': setDropdownBrand(e.value); break;
@@ -75,6 +54,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                 }
 
                 newProduct[name] = val;
+
+
             }
 
             setDataForm(newProduct);
@@ -106,8 +87,18 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                     <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList}/>
                     <br/>
                     <label htmlFor='tags'>Etiquetas:</label>
-                    <MultiSelect name='tags' display="chip" value={tags} placeholder="Selecciona una o varias etiquetas" className="w-full md:w-20rem" onChange={handleInputChange} optionLabel='name' options={tagList}/>
-                    {/* value={tags} */}
+                    <MultiSelect
+                        name='tags'
+                        display="chip"
+                        value={tagList.filter((tags) =>
+                            selectedTags.includes(tags.name))
+                        }
+                        placeholder="Selecciona una o varias etiquetas"
+                        className="w-full md:w-20rem"
+                        onChange={handleInputChange}
+                        options={tagList}
+                        optionLabel='name'/>
+
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
