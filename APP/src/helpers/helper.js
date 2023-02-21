@@ -213,3 +213,16 @@ export function productStoreFilterFormatter(productList, storeList){
     }
     return data;
 }
+
+export function getTagColor(tag){
+    let color = 'bg-blue-200 text-blue-700';
+    console.log(tag)
+    switch (tag) {
+        case 'Vegano':color = 'bg-green-200 text-green-700';
+            break;
+    
+        default:
+            break;
+    }
+    return color;
+}

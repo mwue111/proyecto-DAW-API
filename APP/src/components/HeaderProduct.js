@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ProductCarousel from './ProductCarousel'
+import Tag from 'components/Tag'
 
 function HeaderProduct({data}) {
     const [producto, setProducto] = useState(null)
@@ -21,11 +22,10 @@ function HeaderProduct({data}) {
                                 <div className="mb-3">{producto.description}</div>
                             </div>
                             <div >
-                                {
-
-                                }
-                            </div> 
-                            <i className="pi pi-tag vertical-align-middle mr-2"></i>
+                                {producto.tags.map((tag) => (
+                                        <Tag tag={tag.name} />
+                                ))}
+                            </div>
                         </div>
                     </div>
             </div>
