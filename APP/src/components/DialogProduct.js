@@ -12,11 +12,15 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
     const tagList = [...allTags];
+    let tagName;
+    let tagId;
 
     console.log('product: ', product)
     console.log('tagList: ', tagList);
+    console.log('tags del producto: ', product.tags);
 
     const selectedTags = [];
+    const actualTags = [];
 
     if(product.tags){
 
@@ -30,12 +34,24 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
     console.log('selectedTags: ', selectedTags);
 
+    for(let i = 0; i < selectedTags.length; i++){
+        if(selectedTags[i].name === tagList[i].name){
+            // tagName = selectedTags[i].name;
+            // tagId = selectedTags[i].id;
+            actualTags.push(selectedTags[i].name);
+        }
+    }
+
+    console.log('actualTags: ', actualTags);
     const [dataForm, setDataForm] = useState(product);
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca);
-    //Aquí: que se queden seleccionados varios elementos del array como etiquetas
-    const [tags, setTags] = useState(product.tags ? {'name': selectedTags.name, 'id': selectedTags.id} : null);
+    const [tags, setTags] = useState(product.tags ? actualTags : null);
+    //const [dropdownOwner, setDropdownOwner] = useState(store.user_id ? {'name': ownerName, 'id': ownerId} : null);
     const [productPic, setProductPic] = useState('');
+
+    console.log('tags: ', tags);
+    //Aquí: coge tags pero el value no lo hace bien
 
     useEffect(() => {
         setItem(dataForm);
@@ -90,8 +106,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                     <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList}/>
                     <br/>
                     <label htmlFor='tags'>Etiquetas:</label>
-                    <MultiSelect name='tags' value={tags} display="chip" placeholder="Selecciona una o varias etiquetas" className="w-full md:w-20rem" onChange={handleInputChange} options={tagList}/>
-                    {/* aquí -- value={selectedCategory} onChange={handleInputChange} options={categoriesList} */}
+                    <MultiSelect name='tags' display="chip" value={tags} placeholder="Selecciona una o varias etiquetas" className="w-full md:w-20rem" onChange={handleInputChange} optionLabel='name' options={tagList}/>
+                    {/* value={tags} */}
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
