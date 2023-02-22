@@ -48,17 +48,30 @@ function formatJsonTienda (tiendas){
     return data;
 }
 
-function formatJsonDireccion (address){
+export function formatJsonDireccion (address){
+    if(address == null) return "no hay dirección";
     return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
 }
 
-function formatJsonHorario (schedules){
+export function formatJsonHorario (schedules){
     let horario = '';
     schedules.map((item) => {
         horario += formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
     })
     return horario;
 }
+
+export function formatJsonHorarioDia (schedules){
+    //filtra el dia actual de schedules y devuelve su horario
+    let schedule=schedules.filter((item) => {
+        if(item.day_of_week === (new Date().getDay())+1){
+            return item;
+        }
+    })
+        let horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
+    return horario;
+}
+
 function formatJsonDia(day){
     let dia="";
     switch (day) {

@@ -6,49 +6,49 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
 
-class addressesTableSeeder extends Seeder
+class AddressesTableSeeder extends Seeder
 {
     public function run()
     {
         DB::table('addresses')->insert([
             'road_type' => 'Calle',
-            'zip_code' => '04000',
-            'number' => '2',
-            'name' => 'Falsa',
-            'town_id' => '3',
-            'remarks' => 'ninguno'
+            'zip_code' => '04004',
+            'number' => '15',
+            'name' => 'Javier Sanz',
+            'town_id' => '1',
+            'remarks' => 'celia'
         ]);
         DB::table('addresses')->insert([
             'road_type' => 'Avenida',
-            'zip_code' => '04002',
-            'number' => '1',
-            'name' => 'Falsísima',
-            'town_id' => '2',
-            'remarks' => 'una avenida real'
-        ]);
-        DB::table('addresses')->insert([
-            'road_type' => 'Boulevard',
-            'zip_code' => '04004',
-            'number' => '19',
-            'name' => 'Súper Falsa',
+            'zip_code' => '04005',
+            'number' => '12',
+            'name' => 'de la estación',
             'town_id' => '1',
-            'remarks' => 'esta sí que existe'
+            'remarks' => 'Ocio'
         ]);
         DB::table('addresses')->insert([
             'road_type' => 'Calle',
-            'zip_code' => '04003',
-            'number' => '10',
-            'name' => 'De Verdad',
+            'zip_code' => '04008',
+            'number' => '58',
+            'name' => 'Belén',
             'town_id' => '1',
-            'remarks' => 'esta igual no existe'
+            'remarks' => 'lidl'
         ]);
         DB::table('addresses')->insert([
-            'road_type' => 'Callejón',
-            'zip_code' => '04001',
-            'number' => '0',
-            'name' => 'Real',
+            'road_type' => 'Calle',
+            'zip_code' => '04004',
+            'number' => '15',
+            'name' => 'José Artés de Arcos',
             'town_id' => '1',
-            'remarks' => 'esta existe'
+            'remarks' => 'Herbolario'
+        ]);
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04738',
+            'number' => '19',
+            'name' => 'Vera',
+            'town_id' => '1',
+            'remarks' => 'Vícar'
         ]);
     }
 }
