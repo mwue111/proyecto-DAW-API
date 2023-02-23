@@ -37,7 +37,7 @@ function formatJsonTienda (tiendas){
             email: item.email,
             propietario: item.owner.user.username,
             user_id: item.user_id,
-            horario: formatJsonHorario(item.schedules),
+            horario: formatJsonHorarioCadena(item.schedules),
             descripcion: item.description,
             address: item.address,
             schedules: item.schedules,
@@ -54,21 +54,30 @@ export function formatJsonDireccion (address){
 }
 
 export function formatJsonHorario (schedules){
+    let horario = [];
+    schedules.map((item) => {
+        horario.push(formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n");
+    })
+    return horario;
+}
+
+export function formatJsonHorarioCadena (schedules){
     let horario = '';
     schedules.map((item) => {
-        horario += formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
+        horario+=formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
     })
     return horario;
 }
 
 export function formatJsonHorarioDia (schedules){
-    //filtra el dia actual de schedules y devuelve su horario
+    let horario='Cerrado';
     let schedule=schedules.filter((item) => {
-        if(item.day_of_week === (new Date().getDay())+1){
+        if(item.day_of_week === (new Date().getDay())){
             return item;
         }
     })
-        let horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
+    if(schedule.length > 0)
+        horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
     return horario;
 }
 

@@ -52,15 +52,15 @@ const StoreMap = ({ address, apiKey }) => {
     });
     document.head.appendChild(script);
   }, [apiKey]);
+  
 
   useEffect(() => {
     if (googleReady) {
       // Delete the previous marker, if it exists
-      if (marker) {
+      if (marker && center) {
         marker.setMap(null);
         setMarker(null);
       }
-  
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address }, (results, status) => {
         if (status === 'OK') {
@@ -84,9 +84,10 @@ const StoreMap = ({ address, apiKey }) => {
   }, [address, googleReady]);
 
   return (
-    <div style={{ height: '400px', width: '100%' }}>
+    <div style={{ maxWidth: '250px', height:'250px', width:'100%' }}>
       {googleReady && (
         <GoogleMapReact
+          key={address}
           bootstrapURLKeys={{ key: apiKey }}
           defaultCenter={{ lat: 0, lng: 0 }}
           center={center}
