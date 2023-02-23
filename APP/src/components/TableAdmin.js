@@ -225,7 +225,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             if(item.tags){
                 let tagId = [];
                 for(let i = 0; i < item.tags.length; i++){
-                    tagId.push({'id': item.tags[i].id});
+                    tagId.push(item.tags[i].id);
                 }
                 console.log('tagId: ', tagId);
                 item.tags = tagId;
