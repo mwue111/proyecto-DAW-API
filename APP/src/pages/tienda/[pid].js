@@ -66,7 +66,7 @@ const Tienda = () => {
             <div className="py-12">
             <div className="max-w-6xl mx-auto grid grid-cols-2 gap-8 sm:px-6 lg:px-8 mb-5 bg-white border border-slate-800 rounded-lg">
             <div className="col-span-1">
-                <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey='AIzaSyBQ7YfohcWfByTbDJ1VdyNyrEEOY1pNI4s'/> 
+                <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/> 
             </div>
             <div className="col-span-1 p-6">
                 {selectedStore && <StoreInfo info={selectedStore} />}
