@@ -6,6 +6,8 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import StoreMap from '@/components/StoreMap'
 import { formatJsonDireccion } from '@/helpers/helper'
+import StoreTitle from '@/components/StoreTitle'
+import StoreInfo from '@/components/StoreInfo'
 
 
 const Tienda = () => {
@@ -16,16 +18,11 @@ const Tienda = () => {
     
 
     useEffect(() => {
-        try {
-            if(pid !=null)
-            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
-            .then((response) => {
-                console.log(response.data)
-                setSelectedStore(response.data)
-            })
-        } catch (error) {
-            console.log("petó")
-        }
+        if(!pid) return;
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+        .then((response) => {
+            setSelectedStore(response.data)
+        })
     }, [pid])
 
     const renderListItem = (data) => {
@@ -57,17 +54,34 @@ const Tienda = () => {
     };
 
     return (
-        <AppLayout>
+        <AppLayout
+        header={selectedStore && 
+                <StoreTitle store={selectedStore} />           
+        }
+        >
             <Head>
                 <title>{selectedStore? selectedStore.name : "Tienda"}</title>
             </Head>
 
             <div className="py-12">
-                {selectedStore && 
-                    selectedStore.name
-                }
+            <div className="max-w-6xl mx-auto grid grid-cols-4 gap-8 mb-5 bg-white rounded-lg">
+            <div className="col-span-1">
+            {selectedStore && 
+                <div className='border-8 border-color-slate-800 rounded-l-lg'>
+                    <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/> 
+                </div>}
+            </div>
+            <div className="col-span-2 p-6">
+                {selectedStore && <StoreInfo info={selectedStore}/>}
+            </div>
+            <div className="col-span-1">
+            {selectedStore && 
+                <div className='border-8 border-color-slate-800 rounded-l-lg'>
+                    <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/> 
+                </div>}
+            </div>
+            </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                {selectedStore && <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey='AIzaSyBQ7YfohcWfByTbDJ1VdyNyrEEOY1pNI4s'/>} 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                        {selectedStore && 
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />

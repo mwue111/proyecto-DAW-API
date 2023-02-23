@@ -37,7 +37,7 @@ function formatJsonTienda (tiendas){
             email: item.email,
             propietario: item.owner.user.username,
             user_id: item.user_id,
-            horario: formatJsonHorario(item.schedules),
+            horario: formatJsonHorarioCadena(item.schedules),
             descripcion: item.description,
             address: item.address,
             schedules: item.schedules,
@@ -49,16 +49,38 @@ function formatJsonTienda (tiendas){
 }
 
 export function formatJsonDireccion (address){
+    if(address == null) return "no hay dirección";
     return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
 }
 
-function formatJsonHorario (schedules){
-    let horario = '';
+export function formatJsonHorario (schedules){
+    let horario = [];
     schedules.map((item) => {
-        horario += formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
+        horario.push(formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n");
     })
     return horario;
 }
+
+export function formatJsonHorarioCadena (schedules){
+    let horario = '';
+    schedules.map((item) => {
+        horario+=formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
+    })
+    return horario;
+}
+
+export function formatJsonHorarioDia (schedules){
+    let horario='Cerrado';
+    let schedule=schedules.filter((item) => {
+        if(item.day_of_week === (new Date().getDay())){
+            return item;
+        }
+    })
+    if(schedule.length > 0)
+        horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
+    return horario;
+}
+
 function formatJsonDia(day){
     let dia="";
     switch (day) {

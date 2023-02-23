@@ -53,7 +53,7 @@ class StoreController extends Controller{
         $store->owner->user;
         $store->address;
         if($store->address !=null)
-            $store->address->town->state;
+        $store->address->town->state;
         return $store;
     }
 
