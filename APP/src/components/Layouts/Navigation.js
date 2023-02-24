@@ -18,6 +18,7 @@ const Navigation = ({ user }) => {
 
     const [open, setOpen] = useState(false)
 
+    console.log(user)
     return (
         <nav className="bg-white border-b border-gray-100">
             {/* Primary Navigation Menu */}
@@ -29,10 +30,15 @@ const Navigation = ({ user }) => {
 
                             {/* aquí  */}
 
-                            <Link href="/dashboard">
+                            {user?.type==='guest'?
+                            <Link href="/">
                                 <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
                             </Link>
+                            :<Link href="/dashboard">
+                                <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                            </Link>}
                         </div>
+                    
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
