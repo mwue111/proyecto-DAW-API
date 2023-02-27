@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Brand;
+use App\Models\Category;
+use DB;
 use App\Models\ProductImg;
 
 class ProductController extends Controller
@@ -15,26 +18,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['productos'] = Product::all();
-        foreach($data['productos'] as $producto){
-            $producto->tags;
-            $producto->stores;
-            $producto->sales;
-            $producto->category;
-            $producto->images->file;
+        $products = Product::all();
+        foreach($products as $product){
+            $product->productImg->each(function($url){
+                $url->file;
+            });
+            $product->brand;
+            $product->tags;
+            $product->stores;
+            $product->sales;
+            $product->category;
         }
-        return $data['productos'];
+        return $products;
         //return view('producto', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -63,26 +59,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $producto = Product::find($id);
-        $producto->tags;
-        $producto->stores;
-        $producto->sales;
-        $producto->category;
-        $producto->images->each(function($image){
+        $product = Product::find($id);
+        $product->brand;
+        $product->tags;
+        $product->stores;
+        $product->sales;
+        $product->category;
+        $product->productImg->each(function($image){
             $image->file;
         });
-        return $producto;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $product;
     }
 
     /**
@@ -95,9 +81,38 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
+
+        if(isset($request->categoria)){
+            $categoryId = DB::table("categories")
+                            ->select('id')
+                            ->where("name", $request->categoria)
+                            ->first()
+                            ->id;
+            $category = Category::find($categoryId);
+            $product->category_id = $category->id;
+        }
+
+        if(isset($request->marca)){
+            $brandId = DB::table("brands")
+                        ->select('id')
+                        ->where("name", $request->marca)
+                        ->first()
+                        ->id;
+
+            $brand = Brand::find($brandId);
+            $product->brand_id = $brand->id;
+        }
+
         $product->update($request->all());
-        $product->tags()->sync($request->tags);
+
+        if(isset($request->tags)){
+            //hay que mandarle los ids como números, no como objetos
+            $product->tags()->sync($request->tags);
+            $product->save();
+
+        }
         $product->stores()->sync($request->stores);
+        $product->save();
     }
 
     /**

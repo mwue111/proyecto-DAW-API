@@ -23,7 +23,7 @@ class StoreController extends Controller{
             });
             $store->specialDays;
             $store->owner->user;
-            $store->address->town->state;
+            //$store->address->town->state; //comentado porque daba error el navegador (Attempt to read property "town" on null)
         }
 
         return $stores;
