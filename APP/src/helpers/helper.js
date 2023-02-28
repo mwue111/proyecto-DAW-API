@@ -76,6 +76,7 @@ export function formatJsonHorarioDia (schedules){
             return item;
         }
     })
+    schedule=schedule[0];
     if(schedule.length > 0)
         horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
     return horario;
