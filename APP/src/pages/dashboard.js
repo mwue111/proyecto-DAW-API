@@ -4,7 +4,7 @@ import Table from '@/components/Table'
 
 const Dashboard = () => {
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/producto';
-    console.log(url);
+
     return (
         <AppLayout
             header={

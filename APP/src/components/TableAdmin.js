@@ -427,13 +427,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    const storesDialogFooter = (
-        <React.Fragment>
-            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveItem} />
-        </React.Fragment>
-    );
-
     const itemDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />

@@ -14,11 +14,11 @@ class FilesTableSeeder extends Seeder
             'url' => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.lavanguardia.com%2Fpeliculas-series%2Fpersonas%2Fjackie-chan-18897&psig=AOvVaw0OI4IrGDTAyh5XpTegYo2H&ust=1668861184754000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCMCz4cbet_sCFQAAAAAdAAAAABAD',
             'type' => 'profile_imgs',
             'deleted' => 0,
-        ]); 
+        ]);
 
         DB::table('files')->insert([
             'user_id' => 4,
-            'url' => 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1463207464959160321%2Fgqm3QEfP_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Firenemontero&tbnid=mqekORLnTJth4M&vet=12ahUKEwj0nqSV37f7AhUUgHMKHU5sAF0QMygBegUIARDlAQ..i&docid=HudMX-rjaonT0M&w=399&h=399&q=irene%20montero&safe=active&ved=2ahUKEwj0nqSV37f7AhUUgHMKHU5sAF0QMygBegUIARDlAQ', 
+            'url' => 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1463207464959160321%2Fgqm3QEfP_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Firenemontero&tbnid=mqekORLnTJth4M&vet=12ahUKEwj0nqSV37f7AhUUgHMKHU5sAF0QMygBegUIARDlAQ..i&docid=HudMX-rjaonT0M&w=399&h=399&q=irene%20montero&safe=active&ved=2ahUKEwj0nqSV37f7AhUUgHMKHU5sAF0QMygBegUIARDlAQ',
             'type' => 'profile_imgs',
             'deleted' => 0,
         ]);
@@ -28,7 +28,7 @@ class FilesTableSeeder extends Seeder
             'url' => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.rtve.es%2Fnoticias%2F20200110%2Fperfil-alberto-garzon-ministro-consumo%2F1995051.shtml&psig=AOvVaw3RA8HcpaIhUTzsMw5K5zoV&ust=1668861381136000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCKCAqqDft_sCFQAAAAAdAAAAABAH',
             'type' => 'profile_imgs',
             'deleted' => 0,
-        ]); 
+        ]);
 
         DB::table('files')->insert([
             'user_id' => 1,
@@ -43,7 +43,7 @@ class FilesTableSeeder extends Seeder
             'type' => 'profile_imgs',
             'deleted' => 0,
         ]);
-                   
+
         DB::table('files')->insert([
             'user_id' => 5,
             'url' => 'https://sede.agenciatributaria.gob.es/Sede/procedimientoini/G323.shtml',
@@ -63,24 +63,45 @@ class FilesTableSeeder extends Seeder
             'type' => 'store_imgs',
             'deleted' => 0,
         ]);
+        //9 - CASI
         DB::table('files')->insert([
             'user_id' => 4,
-            'url' => 'logotipo de una marca',
+            'url' => 'https://www.casi.es/wp-content/uploads/2020/10/logo-casi.png',
             'type' => 'brand_imgs',
         ]);
-
+        //10 - Juver
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrX-Oltl3WC7R8nVbg2Y6C_q9qKV1SNMA8Iw&usqp=CAU',
+            'type' => 'brand_imgs',
+        ]);
+        //11 - Danone
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mk7_fRXehIRjLk_gEhSIOJRmfMl_URU4SA&usqp=CAU',
+            'type' => 'brand_imgs',
+        ]);
+        //12 - Coca-Cola
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPVRUbGWo7hCi_4gs4usJBjeVZW_sobM3Prw&usqp=CAU',
+            'type' => 'brand_imgs',
+        ]);
+        //13
         DB::table('files')->insert([
             'user_id' => 5,
             'url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg/640px-Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
+        //14
         DB::table('files')->insert([
             'user_id' => 5,
             'url' => 'https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/2021-04/pomelo.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
+        //15
         DB::table('files')->insert([
             'user_id' => 5,
             'url' => 'https://actualfruveg.com/wp-content/uploads/2022/02/bea-pomelo-c-e1646326027737.jpg',

@@ -184,7 +184,8 @@ function formatJsonProducto (productos){
             deleted: item.deleted,
             marca: item.brand.name,
             categoria: item.category.name,
-            tags: item.tags
+            tags: item.tags,
+
         }
     })
     //console.log('data: ', data)
