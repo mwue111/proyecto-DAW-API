@@ -274,7 +274,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const editItem = (item) => {
         const _item = objectProfoundCopy(item); //copia profunda del item (incluyendo el objeto address)
         setItem(item);
-        setOldItem(_item);   //Aquí item ya tiene el address actualizado
+        setOldItem(_item);
         setItemDialog(true);
     }
 
@@ -301,6 +301,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
+    }
+
+    const getImage = (itemId, table) => {
+        console.log('rowData y table en getImage: ', itemId, ' - ', table);
+        let itemImages = [];
+        {/*Aquí: ver si puedo guardar en un array res.data.store_imgs[i].file.url. Puede que tenga que enviarlo como array de strings desde StoreController.*/}
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
+            .then(res => console.log(res))
+            // .then(res => {res.data.map((item) => {
+            //     console.log(item.store_imgs)
+            // })})
+        console.log('images: ', itemImages);
     }
 
     const responsiveOptions = [
@@ -421,7 +433,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
                 circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
 
-            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => galleria.current.show()} />
+            {/*Aquí: que al clickar el botón se haga una petición al back*/}
+            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => getImage(rowData.id, table)} />
+            {/*esto estaba en el onclick: () => galleria.current.show()*/}
                 </div>
             </React.Fragment>
         )

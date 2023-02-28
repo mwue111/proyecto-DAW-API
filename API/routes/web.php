@@ -72,8 +72,6 @@ Route::delete('/tienda/borrar_horario/{id}', 'StoreController@deleteSchedule');
 Route::put('/tienda/dias_especiales/{id}', 'StoreController@setSpecialDay');
 Route::delete('/tienda/borrar_dia_especial/{id}', 'StoreController@deleteSpecialDay');
 
-
-
 //Usuarios:
 Route::resource('/usuario', 'UserController');
 Route::resource('/cliente', 'ClientController');
@@ -83,3 +81,6 @@ Route::resource('/admin', 'AdministratorController');
 //Archivos (File):
 Route::resource('/archivo', 'FileController');
 require __DIR__.'/auth.php';
+
+//obtener imágenes de una tienda
+Route::get('/imagenes/tienda/{id}', 'StoreController@getImages');
