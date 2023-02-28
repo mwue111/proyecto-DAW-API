@@ -14,7 +14,7 @@ const Tienda = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
         .then((response) => {
             console.log(response.data)
             setSelectedStore(response.data)
@@ -56,12 +56,12 @@ const Tienda = () => {
             </Head>
 
             <div className="py-12">
-                {selectedStore && 
+                {selectedStore &&
                     selectedStore.name
                 }
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                       {selectedStore && 
+                       {selectedStore &&
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />
                        }
                     </div>

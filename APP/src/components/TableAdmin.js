@@ -76,7 +76,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             .then(res => setData(formatJson(res.data, table)))
 
         let cityOptions = [];
-        axios.get('http://localhost:8000/ciudad')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
                 .then(res => {res.data.map((item) => {
                     cityOptions.push({
                         'name': item.name,
@@ -87,7 +87,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setCities(cityOptions);
 
         let ownerOptions = [];
-        axios.get('http://localhost:8000/propietario')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/propietario')
                 .then(res => {res.data.map((item) => {
                     ownerOptions.push({
                         'name': item.user.name,
@@ -98,21 +98,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setOwners(ownerOptions);
 
         let categories = [];
-        axios.get('http://localhost:8000/categoria')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/categoria')
                 .then(res => {res.data.map((item) => {
                     categories.push(item.name);
                 })})
         setProdCategories(categories);
 
         let brandList = [];
-        axios.get('http://localhost:8000/marca')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/marca')
                 .then(res => {res.data.map((item) => {
                         brandList.push(item.name);
                     })})
         setBrands(brandList);
 
         let tagList = [];
-        axios.get('http://localhost:8000/etiqueta')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/etiqueta')
                 .then(res => {res.data.map((tag) => {
                     tagList.push({
                         'name': tag.name,
@@ -221,15 +221,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.user_id = item.user_id.id;
             }
 
-
             if(item.tags){
                 let tagId = [];
+
                 for(let i = 0; i < item.tags.length; i++){
                     tagId.push(item.tags[i].id);
                 }
-                console.log('tagId: ', tagId);
                 item.tags = tagId;
             }
+
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
@@ -239,7 +239,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             console.log('oldItem: ', oldItem);
             console.log('item: ', item);
             console.log('jsonDB: ', jsonDB);
-
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 

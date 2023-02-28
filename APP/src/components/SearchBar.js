@@ -27,11 +27,11 @@ const SearchBar = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8000/tienda/nombre')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')  //cambiado '/nombre' en ambos axios.
         .then((response) => {
             setStores(response.data);
         })
-        axios.get('http://localhost:8000/producto/nombre')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/producto')
         .then((response) => {
             setProducts(response.data);
         })
@@ -41,7 +41,7 @@ const SearchBar = () => {
         const storesProductsFilter=productStoreFilterFormatter(products, stores);
         setDataFilter(storesProductsFilter);
     }, [stores,products]);
-    
+
     const groupedItemTemplate = (item) => {
         return (
             <div className="flex align-items-center">

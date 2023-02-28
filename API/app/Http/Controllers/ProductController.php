@@ -111,6 +111,7 @@ class ProductController extends Controller
             $product->save();
 
         }
+
         $product->stores()->sync($request->stores);
         $product->save();
     }
