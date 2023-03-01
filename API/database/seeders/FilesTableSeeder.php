@@ -53,12 +53,12 @@ class FilesTableSeeder extends Seeder
 
         DB::table('files')->insert([
             'user_id' => 5,
-            'url' => 'https://latiendadejackiechan.com/foto',
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFBVVLm7D_0fFS7UBro9-2sbGN5VAFnWA8ZdUAr9D82WSe4Gzq5ZdWVWFPtoPhW7VQXwY&usqp=CAU',
             'type' => 'store_imgs',
             'deleted' => 0,
         ]);
         DB::table('files')->insert([
-            'user_id' => 5,
+            'user_id' => 4,
             'url' => 'https://latiendadejackiechan.com/foto',
             'type' => 'store_imgs',
             'deleted' => 0,
@@ -149,5 +149,42 @@ class FilesTableSeeder extends Seeder
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
+
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX4gVVQ_9jykaZDboR0p99fD_BBz-JlToXWXK8CKBGhFRo8q0KzhjhQ-DzXbvnyLQtEHc&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi5B99UoHJbE0bdUrG6vETs7_-9YN-Ign4CFweF3omOn3GD1mdotvvKEqBUTG1PJfs8s0&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW2yQngMwS7voRqh2f7DDZN2zUcZ6v823ZLiDLHlkzgFjoZUlv-b1HarViwdOFYSrUoGA&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWxSttjehGqhC2Gn3wimfc2KUmmdmWj83IGf09V5idCn_zlEJuXMBrfWxJz7n1uRFL3GE&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 5,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQczO7HiD8NmXErZgcFgUKdf-N5YOXekBhFoLg4rJM8g0LbH7rTRlz2MgURH_Qeyp_7DfY&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+
     }
 }

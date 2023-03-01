@@ -152,11 +152,12 @@ class StoreController extends Controller{
     }
 
     public function getImages($id){
-        $storeImg = Store::find($id);
-        $storeImg->storeImgs->each(function($image){
-            $image->file->url;
+        $store = Store::with('storeImgs')->find($id);
+
+        $images = $store->storeImgs->map(function($image){
+            return $image->file->url;
         });
-        //dd($storeImg);
-        return $storeImg;
+
+        return $images;
     }
 }

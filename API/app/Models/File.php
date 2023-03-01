@@ -19,7 +19,7 @@ class File extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    
+
     public function document(){
         return $this->hasOne(Document::class);
     }
@@ -33,7 +33,7 @@ class File extends Model
     }
 
     public function storeImgs(){
-        return $this->hasOne(StoreImg::class);
+        return $this->belongsTo(StoreImg::class);
     }
 
     public function brandImgs(){

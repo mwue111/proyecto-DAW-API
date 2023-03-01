@@ -70,6 +70,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
+    const [itemImages, setItemImages] = useState([]);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -305,14 +306,20 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const getImage = (itemId, table) => {
         console.log('rowData y table en getImage: ', itemId, ' - ', table);
-        let itemImages = [];
-        {/*Aquí: ver si puedo guardar en un array res.data.store_imgs[i].file.url. Puede que tenga que enviarlo como array de strings desde StoreController.*/}
+        let images = [];
+
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
-            .then(res => console.log(res))
-            // .then(res => {res.data.map((item) => {
-            //     console.log(item.store_imgs)
-            // })})
-        console.log('images: ', itemImages);
+            .then(res => {console.log(res.data);
+                res.data.map((item) => {
+                    images.push(item);
+                })
+            });
+        //Aquí: esto en un bucle para que no meta un array dentro de un array
+        setItemImages(itemImages.push(images));
+        console.log('images: ', images);
+        console.log('itemImages: ', itemImages);
+
+
     }
 
     const responsiveOptions = [
