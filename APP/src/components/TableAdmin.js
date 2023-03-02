@@ -16,6 +16,7 @@ import { headersDB } from 'helpers/helper.js';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
+    let imagesUrl = [];
     const defaultImages= [
         {
             itemImageSrc: 'https://primereact.org/images/galleria/galleria1.jpg',
@@ -58,7 +59,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
-    const [images, setImages] = useState(defaultImages);
     const galleria = useRef(null);
     const [changedItem, setChangedItem] = useState({});
     const [dataToDelete, setDataToDelete] = useState({});
@@ -70,7 +70,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
-    const [itemImages, setItemImages] = useState([]);
+    const [images, setImages] = useState(defaultImages);
+    const [itemImages, setItemImages] = useState(imagesUrl);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -84,7 +85,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         'id': item.id
                     })
                 })
-        })
+            })
         setCities(cityOptions);
 
         let ownerOptions = [];
@@ -95,7 +96,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         'id': item.user.id
                     })
                 })
-        })
+            })
         setOwners(ownerOptions);
 
         let categories = [];
@@ -237,9 +238,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
-            console.log('oldItem: ', oldItem);
-            console.log('item: ', item);
-            console.log('jsonDB: ', jsonDB);
+            // console.log('oldItem: ', oldItem);
+            // console.log('item: ', item);
+            // console.log('jsonDB: ', jsonDB);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
@@ -306,19 +307,23 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const getImage = (itemId, table) => {
         console.log('rowData y table en getImage: ', itemId, ' - ', table);
-        let images = [];
+        //let imagesUrl = [];
 
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
-            .then(res => {console.log(res.data);
+            .then(res => {
+                //console.log('res.data: ', res.data);
                 res.data.map((item) => {
-                    images.push(item);
+                    //console.log('item: ', item);
+                    imagesUrl.push(item);
                 })
-            });
-        //Aquí: esto en un bucle para que no meta un array dentro de un array
-        setItemImages(itemImages.push(images));
-        console.log('images: ', images);
-        console.log('itemImages: ', itemImages);
+            })
+            .then(setItemImages(imagesUrl));
 
+            console.log('imagesUrl: ', imagesUrl);
+            console.log('itemImages: ', itemImages);
+            console.log('itemImages[0]: ', itemImages[0]);
+
+        {/*esto estaba en el onclick: () => galleria.current.show()*/}
 
     }
 
@@ -437,10 +442,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className="space-x-4">
-                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
+                            {/* cambiado value={images} */}
+                <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
                 circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
-
-            {/*Aquí: que al clickar el botón se haga una petición al back*/}
+            {/* Aquí */}
             <Button label="Imágenes" icon="pi pi-external-link" onClick={() => getImage(rowData.id, table)} />
             {/*esto estaba en el onclick: () => galleria.current.show()*/}
                 </div>
