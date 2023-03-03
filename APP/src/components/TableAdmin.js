@@ -16,7 +16,15 @@ import { headersDB } from 'helpers/helper.js';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
-    let imagesUrl = [];
+    let imagesUrl = [
+        {
+            itemImageSrc: '',
+            thumbnailImageSrc: '',
+            alt: '',
+            title: '',
+        },
+    ];
+
     const defaultImages= [
         {
             itemImageSrc: 'https://primereact.org/images/galleria/galleria1.jpg',
@@ -70,8 +78,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
-    const [images, setImages] = useState(defaultImages);
-    const [itemImages, setItemImages] = useState(imagesUrl);
+    const [images, setImages] = useState(imagesUrl);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -126,7 +133,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         console.log('tabla: ', table);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, images]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -307,24 +314,27 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const getImage = (itemId, table) => {
         console.log('rowData y table en getImage: ', itemId, ' - ', table);
-        //let imagesUrl = [];
 
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
                 //console.log('res.data: ', res.data);
                 res.data.map((item) => {
-                    //console.log('item: ', item);
-                    imagesUrl.push(item);
-                })
+                    console.log('item: ', item);
+                    imagesUrl.push({
+                        itemImageSrc: item,
+                        thumbnailImageSrc: item,
+                        alt: `imagen de ${table}`,
+                        title: `item id: ${itemId}`
+                    })
+                });
+                setImages(imagesUrl.slice(1));
+
             })
-            .then(setItemImages(imagesUrl));
 
-            console.log('imagesUrl: ', imagesUrl);
-            console.log('itemImages: ', itemImages);
-            console.log('itemImages[0]: ', itemImages[0]);
+            //Aquí: se bugea - limpiar gallery al cerrarla y mirar otra alternativa
 
-        {/*esto estaba en el onclick: () => galleria.current.show()*/}
-
+            //console.log('imagesUrl: ', imagesUrl);
+            //console.log('images: ', images);
     }
 
     const responsiveOptions = [
@@ -347,11 +357,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
     ];
 
     const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
     }
 
     const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ width: '50%', display: 'inline-block' }} />;
     }
 
     const confirmUndoDelete = (item) => {
@@ -442,12 +452,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className="space-x-4">
-                            {/* cambiado value={images} */}
-                <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
+                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
                 circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
             {/* Aquí */}
-            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => getImage(rowData.id, table)} />
-            {/*esto estaba en el onclick: () => galleria.current.show()*/}
+            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => {getImage(rowData.id, table); galleria.current.show()}} />
                 </div>
             </React.Fragment>
         )
