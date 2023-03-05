@@ -24,6 +24,12 @@ class Store_imgsTableSeeder extends Seeder
             'file_id' => 26,
             'store_id' => 1,
         ]);
+
+        DB::table('store_imgs')->insert([
+            'file_id' => 27,
+            'store_id' => 2,
+        ]);
+
         DB::table('store_imgs')->insert([
             'file_id' => 7,
             'store_id' => 4,
@@ -38,6 +44,8 @@ class Store_imgsTableSeeder extends Seeder
             'file_id' => 23,
             'store_id' => 4,
         ]);
+
+
     }
 }
 

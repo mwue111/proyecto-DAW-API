@@ -185,6 +185,13 @@ class FilesTableSeeder extends Seeder
             'deleted' => 0,
         ]);
 
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRirl35AubSkQn-WsWRreuNPCjkIo9Q8pdR3DI_FzPkmDkRKqpMgWm7esNHtC0MQPdZ-X8&usqp=CAU',
+            'type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
 
     }
 }

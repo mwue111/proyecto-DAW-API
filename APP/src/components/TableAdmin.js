@@ -79,6 +79,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
     const [images, setImages] = useState(imagesUrl);
+    const [galleryKey, setGalleryKey] = useState(0);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -133,7 +134,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         console.log('tabla: ', table);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, images]);
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, images, galleryKey]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -314,27 +315,36 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const getImage = (itemId, table) => {
         console.log('rowData y table en getImage: ', itemId, ' - ', table);
-
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
-                //console.log('res.data: ', res.data);
-                res.data.map((item) => {
-                    console.log('item: ', item);
-                    imagesUrl.push({
-                        itemImageSrc: item,
-                        thumbnailImageSrc: item,
-                        alt: `imagen de ${table}`,
-                        title: `item id: ${itemId}`
-                    })
-                });
-                setImages(imagesUrl.slice(1));
+                console.log('res.data: ', res.data);
 
+                if(res.data.length === 0){
+                    imagesUrl.push({
+                        itemImageSrc: 'https://media.istockphoto.com/id/1319717836/es/vector/ning%C3%BAn-vector-de-icono-de-signo-de-c%C3%A1mara-de-fotos.jpg?s=170667a&w=0&k=20&c=UwNQQM1WyAQXWVayIwQlSefX-ycCuugxKo41nxzcSpc=',
+                        alt: 'No hay imágenes disponibles para esta tienda',
+                        title: 'sin imágenes'
+                    });
+                }
+                else{
+                    res.data.map((item) => {
+                        imagesUrl.push({
+                            itemImageSrc: item,
+                            thumbnailImageSrc: item,
+                            alt: `imagen de ${table}`,
+                            title: `item id: ${itemId}`
+                        })
+                    });
+                }
+
+                setImages(imagesUrl.slice(1));
             })
 
-            //Aquí: se bugea - limpiar gallery al cerrarla y mirar otra alternativa
+            galleria.current.show();
 
-            //console.log('imagesUrl: ', imagesUrl);
-            //console.log('images: ', images);
+        //Problemas con esta versión:
+            //1. se bugea: al pasar de la primera imagen a la segunda en un item y luego cerrar y abrir en un item sin imágenes, deja de reconocer item.itemImageSrc en itemTemplate y da fallo
+            //2. hay que esperar que carguen las imágenes desde la bd
     }
 
     const responsiveOptions = [
@@ -357,11 +367,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
     ];
 
     const itemTemplate = (item) => {
+        console.log('item: ', item);
         return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
     }
 
     const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ width: '50%', display: 'inline-block' }} />;
+        if(item.thumbnailImageSrc){
+            return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ width: '30%', display: 'inline-block' }} />;
+        }
     }
 
     const confirmUndoDelete = (item) => {
@@ -452,10 +465,25 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className="space-x-4">
-                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
-                circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
-            {/* Aquí */}
-            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => {getImage(rowData.id, table); galleria.current.show()}} />
+                    <Galleria
+                        ref={galleria}
+                        value={images}
+                        responsiveOptions={responsiveOptions}
+                        numVisible={9}
+                        style={{ maxWidth: '50%' }}
+                        circular fullScreen showItemNavigators
+                        item={itemTemplate}
+                        thumbnail={thumbnailTemplate}
+                    />
+
+                    <Button
+                        label="Imágenes"
+                        icon="pi pi-external-link"
+                        onClick={() =>
+                            getImage(rowData.id, table)
+                        }
+                    />
+
                 </div>
             </React.Fragment>
         )
