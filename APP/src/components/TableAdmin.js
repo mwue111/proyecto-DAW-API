@@ -360,10 +360,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
     ];
 
     const itemTemplate = (item) => {
-        if(item?.itemImageSrc){
-            return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
-            //console.log('item: ', item);
-        }
+        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
+        // if(item?.itemImageSrc){
+        //     //console.log('item: ', item);
+        // }
     }
 
     const thumbnailTemplate = (item) => {
