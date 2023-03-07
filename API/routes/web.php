@@ -82,5 +82,6 @@ Route::resource('/admin', 'AdministratorController');
 Route::resource('/archivo', 'FileController');
 require __DIR__.'/auth.php';
 
-//obtener imágenes de una tienda
+//obtener imágenes de una tienda -- mejora: remplazar por show en un nuevo controlador
 Route::get('/imagenes/tienda/{id}', 'StoreController@getImages');
+
