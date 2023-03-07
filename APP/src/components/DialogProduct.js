@@ -6,8 +6,9 @@ import { Image } from 'primereact/image';
 import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
+import Upload from './Upload';
 
-const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => {
+const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table }) => {
     const newProduct = product;
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
@@ -54,8 +55,6 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                 }
 
                 newProduct[name] = val;
-
-
             }
 
             setDataForm(newProduct);
@@ -102,18 +101,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <label htmlFor='productPic'>Nueva imagen:</label>
-                    <br/>
-                    <br/>
-                    <FileUpload mode='basic' name='productPic[]' url='https://primefaces.org/primereact/showcase/upload.php' accept='image/*' maxFileSize={1000000} onUpload={onProductPicUpload}/>
-                    <br/>
-                    {/*Esto debería ser dependiendo de si hay una imagen guardada para el producto, puesto .name para que haga el condicional */}
-                    {dataForm.nombre &&
-                        <div>
-                            <label htmlFor='oldProductPic'>Imagen guardada:</label>
-                            <Image name='oldProductPic' /*src={picture} alt={`Imagen de ${productName}`}*/ width='250' preview/>
-                        </div>
-                    }
+                        <Upload item={product} table={table} />
                 </Fieldset>
             </div>
         </div>

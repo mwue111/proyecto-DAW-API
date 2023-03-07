@@ -116,36 +116,76 @@ class FilesTableSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            'user_id' => 5,
-            'url' => 'foto de bulgur',
+            'user_id' => 7,
+            'url' => 'https://linverd.com/es/wp-content/uploads/sites/3/2021/02/bulgur-600x334.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
-            'user_id' => 5,
-            'url' => 'foto de plátanos',
+            'user_id' => 7,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpsmGb1HWNfSYvpkPoufD2jXtf7qM8ykJHbQGZ1iLjheo0HkMYmpj4IJEQi2lNvkCHlog&usqp=CAU',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
-            'user_id' => 5,
-            'url' => 'foto de un pack de zumos de piña',
+            'user_id' => 7,
+            'url' => 'https://www.frutoseco.com/1534-large_default/bulgur-500g.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //20
+        DB::table('files')->insert([
+            'user_id' => 7,
+            'url' => 'https://static2.abc.es/media/bienestar/2019/07/25/platano-beneficios-kIyF--1200x630@abc.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //21
+        DB::table('files')->insert([
+            'user_id' => 7,
+            'url' => 'https://statics-cuidateplus.marca.com/cms/styles/natural/azblob/platanos_0.jpg.webp?itok=Nm5QVrwg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //22
+        DB::table('files')->insert([
+            'user_id' => 7,
+            'url' => 'https://www.ayuno.es/wp-content/uploads/2017/12/Zumo-de-pin%CC%83a.jpg',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //23
+        DB::table('files')->insert([
+            'user_id' => 7,
+            'url' => 'https://www.consalud.es/estetic/uploads/s1/12/82/63/zumo_pina_beneficios_11052017_consalud.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
-            'user_id' => 5,
-            'url' => 'foto de una botella de ron',
+            'user_id' => 7,
+            'url' => 'https://marianomadrueno.es/wp-content/uploads/2019/08/brugal-anejo-ron-nueva-edicion-botella-70-cl-2021.png',
+            'type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //25
+        DB::table('files')->insert([
+            'user_id' => 7,
+            'url' => 'https://cdn.shopify.com/s/files/1/0359/6350/2725/products/006584-helado-de-Danonino-MPK-la-menorquina-en-casa_600x.jpg?v=1652865141',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
-            'user_id' => 5,
-            'url' => 'foto de un danonino fake',
+            'user_id' => 7,
+            'url' => 'https://static.ulabox.com/media/178794_l1.jpg',
             'type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -191,7 +231,5 @@ class FilesTableSeeder extends Seeder
             'type' => 'store_imgs',
             'deleted' => 0,
         ]);
-
-
     }
 }

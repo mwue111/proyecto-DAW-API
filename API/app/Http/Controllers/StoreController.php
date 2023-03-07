@@ -151,13 +151,4 @@ class StoreController extends Controller{
         return $oldStores;
     }
 
-    public function getImages($id){
-        $store = Store::with('storeImgs')->find($id);
-
-        $images = $store->storeImgs->map(function($image){
-            return $image->file->url;
-        });
-
-        return $images;
-    }
 }

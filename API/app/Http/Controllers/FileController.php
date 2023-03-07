@@ -45,9 +45,9 @@ class FileController extends Controller
 
             case 'store_imgs': $store = new StoreImg();
                             $store->file_id = $file->id;
-                            
+
                             $storeId = Store::find($request->store_id);
-                            $store->store_id = $storeId->id;                            
+                            $store->store_id = $storeId->id;
                             $store->save(); break;
 
             case 'product_imgs': $product = new ProductImg();
@@ -56,7 +56,7 @@ class FileController extends Controller
                                 $productId = Product::find($request->product_id);
                                 $product->product_id = $productId->id;
                                 $product->save(); break;
-            
+
             case 'brand_imgs': $brand = new BrandImg();
                                 $brand->file_id = $file->id;
 
@@ -74,17 +74,17 @@ class FileController extends Controller
             case 'product_imgs': $file->productImgs; break;
             case 'store_imgs': $file->storeImgs; break;
             case 'brand': $file->brandImgs; break;
-        }    
-        
+        }
+
         return $file;
     }
 
     //Función planteada por si es necesario cambiar el tipo de documento, pero en realidad servirá para marcar documentos como eliminados o no (deleted).
     public function update(Request $request, $id){
         $file = File::find($id);
-        
+
         $file->update($request->all()); //para modificar el campo type dentro de un file concreto
-        
+
         switch($file->type){
             case 'document': $document = Document::find($id);
                              $document->update($request->all()); break;
@@ -97,16 +97,34 @@ class FileController extends Controller
 
             case 'product_imgs': $product = ProductImg::find($id);
                                 $product->update($request->all()); break;
-            
+
             case 'brand_imgs': $brand = BrandImg::find($id);
                                 $brand->update($request->all()); break;
         }
-        
+
         $file->deleted = $request->deleted;
         $file->save();
     }
 
     public function destroy($id){
         return File::destroy($id);
+    }
+
+    public function getImages($table, $id){
+        switch($table){
+            case 'tienda': $store = Store::with('storeImgs')->find($id);
+                            $images = $store->storeImgs->map(function($image){
+                                            return $image->file->url;
+                            });
+                            break;
+            case 'producto': $product = Product::with('productImg')->find($id);
+                            $images = $product->productImg->map(function($image){
+                                return $image->file->url;
+                            });
+                            break;
+            case 'usuario': echo 'ok'; break;
+        }
+
+        return $images;
     }
 }

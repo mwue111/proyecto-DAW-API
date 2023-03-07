@@ -484,10 +484,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
-                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} />}
+                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
                 {table === 'usuario' && <DialogUser user={item} />}
 
-            </Dialog>
+            </Dialog>z
 
             <Dialog
                 visible={deleteItemDialog}

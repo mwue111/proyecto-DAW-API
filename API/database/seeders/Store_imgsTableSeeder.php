@@ -10,6 +10,7 @@ class Store_imgsTableSeeder extends Seeder
 {
 
     public function run() {
+
         DB::table('store_imgs')->insert([
             'file_id' => 24,
             'store_id' => 1,

@@ -6,8 +6,6 @@ import axios from 'axios';
 
 function Gallery( {rowData, table} ) {
 
-    {/* { loading === true ? <ProgressSpinner /> : } */}
-
     let defaultImages = [
         {
             itemImageSrc: '',
@@ -23,16 +21,11 @@ function Gallery( {rowData, table} ) {
 
     const getImage = async (itemId, table) => {
 
-        console.log('itemId y table: ', itemId, table);
-        //setImages(defaultUrl);   //Esto debería limpiar la galería
-        //cleanGallery();
-        console.log('images al principio de getImage: ', images);
-
+        console.log('itemId y table: ', itemId, ' - ', table);
         setLoading(true);
 
         await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
-                cleanGallery();
                 let newImages = [];
 
                 if(res.data.length === 0){
@@ -43,7 +36,6 @@ function Gallery( {rowData, table} ) {
                     });
                 }
                 else{
-                    console.log('petición: ', res);
                     res.data.map((item) => {
                         newImages.push({
                             itemImageSrc: item,
@@ -53,26 +45,13 @@ function Gallery( {rowData, table} ) {
                         });
                     });
                 }
-
-                console.log('newImages: ', newImages);
                 setImages(newImages);
             })
             .then(() => {
-                console.log('images: ', images);
                 setLoading(false);
-                console.log('galleria: ', galleria)
                 galleria.current.show();
             })
             .catch(error => console.log('Ha ocurrido un error: ', error))
-
-
-        //Problemas con esta versión:
-            //1. se bugea: no se puede limpiar al volver al dar al botón *Aquí
-            //2. hay que esperar que carguen las imágenes desde la bd
-    }
-
-    const cleanGallery = () => {
-        setImages(defaultImages);
     }
 
     const responsiveOptions = [
@@ -96,9 +75,6 @@ function Gallery( {rowData, table} ) {
 
     const itemTemplate = (item) => {
         return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
-        // if(item?.itemImageSrc){
-        //     //console.log('item: ', item);
-        // }
     }
 
     const thumbnailTemplate = (item) => {
@@ -122,13 +98,15 @@ function Gallery( {rowData, table} ) {
                 activeIndex={0}
             />
 
-            <Button
-                label="Imágenes"
-                icon="pi pi-external-link"
-                onClick={() =>
-                    getImage(rowData.id, table)
-                }
-            />
+            { loading == true ? <ProgressSpinner style={{width: '30%', height: '30%'}} strokeWidth="5" /> :
+                <Button
+                    label="Imágenes"
+                    icon="pi pi-external-link"
+                    onClick={() =>
+                        getImage(rowData.id, table)
+                    }
+                />
+            }
         </div>
     )
 }
