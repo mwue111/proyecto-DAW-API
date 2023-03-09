@@ -6,14 +6,19 @@ import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
 
-function Upload( {item, table} ) {
-    //console.log('item: ', item);
-    console.log('Subida desde la tabla ',table);
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //POST: archivo.store
+function Upload( {item, table, setProductPic, oldImages} ) {
+    //console.log('oldImages: ', oldImages);
+    //console.log('Subida desde la tabla ',table);
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
 
+    const [newImage, setNewImage] = useState([]);
     const [totalSize, setTotalSize] = useState(0);
     const toast = useRef(null);
     const fileUploadRef = useRef(null);
+
+    useEffect(() => {
+        setProductPic(newImage);
+    }, [newImage]);
 
     const onUpload = () => {
         toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
@@ -30,15 +35,23 @@ function Upload( {item, table} ) {
         setTotalSize(_totalSize);
     }
 
-    //*Aquí: Subida al back
     const onTemplateUpload = (e) => {
-        console.log('e: ', e);
+        const fileUrl = [];
         let _totalSize = 0;
         const files = Array.from(e.files);
 
-        files.forEach(file => {
+        files.map((url) => {
+            fileUrl.push(url.objectURL);
+        })
 
+        //console.log(fileUrl);
+
+        setNewImage(fileUrl);
+        //console.log('newImage: ', newImage);
+
+        files.forEach(file => {
             _totalSize += (file.size || 0);
+            console.log('_totalSize: ', _totalSize);
         });
 
         setTotalSize(_totalSize);

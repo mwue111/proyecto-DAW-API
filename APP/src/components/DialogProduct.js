@@ -29,7 +29,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     const [dataForm, setDataForm] = useState(product);
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca);
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState(tagList);
     const [productPic, setProductPic] = useState('');
 
     useEffect(() => {
@@ -62,10 +62,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         }
     }
 
-    const onProductPicUpload = (e) => {
-        setProductPic(e);
-        toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
-    }
+    // const onProductPicUpload = (e) => {
+    //     setProductPic(e);
+    //     toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
+    // }
 
     return(
         <div>
@@ -89,19 +89,19 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     <MultiSelect
                         name='tags'
                         display="chip"
-                        value={tagList.filter((tags) =>
+                        value={tags.filter((tags) =>
                             selectedTags.includes(tags.name))
                         }
                         placeholder="Selecciona una o varias etiquetas"
                         className="w-full md:w-20rem"
                         onChange={handleInputChange}
-                        options={tagList}
+                        options={tags}
                         optionLabel='name'/>
 
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                        <Upload item={product} table={table} />
+                        <Upload item={product} table={table} oldImages={product.product_img} setProductPic={setProductPic} />
                 </Fieldset>
             </div>
         </div>

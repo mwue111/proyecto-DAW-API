@@ -12,22 +12,22 @@ class Store_imgsTableSeeder extends Seeder
     public function run() {
 
         DB::table('store_imgs')->insert([
-            'file_id' => 24,
+            'file_id' => 29,
             'store_id' => 1,
         ]);
 
         DB::table('store_imgs')->insert([
-            'file_id' => 25,
+            'file_id' => 30,
             'store_id' => 1,
         ]);
 
         DB::table('store_imgs')->insert([
-            'file_id' => 26,
+            'file_id' => 31,
             'store_id' => 1,
         ]);
 
         DB::table('store_imgs')->insert([
-            'file_id' => 27,
+            'file_id' => 32,
             'store_id' => 2,
         ]);
 

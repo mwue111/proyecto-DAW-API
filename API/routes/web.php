@@ -84,4 +84,3 @@ require __DIR__.'/auth.php';
 
 //Obtener imágenes:
 Route::get('/imagenes/{table}/{id}', 'FileController@getImages');
-
