@@ -6,9 +6,12 @@ import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
 
+//https://stackoverflow.com/questions/60389073/how-to-upload-files-using-primereact-fileupload-component
+
 function Upload( {item, table, setProductPic, oldImages} ) {
     //console.log('oldImages: ', oldImages);
     //console.log('Subida desde la tabla ',table);
+    const prevImages = [...oldImages];
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
 
     const [newImage, setNewImage] = useState([]);
@@ -18,6 +21,7 @@ function Upload( {item, table, setProductPic, oldImages} ) {
 
     useEffect(() => {
         setProductPic(newImage);
+
     }, [newImage]);
 
     const onUpload = () => {
@@ -25,34 +29,39 @@ function Upload( {item, table, setProductPic, oldImages} ) {
     }
 
     const onTemplateSelect = (e) => {
+        console.log('onTemplateSelect');
+        const fileUrl = [];
         let _totalSize = totalSize;
         const files = Array.from(e.files);
 
         files.forEach(file => {
-             _totalSize += file.size;
+            fileUrl.push(file.objectURL);
+            _totalSize += file.size;
+            console.log('fileUrl: ', fileUrl);
         });
+
+        setNewImage(fileUrl);
 
         setTotalSize(_totalSize);
     }
 
     const onTemplateUpload = (e) => {
-        const fileUrl = [];
+
         let _totalSize = 0;
         const files = Array.from(e.files);
-
-        files.map((url) => {
-            fileUrl.push(url.objectURL);
-        })
-
-        //console.log(fileUrl);
-
-        setNewImage(fileUrl);
-        //console.log('newImage: ', newImage);
 
         files.forEach(file => {
             _totalSize += (file.size || 0);
             console.log('_totalSize: ', _totalSize);
         });
+
+        //Esto no tendría que ser aquí sino al guardar en dialogProduct
+        console.log('prevImages: ', prevImages);
+        console.log('newImage: ', newImage);
+
+        //Al añadir nuevas imágenes: juntar las imágenes antiguas y las nuevas en un array y mandarlas al padre para que éste las envíe a ProductController -> comprobar que las imágenes que se metan en productos tendrán que meterse en files
+
+        //Otra opción: si el length de productPic en el padre es mayor de 0 es que hay imágenes nuevas
 
         setTotalSize(_totalSize);
         toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
@@ -102,7 +111,7 @@ function Upload( {item, table, setProductPic, oldImages} ) {
         return (
             <div className="flex align-items-center flex-column">
                 <i className="pi pi-image ml-20 p-5" style={{ 'fontSize': '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}></i>
-                <span style={{ 'fontSize': '1.2em', color: 'var(--text-color-secondary)' }} className="my-auto mx-auto ml-3">Drag and Drop Image Here</span>
+                <span style={{ 'fontSize': '1.2em', color: 'var(--text-color-secondary)' }} className="my-auto mx-auto ml-3">Arrastra una imagen aquí</span>
             </div>
         )
     }

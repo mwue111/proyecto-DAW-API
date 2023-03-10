@@ -112,6 +112,8 @@ class ProductController extends Controller
 
         }
 
+        //*aquí*: ver cómo modificar las imágenes
+
         $product->stores()->sync($request->stores);
         $product->save();
     }

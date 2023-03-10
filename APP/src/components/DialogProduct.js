@@ -42,6 +42,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         const name = target.name;
 
         if(name !== null){
+
             const checkName = name.split('.');
             if(checkName.length == 2){
                 newProduct[checkName[0]][checkName[1]] = val;
@@ -101,7 +102,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                        <Upload item={product} table={table} oldImages={product.product_img} setProductPic={setProductPic} />
+                    <Upload name="product_img" item={product} table={table} oldImages={product.product_img} setProductPic={setProductPic} />
                 </Fieldset>
             </div>
         </div>

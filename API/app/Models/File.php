@@ -12,8 +12,8 @@ class File extends Model
     protected $fillable = [
         'user_id',
         'url',
-        'user_id',
         'type',
+        'deleted'
     ];
 
     public function user(){
