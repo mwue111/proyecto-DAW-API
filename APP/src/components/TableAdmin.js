@@ -184,6 +184,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const saveItem = () =>{
+
+        //Aquí tendría que poder verse la nueva imagen de los productos
         setSubmitted(true);
         setItemDialog(false);
 

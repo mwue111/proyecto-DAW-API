@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\File;
 use Illuminate\Http\Request;
 use App\Models\Document;
@@ -30,40 +31,51 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
-        $file = File::create($request->all());
+        if($request->has('url')) {
+            $file = File::create($request->all());
 
-        switch($file->type){
-            case 'document': $document = new Document();
-                            $document->file_id = $file->id;
-                            //$document->expiration_date = date('Y-m-d H:i:s');
-                            $document->expiration_date = $request->expiration_date;
-                            $document->save(); break;
+            // $user = Auth::check();
+            // dd(auth()->user());
 
-            case 'profile_imgs': $profile = new ProfileImg();
-                                $profile->file_id = $file->id;
-                                $profile->save(); break;
+        //Mirar aquí para asignar el id del usuario identificado (algo como user_id = auth()->id)
+            switch($file->type){
+                case 'document': $document = new Document();
+                                $document->file_id = $file->id;
+                                //$document->expiration_date = date('Y-m-d H:i:s');
+                                $document->expiration_date = $request->expiration_date;
+                                $document->save(); break;
 
-            case 'store_imgs': $store = new StoreImg();
-                            $store->file_id = $file->id;
+                case 'profile_imgs': $profile = new ProfileImg();
+                                    $profile->file_id = $file->id;
+                                    $profile->save(); break;
 
-                            $storeId = Store::find($request->store_id);
-                            $store->store_id = $storeId->id;
-                            $store->save(); break;
+                case 'store_imgs': $store = new StoreImg();
+                                $store->file_id = $file->id;
 
-            case 'product_imgs': $product = new ProductImg();
-                                $product->file_id = $file->id;
+                                $storeId = Store::find($request->store_id);
+                                $store->store_id = $storeId->id;
+                                $store->save(); break;
 
-                                $productId = Product::find($request->product_id);
-                                $product->product_id = $productId->id;
-                                $product->save(); break;
+                case 'product_imgs': $product = new ProductImg();
+                                    $product->file_id = $file->id;
 
-            case 'brand_imgs': $brand = new BrandImg();
-                                $brand->file_id = $file->id;
+                                    $productId = Product::find($request->product_id);
+                                    $product->product_id = $productId->id;
+                                    $product->save(); break;
 
-                                $brandId = Brand::find($request->brand_id);
-                                $brand->brand_id = $brandId->id;
-                                $brand->save(); break;
+                case 'brand_imgs': $brand = new BrandImg();
+                                    $brand->file_id = $file->id;
+
+                                    $brandId = Brand::find($request->brand_id);
+                                    $brand->brand_id = $brandId->id;
+                                    $brand->save(); break;
+            }
         }
+        else{
+            echo 'error'; //añadir gestión de errores
+        }
+
+
     }
 
     public function show($id){

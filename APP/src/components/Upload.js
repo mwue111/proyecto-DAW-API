@@ -5,13 +5,14 @@ import { ProgressBar } from 'primereact/progressbar';
 import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
+import axios from 'axios';
 
 //https://stackoverflow.com/questions/60389073/how-to-upload-files-using-primereact-fileupload-component
 
 function Upload( {item, table, setProductPic, oldImages} ) {
     //console.log('oldImages: ', oldImages);
     //console.log('Subida desde la tabla ',table);
-    const prevImages = [...oldImages];
+
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
 
     const [newImage, setNewImage] = useState([]);
@@ -29,7 +30,7 @@ function Upload( {item, table, setProductPic, oldImages} ) {
     }
 
     const onTemplateSelect = (e) => {
-        console.log('onTemplateSelect');
+
         const fileUrl = [];
         let _totalSize = totalSize;
         const files = Array.from(e.files);
@@ -37,7 +38,6 @@ function Upload( {item, table, setProductPic, oldImages} ) {
         files.forEach(file => {
             fileUrl.push(file.objectURL);
             _totalSize += file.size;
-            console.log('fileUrl: ', fileUrl);
         });
 
         setNewImage(fileUrl);
@@ -56,15 +56,24 @@ function Upload( {item, table, setProductPic, oldImages} ) {
         });
 
         //Esto no tendría que ser aquí sino al guardar en dialogProduct
-        console.log('prevImages: ', prevImages);
-        console.log('newImage: ', newImage);
 
-        //Al añadir nuevas imágenes: juntar las imágenes antiguas y las nuevas en un array y mandarlas al padre para que éste las envíe a ProductController -> comprobar que las imágenes que se metan en productos tendrán que meterse en files
-
-        //Otra opción: si el length de productPic en el padre es mayor de 0 es que hay imágenes nuevas
+        for(let i = 0; i < newImage.length; i++){
+            uploadFile(newImage[i]);
+        }
 
         setTotalSize(_totalSize);
         toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+    }
+
+    const uploadFile = (img) => {
+        //Esto no tendría que ser aquí sino al guardar en dialogProduct
+        axios.post(url, {
+            'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+            'url': img,
+            'type': 'product_imgs',
+            'deleted': 0,
+            'product_id': item.id
+        }, {'Content-Type': 'application/json'});
     }
 
     const onTemplateRemove = (file, callback) => {

@@ -42,7 +42,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         const name = target.name;
 
         if(name !== null){
-
+        //fileUpload no tiene un name
             const checkName = name.split('.');
             if(checkName.length == 2){
                 newProduct[checkName[0]][checkName[1]] = val;
