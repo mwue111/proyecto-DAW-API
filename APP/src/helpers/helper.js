@@ -138,7 +138,7 @@ export function changedJson(oldData, newData){
             }
         }
         else{
-            //añadido 'tags' porque si no incluye tiendas aunque no haya ningún cambio en ellas (¿objetos?)
+            //revisar tags: aparecen como cambios aunque no se hayan tocado
             if(item === 'tags' && oldData[item] !== newData[item]){
                 changed[item] = newData[item];
             }
@@ -185,7 +185,7 @@ function formatJsonProducto (productos){
             marca: item.brand.name,
             categoria: item.category.name,
             tags: item.tags,
-            product_img: item.product_img,
+            imagenes: item.product_img,
 
         }
     })

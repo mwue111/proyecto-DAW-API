@@ -9,7 +9,7 @@ import axios from 'axios';
 
 //https://stackoverflow.com/questions/60389073/how-to-upload-files-using-primereact-fileupload-component
 
-function Upload( {item, table, setProductPic, oldImages} ) {
+function Upload( {item, setProductPic } ) {
     //console.log('oldImages: ', oldImages);
     //console.log('Subida desde la tabla ',table);
 
@@ -22,7 +22,6 @@ function Upload( {item, table, setProductPic, oldImages} ) {
 
     useEffect(() => {
         setProductPic(newImage);
-
     }, [newImage]);
 
     const onUpload = () => {
@@ -31,16 +30,18 @@ function Upload( {item, table, setProductPic, oldImages} ) {
 
     const onTemplateSelect = (e) => {
 
-        const fileUrl = [];
         let _totalSize = totalSize;
         const files = Array.from(e.files);
 
+        const fileObjects = files.map((file) =>
+            file.objectURL
+        );
+
+        setNewImage(prevImage => [...prevImage, ...fileObjects]);
+
         files.forEach(file => {
-            fileUrl.push(file.objectURL);
             _totalSize += file.size;
         });
-
-        setNewImage(fileUrl);
 
         setTotalSize(_totalSize);
     }
@@ -52,10 +53,11 @@ function Upload( {item, table, setProductPic, oldImages} ) {
 
         files.forEach(file => {
             _totalSize += (file.size || 0);
-            console.log('_totalSize: ', _totalSize);
         });
 
         //Esto no tendría que ser aquí sino al guardar en dialogProduct
+
+        console.log('newImage: ', newImage);
 
         for(let i = 0; i < newImage.length; i++){
             uploadFile(newImage[i]);
@@ -67,13 +69,14 @@ function Upload( {item, table, setProductPic, oldImages} ) {
 
     const uploadFile = (img) => {
         //Esto no tendría que ser aquí sino al guardar en dialogProduct
+
         axios.post(url, {
-            'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
-            'url': img,
-            'type': 'product_imgs',
-            'deleted': 0,
-            'product_id': item.id
-        }, {'Content-Type': 'application/json'});
+                'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+                'url': img,
+                'type': 'product_imgs',
+                'deleted': 0,
+                'product_id': item.id
+            }, {'Content-Type': 'application/json'});
     }
 
     const onTemplateRemove = (file, callback) => {

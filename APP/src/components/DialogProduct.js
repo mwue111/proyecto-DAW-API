@@ -16,7 +16,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     let tagName;
     let tagId;
 
-    console.log('product: ', product)
+    //console.log('product: ', product)
 
     const selectedTags = [];
 
@@ -42,7 +42,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         const name = target.name;
 
         if(name !== null){
-        //fileUpload no tiene un name
+
             const checkName = name.split('.');
             if(checkName.length == 2){
                 newProduct[checkName[0]][checkName[1]] = val;
@@ -53,6 +53,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     case 'categoria': setSelectedCategory(e.value); break;
                     case 'marca': setDropdownBrand(e.value); break;
                     case 'tags': setTags(e.value); break;
+                    case 'imagenes': console.log('imágenes cambiadas'); break;
                 }
 
                 newProduct[name] = val;
@@ -62,11 +63,6 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
             console.log('newProduct: ', dataForm);
         }
     }
-
-    // const onProductPicUpload = (e) => {
-    //     setProductPic(e);
-    //     toast.current.show({severity: 'info', summary: '¡Perfecto!', detail:'Imagen subida'});
-    // }
 
     return(
         <div>
@@ -102,7 +98,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <Upload name="product_img" item={product} table={table} oldImages={product.product_img} setProductPic={setProductPic} />
+                    <Upload name="imagenes" item={product} setProductPic={setProductPic} />
                 </Fieldset>
             </div>
         </div>
