@@ -13,7 +13,7 @@ function Upload( {item, setProductPic } ) {
     //console.log('oldImages: ', oldImages);
     //console.log('Subida desde la tabla ',table);
 
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
+    //const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
 
     const [newImage, setNewImage] = useState([]);
     const [totalSize, setTotalSize] = useState(0);
@@ -44,8 +44,10 @@ function Upload( {item, setProductPic } ) {
         });
 
         setTotalSize(_totalSize);
+
     }
 
+/*-------------------------- esto no debería hacerse aquí
     const onTemplateUpload = (e) => {
 
         let _totalSize = 0;
@@ -54,8 +56,6 @@ function Upload( {item, setProductPic } ) {
         files.forEach(file => {
             _totalSize += (file.size || 0);
         });
-
-        //Esto no tendría que ser aquí sino al guardar en dialogProduct
 
         console.log('newImage: ', newImage);
 
@@ -68,7 +68,6 @@ function Upload( {item, setProductPic } ) {
     }
 
     const uploadFile = (img) => {
-        //Esto no tendría que ser aquí sino al guardar en dialogProduct
 
         axios.post(url, {
                 'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
@@ -78,6 +77,7 @@ function Upload( {item, setProductPic } ) {
                 'product_id': item.id
             }, {'Content-Type': 'application/json'});
     }
+//------------------------- fin --*/
 
     const onTemplateRemove = (file, callback) => {
         setTotalSize(totalSize - file.size);
@@ -96,7 +96,7 @@ function Upload( {item, setProductPic } ) {
         return (
             <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
                 {chooseButton}
-                {uploadButton}
+                {/* {uploadButton} */}
                 {cancelButton}
                 <ProgressBar value={value} displayValueTemplate={() => `${formatedValue} / 1 MB`} style={{ width: '300px', height: '20px', marginLeft: 'auto' }}></ProgressBar>
             </div>
@@ -135,12 +135,12 @@ function Upload( {item, setProductPic } ) {
         style: {width: '40px'}
     };
 
-    const uploadOptions = {
-        icon: 'pi pi-fw pi-cloud-upload',
-        iconOnly: true,
-        className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined',
-        style: {width: '40px'}
-    };
+    // const uploadOptions = {
+    //     icon: 'pi pi-fw pi-cloud-upload',
+    //     iconOnly: true,
+    //     className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined',
+    //     style: {width: '40px'}
+    // };
 
     const cancelOptions = {
         icon: 'pi pi-fw pi-times',
@@ -156,19 +156,21 @@ function Upload( {item, setProductPic } ) {
             <FileUpload
                 ref={fileUploadRef}
                 name="upload[]"
-                url={url}
+                //url={url}
                 multiple
                 accept="image/*"
                 maxFileSize={1000000}
-                onUpload={onTemplateUpload}
+
+                //onUpload={onTemplateUpload}
                 onSelect={onTemplateSelect}
+
                 onError={onTemplateClear}
                 onClear={onTemplateClear}
                 headerTemplate={headerTemplate}
                 itemTemplate={itemTemplate}
                 emptyTemplate={emptyTemplate}
                 chooseOptions={chooseOptions}
-                uploadOptions={uploadOptions}
+                //uploadOptions={uploadOptions}
                 cancelOptions={cancelOptions}
             />
 

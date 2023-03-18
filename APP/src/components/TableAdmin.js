@@ -185,7 +185,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const saveItem = () =>{
 
-        //Aquí tendría que poder verse la nueva imagen de los productos
         setSubmitted(true);
         setItemDialog(false);
 
@@ -204,6 +203,25 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.tags = tagId;
             }
 
+            //Esto si se quiere hacer sin el helper:
+            //if(item.imagenes){
+
+                // const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
+
+                // for(let i = 0; i < item.imagenes.length; i++){
+                //     if(typeof(item.imagenes[i]) !== 'object'){
+                //         console.log('Imágenes nuevas: ', item.imagenes[i]);
+                //         axios.post(url, {
+                //             'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+                //             'url': item.imagenes[i],
+                //             'type': 'product_imgs',
+                //             'deleted': 0,
+                //             'product_id': item.id
+                //         }, {'Content-Type': 'application/json'});
+                //     }
+                // }
+            //}
+
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
@@ -212,8 +230,25 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             // console.log('oldItem: ', oldItem);
             // console.log('item: ', item);
-            // console.log('jsonDB: ', jsonDB);
 
+            if(Object.keys(jsonDB).some(x => x == 'product_img')){
+                console.log('jsonDB: ', jsonDB['product_img']);
+                //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo', jsonDB['product_img'], {'Content-Type': 'application/json'}); <- problema: si se cambia más de una cosa.
+
+                for(let i = 0; i < jsonDB['product_img'].length; i++){
+                    if(typeof(jsonDB['product_img'][i]) !== 'object'){
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo', {
+                            'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+                            'url': jsonDB['product_img'][i],
+                            'type': 'product_imgs',
+                            'deleted': 0,
+                            'product_id': item.id
+                        }, {'Content-Type': 'application/json'});
+                    }
+                }
+            }
+
+            //console.log('qué se envía al back: ', fetchUrl + '/' + item.id, jsonDB, { headers })
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });

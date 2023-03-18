@@ -88,8 +88,8 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-    // console.log('oldData: ', oldData);
-    // console.log('newData: ', newData);
+    console.log('oldData: ', oldData);
+    console.log('newData: ', newData);
     Object.keys(oldData).map(item => {
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){
@@ -143,6 +143,22 @@ export function changedJson(oldData, newData){
                 changed[item] = newData[item];
             }
 
+            if (item === 'product_img' && oldData[item] !== newData[item]){
+                    // console.log('newData[item]: ', newData[item]);
+                    // for(let i = 0; i < newData[item].length; i++){
+                    //     if(typeof(newData[item][i]) !== 'object'){
+                    //         newData[item][i] = {
+                    //             'user_id': 7,
+                    //             'url': newData[item][i],
+                    //             'type': 'product_imgs',
+                    //             'deleted': 0,
+                    //             'product_id': item.id
+                    //         }
+                    //     }
+                    // }
+                changed[item] = newData[item];
+            }
+
             // console.log('item: ', item);
             // console.log('newData[item]: ', newData[item]);
             // console.log('oldData[item]: ', oldData[item]);
@@ -185,7 +201,7 @@ function formatJsonProducto (productos){
             marca: item.brand.name,
             categoria: item.category.name,
             tags: item.tags,
-            imagenes: item.product_img,
+            product_img: item.product_img,
 
         }
     })

@@ -13,8 +13,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
     const tagList = [...allTags];
-    let tagName;
-    let tagId;
+    //const oldImages = product.product_img;
 
     //console.log('product: ', product)
 
@@ -30,10 +29,11 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     const [selectedCategory, setSelectedCategory] = useState(product.categoria);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca);
     const [tags, setTags] = useState(tagList);
-    const [productPic, setProductPic] = useState('');
+    const [productPic, setProductPic] = useState([]);
 
     useEffect(() => {
         setItem(dataForm);
+        //console.log('productPic: ', productPic);
     }, [dataForm]);
 
     const handleInputChange = (e) => {
@@ -42,7 +42,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         const name = target.name;
 
         if(name !== null){
-
+            console.log('name: ', name);
             const checkName = name.split('.');
             if(checkName.length == 2){
                 newProduct[checkName[0]][checkName[1]] = val;
@@ -53,10 +53,24 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     case 'categoria': setSelectedCategory(e.value); break;
                     case 'marca': setDropdownBrand(e.value); break;
                     case 'tags': setTags(e.value); break;
-                    case 'imagenes': console.log('imágenes cambiadas'); break;
                 }
 
                 newProduct[name] = val;
+            }
+
+            if(productPic.length){
+            //Aquí: hacer que se detecte que se han seleccionado imágenes para elicitar setDataForm igual que los otros campos.
+
+                const oldImages = [];
+
+                for(let i = 0; i < product.product_img.length; i++) {
+                    //oldImages.push(product.product_img[i].file.url);
+                    oldImages.push(product.product_img[i]);
+                }
+
+                productPic.forEach(item => oldImages.push(item));
+
+                newProduct['product_img'] = oldImages;
             }
 
             setDataForm(newProduct);
@@ -98,7 +112,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <Upload name="imagenes" item={product} setProductPic={setProductPic} />
+                    <Upload name="product_img" item={product} setProductPic={setProductPic} onChange={handleInputChange} />
                 </Fieldset>
             </div>
         </div>
