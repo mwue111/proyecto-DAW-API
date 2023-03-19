@@ -167,6 +167,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const hideDialog = () => {
+        setChangedItem(oldItem);
         setSubmitted(false);
         setItemDialog(false);
     }

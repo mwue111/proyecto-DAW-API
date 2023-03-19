@@ -37,6 +37,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     }, [dataForm]);
 
     const handleInputChange = (e) => {
+        console.log('llamado');
         const target = e.target;
         const val = target.value;
         const name = target.name;
@@ -112,7 +113,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <Upload name="product_img" item={product} setProductPic={setProductPic} onChange={handleInputChange} />
+                    <Upload name="product_img" item={product} setProductPic={setProductPic}/>
                 </Fieldset>
             </div>
         </div>

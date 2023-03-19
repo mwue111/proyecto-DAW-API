@@ -24,9 +24,9 @@ function Upload( {item, setProductPic } ) {
         setProductPic(newImage);
     }, [newImage]);
 
-    const onUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    }
+    // const onUpload = () => {
+    //     toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+    // }
 
     const onTemplateSelect = (e) => {
 
@@ -103,6 +103,7 @@ function Upload( {item, setProductPic } ) {
         );
     }
 
+    //Aquí: cambiar el botón rojo de borrar
     const itemTemplate = (file, props) => {
         return (
             <div className="flex align-items-center flex-wrap">
