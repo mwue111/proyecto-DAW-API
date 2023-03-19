@@ -33,8 +33,27 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     useEffect(() => {
         setItem(dataForm);
-        //console.log('productPic: ', productPic);
-    }, [dataForm]);
+        //console.log('productPic en useEffect: ', productPic);
+    }, [dataForm, productPic]);
+
+    //Aquí: que la subida de imagen no sobreescriba o elimine los otros cambios que se hayan hecho antes en dialog
+    const uploadHandler = (data) => {
+        setProductPic(data);
+
+        const oldImages = [];
+
+        for(let i = 0; i < product.product_img.length; i++) {
+            oldImages.push(product.product_img[i]);
+        }
+
+        data.forEach(item => oldImages.push(item));
+
+        setProductPic(oldImages);
+
+        newProduct['product_img'] = oldImages;
+        setDataForm(newProduct);
+        console.log('newProduct al subir imagen: ', dataForm);
+    }
 
     const handleInputChange = (e) => {
         console.log('llamado');
@@ -59,21 +78,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 newProduct[name] = val;
             }
 
-            if(productPic.length){
-            //Aquí: hacer que se detecte que se han seleccionado imágenes para elicitar setDataForm igual que los otros campos.
-
-                const oldImages = [];
-
-                for(let i = 0; i < product.product_img.length; i++) {
-                    //oldImages.push(product.product_img[i].file.url);
-                    oldImages.push(product.product_img[i]);
-                }
-
-                productPic.forEach(item => oldImages.push(item));
-
-                newProduct['product_img'] = oldImages;
-            }
-
+            //uploadHandler();
             setDataForm(newProduct);
             console.log('newProduct: ', dataForm);
         }
@@ -113,7 +118,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <Upload name="product_img" item={product} setProductPic={setProductPic}/>
+                    <Upload name="product_img" item={product} setProductPic={(data) => {uploadHandler(data)}}
+                    />
                 </Fieldset>
             </div>
         </div>

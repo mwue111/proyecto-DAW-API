@@ -233,7 +233,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // console.log('item: ', item);
 
             if(Object.keys(jsonDB).some(x => x == 'product_img')){
-                console.log('jsonDB: ', jsonDB['product_img']);
+                //console.log('jsonDB: ', jsonDB['product_img']);
                 //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo', jsonDB['product_img'], {'Content-Type': 'application/json'}); <- problema: si se cambia más de una cosa.
 
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
@@ -249,10 +249,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
-            //console.log('qué se envía al back: ', fetchUrl + '/' + item.id, jsonDB, { headers })
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
+            console.log('item: ', item);
         }
         else {
             const headers = {
