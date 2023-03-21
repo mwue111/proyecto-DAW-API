@@ -8,8 +8,4 @@ const axios = Axios.create({
     withCredentials: true,
 });
 
-const csrfToken = document.cookie.match(/XSRF-TOKEN=([\w-]+)/)?.[1];
-
-axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
-
 export default axios
