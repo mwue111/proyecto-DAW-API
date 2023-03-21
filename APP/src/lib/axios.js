@@ -6,6 +6,10 @@ const axios = Axios.create({
         'X-Requested-With': 'XMLHttpRequest',
     },
     withCredentials: true,
-})
+});
+
+const csrfToken = document.cookie.match(/XSRF-TOKEN=([\w-]+)/)?.[1];
+
+axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken;
 
 export default axios

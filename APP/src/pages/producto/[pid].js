@@ -17,7 +17,7 @@ const Producto = () => {
 
     useEffect(() => {
         if(!pid) return;
-        axios.get(`http://localhost:8000/producto/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/producto/${pid}`)
         .then((response) => {
             setSelectedProduct(response.data)
         })

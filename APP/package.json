@@ -10,13 +10,12 @@
     "eject": "react-scripts eject",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
     "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
-
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "axios": "^0.21.1",
     "classname": "^0.0.0",
-    "next": "^13.1.2",
+    "next": "^13.1.6",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.3",
     "react": "^18.2.0",

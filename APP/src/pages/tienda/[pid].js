@@ -14,7 +14,7 @@ const Tienda = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/tienda/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/tienda/${pid}`)
         .then((response) => {
             console.log(response.data)
             setSelectedStore(response.data)

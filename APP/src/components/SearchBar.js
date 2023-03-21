@@ -27,11 +27,11 @@ const SearchBar = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8000/tienda/nombre')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')
         .then((response) => {
             setStores(response.data);
         })
-        axios.get('http://localhost:8000/producto/nombre')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/producto')
         .then((response) => {
             setProducts(response.data);
         })
