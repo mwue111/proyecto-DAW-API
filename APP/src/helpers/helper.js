@@ -49,7 +49,10 @@ function formatJsonTienda (tiendas){
 }
 
 function formatJsonDireccion (address){
-    return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
+    console.log('address: ', address);
+    if(address){
+        return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
+    }
 }
 
 function formatJsonHorario (schedules){
