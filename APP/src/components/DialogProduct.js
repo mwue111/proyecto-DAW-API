@@ -13,11 +13,28 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
     const tagList = [...allTags];
-    //const oldImages = product.product_img;
+    let brandName;
+    let brandId;
+    let categoryName;
+    let categoryId;
 
     //console.log('product: ', product)
 
     const selectedTags = [];
+
+    for(let i = 0; i < brandsList.length; i++) {
+        if(product.marca === brandsList[i].name) {
+            brandName = brandsList[i].name;
+            brandId = brandsList[i].id;
+        }
+    }
+
+    for(let i = 0; i < categoriesList.length; i++) {
+        if(product.categoria === categoriesList[i].name) {
+            categoryName = categoriesList[i].name;
+            categoryId = categoriesList[i].id;
+        }
+    }
 
     if(product.tags){
         product.tags.map((tag)=>{
@@ -26,8 +43,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     }
 
     const [dataForm, setDataForm] = useState(product);
-    const [selectedCategory, setSelectedCategory] = useState(product.categoria);
-    const [dropdownBrand, setDropdownBrand] = useState(product.marca);
+    //const [selectedCategory, setSelectedCategory] = useState(product.categoria);
+    const [selectedCategory, setSelectedCategory] = useState(product.categoria ? {'name': categoryName, 'id': categoryId} : null);
+    //const [dropdownBrand, setDropdownBrand] = useState(product.marca);
+    const [dropdownBrand, setDropdownBrand] = useState(product.marca ? {'name': brandName, 'id': brandId } : null);
     const [tags, setTags] = useState(tagList);
     const [productPic, setProductPic] = useState([]);
 
@@ -36,33 +55,33 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         //console.log('productPic en useEffect: ', productPic);
     }, [dataForm, productPic]);
 
-    //Aquí: que la subida de imagen no sobreescriba o elimine los otros cambios que se hayan hecho antes en dialog
     const uploadHandler = (data) => {
-        setProductPic(data);
+        if(product.product_img){
+            setProductPic(data);
 
-        const oldImages = [];
+            const oldImages = [];
 
-        for(let i = 0; i < product.product_img.length; i++) {
-            oldImages.push(product.product_img[i]);
+            for(let i = 0; i < product.product_img.length; i++) {
+                oldImages.push(product.product_img[i]);
+            }
+
+            data.forEach(item => oldImages.push(item));
+
+            setProductPic(oldImages);
+
+            newProduct['product_img'] = oldImages;
+            setDataForm(newProduct);
+            console.log('newProduct al subir imagen: ', dataForm);
         }
-
-        data.forEach(item => oldImages.push(item));
-
-        setProductPic(oldImages);
-
-        newProduct['product_img'] = oldImages;
-        setDataForm(newProduct);
-        console.log('newProduct al subir imagen: ', dataForm);
     }
 
     const handleInputChange = (e) => {
-        console.log('llamado');
         const target = e.target;
         const val = target.value;
         const name = target.name;
 
         if(name !== null){
-            console.log('name: ', name);
+
             const checkName = name.split('.');
             if(checkName.length == 2){
                 newProduct[checkName[0]][checkName[1]] = val;
@@ -78,9 +97,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 newProduct[name] = val;
             }
 
-            //uploadHandler();
             setDataForm(newProduct);
-            console.log('newProduct: ', dataForm);
+            //console.log('newProduct: ', dataForm);
         }
     }
 
@@ -97,10 +115,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     <br/>
                     <br/>
                     <label htmlFor='marca'>Marca:</label>
-                    <Dropdown name='marca' value={dropdownBrand} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange}/>
+                    <Dropdown name='marca' value={dropdownBrand} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange} optionLabel='name'/>
                     <br/>
                     <label htmlFor='categoria'>Categoría:</label>
-                    <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList}/>
+                    <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList} optionLabel='name'/>
                     <br/>
                     <label htmlFor='tags'>Etiquetas:</label>
                     <MultiSelect

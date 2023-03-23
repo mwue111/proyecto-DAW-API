@@ -72,14 +72,20 @@ const TableAdmin = ({ fetchUrl, table }) => {
         let categories = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/categoria')
                 .then(res => {res.data.map((item) => {
-                    categories.push(item.name);
+                    categories.push({
+                        'name': item.name,
+                        'id': item.id
+                    });
                 })})
         setProdCategories(categories);
 
         let brandList = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/marca')
                 .then(res => {res.data.map((item) => {
-                        brandList.push(item.name);
+                    brandList.push({
+                        'name': item.name,
+                        'id': item.id
+                    });
                     })})
         setBrands(brandList);
 
@@ -189,39 +195,20 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
+        if(item.tags){
+            let tagId = [];
+
+            for(let i = 0; i < item.tags.length; i++){
+                tagId.push(item.tags[i].id);
+            }
+            item.tags = tagId;
+        }
+
         if (item.id) {
 
             if(item.user_id){
                 item.user_id = item.user_id.id;
             }
-
-            if(item.tags){
-                let tagId = [];
-
-                for(let i = 0; i < item.tags.length; i++){
-                    tagId.push(item.tags[i].id);
-                }
-                item.tags = tagId;
-            }
-
-            //Esto si se quiere hacer sin el helper:
-            //if(item.imagenes){
-
-                // const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
-
-                // for(let i = 0; i < item.imagenes.length; i++){
-                //     if(typeof(item.imagenes[i]) !== 'object'){
-                //         console.log('Imágenes nuevas: ', item.imagenes[i]);
-                //         axios.post(url, {
-                //             'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
-                //             'url': item.imagenes[i],
-                //             'type': 'product_imgs',
-                //             'deleted': 0,
-                //             'product_id': item.id
-                //         }, {'Content-Type': 'application/json'});
-                //     }
-                // }
-            //}
 
             const jsonDB = changedJson(oldItem, item);
 
@@ -229,12 +216,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
-            // console.log('oldItem: ', oldItem);
-            // console.log('item: ', item);
 
-            if(Object.keys(jsonDB).some(x => x == 'product_img')){
-                //console.log('jsonDB: ', jsonDB['product_img']);
-                //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo', jsonDB['product_img'], {'Content-Type': 'application/json'}); <- problema: si se cambia más de una cosa.
+            if(item.product_img.length !== oldItem.product_img.length ){
 
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
                     if(typeof(jsonDB['product_img'][i]) !== 'object'){
@@ -244,7 +227,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             'type': 'product_imgs',
                             'deleted': 0,
                             'product_id': item.id
-                        }, {'Content-Type': 'application/json'});
+                        }, { headers });
                     }
                 }
             }
@@ -252,7 +235,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
-            console.log('item: ', item);
         }
         else {
             const headers = {
@@ -261,19 +243,31 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             const itemDB = headersDB(item);
 
-            itemDB.user_id = itemDB.user_id.id;
+            if(itemDB.user_id){
+                itemDB.user_id = itemDB.user_id.id;
+            }
 
             if(itemDB.address && itemDB.address.town){
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;
             }
 
-            console.log('itemDB: ', itemDB);
+            if(itemDB.brand){
+                itemDB.brand = itemDB.brand.id;
+            }
+
+            if(itemDB.category){
+                itemDB.category = itemDB.category.id;
+            }
 
             axios.post(fetchUrl, itemDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
+
+            if(changedItem !== item){
+                setChangedItem(item);
+            }
 
             setChangedItem(item);
             setItemDialog(false);
@@ -525,7 +519,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
                 {table === 'usuario' && <DialogUser user={item} />}
 
-            </Dialog>z
+            </Dialog>
 
             <Dialog
                 visible={deleteItemDialog}
