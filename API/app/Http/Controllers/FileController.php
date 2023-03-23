@@ -70,8 +70,6 @@ class FileController extends Controller
                                     $brand->brand_id = $brandId->id;
                                     $brand->save(); break;
             }
-
-            //Aquí: subida de imágenes en el directorio correspondiente
         }
         else{
             echo 'error'; //añadir gestión de errores

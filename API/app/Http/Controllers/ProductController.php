@@ -41,32 +41,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         $product = Product::create($request->all());
-
-        if(isset($request->brand)) {
-            $brandId = DB::table('brands')->select('id')
-                                        ->where('id', $request->brand)
-                                        ->first()
-                                        ->id;
-            $brand = Brand::find($brandId);
-            $product->brand_id = $brand->id;
-        }
-
-        if(isset($request->category)) {
-            $categoryId = DB::table('categories')->select('id')
-                                                ->where('id', $request->category)
-                                                ->first()
-                                                ->id;
-            $category = Category::find($categoryId);
-            $product->category_id = $category->id;
-        }
-
-        if(isset($request->tags)) {
-            $product->tags()->sync($request->tags);
-            $product->save();
-        }
-
+        $product->tags()->attach($request->tags);
         $product->stores()->attach($request->stores, [
             'stock' => $request->stock,
             'value' => $request->value,

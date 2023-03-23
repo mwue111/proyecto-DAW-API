@@ -152,12 +152,16 @@ export function changedJson(oldData, newData){
                     //             'url': newData[item][i],
                     //             'type': 'product_imgs',
                     //             'deleted': 0,
-                    //             'product_id': newData.id
+                    //             'product_id': item.id
                     //         }
                     //     }
                     // }
                 changed[item] = newData[item];
             }
+
+            // console.log('item: ', item);
+            // console.log('newData[item]: ', newData[item]);
+            // console.log('oldData[item]: ', oldData[item]);
         }
     })
 
@@ -174,8 +178,6 @@ export function headersDB(oldHeaders){
             case 'telefono1': oldHeaders['telephone1'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'telefono2': oldHeaders['telephone2'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
-            case 'marca': oldHeaders['brand'] = oldHeaders[item]; delete oldHeaders[item]; break;
-            case 'categoria': oldHeaders['category'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
     return oldHeaders;
 }
@@ -189,7 +191,7 @@ export function objectProfoundCopy(object){
 ///////////////////////////////////////////
 function formatJsonProducto (productos){
     const data = productos.map((item) => {
-        //console.log('item en helper: ', item) //lo que viene desde bd, el json completo
+        //console.log('item en helper: ', item)
         return {
             id: item.id,
             nombre: item.name,
