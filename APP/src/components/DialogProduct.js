@@ -47,7 +47,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     const [selectedCategory, setSelectedCategory] = useState(product.categoria ? {'name': categoryName, 'id': categoryId} : null);
     //const [dropdownBrand, setDropdownBrand] = useState(product.marca);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca ? {'name': brandName, 'id': brandId } : null);
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState(tagList);
     const [productPic, setProductPic] = useState([]);
 
     useEffect(() => {

@@ -83,10 +83,6 @@ const DialogStore = ({ store, setItem, cities, owners }) =>{
                     <label htmlFor='user_id'>Propietario/a:</label>
                     <Dropdown name='user_id' value={dropdownOwner} options={optionsOwner} onChange={handleInputChange} placeholder='Seleccione el/la propietario/a' optionLabel='name' required/>
                     <br/>
-                    <label htmlFor='horario'>Horario de la tienda: </label>
-                    <InputText name='horario' placeholder='A ver cómo ponemos el horario xdd' onChange={handleInputChange} />
-                    <br/>
-                    <br/>
                     <label htmlFor='description'>Descripción de la tienda:</label>
                     <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} onChange={handleInputChange} rows={5} required />
                 </Fieldset>

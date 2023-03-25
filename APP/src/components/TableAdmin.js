@@ -17,6 +17,49 @@ import Gallery from 'components/Gallery';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
+    const emptyStore = {
+        "nombre": "",
+        "telefono1": "",
+        "telefono2": "",
+        "email": "",
+        "descripcion": "",
+        "address": {
+            "road_type": "",
+            "zip_code": "",
+            "number": 0,
+            "name": "",
+            "remarks": "",
+            "town_id": "",
+            "town": {
+                "name": "",
+                "id": ""
+            }
+        },
+        "user_id": "",
+        "deleted": 0
+    }
+
+    const emptyProduct = {
+        "marca": "",
+        "categoria": {
+            "nombre": "",
+            "parent_category_id": ""
+        },
+        "descripcion": "",
+        "nombre": "",
+        "ofertas":[],
+        "tiendas": [],
+        "tags": [],
+        "imagen": "",
+        "deleted": 0
+    }
+
+    const emptyUser = {
+        //Cambiar estructura en DialogUser
+    }
+
+    const [toDashboard, setToDashboard] = useState(false);
+
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
@@ -42,6 +85,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [recharge, setRecharge] = useState(false);
+    //const [metaKey, setMetaKey] = useState(true);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -102,51 +148,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         console.log('tabla: ', table);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
-    }
-
-    const emptyStore = {
-            "nombre": "",
-            "telefono1": "",
-            "telefono2": "",
-            "email": "",
-            "descripcion": "",
-            "address": {
-                "road_type": "",
-                "zip_code": "",
-                "number": 0,
-                "name": "",
-                "remarks": "",
-                "town_id": "",
-                "town": {
-                    "name": "",
-                    "id": ""
-                }
-            },
-            "user_id": "",
-            "deleted": 0
-    }
-
-    const emptyProduct = {
-        "marca": "",
-        "categoria": {
-            "nombre": "",
-            "parent_category_id": ""
-        },
-        "descripcion": "",
-        "nombre": "",
-        "ofertas":[],
-        "tiendas": [],
-        "tags": [],
-        "imagen": "",
-        "deleted": 0
-    }
-
-    const emptyUser = {
-        //Cambiar estructura en DialogUser
     }
 
     const openStores = () => {
@@ -195,6 +200,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSubmitted(true);
         setItemDialog(false);
 
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
         if(item.tags){
             let tagId = [];
 
@@ -211,11 +220,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             const jsonDB = changedJson(oldItem, item);
-
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-
 
             if(item.product_img.length !== oldItem.product_img.length ){
 
@@ -237,9 +241,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-            const headers = {
-                'Content-Type': 'application/json'
-            };
 
             const itemDB = headersDB(item);
 
@@ -265,14 +266,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
-            if(changedItem !== item){
-                setChangedItem(item);
-            }
-
-            setChangedItem(item);
-            setItemDialog(false);
-            setItem({});
-            setOldItem({});
+        setRecharge(true);
+        setChangedItem(item);
+        setItemDialog(false);
+        setItem({});
+        setOldItem({});
     }
 
     const editItem = (item) => {
@@ -378,6 +376,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
+    const goToData = (e) => {
+        setToDashboard(true);
+        setSelectedRow(e.value);
+
+        if(table === 'tienda'){
+            if(toDashboard === true){
+                return <Navigate to="/dashboard" />
+            }
+        }
+    }
+
     {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
@@ -473,6 +482,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         }
     }
 
+
+
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
@@ -488,7 +499,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         paginatorLeft={paginatorButton}
                         paginatorRight={deleteOldItemsButton}
                         rows={5}
+                        selectionMode="single"
+                        selection={selectedRow}
+                        onClick={goToData}
                     >
+
+                {/* <DataTable
+                        value={products}
+                        selectionMode="single"
+                        selection={selectedProduct}
+                        onSelectionChange={(e) => setSelectedProduct(e.value)}
+                        dataKey="id"
+                        metaKeySelection={metaKey}
+                        tableStyle={{ minWidth: '50rem' }}
+                    >
+                */}
 
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
@@ -517,7 +542,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
                 {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
-                {table === 'usuario' && <DialogUser user={item} />}
+                {/* {table === 'usuario' && <DialogUser user={item} />} */}
 
             </Dialog>
 
