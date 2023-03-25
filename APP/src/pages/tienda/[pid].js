@@ -8,10 +8,14 @@ import StoreMap from '@/components/StoreMap'
 import { formatJsonDireccion } from '@/helpers/helper'
 import StoreTitle from '@/components/StoreTitle'
 import StoreInfo from '@/components/StoreInfo'
+import { useAuth } from '@/hooks/auth'
+import EditStoreDialog from '@/components/EditStoreDialog'
+
 
 
 const Tienda = () => {
 
+    const { user } = useAuth()
     const [selectedStore, setSelectedStore] = useState(null);
     const router = useRouter();
     const { pid } = router.query;  //id recibida por parametro
@@ -37,7 +41,7 @@ const Tienda = () => {
                         <span className="vertical-align-middle font-semibold">{data.pivot.stock}</span>
                     </div>
                     <div className="flex md:flex-column mt-5 justify-content-between align-items-center md:w-auto w-full">
-                        <span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">${data.pivot.value}</span>
+                        <span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">{data.pivot.value}€</span>
                         <span className={`product-badge `}>{data.pivot.unit}</span>
                     </div>
                 </div>
@@ -56,11 +60,16 @@ const Tienda = () => {
     return (
         <AppLayout
         header={selectedStore && 
-                <StoreTitle store={selectedStore} />           
-        }
+            <div className='flex flex-col justify-items-center'>
+              <StoreTitle store={selectedStore} />
+              {((user.type =="owner" && user.id === selectedStore?.user_id) || user.type =="administrator") &&
+                <EditStoreDialog store={selectedStore} />
+              }
+            </div>
+          }
         >
             <Head>
-                <title>{selectedStore? selectedStore.name : "Tienda"}</title>
+                <title>LocAlmeria - {selectedStore? selectedStore.name : "Tienda"}</title>
             </Head>
 
             <div className="py-12">
@@ -68,7 +77,7 @@ const Tienda = () => {
             <div className="col-span-1">
             {selectedStore && 
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
-                    <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/> 
+
                 </div>}
             </div>
             <div className="col-span-2 p-6">

@@ -3,6 +3,7 @@ import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
+import Tag from "components/Tag";
 
 const FullTable = () => {
   const [products, setProducts] = useState([]);
@@ -42,7 +43,7 @@ const FullTable = () => {
           body={row => (
             <ul>
               {row.tags.map(tag => (
-                <li key={tag.id}>{tag.name}</li>
+                <li key={tag.id}><Tag tag={tag.name} /></li>
               ))}
             </ul>
           )}

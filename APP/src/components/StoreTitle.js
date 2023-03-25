@@ -2,7 +2,7 @@ import React from 'react';
 
 function StoreTitle({store}) {
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
+    <div className="max-w-7xl">
       <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg relative">
         <img
           src="/palm-tree.svg"
