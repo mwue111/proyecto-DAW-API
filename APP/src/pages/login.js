@@ -76,7 +76,7 @@ const Login = () => {
 
                     {/* Password */}
                     <div className="mt-4">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">Contraseña</Label>
 
                         <Input
                             id="password"
@@ -110,7 +110,7 @@ const Login = () => {
                             />
 
                             <span className="ml-2 text-sm text-gray-600">
-                                Remember me
+                                Mantener conectado
                             </span>
                         </label>
                     </div>
@@ -119,7 +119,7 @@ const Login = () => {
                         <Link
                             href="/forgot-password"
                             className="underline text-sm text-gray-600 hover:text-gray-900">
-                            Forgot your password?
+                            ¿Olvidaste tu contraseña?
                         </Link>
 
                         <Button className="ml-3">Login</Button>

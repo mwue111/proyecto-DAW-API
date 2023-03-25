@@ -5,7 +5,6 @@ import Tag from 'components/Tag'
 function HeaderProduct({data}) {
     const [producto, setProducto] = useState(null)
     useEffect(() => {
-        console.log(data)
         setProducto(data);
     }, [data])
   return (

@@ -5,12 +5,12 @@ import Head from 'next/head'
 //Cuando hay un usuario registrado
 
 const AppLayout = ({ header, children }) => {
-    const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useAuth()
 
     return (
         <div>
             <Head>
-                    <title>User Layout</title>
+                    <title>Dahsboard</title>
             </Head>
 
             <div className="min-h-screen bg-gray-100">

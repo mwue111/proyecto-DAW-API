@@ -122,13 +122,13 @@ export default function Home() {
                   <h5 className="uppercase mb-6 font-bold">Social</h5>
                   <ul className="mb-4">
                     <li className="mt-2">
-                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Corellia</a>
+                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Coruscant</a>
                     </li>
                     <li className="mt-2">
-                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Bilbringi</a>
+                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Hoth</a>
                     </li>
                     <li className="mt-2">
-                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Fondor</a>
+                      <a href="#" className="hover:underline text-gray-600 hover:text-orange-500">Torremolinos</a>
                     </li>
                   </ul>
                 </div>

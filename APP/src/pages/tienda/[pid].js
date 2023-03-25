@@ -31,7 +31,7 @@ const Tienda = () => {
                 <div className="flex flex-column align-items-center p-3 w-full md:flex-row">
 {/*                     <img className="md:w-11rem w-9 shadow-2 md:my-0 md:mr-5 mr-0 my-5" src={`https://primereact.org/images/product/${data.image}`}  alt={data.name} />
  */}                    <div className="text-center md:text-left md:flex-1">
-                        <div className="text-2xl font-bold">{data.name}</div>
+                        <div className="text-2xl font-bold"><a href={`/producto/${data.id}`}>{data.name}</a></div>
                         <div className="mb-3">{data.description}</div>
                         <i className="pi pi-tag vertical-align-middle mr-2"></i>
                         <span className="vertical-align-middle font-semibold">{data.pivot.stock}</span>
