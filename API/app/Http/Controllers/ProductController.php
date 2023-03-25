@@ -21,7 +21,9 @@ class ProductController extends Controller
             $producto->stores;
             $producto->sales;
             $producto->category;
-            $producto->images->file;
+            $producto->images->each(function($archivo){
+                $archivo->file;
+            });
         }
         return $data['productos'];
         //return view('producto', $data);

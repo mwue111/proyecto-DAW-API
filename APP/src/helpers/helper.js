@@ -30,13 +30,13 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            direccion: formatJsonDireccion(item.address),
+            direccion: item.address != null ?formatJsonDireccion(item.address):"no hay dirección", //cambiado de direccion a address para recibir un objeto en TableAdmin
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,
             propietario: item.owner.user.username,
             user_id: item.user_id,
-            horario: formatJsonHorario(item.schedules),
+            horario: formatJsonHorarioCadena(item.schedules),
             descripcion: item.description,
             address: item.address,
             schedules: item.schedules,
@@ -47,17 +47,40 @@ function formatJsonTienda (tiendas){
     return data;
 }
 
-function formatJsonDireccion (address){
+export function formatJsonDireccion (address){
+    if(address == null) return "no hay dirección";
     return address.road_type + " " + address.name + " " + address.number + ", " + address.zip_code + " " + address.town.name + " (" + address.town.state.name.toUpperCase() + ")";
 }
 
-function formatJsonHorario (schedules){
-    let horario = '';
+export function formatJsonHorario (schedules){
+    let horario = [];
     schedules.map((item) => {
-        horario += formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
+        horario.push(formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n");
     })
     return horario;
 }
+
+export function formatJsonHorarioCadena (schedules){
+    let horario = '';
+    schedules.map((item) => {
+        horario+=formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n";
+    })
+    return horario;
+}
+
+export function formatJsonHorarioDia (schedules){
+    let horario='Cerrado';
+    let schedule=schedules.filter((item) => {
+        if(item.day_of_week === (new Date().getDay())){
+            return item;
+        }
+    })
+    schedule=schedule[0];
+    if(schedule)
+        horario = formatJsonDia(schedule.day_of_week) + ": " + schedule.time_slot.open_time + " - " + schedule.time_slot.closed_time + " \n";
+    return horario;
+}
+
 function formatJsonDia(day){
     let dia="";
     switch (day) {
@@ -215,4 +238,17 @@ export function productStoreFilterFormatter(productList, storeList){
         })
     }
     return data;
+}
+
+export function getTagColor(tag){
+    let color = 'bg-blue-200 text-blue-700';
+    console.log(tag)
+    switch (tag) {
+        case 'Vegano':color = 'bg-green-200 text-green-700';
+            break;
+    
+        default:
+            break;
+    }
+    return color;
 }

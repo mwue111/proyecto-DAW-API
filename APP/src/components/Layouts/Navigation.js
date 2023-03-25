@@ -17,7 +17,7 @@ const Navigation = ({ user }) => {
     const { logout } = useAuth()
 
     const [open, setOpen] = useState(false)
-
+    
     return (
         <nav className="bg-white border-b border-gray-100">
             {/* Primary Navigation Menu */}
@@ -29,10 +29,15 @@ const Navigation = ({ user }) => {
 
                             {/* aquí  */}
 
-                            <Link href="/dashboard">
+                            {user?.type===undefined?
+                            <Link href="/">
                                 <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
                             </Link>
+                            :<Link href="/dashboard">
+                                <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                            </Link>}
                         </div>
+                    
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -40,13 +45,6 @@ const Navigation = ({ user }) => {
                                 href="/dashboard"
                                 active={router.pathname === '/dashboard'}>
                                 Dashboard
-                            </NavLink>
-                        </div>
-                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href="/test"
-                                active={router.pathname === '/test'}>
-                                Guest
                             </NavLink>
                         </div>
                         {user?.type === 'administrator' && (
@@ -58,23 +56,15 @@ const Navigation = ({ user }) => {
                             </NavLink>
                         </div>
                         )}
-                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink
-                            href="/tienda/1"
-                            active={router.pathname === '/tienda'}>
-                            Tienda
-                        </NavLink>
-                        </div>
                     </div>
-                    <div className="hidden sm:flex sm:items-center sm:ml-6">
-                        <div className="flex items-center">
-                            <SearchBar />
-                        </div>
-                    </div>
+
 
                     {/* Settings Dropdown */}
                     {user ? (
-                    <div className="hidden sm:flex sm:items-center sm:ml-6">
+                    <div className="hidden sm:flex sm:items-center sm:ml-6 space-x-4">
+                        <div className="flex items-center">
+                                <SearchBar />
+                        </div>
                         <Dropdown
                             align="right"
                             width="48"
@@ -103,7 +93,15 @@ const Navigation = ({ user }) => {
                         </Dropdown>
                     </div>
                     ) : (
-                        <div className="hidden sm:flex sm:items-center sm:ml-6">
+                        <div className="hidden sm:flex sm:items-center sm:ml-6 space-x-4">
+                            <div className="flex items-center">
+                                <SearchBar />
+                            </div>
+                            <NavLink
+                                href="/register"
+                                active={router.pathname === '/register'}>
+                                Registrarse
+                            </NavLink>
                             <NavLink
                                 href="/login"
                                 active={router.pathname === '/login'}>
