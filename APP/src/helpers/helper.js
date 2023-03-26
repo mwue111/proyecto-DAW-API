@@ -21,10 +21,6 @@ export function formatJson (cosa, tipo){
     return data
 }
 
-function formatProduct(producto){
-    //const data = producto.map
-}
-
 function formatJsonTienda (tiendas){
     const data = tiendas.map((item) => {
         return {
@@ -114,7 +110,8 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-
+    // console.log('oldData: ', oldData);
+    // console.log('newData: ', newData);
     Object.keys(oldData).map(item => {
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){
@@ -155,19 +152,39 @@ export function changedJson(oldData, newData){
                 if(item === 'user_id' && oldData[item] !== newData[item]){
                     changed[item] = newData[item];
                 }
-                else{
-                    if(oldData[item] !== newData[item]){
+                else if(oldData[item] !== newData[item]){
                         changed[item] = newData[item];
-                    }
                 }
+            }
+        }
+        else{
+            //revisar tags: aparecen como cambios aunque no se hayan tocado
+            if(item === 'tags' && oldData[item] !== newData[item]){
+                changed[item] = newData[item];
+            }
+
+            if (item === 'product_img' && oldData[item] !== newData[item]){
+                    // console.log('newData[item]: ', newData[item]);
+                    // for(let i = 0; i < newData[item].length; i++){
+                    //     if(typeof(newData[item][i]) !== 'object'){
+                    //         newData[item][i] = {
+                    //             'user_id': 7,
+                    //             'url': newData[item][i],
+                    //             'type': 'product_imgs',
+                    //             'deleted': 0,
+                    //             'product_id': newData.id
+                    //         }
+                    //     }
+                    // }
+                changed[item] = newData[item];
             }
         }
     })
 
     changed = headersDB(changed);
 
+    console.log('changed: ', changed);
     return changed;
-
 }
 
 export function headersDB(oldHeaders){
@@ -177,6 +194,8 @@ export function headersDB(oldHeaders){
             case 'telefono1': oldHeaders['telephone1'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'telefono2': oldHeaders['telephone2'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'marca': oldHeaders['brand'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'categoria': oldHeaders['category'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
     return oldHeaders;
 }
@@ -190,16 +209,21 @@ export function objectProfoundCopy(object){
 ///////////////////////////////////////////
 function formatJsonProducto (productos){
     const data = productos.map((item) => {
-        console.log(item)
+        //console.log('item en helper: ', item)
         return {
             id: item.id,
             nombre: item.name,
             descripcion: item.description,
-            imágenes: item.images,
             tienda: item.stores,
+            deleted: item.deleted,
+            marca: item.brand.name,
+            categoria: item.category.name,
+            tags: item.tags,
+            product_img: item.product_img,
+
         }
     })
-    console.log(data)
+    //console.log('data: ', data)
     return data;
 }
 

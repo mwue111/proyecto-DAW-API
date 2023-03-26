@@ -19,7 +19,7 @@ const Producto = () => {
 
     useEffect(() => {
         if(!pid) return;
-        axios.get(`http://localhost:8000/producto/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/producto/${pid}`) //pid es el id de la tienda (http://localhost:8000/tienda/
         .then((response) => {
             setSelectedProduct(response.data)
         })
@@ -98,11 +98,11 @@ const Producto = () => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                        <h1 className="text-3xl font-bold text-center">{!selectedProduct && <ProgressSpinner/>}</h1>
                     </div>
-                    
+
                 </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                       {selectedProduct && 
+                       {selectedProduct &&
                         <DataView value={selectedProduct.stores} itemTemplate={itemTemplate} paginator rows={10} layout="list" />
                        }
                     </div>

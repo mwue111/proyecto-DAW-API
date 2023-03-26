@@ -26,6 +26,9 @@ class StoreController extends Controller{
             $store->address;
             if($store->address !=null)
             $store->address->town->state;
+            $store->storeImgs->each(function($image){
+                $image->file;
+            });
         }
 
         return $stores;
@@ -45,6 +48,9 @@ class StoreController extends Controller{
 
     public function show($id){
         $store = Store::find($id);
+        $store->storeImgs->each(function($image){
+            $image->file;
+        });
         $store->schedules->each(function($schedule){
             $schedule->timeSlot;
         });
@@ -86,19 +92,6 @@ class StoreController extends Controller{
        return Store::destroy($id);
     }
 
-    //Los métodos que podían pasarse a las funciones store, show, update y destroy se han comentado.
-    /*
-    public function getStores($id){
-        $store = Store::find($id);
-        return $store->schedules;
-    }
-
-    public function createSchedules(Request $request){
-        $store = Store::create($request->all());
-        $store->schedules()->attach($request->schedules);
-    }
-    */
-
     //actualizar un registro (aparte porque puede que al actualizar una tienda no sea necesario actualizar su horario)
     public function setSchedule(Request $request, $id){
         $store = Store::find($id);
@@ -123,19 +116,6 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->products()->detach($request->products);
     }
-
-    /*
-    public function getSpecialDays($id){
-        $store = Store::find($id);
-        return $store->specialDays;
-    }
-
-    //insertar un día especial a la tienda: pasado a la función store.
-    public function createSpecialDay(Request $request){
-        $store = Store::create($request->all());
-        $store->specialDays()->attach($request->specialDays);
-    }
-    */
 
     //dejado aparte porque al actualizar una tienda puede que no sea necesario cambiar sus días de horario especial
     public function setSpecialDay(Request $request, $id){
@@ -174,4 +154,5 @@ class StoreController extends Controller{
 
         return $oldStores;
     }
+
 }

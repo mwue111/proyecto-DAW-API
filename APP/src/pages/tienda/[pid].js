@@ -19,7 +19,7 @@ const Tienda = () => {
     const [selectedStore, setSelectedStore] = useState(null);
     const router = useRouter();
     const { pid } = router.query;  //id recibida por parametro
-    
+
 
     useEffect(() => {
         if(!pid) return;
@@ -75,24 +75,23 @@ const Tienda = () => {
             <div className="py-12">
             <div className="max-w-6xl mx-auto grid grid-cols-4 gap-8 mb-5 bg-white rounded-lg">
             <div className="col-span-1">
-            {selectedStore && 
+            {selectedStore &&
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
-
                 </div>}
             </div>
             <div className="col-span-2 p-6">
                 {selectedStore && <StoreInfo info={selectedStore}/>}
             </div>
             <div className="col-span-1">
-            {selectedStore && 
+            {selectedStore &&
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
-                    <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/> 
+                    <StoreMap address={formatJsonDireccion(selectedStore?.address)} apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}/>
                 </div>}
             </div>
             </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                       {selectedStore && 
+                       {selectedStore &&
                         <DataView value={selectedStore.products} layout="list" itemTemplate={itemTemplate} paginator rows={10} />
                        }
                     </div>

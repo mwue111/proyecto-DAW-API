@@ -27,25 +27,21 @@ const SearchBar = () => {
     }
 
     useEffect(() => {
-        try{
-            axios.get('http://localhost:8000/tienda/nombre')
-            .then((response) => {
-                setStores(response.data);
-            })
-            axios.get('http://localhost:8000/producto/nombre')
-            .then((response) => {
-                setProducts(response.data);
-            })
-        } catch (error) {
-            console.log("petó")
-        }
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')  //cambiado '/nombre' en ambos axios.
+        .then((response) => {
+            setStores(response.data);
+        })
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/producto')
+        .then((response) => {
+            setProducts(response.data);
+        })
     }, []);
 
     useEffect(() => {
         const storesProductsFilter=productStoreFilterFormatter(products, stores);
         setDataFilter(storesProductsFilter);
     }, [stores,products]);
-    
+
     const groupedItemTemplate = (item) => {
         return (
             <div className="flex align-items-center">

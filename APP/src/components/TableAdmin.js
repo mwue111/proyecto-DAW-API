@@ -13,35 +13,52 @@ import axios from 'axios';
 import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
 import { headersDB } from 'helpers/helper.js';
+import Gallery from 'components/Gallery';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
-    const defaultImages= [
-        {
-            itemImageSrc: 'https://primereact.org/images/galleria/galleria1.jpg',
-            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria1s.jpg',
-            alt: 'Description for Image 1',
-            title: 'Title 1'
+    const emptyStore = {
+        "nombre": "",
+        "telefono1": "",
+        "telefono2": "",
+        "email": "",
+        "descripcion": "",
+        "address": {
+            "road_type": "",
+            "zip_code": "",
+            "number": 0,
+            "name": "",
+            "remarks": "",
+            "town_id": "",
+            "town": {
+                "name": "",
+                "id": ""
+            }
         },
-        {
-            itemImageSrc: 'https://primereact.org/images/galleria/galleria2.jpg',
-            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria2s.jpg',
-            alt: 'Description for Image 2',
-            title: 'Title 2'
+        "user_id": "",
+        "deleted": 0
+    }
+
+    const emptyProduct = {
+        "marca": "",
+        "categoria": {
+            "nombre": "",
+            "parent_category_id": ""
         },
-        {
-            itemImageSrc: 'https://primereact.org/images/galleria/galleria3.jpg',
-            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria3s.jpg',
-            alt: 'Description for Image 3',
-            title: 'Title 3'
-        },
-        {
-            itemImageSrc: 'https://primereact.org/images/galleria/galleria4.jpg',
-            thumbnailImageSrc: 'https://primereact.org/images/galleria/galleria4s.jpg',
-            alt: 'Description for Image 4',
-            title: 'Title 4'
-        },
-    ]
+        "descripcion": "",
+        "nombre": "",
+        "ofertas":[],
+        "tiendas": [],
+        "tags": [],
+        "imagen": "",
+        "deleted": 0
+    }
+
+    const emptyUser = {
+        //Cambiar estructura en DialogUser
+    }
+
+    const [toDashboard, setToDashboard] = useState(false);
 
     const { user } = useAuth();
     const [data, setData] = useState([]);
@@ -58,8 +75,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [oldItem, setOldItem] = useState({});
-    const [images, setImages] = useState(defaultImages);
-    const galleria = useRef(null);
     const [changedItem, setChangedItem] = useState({});
     const [dataToDelete, setDataToDelete] = useState({});
     const [months, setMonths] = useState(3);
@@ -67,68 +82,76 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [singleDeleted, setSingleDeleted] = useState(false);
     const [cities, setCities] = useState([])
     const [owners, setOwners] = useState([])
+    const [prodCategories, setProdCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [recharge, setRecharge] = useState(false);
+    //const [metaKey, setMetaKey] = useState(true);
 
     useEffect(() => {
         axios.get(fetchUrl)
             .then(res => setData(formatJson(res.data, table)))
 
-        let cityOptions = [];   //array de objetos
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/ciudad')
+        let cityOptions = [];
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
                 .then(res => {res.data.map((item) => {
                     cityOptions.push({
                         'name': item.name,
                         'id': item.id
                     })
                 })
-        })
+            })
         setCities(cityOptions);
 
         let ownerOptions = [];
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/propietario')
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/propietario')
                 .then(res => {res.data.map((item) => {
                     ownerOptions.push({
                         'name': item.user.name,
                         'id': item.user.id
                     })
                 })
-        })
+            })
         setOwners(ownerOptions);
 
-        setSingleDeleted(false)
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);
+        let categories = [];
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/categoria')
+                .then(res => {res.data.map((item) => {
+                    categories.push({
+                        'name': item.name,
+                        'id': item.id
+                    });
+                })})
+        setProdCategories(categories);
+
+        let brandList = [];
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/marca')
+                .then(res => {res.data.map((item) => {
+                    brandList.push({
+                        'name': item.name,
+                        'id': item.id
+                    });
+                    })})
+        setBrands(brandList);
+
+        let tagList = [];
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/etiqueta')
+                .then(res => {res.data.map((tag) => {
+                    tagList.push({
+                        'name': tag.name,
+                        'id': tag.id});
+                })})
+        setTags(tagList);
+
+        setSingleDeleted(false);
+
+        console.log('tabla: ', table);
+
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
-    }
-
-    const emptyStore = {
-            "nombre": "",
-            "telefono1": "",
-            "telefono2": "",
-            "email": "",
-            "descripcion": "",
-            "address": {
-                "road_type": "",
-                "zip_code": "",
-                "number": 0,
-                "name": "",
-                "remarks": "",
-                "town_id": "",
-                "town": {
-                    "name": "",
-                    "id": ""
-                }
-            },
-            "user_id": "",
-            "deleted": 0
-    }
-
-    const emptyProduct = {
-        //Cambiar estructura en DialogProduct
-    }
-
-    const emptyUser = {
-        //Cambiar estructura en DialogUser
     }
 
     const openStores = () => {
@@ -144,13 +167,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const openNew = () => {
-        //switch para emptyProduct y emptyUser según el tipo
-        setItem(emptyStore);
+
+        switch(table){
+            case 'tienda': setItem(emptyStore); break;
+            case 'producto': setItem(emptyProduct); break;
+        }
+
         setSubmitted(false);
         setItemDialog(true);
     }
 
     const hideDialog = () => {
+        setChangedItem(oldItem);
         setSubmitted(false);
         setItemDialog(false);
     }
@@ -168,34 +196,108 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const saveItem = () =>{
+
         setSubmitted(true);
         setItemDialog(false);
 
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if(item.tags){
+            let tagId = [];
+
+            for(let i = 0; i < item.tags.length; i++){
+                tagId.push(item.tags[i].id);
+            }
+            item.tags = tagId;
+        }
+
         if (item.id) {
 
-            item.user_id = item.user_id.id;
+            if(item.user_id){
+                item.user_id = item.user_id.id;
+            }
+
             const jsonDB = changedJson(oldItem, item);
 
-            const headers = {
-                'Content-Type': 'application/json'
-            };
+            if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
+
+                console.log('jsonDB[product_img]: ', jsonDB['product_img']);
+
+                // for(let i = 0; i < jsonDB['product_img'].length; i++){
+                //     if(jsonDB['product_img'][i] instanceof File){
+
+                //         Object.defineProperties(jsonDB['product_img'][i], {
+                //             'image_type': {
+                //                 value: 'product_imgs',
+                //                 writable: false
+                //             },
+                //             'product_id': {
+                //                 value: item.id,
+                //                 writable: false
+                //             },
+                //             'user_id': {
+                //                 value: 7,
+                //                 writable: false
+                //             },
+                //             'deleted': {
+                //                 value: 0,
+                //                 writable: true
+                //             },
+                //             'url' : {
+                //                 value: jsonDB['product_img'][i].objectURL,
+                //                 writable: false
+                //             }
+                //         });
+                //         console.log('entra ', jsonDB['product_img'][i]);
+
+                //         const formData = new FormData();
+                //         formData.append('product', jsonDB['product_img'][i]);
+
+                //         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData, { 'Content-Type': 'multipart/form-data' })
+                //             .then(res => console.log('res: ', res))
+                //             .catch(error => console.log('error en la subida de imágenes: ', error));
+                //         //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', jsonDB['product_img'][i], { 'Content-Type': 'multipart/form-data' });
+                //     }
+                // }
+
+                for(let i = 0; i < jsonDB['product_img'].length; i++){
+                    if(typeof(jsonDB['product_img'][i]) !== 'object'){
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
+                            'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+                            'url': jsonDB['product_img'][i],
+                            'image_type': 'product_imgs',
+                            'deleted': 0,
+                            'product_id': item.id
+                        }, { headers });
+                    }
+                }
+            }
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-            const headers = {
-                'Content-Type': 'application/json'
-            };
 
             const itemDB = headersDB(item);
 
-            itemDB.user_id = itemDB.user_id.id;
+            if(itemDB.user_id){
+                itemDB.user_id = itemDB.user_id.id;
+            }
 
             if(itemDB.address && itemDB.address.town){
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;
+            }
+
+            if(itemDB.brand){
+                itemDB.brand = itemDB.brand.id;
+            }
+
+            if(itemDB.category){
+                itemDB.category = itemDB.category.id;
             }
 
             axios.post(fetchUrl, itemDB, { headers });
@@ -203,10 +305,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
-            setChangedItem(item);
-            setItemDialog(false);
-            setItem({});
-            setOldItem({});
+        setChangedItem(item);
+        setItemDialog(false);
+        setItem({});
+        setOldItem({});
+        setRecharge(true);
     }
 
     const editItem = (item) => {
@@ -233,39 +336,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
+            console.log('qué se manda: ')
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
         }
 
+        setRecharge(true);
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
-    }
-
-    const responsiveOptions = [
-        {
-            breakpoint: '1500px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '1024px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 2
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
-
-    const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
-    }
-
-    const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
     }
 
     const confirmUndoDelete = (item) => {
@@ -338,6 +416,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
+    const goToData = (e) => {
+        setToDashboard(true);
+        setSelectedRow(e.value);
+
+        if(table === 'tienda'){
+            if(toDashboard === true){
+                //aquí: ruta hacia la tienda
+            }
+        }
+    }
+
+    {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -354,21 +444,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return(
             <React.Fragment>
                 <div className="space-x-4">
-                <Galleria ref={galleria} value={images} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
-                circular fullScreen showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
 
-            <Button label="Imágenes" icon="pi pi-external-link" onClick={() => galleria.current.show()} />
+                    <Gallery rowData={rowData} table={table}/>
+
                 </div>
             </React.Fragment>
         )
     }
-
-    const storesDialogFooter = (
-        <React.Fragment>
-            <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-            <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveItem} />
-        </React.Fragment>
-    );
 
     const itemDialogFooter = (
         <React.Fragment>
@@ -401,7 +483,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const paginatorButton = () => {
         return(
             <React.Fragment>
-                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nueva tienda" onClick={openNew} />
+                <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nuevo registro" onClick={openNew} />
             </React.Fragment>
         )
     }
@@ -426,7 +508,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at'){
+            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id'){
                 acum[key] = value;
             }
             return acum;
@@ -438,6 +520,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'deleted': data.deleted == 1
         }
     }
+
+
 
     return (
         <div className="dataTable-crud">
@@ -454,14 +538,28 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         paginatorLeft={paginatorButton}
                         paginatorRight={deleteOldItemsButton}
                         rows={5}
+                        selectionMode="single"
+                        selection={selectedRow}
+                        onClick={goToData}
                     >
+
+                {/* <DataTable
+                        value={products}
+                        selectionMode="single"
+                        selection={selectedProduct}
+                        onSelectionChange={(e) => setSelectedProduct(e.value)}
+                        dataKey="id"
+                        metaKeySelection={metaKey}
+                        tableStyle={{ minWidth: '50rem' }}
+                    >
+                */}
 
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
                         )
                     )}
 
-                        {<Column field={'imágenes'} header={'imágenes'} key={'imágenes'} body={imagesBodyTemplate}/>}
+                        {<Column field={'imágenes'} header={'imágenes'} key={'imágenes'} body={imagesBodyTemplate} />}
                         <Column
                             body={actionBodyTemplate}
                             header='Acciones'
@@ -482,8 +580,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDialog}
             >
                 {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
-                {table === 'producto' && <DialogProduct product={item} />}
-                {table === 'usuario' && <DialogUser user={item} />}
+                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
+                {/* {table === 'usuario' && <DialogUser user={item} />} */}
 
             </Dialog>
 

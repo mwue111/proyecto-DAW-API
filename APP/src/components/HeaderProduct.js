@@ -12,7 +12,7 @@ function HeaderProduct({data}) {
         {producto !=null && 
             <div className='flex flex-row w-auto h-100'> 
                     <div className='max-w-sm items-center'>
-                        <ProductCarousel images={data.images}/>
+                        <ProductCarousel images={data.product_img}/>
                     </div>
                     <div className="">
                         <div className="text-center md:text-left md:flex-1">

@@ -53,8 +53,8 @@ function ProductCarousel() {
   const productTemplate = (product) => {
     return (
       <div className="product">
-        {product.images.length > 0 ? (
-          <img src={product.images[0].file.url} alt={product.name} />
+        {product.product_img?.length > 0 ? (
+          <img src={product.product_img[0].file.url} alt={product.name} />
         ) : (
           <img
             src="https://via.placeholder.com/300x200.png?text=No+Image"

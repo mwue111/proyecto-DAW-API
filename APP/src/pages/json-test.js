@@ -6,13 +6,13 @@ const JsonTest = () => {
   const [tipo, setTipo] = useState('tienda')
 
   useEffect(() => {
-    fetch('http://localhost:8000/tienda')
+    fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')
       .then(response => response.json())
       .then(data => setData(formatJson(data, tipo)));
   },[])
     console.log(data)
     return (
-      
+
       <div>
         {data.map((item) => (
           <div key={item.id}>
