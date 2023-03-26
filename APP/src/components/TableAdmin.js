@@ -221,7 +221,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             const jsonDB = changedJson(oldItem, item);
 
-            if(item.product_img.length !== oldItem.product_img.length ){
+            if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
 
                 console.log('jsonDB[product_img]: ', jsonDB['product_img']);
 
@@ -305,11 +305,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
-        setRecharge(true);
         setChangedItem(item);
         setItemDialog(false);
         setItem({});
         setOldItem({});
+        setRecharge(true);
     }
 
     const editItem = (item) => {
