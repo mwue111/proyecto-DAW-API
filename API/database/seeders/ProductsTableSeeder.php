@@ -74,7 +74,7 @@ class ProductsTableSeeder extends Seeder
         ]);
 
         // crea 40 seeds de productos de alimentación y 40 de bebidas
-        /*
+
         for ($i = 0; $i < 40; $i++) {
             DB::table('products')->insert([
                 'name' => 'Producto de alimentación ' . $i,
@@ -93,6 +93,6 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 2,
                 'deleted' => 0,
             ]);
-        }*/
+        }
     }
 }
