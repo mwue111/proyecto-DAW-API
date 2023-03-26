@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Carousel } from 'primereact/carousel';
 import axios from 'axios';
 
-function ProductCarousel() {
+function RecommendedProducts () {
   const [products, setProducts] = useState([]);
   const responsiveOptions = [
     {
@@ -76,4 +76,4 @@ function ProductCarousel() {
     </>
   );
 }
-export default ProductCarousel;
+export default RecommendedProducts;
