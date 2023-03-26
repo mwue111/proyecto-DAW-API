@@ -27,7 +27,7 @@ const Dashboard = () => {
                             <h1 className="text-3xl font-bold">Buscador de productos</h1>
                     </div>
                         <div className="p-6 bg-white border-b border-gray-200">
-                            <Table
+                            <FullTable
                                 fetchUrl={url}
                             />
                         </div>
