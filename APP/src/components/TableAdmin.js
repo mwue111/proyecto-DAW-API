@@ -204,7 +204,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
-        if(item.tags){
+        if(item.tags && item.tags !== oldItem.tags){
             let tagId = [];
 
             for(let i = 0; i < item.tags.length; i++){
@@ -305,11 +305,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
+        setRecharge(true);
         setChangedItem(item);
         setItemDialog(false);
         setItem({});
         setOldItem({});
-        setRecharge(true);
     }
 
     const editItem = (item) => {
@@ -336,14 +336,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
-            console.log('qué se manda: ')
+            console.log('qué se está mandando: ', fetchUrl + '/' + item.id, jsonDB, { headers });
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
-
         }
 
-        setRecharge(true);
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
+        setRecharge(true);
     }
 
     const confirmUndoDelete = (item) => {

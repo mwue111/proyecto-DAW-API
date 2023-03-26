@@ -37,7 +37,6 @@ function ProductCarousel() {
   const getRandomProducts = () => {
     const randomProducts = [];
     if (products.length > 0) {
-        console.log('productos: ', products);
       while (randomProducts.length < 9) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];

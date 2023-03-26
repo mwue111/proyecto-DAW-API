@@ -130,12 +130,12 @@ export function changedJson(oldData, newData){
                         else{
                             Object.keys(oldData[item][subItem]).map(infraItem => {
                                 if(oldData[item][subItem][infraItem] !== newData[item][subItem][infraItem] && infraItem !== 'state'){
-                
-                                    if(!changed[item]){                 
+
+                                    if(!changed[item]){
                                         changed[item] = {};
                                     }
 
-                                    if(!changed[item]['town_id']){      
+                                    if(!changed[item]['town_id']){
                                         changed[item]['town_id'] = {};
                                     }
 
@@ -158,12 +158,19 @@ export function changedJson(oldData, newData){
             }
         }
         else{
-            //revisar tags: aparecen como cambios aunque no se hayan tocado
-            if(item === 'tags' && oldData[item] !== newData[item]){
-                changed[item] = newData[item];
+            if(item === 'tags'){
+                let oldTagsId = [];
+
+                for(let i = 0; i < oldData[item].length; i++){
+                    oldTagsId.push(oldData[item][i].id);
+                }
+
+                if(oldTagsId.toString() !== newData[item].toString()){
+                    changed[item] = newData[item];
+                }
             }
 
-            if (item === 'product_img' && oldData[item] !== newData[item]){
+            if (item === 'product_img' && JSON.stringify(oldData[item]) !== JSON.stringify(newData[item])){
                     // console.log('newData[item]: ', newData[item]);
                     // for(let i = 0; i < newData[item].length; i++){
                     //     if(typeof(newData[item][i]) !== 'object'){
@@ -270,7 +277,7 @@ export function getTagColor(tag){
     switch (tag) {
         case 'Vegano':color = 'bg-green-200 text-green-700';
             break;
-    
+
         default:
             break;
     }

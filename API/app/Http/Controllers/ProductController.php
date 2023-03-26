@@ -147,18 +147,17 @@ class ProductController extends Controller
             $product->brand_id = $brand->id;
         }
 
-        $product->update($request->all());
 
         if(isset($request->tags)){
             //hay que mandarle los ids como números, no como objetos
             $product->tags()->sync($request->tags);
             $product->save();
-
         }
 
         //*aquí*: ver cómo modificar las imágenes
-
         $product->stores()->sync($request->stores);
+
+        $product->update($request->all());
         $product->save();
     }
 

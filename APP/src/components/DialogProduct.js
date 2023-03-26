@@ -19,7 +19,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     let categoryName;
     let categoryId;
 
-    //console.log('product: ', product)
+    console.log('product: ', product)
 
     const selectedTags = [];
 
@@ -124,7 +124,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
             }
 
             setDataForm(newProduct);
-            //console.log('newProduct: ', dataForm);
+            console.log('newProduct: ', dataForm);
         }
     }
 
