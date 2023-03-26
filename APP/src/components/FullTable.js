@@ -26,7 +26,7 @@ const FullTable = () => {
 
   return (
     <>
-      <InputText type="text" placeholder="Search..." value={filterText} onChange={handleFilterChange} />
+      <InputText type="text" placeholder="Buscar..." value={filterText} onChange={handleFilterChange} />
       <DataTable
         value={filteredProducts}
         paginator
