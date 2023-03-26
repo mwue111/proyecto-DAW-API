@@ -442,14 +442,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    const goToData = (e) => {
-        setToDashboard(true);
-        setSelectedRow(e.value);
-
-        if(table === 'tienda'){
-            if(toDashboard === true){
-                //aquí: ruta hacia la tienda
-            }
+    const goToData = (row) => {
+        switch(table){
+            case 'tienda': window.location.href = `/tienda/${row.data.id}`; break;
+            case 'producto': window.location.href = `/producto/${row.data.id}`; break;
         }
     }
 
@@ -565,20 +561,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         paginatorRight={deleteOldItemsButton}
                         rows={5}
                         selectionMode="single"
-                        selection={selectedRow}
-                        onClick={goToData}
+                        selection={null}
+                        onRowClick={goToData}
                     >
-
-                {/* <DataTable
-                        value={products}
-                        selectionMode="single"
-                        selection={selectedProduct}
-                        onSelectionChange={(e) => setSelectedProduct(e.value)}
-                        dataKey="id"
-                        metaKeySelection={metaKey}
-                        tableStyle={{ minWidth: '50rem' }}
-                    >
-                */}
 
                     {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key} header={key} key={key} />
