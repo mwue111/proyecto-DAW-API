@@ -87,7 +87,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [tags, setTags] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [recharge, setRecharge] = useState(false);
-    //const [metaKey, setMetaKey] = useState(true);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -204,26 +203,32 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
-        if(item.tags && item.tags !== oldItem.tags){
-            let tagId = [];
+        if(item.tags){
+            console.log('item.tags: ', item.tags);
+            console.log('oldItem.tags: ', oldItem.tags);
 
-            for(let i = 0; i < item.tags.length; i++){
-                tagId.push(item.tags[i].id);
-            }
-            item.tags = tagId;
+            item.tags = formatTags(item.tags);
         }
 
         if (item.id) {
-
+            console.log('item: ', item);
             if(item.user_id){
                 item.user_id = item.user_id.id;
+            }
+
+            if(item.marca){
+                item.marca = item.marca.name;
+            }
+
+            if(item.categoria){
+                item.categoria = item.categoria.name;
             }
 
             const jsonDB = changedJson(oldItem, item);
 
             if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
 
-                console.log('jsonDB[product_img]: ', jsonDB['product_img']);
+                //console.log('jsonDB[product_img]: ', jsonDB['product_img']);
 
                 // for(let i = 0; i < jsonDB['product_img'].length; i++){
                 //     if(jsonDB['product_img'][i] instanceof File){
@@ -326,17 +331,33 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(true);
     }
 
+    const formatTags = (tags) => {
+        let tagId = [];
+
+        for(let i = 0; i < tags.length; i++){
+            tagId.push(tags[i].id);
+        }
+
+        return tagId;
+    }
+
     const deleteItem = () => {
 
         if(item.id){
             item.deleted = 1;
+
+            if(item.tags){
+                item.tags = formatTags(item.tags);
+            }
+
+            console.log('oldItem que se manda al borrar: ', oldItem);
+            console.log('item que se manda al borrar: ', item);
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
                 'Content-Type': 'application/json'
             };
 
-            console.log('qué se está mandando: ', fetchUrl + '/' + item.id, jsonDB, { headers });
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
         }
 
@@ -356,7 +377,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         if(item.id){
             item.deleted = 0;
+
+            if(item.tags){
+                item.tags = formatTags(item.tags);
+            }
+
             const jsonDB = changedJson(oldItem, item);
+            console.log('jsonDB en undoDelete: ', jsonDB);
 
             const headers = {
                 'Content-Type': 'application/json'

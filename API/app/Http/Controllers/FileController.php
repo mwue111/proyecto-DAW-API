@@ -33,6 +33,20 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
+
+        // Route::post('/upload', function(Request $request) {
+        //     $files = $request->file('product_img');
+        //     $urls = [];
+
+        //     foreach($files as $file) {
+        //         $path = $file->store('public/images/product_img');
+        //         $url = Storage::url($path);
+        //         $urls[] = $url;
+        //     }
+
+        //     return response()->json(['urls' => $urls]);
+        // })
+
         //$user = Auth::user();
 
         //if($request->has('url') || $request->has('objectURL') || $request->upload) {

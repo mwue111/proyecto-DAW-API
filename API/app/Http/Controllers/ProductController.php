@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
-use DB;
 use App\Models\ProductImg;
+use DB;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
 class ProductController extends Controller
 {
@@ -126,27 +129,26 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if(isset($request->categoria)){
+        if(isset($request->category)){
+
             $categoryId = DB::table("categories")
                             ->select('id')
-                            ->where("name", $request->categoria)
-                            ->first()
-                            ->id;
+                            ->where("name", $request->category)
+                            ->first()->id;
             $category = Category::find($categoryId);
             $product->category_id = $category->id;
         }
 
-        if(isset($request->marca)){
+        if(isset($request->brand)){
             $brandId = DB::table("brands")
                         ->select('id')
-                        ->where("name", $request->marca)
+                        ->where("name", $request->brand)
                         ->first()
                         ->id;
 
             $brand = Brand::find($brandId);
             $product->brand_id = $brand->id;
         }
-
 
         if(isset($request->tags)){
             //hay que mandarle los ids como números, no como objetos
@@ -220,5 +222,25 @@ class ProductController extends Controller
     // funcion para recibir todos los nombres de los productos
     public function getNames(){
         return Product::select('name', 'id')->get();
+    }
+
+    public function deleteOldProducts(Request $request){
+
+        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));
+        $date->sub(DateInterval::createFromDateString($request->data . ' months'));
+        $test = $date->format('Y-m-d H:i:s');
+
+        $oldProducts = Product::where('updated_at', '<', $test)->where('deleted', '=', '1')->get();
+
+        foreach($oldProducts as $oldProduct){
+            $oldProduct->brand;
+            $oldProduct->stores;
+            $oldProduct->sales;
+            $oldProduct->category;
+            $oldProduct->productImg->each(function ($url) {
+                $url->file;
+            });
+        }
+        return $oldProducts;
     }
 }

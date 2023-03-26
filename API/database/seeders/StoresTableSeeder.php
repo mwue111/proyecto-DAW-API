@@ -89,7 +89,7 @@ class StoresTableSeeder extends Seeder
             'created_at' => '2021-01-01 00:00:00',
             'updated_at' => '2021-01-01 00:00:00',
         ]);
-
+/*
         for ($i = 0; $i < 40; $i++) {
             DB::table('stores')->insert([
                 'name' => 'Tienda ' . $i,
@@ -105,6 +105,6 @@ class StoresTableSeeder extends Seeder
                 'created_at' => '2021-01-01 00:00:00',
                 'updated_at' => '2021-01-01 00:00:00',
             ]);
-        }
+        }*/
     }
 }

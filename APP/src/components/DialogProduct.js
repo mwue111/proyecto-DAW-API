@@ -150,7 +150,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     <MultiSelect
                         name='tags'
                         display="chip"
-                        value={tags.filter((tags) =>
+                        value={tagList.filter((tags) =>
                             selectedTags.includes(tags.name))
                         }
                         placeholder="Selecciona una o varias etiquetas"

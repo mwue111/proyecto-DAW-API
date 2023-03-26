@@ -74,25 +74,26 @@ class ProductsTableSeeder extends Seeder
         ]);
 
         // crea 40 seeds de productos de alimentación y 40 de bebidas
+/*
+for ($i = 0; $i < 40; $i++) {
+    DB::table('products')->insert([
+        'name' => 'Producto de alimentación ' . $i,
+        'description' => 'Producto de alimentación ' . $i,
+        'brand_id' => 1,
+        'category_id' => 1,
+        'deleted' => 0,
+    ]);
+}
 
-        for ($i = 0; $i < 40; $i++) {
-            DB::table('products')->insert([
-                'name' => 'Producto de alimentación ' . $i,
-                'description' => 'Producto de alimentación ' . $i,
-                'brand_id' => 1,
-                'category_id' => 1,
-                'deleted' => 0,
-            ]);
-        }
-
-        for ($i = 0; $i < 40; $i++) {
-            DB::table('products')->insert([
-                'name' => 'Producto de bebida ' . $i,
-                'description' => 'Producto de bebida ' . $i,
-                'brand_id' => 1,
-                'category_id' => 2,
-                'deleted' => 0,
-            ]);
-        }
+for ($i = 0; $i < 40; $i++) {
+    DB::table('products')->insert([
+        'name' => 'Producto de bebida ' . $i,
+        'description' => 'Producto de bebida ' . $i,
+        'brand_id' => 1,
+        'category_id' => 2,
+        'deleted' => 0,
+    ]);
+}
+*/
     }
 }

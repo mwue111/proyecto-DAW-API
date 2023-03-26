@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/tienda/nombre', 'StoreController@getNames');
 Route::get('/producto/nombre', 'ProductController@getNames');
 Route::post('/tienda/borrar', 'StoreController@deleteOldStores');
+Route::post('/producto/borrar', 'ProductController@deleteOldProducts');
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
@@ -81,19 +82,6 @@ Route::resource('/admin', 'AdministratorController');
 //Archivos (File):
 Route::resource('/subir-archivo', 'FileController');
 require __DIR__.'/auth.php';
-
-// Route::post('/upload', function(Request $request) {
-//     $files = $request->file('product_img');
-//     $urls = [];
-
-//     foreach($files as $file) {
-//         $path = $file->store('public/images/product_img');
-//         $url = Storage::url($path);
-//         $urls[] = $url;
-//     }
-
-//     return response()->json(['urls' => $urls]);
-// })
 
 //Obtener imágenes:
 Route::get('/imagenes/{table}/{id}', 'FileController@getImages');

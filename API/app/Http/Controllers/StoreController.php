@@ -22,7 +22,7 @@ class StoreController extends Controller{
                 $schedule->timeSlot;
             });
             $store->specialDays;
-            $store->owner->user;
+            //$store->owner->user;
             $store->address;
             if($store->address !=null)
             $store->address->town->state;

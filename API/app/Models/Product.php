@@ -13,6 +13,8 @@ class Product extends Model
         'name',
         'description',
         'brand_id',
+        'category_id',
+        'deleted',
     ];
     public function brand()
     {

@@ -153,12 +153,14 @@ export function changedJson(oldData, newData){
                     changed[item] = newData[item];
                 }
                 else if(oldData[item] !== newData[item]){
-                        changed[item] = newData[item];
+                    console.log('newData: ', newData[item]);
+                    changed[item] = newData[item];
                 }
             }
         }
         else{
             if(item === 'tags'){
+
                 let oldTagsId = [];
 
                 for(let i = 0; i < oldData[item].length; i++){
