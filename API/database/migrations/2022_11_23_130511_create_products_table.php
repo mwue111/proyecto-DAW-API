@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description', 1000);
             $table->integer('brand_id');
             $table->integer('category_id');
+            $table->tinyInteger('deleted');
             $table->timestamps();
         });
     }

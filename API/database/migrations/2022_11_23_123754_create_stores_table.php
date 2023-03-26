@@ -22,7 +22,6 @@ return new class extends Migration
             $table->char('telephone2', 20);
             $table->double('longitude');
             $table->double('latitude');
-            $table->tinyInteger('deleted');
             $table->string('description', 500);
             $table->Integer('user_id');
             $table->timestamps();

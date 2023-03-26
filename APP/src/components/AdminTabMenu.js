@@ -5,9 +5,6 @@ import Link from 'next/link'
 import NavLink from '@/components/NavLink'
 import { useRouter } from 'next/router'
 
-{/*Cambiado item por table aquí*/}
-{/*Seguir modificando tabmenu para que cambie el índice activo*/}
-
 const AdminTabMenu = ({ setContent }) => {
     const [activeIndex, setActiveIndex] = useState('');
 
@@ -16,7 +13,7 @@ const AdminTabMenu = ({ setContent }) => {
     const table = [
         {label: 'Tienda', icon: 'pi pi-fw pi-shopping-bag'},
         {label: 'Producto', icon: 'pi pi-fw pi-shopping-cart'},
-        {label: 'Usuario', icon: 'pi pi-fw pi-users'}
+        // {label: 'Usuario', icon: 'pi pi-fw pi-users'}
     ];
 
     return (

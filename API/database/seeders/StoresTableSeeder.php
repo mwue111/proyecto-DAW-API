@@ -89,14 +89,15 @@ class StoresTableSeeder extends Seeder
             'latitude' => 2.17403,
             'description' => 'La tienda de la esquina, la mejor tienda de alimentación de la ciudad',
             'user_id' => 4,
+            'deleted' => 0,
             'created_at' => '2021-01-01 00:00:00',
             'updated_at' => '2021-01-01 00:00:00',
         ]);
-
+        /*
         for ($i = 0; $i < 40; $i++) {
             DB::table('stores')->insert([
                 'name' => 'Tienda ' . $i,
-                'address_id' => $i + 6,
+                'address_id' => 5,
                 'email' => 'tienda' . $i . '@gmail.com',
                 'telephone1' => '950123456',
                 'telephone2' => '647987654',
@@ -104,9 +105,10 @@ class StoresTableSeeder extends Seeder
                 'latitude' => 2.17403,
                 'description' => 'Tienda ' . $i . ', la mejor tienda de alimentación de la ciudad',
                 'user_id' => 4,
+                'deleted' => 0,
                 'created_at' => '2021-01-01 00:00:00',
                 'updated_at' => '2021-01-01 00:00:00',
             ]);
-        }
+        }*/
     }
 }

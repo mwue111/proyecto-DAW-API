@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Brand;
+use App\Models\Category;
+use DB;
 use App\Models\ProductImg;
 
 class ProductController extends Controller
@@ -17,26 +20,36 @@ class ProductController extends Controller
     {
         $data['productos'] = Product::all();
         foreach($data['productos'] as $producto){
+            $producto->brand;
             $producto->tags;
             $producto->stores;
             $producto->sales;
             $producto->category;
+            $product->productImg->each(function($url){
+                $url->file;
+            });
+        }
+        return $products;
+        //return view('producto', $data);
+
+        /*
+        //Lo que yo tenía:
+        $products = Product::all();
+        foreach($products as $product){
+            $product->productImg->each(function($url){
+                $url->file;
+            });
+            $product->brand;
+            $product->tags;
+            $product->stores;
+            $product->sales;
+            $product->category;
+
+        //este es el array de imágenes que había en merge:
             $producto->images->each(function($archivo){
                 $archivo->file;
             });
-        }
-        return $data['productos'];
-        //return view('producto', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
+        */
     }
 
     /**
@@ -48,7 +61,32 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = Product::create($request->all());
-        $product->tags()->attach($request->tags);
+
+        if(isset($request->brand)) {
+            $brandId = DB::table('brands')->select('id')
+                                        ->where('id', $request->brand)
+                                        ->first()
+                                        ->id;
+            $brand = Brand::find($brandId);
+            $product->brand_id = $brand->id;
+        }
+
+        if(isset($request->category)) {
+            $categoryId = DB::table('categories')->select('id')
+                                                ->where('id', $request->category)
+                                                ->first()
+                                                ->id;
+            $category = Category::find($categoryId);
+            $product->category_id = $category->id;
+        }
+
+        if(isset($request->tags)) {
+            $product->tags()->sync($request->tags);
+            $product->save();
+        }
+
+        //Aquí: subida de imágenes en el directorio correspondiente
+
         $product->stores()->attach($request->stores, [
             'stock' => $request->stock,
             'value' => $request->value,
@@ -65,26 +103,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $producto = Product::find($id);
-        $producto->tags;
-        $producto->stores;
-        $producto->sales;
-        $producto->category;
-        $producto->images->each(function($image){
+        $product = Product::find($id);
+        $product->brand;
+        $product->tags;
+        $product->stores;
+        $product->sales;
+        $product->category;
+        $product->productImg->each(function($image){
             $image->file;
         });
-        return $producto;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $product;
     }
 
     /**
@@ -97,9 +125,41 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
+
+        if(isset($request->categoria)){
+            $categoryId = DB::table("categories")
+                            ->select('id')
+                            ->where("name", $request->categoria)
+                            ->first()
+                            ->id;
+            $category = Category::find($categoryId);
+            $product->category_id = $category->id;
+        }
+
+        if(isset($request->marca)){
+            $brandId = DB::table("brands")
+                        ->select('id')
+                        ->where("name", $request->marca)
+                        ->first()
+                        ->id;
+
+            $brand = Brand::find($brandId);
+            $product->brand_id = $brand->id;
+        }
+
         $product->update($request->all());
-        $product->tags()->sync($request->tags);
+
+        if(isset($request->tags)){
+            //hay que mandarle los ids como números, no como objetos
+            $product->tags()->sync($request->tags);
+            $product->save();
+
+        }
+
+        //*aquí*: ver cómo modificar las imágenes
+
         $product->stores()->sync($request->stores);
+        $product->save();
     }
 
     /**

@@ -4,6 +4,8 @@ import FullTable from '../components/FullTable'
 import RecommendedProducts from '../components/RecommendedProducts'
 
 const Dashboard = () => {
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/producto';
+
     return (
         <AppLayout
             header={
@@ -12,7 +14,7 @@ const Dashboard = () => {
                             <RecommendedProducts />
                     </div>
             }>
-            
+
 
             <Head>
                 <title>Laravel - Dashboard</title>
@@ -25,8 +27,8 @@ const Dashboard = () => {
                             <h1 className="text-3xl font-bold">Buscador de productos</h1>
                     </div>
                         <div className="p-6 bg-white border-b border-gray-200">
-                            <FullTable
-                                fetchUrl="http://localhost:8000/producto"
+                            <Table
+                                fetchUrl={url}
                             />
                         </div>
                     </div>

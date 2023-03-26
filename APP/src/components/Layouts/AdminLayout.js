@@ -34,8 +34,7 @@ const AdminLayout = () => {
                 {/* Page Content */}
                 <main>
                     {/*El content por defecto (tienda) es el que aparece al entrar en esta vista y cambiará según el setState que recibe admin navigation */}
-
-                    <TableAdmin fetchUrl={`http://localhost:8000/${content}`} table={content} />
+                    <TableAdmin fetchUrl={process.env.NEXT_PUBLIC_BACKEND_URL + `/${content}`} table={content} />
                 </main>
             </div>
         </div>
