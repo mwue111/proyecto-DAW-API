@@ -8,6 +8,11 @@ import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
+import { ToggleButton } from 'primereact/togglebutton';
+import { FileUpload } from 'primereact/fileupload'
+import Head from 'next/head'
+
+
 
 const Register = () => {
   const { register } = useAuth({
@@ -24,6 +29,8 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [errors, setErrors] = useState([])
+  const [file, setFile] = useState(null);
+
 
   const submitForm = event => {
     event.preventDefault()
@@ -33,10 +40,11 @@ const Register = () => {
       username,
       surname1,
       surname2,
-      type,
+      type:type,
       email,
       password,
       password_confirmation: passwordConfirmation,
+      file,
       setErrors,
     })
   }
@@ -50,7 +58,11 @@ const Register = () => {
           </Link>
         }
       >
+        <Head>
+                <title>LocAlmeria - Registro de nuevo usuario</title>
+        </Head>
         <form onSubmit={submitForm}>
+          
           {/* Name */}
           <div className="mt-4">
             <Label htmlFor="name">Nombre</Label>
@@ -116,8 +128,6 @@ const Register = () => {
             <InputError messages={errors.username} className="mt-2" />
           </div>
 
-          <input type="hidden" name="role" value="user" />
-
           {/* Email Address */}
           <div className="mt-4">
                         <Label htmlFor="email">Email</Label>
@@ -163,15 +173,59 @@ const Register = () => {
                         <InputError messages={errors.password} className="mt-2" />
                       </div>
 
-                    <div className="flex items-center justify-end mt-4">
-                        <Link
-                            href="/login"
-                            className="underline text-sm text-gray-600 hover:text-gray-900">
-                            ¿Ya es usuario? Inicie sesión
-                        </Link>
+                    {/* Role */}
+                    <div className="mt-4 flex justify-between">
+                    <div className="w-1/2 mr-2">
+                      <Label htmlFor="type">Rol</Label>
+                        <ToggleButton
+                          checked={type === 'owner'}
+                          onChange={(e) => setType(e.value ? 'owner' : 'client')}
+                          onLabel="Dueño de tienda"
+                          offLabel="Usuario normal"
+                        />
+                      </div>
 
-                        <Button className="ml-4">Registrarse</Button>
+                    {/* File upload */}
+                    {type === 'owner' && (
+                      <div className="w-1/2 mr-2">
+                        <Label htmlFor="file">Archivo</Label>
+                        <div className="overflow-hidden">
+                        <FileUpload
+                          id="file"
+                          name="file"
+                          mode="basic"
+                          chooseLabel="Buscar"
+                          maxFileSize={1000000}
+                          invalidFileSizeMessageSummary="Tamaño del archivo demasiado grande"
+                          invalidFileSizeMessageDetail="El archivo seleccionado supera el tamaño máximo de 1MB."
+                          onUpload={(event) => {
+                            setFile(event.files[0]);
+                          }}
+                          onError={(event) => {
+                            setErrors(['Error al subir el archivo. Intente de nuevo.']);
+                          }}
+                        />
+                        </div>
+                      </div>
+                    )}
                     </div>
+
+                    {/* Hidden Role Input */}
+                    <input type="hidden" name="type" value={type} />
+
+                    
+
+                    <div className="flex items-center justify-end mt-4">
+                      <Link
+                        href="/login"
+                        className="underline text-sm text-gray-600 hover:text-gray-900"
+                      >
+                        ¿Ya es usuario? Inicie sesión
+                      </Link>
+
+                      <Button className="ml-4">Registrarse</Button>
+                    </div>
+
                 </form>
             </AuthCard>
         </GuestLayout>

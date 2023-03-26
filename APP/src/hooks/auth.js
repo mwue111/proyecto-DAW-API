@@ -24,6 +24,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         setErrors([])
 
+        
         axios
             .post('/register', props)
             .then(() => mutate())

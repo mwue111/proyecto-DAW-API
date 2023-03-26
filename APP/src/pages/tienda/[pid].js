@@ -10,6 +10,7 @@ import StoreTitle from '@/components/StoreTitle'
 import StoreInfo from '@/components/StoreInfo'
 import { useAuth } from '@/hooks/auth'
 import EditStoreDialog from '@/components/EditStoreDialog'
+import { Image } from 'primereact/image'
 
 
 
@@ -19,6 +20,7 @@ const Tienda = () => {
     const [selectedStore, setSelectedStore] = useState(null);
     const router = useRouter();
     const { pid } = router.query;  //id recibida por parametro
+    const [storeUpdated, setStoreUpdated] = useState(false);
 
 
     useEffect(() => {
@@ -27,7 +29,11 @@ const Tienda = () => {
         .then((response) => {
             setSelectedStore(response.data)
         })
-    }, [pid])
+    }, [pid, storeUpdated])
+
+    const handleStoreUpdated = () => {
+        setStoreUpdated(!storeUpdated);
+    };
 
     const renderListItem = (data) => {
         return (
@@ -57,13 +63,15 @@ const Tienda = () => {
         return renderListItem(store);
     };
 
+    console.log(selectedStore?.store_imgs.length>0)
+
     return (
         <AppLayout
         header={selectedStore && 
             <div className='flex flex-col justify-items-center'>
               <StoreTitle store={selectedStore} />
               {((user.type =="owner" && user.id === selectedStore?.user_id) || user.type =="administrator") &&
-                <EditStoreDialog store={selectedStore} />
+                <EditStoreDialog store={selectedStore} onUpdate={handleStoreUpdated} />
               }
             </div>
           }
@@ -71,12 +79,12 @@ const Tienda = () => {
             <Head>
                 <title>LocAlmeria - {selectedStore? selectedStore.name : "Tienda"}</title>
             </Head>
-
             <div className="py-12">
             <div className="max-w-6xl mx-auto grid grid-cols-4 gap-8 mb-5 bg-white rounded-lg">
             <div className="col-span-1">
             {selectedStore &&
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
+                    {selectedStore?.store_imgs.length>0 ?<Image src={selectedStore?.store_imgs[0]} width={300} height={300} alt={selectedStore?.name}/>: <Image src="https://via.placeholder.com/300x300.png?text=No+Image" width={300} height={300} alt={selectedStore?.name}/>}
                 </div>}
             </div>
             <div className="col-span-2 p-6">

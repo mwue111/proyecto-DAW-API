@@ -27,14 +27,18 @@ const SearchBar = () => {
     }
 
     useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')  //cambiado '/nombre' en ambos axios.
-        .then((response) => {
-            setStores(response.data);
-        })
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/producto')
-        .then((response) => {
-            setProducts(response.data);
-        })
+        try{
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/tienda/nombre')
+            .then((response) => {
+                setStores(response.data);
+            })
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/producto/nombre')
+            .then((response) => {
+                setProducts(response.data);
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }, []);
 
     useEffect(() => {

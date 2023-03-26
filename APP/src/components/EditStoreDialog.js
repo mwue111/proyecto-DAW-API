@@ -9,13 +9,15 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
 
-const EditStoreDialog = ({ store}) => {
+const EditStoreDialog = ({ store, onUpdate}) => {
     const { user } = useAuth();
     const [visible, setVisible] = useState(false);
     const [updatedStore, setUpdatedStore] = useState(store);
-    const [dropdownValue, setDropdownValue] = useState(store.address ? store.address.road_type : null);
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
     const [cities, setCities] = useState([]);
+    const [dropdownCity, setDropdownCity] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null);
+    const [ road_type, setRoadType ] = useState(store.address ? store.address.road_type : null);
+
     
     useEffect(() => {
         let cityOptions = [];
@@ -35,20 +37,61 @@ const EditStoreDialog = ({ store}) => {
     }, [store]);
   
     const handleChange = (e) => {
-      setUpdatedStore({ ...updatedStore, [e.target.name]: e.target.value });
-    };
+        if(e.target.name === 'address.town.name'){
+            setUpdatedStore({ ...updatedStore, address: { town: { name: e.target.value.name, id:e.target.value.id } } });
+            setDropdownCity(e.target.value);
+        }else if (e.target.name === 'address.road_type'){
+            setUpdatedStore({ ...updatedStore, address: { road_type: e.target.value } });
+            setRoadType(e.target.value);
+        }
+        else{
+            setUpdatedStore({ ...updatedStore, [e.target.name]: e.target.value });
+        }
+      };
+      
   
-    const handleUpdate = () => {
-      axios
-        .put(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${store.id}`,
-          updatedStore
-        )
-        .then((response) => {
-          console.log(response.data)
-          setVisible(false);
+      const handleUpdate = () => {
+        const changedFields = Object.keys(updatedStore).filter(
+          (key) => updatedStore[key] !== store[key]
+        );
+        const updatedFields = {};
+      
+        let addressChanged = false; 
+      
+        changedFields.forEach((field) => {
+          if (field.startsWith("address.")) {
+            addressChanged = true;
+      
+            if (!updatedFields.address) {
+              updatedFields.address = {};
+            }
+      
+            const addressField = field.replace("address.", "");
+            updatedFields.address[addressField] = updatedStore[field];
+          } else {
+            // Set the updated value for non-address fields
+            updatedFields[field] = updatedStore[field];
+          }
         });
-    };
+      
+        if (addressChanged || (updatedFields.address && updatedFields.address.town)) {
+          updatedFields.address = {
+            ...updatedFields.address,
+            id: store.address.id,
+          };
+        }
+      
+        console.log(updatedFields);
+      
+        axios
+          .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${store.id}`, updatedFields)
+          .then((response) => {
+            setVisible(false);
+            onUpdate();
+          });
+      };
+      
+      
   
     const renderFooter = () => {
       return (
@@ -110,13 +153,13 @@ const EditStoreDialog = ({ store}) => {
                 <div className="p-fluid">
                 <div className='field'>
                 <Fieldset legend='Dirección'>
-                    <Dropdown name='address.road_type' value={updatedStore.address.road_type} options={optionsRoadType} onChange={handleChange} placeholder='Selecciona un tipo de vía' required/>
+                    <Dropdown name='address.road_type' value={road_type} options={optionsRoadType} onChange={handleChange} placeholder='Selecciona un tipo de vía' required/>
                     <br/>
                     <label htmlFor='address.name'>Nombre de la calle:</label>
                     <InputText name='address.name' defaultValue={updatedStore.address.name} onChange={handleChange} required />
                     <br/>
                     <label htmlFor='adress.number'>Número</label>
-                    <InputNumber name='address.number' value={updatedStore.address.number} onValueChange={handleChange} mode='decimal' useGrouping={false} required />
+                    <InputNumber name='address.number' value={updatedStore.address.number} onValueChange={handleChange} mode='decimal' required />
                     <br/>
                     <label htmlFor='address.zip_code'>Código postal</label>
                     <InputText name='address.zip_code' defaultValue={updatedStore.address.zip_code} onChange={handleChange} required />
@@ -125,7 +168,7 @@ const EditStoreDialog = ({ store}) => {
                     <InputTextarea name='address.remarks' defaultValue={updatedStore.address.remarks} onChange={handleChange} rows={5}/>
                     <br />
                     <label htmlFor='address.town.name'>Ciudad:</label>
-                    <Dropdown name='address.town.name' value={updatedStore.address.town.name} options={cities} onChange={handleChange} placeholder='Selecciona una ciudad' optionLabel='name' required/>
+                    <Dropdown name='address.town.name' value={dropdownCity} options={cities} onChange={handleChange} placeholder='Selecciona una ciudad' optionLabel='name' required/>
                 </Fieldset>
                 </div>
                 </div>

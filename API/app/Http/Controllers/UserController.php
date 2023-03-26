@@ -24,32 +24,32 @@ class UserController extends Controller{
         return $users;
     }
 
-    public function store(Request $request){
-        $user = User::create($request->all());
+    // public function store(Request $request){
+    //     $user = User::create($request->all());
     
-        switch($user->type){
-            case 'client': $client = new Client(); 
-                        $client->user_id = $user->id;
-                        $client->save(); break;
-            case 'owner': $owner = new Owner();
-                        $owner->user_id = $user->id;
-                        $owner->verified = 0;
-                        $owner->save(); break;
-            case 'administrator': $admin = new Administrator();
-                        $admin->user_id = $user->id;
-                        $admin->last_login = date('Y-m-d H:i:s');
-                        $admin->save(); break;
-        }
+    //     switch($user->type){
+    //         case 'client': $client = new Client(); 
+    //                     $client->user_id = $user->id;
+    //                     $client->save(); break;
+    //         case 'owner': $owner = new Owner();
+    //                     $owner->user_id = $user->id;
+    //                     $owner->verified = 0;
+    //                     $owner->save(); break;
+    //         case 'administrator': $admin = new Administrator();
+    //                     $admin->user_id = $user->id;
+    //                     $admin->last_login = date('Y-m-d H:i:s');
+    //                     $admin->save(); break;
+    //     }
         
-        /*
-        if($user->type == 'client'){
-            $client = new Client();
-            $client->user_id = $user->id;
-            $client->save();
-        }
-        */
-        //convertirlo en switch con los datos 
-    }
+    //     /*
+    //     if($user->type == 'client'){
+    //         $client = new Client();
+    //         $client->user_id = $user->id;
+    //         $client->save();
+    //     }
+    //     */
+    //     //convertirlo en switch con los datos 
+    // }
 
     public function show($id){
         $user = User::find($id);
