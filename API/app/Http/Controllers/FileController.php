@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\File;
 use Illuminate\Http\Request;
 use App\Models\Document;
@@ -31,14 +33,36 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
+        //$user = Auth::user();
+
+        //if($request->has('url') || $request->has('objectURL') || $request->upload) {
         if($request->has('url')) {
+
+            //aquí: dd($request) para ver la validación - mirar en docs de laravel para imágenes
             $file = File::create($request->all());
 
-            // $user = Auth::check();
-            // dd(auth()->user());
+            // $product = new ProductImg();
+            // $product->file_id = $file->id;
 
-        //Mirar aquí para asignar el id del usuario identificado (algo como user_id = auth()->id)
-            switch($file->type){
+            // $productId = Product::find($request->product_id);
+            // $product->product_id = $productId->id;
+            // $product->save();
+
+            //$image_name = time() . '.' . $request->upload->extension();
+            // $request->file('upload')->store('public/images/product_imgs');
+
+            // Validator::make($request->all(), [
+            //     'user_id' => 'required',
+            //     'url' => 'required',
+            //     'image_type' => 'required',
+            //     'deleted' => 'required',
+            //     'product_id' => 'required',
+            //     'upload' => 'required',
+            // ])->validate();
+
+            //Mirar aquí para asignar el id del usuario identificado (algo como user_id = auth()->id)
+
+            switch($file->image_type){
                 case 'document': $document = new Document();
                                 $document->file_id = $file->id;
                                 //$document->expiration_date = date('Y-m-d H:i:s');
@@ -61,7 +85,14 @@ class FileController extends Controller
 
                                     $productId = Product::find($request->product_id);
                                     $product->product_id = $productId->id;
-                                    $product->save(); break;
+                                    $product->save();
+
+                                    //$request->file('upload')->store('public/images/product_imgs');
+                                    // $path = $file->store('public/images/product_imgs');
+                                    // $url = Storage::url($path);
+                                    //$urls[] = $url;
+
+                                    break;
 
                 case 'brand_imgs': $brand = new BrandImg();
                                     $brand->file_id = $file->id;
@@ -71,7 +102,6 @@ class FileController extends Controller
                                     $brand->save(); break;
             }
 
-            //Aquí: subida de imágenes en el directorio correspondiente
         }
         else{
             echo 'error'; //añadir gestión de errores

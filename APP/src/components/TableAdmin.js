@@ -223,12 +223,51 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             if(item.product_img.length !== oldItem.product_img.length ){
 
+                console.log('jsonDB[product_img]: ', jsonDB['product_img']);
+
+                // for(let i = 0; i < jsonDB['product_img'].length; i++){
+                //     if(jsonDB['product_img'][i] instanceof File){
+
+                //         Object.defineProperties(jsonDB['product_img'][i], {
+                //             'image_type': {
+                //                 value: 'product_imgs',
+                //                 writable: false
+                //             },
+                //             'product_id': {
+                //                 value: item.id,
+                //                 writable: false
+                //             },
+                //             'user_id': {
+                //                 value: 7,
+                //                 writable: false
+                //             },
+                //             'deleted': {
+                //                 value: 0,
+                //                 writable: true
+                //             },
+                //             'url' : {
+                //                 value: jsonDB['product_img'][i].objectURL,
+                //                 writable: false
+                //             }
+                //         });
+                //         console.log('entra ', jsonDB['product_img'][i]);
+
+                //         const formData = new FormData();
+                //         formData.append('product', jsonDB['product_img'][i]);
+
+                //         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData, { 'Content-Type': 'multipart/form-data' })
+                //             .then(res => console.log('res: ', res))
+                //             .catch(error => console.log('error en la subida de imágenes: ', error));
+                //         //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', jsonDB['product_img'][i], { 'Content-Type': 'multipart/form-data' });
+                //     }
+                // }
+
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
                     if(typeof(jsonDB['product_img'][i]) !== 'object'){
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo', {
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
                             'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
                             'url': jsonDB['product_img'][i],
-                            'type': 'product_imgs',
+                            'image_type': 'product_imgs',
                             'deleted': 0,
                             'product_id': item.id
                         }, { headers });
@@ -297,10 +336,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 'Content-Type': 'application/json'
             };
 
+            console.log('qué se manda: ')
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
         }
 
+        setRecharge(true);
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
     }
@@ -382,7 +423,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         if(table === 'tienda'){
             if(toDashboard === true){
-                return <Navigate to="/dashboard" />
+                //ruta hacia la tienda
             }
         }
     }

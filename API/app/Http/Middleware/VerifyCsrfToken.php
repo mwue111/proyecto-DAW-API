@@ -12,7 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        
+
         "tienda*",
         "producto*",
         "unidad*",
@@ -25,7 +25,7 @@ class VerifyCsrfToken extends Middleware
         "ciudad*",
         "direccion*",
         "horario*",
-        "producto*", 
+        "producto*",
         "franja_horaria*",
         "dia_especial*",
         "usuario*",
@@ -33,8 +33,9 @@ class VerifyCsrfToken extends Middleware
         "cliente*",
         "admin*",
         "propietario*",
-        "archivo*",
+        "subir-archivo*",
         "documento*",
         "perfil*",
+        'login*',
     ];
 }

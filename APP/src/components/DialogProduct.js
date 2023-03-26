@@ -7,6 +7,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
+//import axios from 'axios';
 
 const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table }) => {
     const newProduct = product;
@@ -52,12 +53,14 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     useEffect(() => {
         setItem(dataForm);
-        //console.log('productPic en useEffect: ', productPic);
+        console.log('productPic en useEffect de DialogProduct: ', productPic);
     }, [dataForm, productPic]);
 
     const uploadHandler = (data) => {
         if(product.product_img){
             setProductPic(data);
+            // console.log('productPic al principio de uploadHandler: ', productPic);
+            // console.log('data: ', data);
 
             const oldImages = [];
 
@@ -67,12 +70,35 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
             data.forEach(item => oldImages.push(item));
 
+            // const formData = new FormData();
+            //data.forEach((file) => formData.append('product_img[]', file));
+            // formData.forEach(item => oldImages.push(item));
+
             setProductPic(oldImages);
+            console.log('productPic en uploadHandler: ', productPic)
+
 
             newProduct['product_img'] = oldImages;
             setDataForm(newProduct);
             console.log('newProduct al subir imagen: ', dataForm);
         }
+        // //crear un objeto FormData:
+        // const formData = new FormData();
+
+        // //adjuntar el archivo de imagen al objeto FormData:
+        // data.forEach((file) => {
+        //     formData.append('product_img[]', file);
+        // });
+
+        // try {
+        //     //const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + "/upload", formData);
+        //     console.log('response.data en DialogProduct: ', response.data);
+        // }
+        // catch(error) {
+        //     console.log('error: ', error);
+        // }
+
+
     }
 
     const handleInputChange = (e) => {
@@ -136,7 +162,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Imagen del producto'>
-                    <Upload name="product_img" item={product} setProductPic={(data) => {uploadHandler(data)}}
+                    <Upload item={product} setProductPic={(data) => {uploadHandler(data)}}
                     />
                 </Fieldset>
             </div>

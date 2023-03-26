@@ -79,8 +79,21 @@ Route::resource('/propietario', 'OwnerController');
 Route::resource('/admin', 'AdministratorController');
 
 //Archivos (File):
-Route::resource('/archivo', 'FileController');
+Route::resource('/subir-archivo', 'FileController');
 require __DIR__.'/auth.php';
+
+// Route::post('/upload', function(Request $request) {
+//     $files = $request->file('product_img');
+//     $urls = [];
+
+//     foreach($files as $file) {
+//         $path = $file->store('public/images/product_img');
+//         $url = Storage::url($path);
+//         $urls[] = $url;
+//     }
+
+//     return response()->json(['urls' => $urls]);
+// })
 
 //Obtener imágenes:
 Route::get('/imagenes/{table}/{id}', 'FileController@getImages');

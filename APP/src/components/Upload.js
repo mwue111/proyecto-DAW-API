@@ -32,10 +32,15 @@ function Upload( {item, setProductPic } ) {
 
         let _totalSize = totalSize;
         const files = Array.from(e.files);
+        console.log('files: ', files);
 
         const fileObjects = files.map((file) =>
             file.objectURL
         );
+
+        //Almacenar el archivo en lugar de su url:
+        // const fileObjects = files.map((file) => file);
+        // console.log('fileObjects: ', fileObjects );
 
         setNewImage(prevImage => [...prevImage, ...fileObjects]);
 
@@ -47,7 +52,7 @@ function Upload( {item, setProductPic } ) {
 
     }
 
-/*-------------------------- esto no debería hacerse aquí
+/*-------------------------- esto no se usa para la subida de imágenes
     const onTemplateUpload = (e) => {
 
         let _totalSize = 0;
@@ -163,7 +168,7 @@ function Upload( {item, setProductPic } ) {
 
             <FileUpload
                 ref={fileUploadRef}
-                name="upload[]"
+                name="upload"
                 //url={url}
                 multiple
                 accept="image/*"
