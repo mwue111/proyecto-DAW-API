@@ -26,7 +26,7 @@ function formatJsonTienda (tiendas){
         return {
             id: item.id,
             nombre: item.name,
-            direccion: item.address != null ?formatJsonDireccion(item.address):"no hay dirección", //cambiado de direccion a address para recibir un objeto en TableAdmin
+            direccion: item.address != null ?formatJsonDireccion(item.address):"no hay dirección",
             telefono1: item.telephone1,
             telefono2: item.telephone2,
             email: item.email,
@@ -110,8 +110,7 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-    // console.log('oldData: ', oldData);
-    // console.log('newData: ', newData);
+
     Object.keys(oldData).map(item => {
         if(!Array.isArray(oldData[item])){
             if(typeof(oldData[item]) === 'object'){
@@ -153,7 +152,6 @@ export function changedJson(oldData, newData){
                     changed[item] = newData[item];
                 }
                 else if(oldData[item] !== newData[item]){
-                    console.log('newData: ', newData[item]);
                     changed[item] = newData[item];
                 }
             }
@@ -173,18 +171,6 @@ export function changedJson(oldData, newData){
             }
 
             if (item === 'product_img' && JSON.stringify(oldData[item]) !== JSON.stringify(newData[item])){
-                    // console.log('newData[item]: ', newData[item]);
-                    // for(let i = 0; i < newData[item].length; i++){
-                    //     if(typeof(newData[item][i]) !== 'object'){
-                    //         newData[item][i] = {
-                    //             'user_id': 7,
-                    //             'url': newData[item][i],
-                    //             'type': 'product_imgs',
-                    //             'deleted': 0,
-                    //             'product_id': newData.id
-                    //         }
-                    //     }
-                    // }
                 changed[item] = newData[item];
             }
         }
@@ -192,7 +178,6 @@ export function changedJson(oldData, newData){
 
     changed = headersDB(changed);
 
-    console.log('changed: ', changed);
     return changed;
 }
 
@@ -218,7 +203,6 @@ export function objectProfoundCopy(object){
 ///////////////////////////////////////////
 function formatJsonProducto (productos){
     const data = productos.map((item) => {
-        //console.log('item en helper: ', item)
         return {
             id: item.id,
             nombre: item.name,
@@ -232,7 +216,6 @@ function formatJsonProducto (productos){
 
         }
     })
-    //console.log('data: ', data)
     return data;
 }
 
@@ -275,7 +258,6 @@ export function productStoreFilterFormatter(productList, storeList){
 
 export function getTagColor(tag){
     let color = 'bg-blue-200 text-blue-700';
-    console.log(tag)
     switch (tag) {
         case 'Vegano':color = 'bg-green-200 text-green-700';
             break;

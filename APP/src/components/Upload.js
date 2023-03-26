@@ -3,17 +3,9 @@ import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { ProgressBar } from 'primereact/progressbar';
 import { Button } from 'primereact/button';
-import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
-import axios from 'axios';
 
-//https://stackoverflow.com/questions/60389073/how-to-upload-files-using-primereact-fileupload-component
-
-function Upload( {item, setProductPic } ) {
-    //console.log('oldImages: ', oldImages);
-    //console.log('Subida desde la tabla ',table);
-
-    //const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/archivo'; //PUT: archivo.update
+function Upload( { setProductPic } ) {
 
     const [newImage, setNewImage] = useState([]);
     const [totalSize, setTotalSize] = useState(0);
@@ -24,23 +16,14 @@ function Upload( {item, setProductPic } ) {
         setProductPic(newImage);
     }, [newImage]);
 
-    // const onUpload = () => {
-    //     toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    // }
-
     const onTemplateSelect = (e) => {
 
         let _totalSize = totalSize;
         const files = Array.from(e.files);
-        console.log('files: ', files);
 
         const fileObjects = files.map((file) =>
             file.objectURL
         );
-
-        //Almacenar el archivo en lugar de su url:
-        // const fileObjects = files.map((file) => file);
-        // console.log('fileObjects: ', fileObjects );
 
         setNewImage(prevImage => [...prevImage, ...fileObjects]);
 
@@ -51,38 +34,6 @@ function Upload( {item, setProductPic } ) {
         setTotalSize(_totalSize);
 
     }
-
-/*-------------------------- esto no se usa para la subida de imágenes
-    const onTemplateUpload = (e) => {
-
-        let _totalSize = 0;
-        const files = Array.from(e.files);
-
-        files.forEach(file => {
-            _totalSize += (file.size || 0);
-        });
-
-        console.log('newImage: ', newImage);
-
-        for(let i = 0; i < newImage.length; i++){
-            uploadFile(newImage[i]);
-        }
-
-        setTotalSize(_totalSize);
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    }
-
-    const uploadFile = (img) => {
-
-        axios.post(url, {
-                'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
-                'url': img,
-                'type': 'product_imgs',
-                'deleted': 0,
-                'product_id': item.id
-            }, {'Content-Type': 'application/json'});
-    }
-//------------------------- fin --*/
 
     const onTemplateRemove = (file, callback) => {
         setTotalSize(totalSize - file.size);
@@ -101,14 +52,12 @@ function Upload( {item, setProductPic } ) {
         return (
             <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
                 {chooseButton}
-                {/* {uploadButton} */}
                 {cancelButton}
                 <ProgressBar value={value} displayValueTemplate={() => `${formatedValue} / 1 MB`} style={{ width: '300px', height: '20px', marginLeft: 'auto' }}></ProgressBar>
             </div>
         );
     }
 
-    //Aquí: cambiar el botón rojo de borrar
     const itemTemplate = (file, props) => {
         return (
             <div className="flex align-items-center flex-wrap">
@@ -148,13 +97,6 @@ function Upload( {item, setProductPic } ) {
         style: {width: '40px'}
     };
 
-    // const uploadOptions = {
-    //     icon: 'pi pi-fw pi-cloud-upload',
-    //     iconOnly: true,
-    //     className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined',
-    //     style: {width: '40px'}
-    // };
-
     const cancelOptions = {
         icon: 'pi pi-fw pi-times',
         iconOnly: true,
@@ -169,21 +111,16 @@ function Upload( {item, setProductPic } ) {
             <FileUpload
                 ref={fileUploadRef}
                 name="upload"
-                //url={url}
                 multiple
                 accept="image/*"
                 maxFileSize={1000000}
-
-                //onUpload={onTemplateUpload}
                 onSelect={onTemplateSelect}
-
                 onError={onTemplateClear}
                 onClear={onTemplateClear}
                 headerTemplate={headerTemplate}
                 itemTemplate={itemTemplate}
                 emptyTemplate={emptyTemplate}
                 chooseOptions={chooseOptions}
-                //uploadOptions={uploadOptions}
                 cancelOptions={cancelOptions}
             />
 

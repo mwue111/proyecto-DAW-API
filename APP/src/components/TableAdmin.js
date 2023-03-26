@@ -58,8 +58,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         //Cambiar estructura en DialogUser
     }
 
-    const [toDashboard, setToDashboard] = useState(false);
-
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
@@ -85,7 +83,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
-    const [selectedRow, setSelectedRow] = useState(null);
     const [recharge, setRecharge] = useState(false);
 
     useEffect(() => {
@@ -145,24 +142,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         setSingleDeleted(false);
 
-        console.log('tabla: ', table);
-
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
-    }
-
-    const openStores = () => {
-        setStoresDialog(true);
-    }
-
-    const openImages = () => {
-        setItemDialog(true);
-    }
-
-    const hidestoresDialog = () => {
-        setStoresDialog(false);
     }
 
     const openNew = () => {
@@ -204,14 +187,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         };
 
         if(item.tags){
-            console.log('item.tags: ', item.tags);
-            console.log('oldItem.tags: ', oldItem.tags);
-
             item.tags = formatTags(item.tags);
         }
 
         if (item.id) {
-            console.log('item: ', item);
             if(item.user_id){
                 item.user_id = item.user_id.id;
             }
@@ -228,49 +207,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
 
-                //console.log('jsonDB[product_img]: ', jsonDB['product_img']);
-
-                // for(let i = 0; i < jsonDB['product_img'].length; i++){
-                //     if(jsonDB['product_img'][i] instanceof File){
-
-                //         Object.defineProperties(jsonDB['product_img'][i], {
-                //             'image_type': {
-                //                 value: 'product_imgs',
-                //                 writable: false
-                //             },
-                //             'product_id': {
-                //                 value: item.id,
-                //                 writable: false
-                //             },
-                //             'user_id': {
-                //                 value: 7,
-                //                 writable: false
-                //             },
-                //             'deleted': {
-                //                 value: 0,
-                //                 writable: true
-                //             },
-                //             'url' : {
-                //                 value: jsonDB['product_img'][i].objectURL,
-                //                 writable: false
-                //             }
-                //         });
-                //         console.log('entra ', jsonDB['product_img'][i]);
-
-                //         const formData = new FormData();
-                //         formData.append('product', jsonDB['product_img'][i]);
-
-                //         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData, { 'Content-Type': 'multipart/form-data' })
-                //             .then(res => console.log('res: ', res))
-                //             .catch(error => console.log('error en la subida de imágenes: ', error));
-                //         //axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', jsonDB['product_img'][i], { 'Content-Type': 'multipart/form-data' });
-                //     }
-                // }
-
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
                     if(typeof(jsonDB['product_img'][i]) !== 'object'){
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
-                            'user_id': 7,   //esto debería ser dinámico (que lo gestione el back - no pasarlo)->cookie
+                            'user_id': 7,
                             'url': jsonDB['product_img'][i],
                             'image_type': 'product_imgs',
                             'deleted': 0,
@@ -350,8 +290,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.tags = formatTags(item.tags);
             }
 
-            console.log('oldItem que se manda al borrar: ', oldItem);
-            console.log('item que se manda al borrar: ', item);
             const jsonDB = changedJson(oldItem, item);
 
             const headers = {
@@ -383,7 +321,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             const jsonDB = changedJson(oldItem, item);
-            console.log('jsonDB en undoDelete: ', jsonDB);
 
             const headers = {
                 'Content-Type': 'application/json'
@@ -449,7 +386,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         }
     }
 
-    {/**Cada botón pasa rowData, que es la información de cada registro */}
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -542,8 +478,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'deleted': data.deleted == 1
         }
     }
-
-
 
     return (
         <div className="dataTable-crud">

@@ -9,26 +9,25 @@ use App\Models\Owner;
 use App\Models\Administrator;
 
 class UserController extends Controller{
-    
+
     public function index(){
         $users = User::all();
         foreach($users as $user){
-            //Para prescindir del controlador de cliente
             switch($user->type){
                 case 'client': $user->client; break;
                 case 'owner': $user->owner; break;
                 case 'administrator': $user->administrator; break;
             }
-            
+
         }
         return $users;
     }
 
     public function store(Request $request){
         $user = User::create($request->all());
-    
+
         switch($user->type){
-            case 'client': $client = new Client(); 
+            case 'client': $client = new Client();
                         $client->user_id = $user->id;
                         $client->save(); break;
             case 'owner': $owner = new Owner();
@@ -40,15 +39,6 @@ class UserController extends Controller{
                         $admin->last_login = date('Y-m-d H:i:s');
                         $admin->save(); break;
         }
-        
-        /*
-        if($user->type == 'client'){
-            $client = new Client();
-            $client->user_id = $user->id;
-            $client->save();
-        }
-        */
-        //convertirlo en switch con los datos 
     }
 
     public function show($id){
@@ -57,7 +47,6 @@ class UserController extends Controller{
         return $user;
     }
 
-    
     public function update(Request $request, $id){
         $user = User::find($id);
         $user->update($request->all());

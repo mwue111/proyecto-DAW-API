@@ -17,7 +17,7 @@ const Navigation = ({ user }) => {
     const { logout } = useAuth()
 
     const [open, setOpen] = useState(false)
-    
+
     return (
         <nav className="bg-white border-b border-gray-100">
             {/* Primary Navigation Menu */}
@@ -27,8 +27,6 @@ const Navigation = ({ user }) => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
 
-                            {/* aquí  */}
-
                             {user?.type===undefined?
                             <Link href="/">
                                 <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
@@ -37,7 +35,7 @@ const Navigation = ({ user }) => {
                                 <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
                             </Link>}
                         </div>
-                    
+
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

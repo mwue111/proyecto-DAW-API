@@ -33,26 +33,6 @@ class ProductController extends Controller
             });
         }
         return $data['productos'];
-        //return view('producto', $data);
-
-        /*
-        //Lo que yo tenía:
-        $products = Product::all();
-        foreach($products as $product){
-            $product->productImg->each(function($url){
-                $url->file;
-            });
-            $product->brand;
-            $product->tags;
-            $product->stores;
-            $product->sales;
-            $product->category;
-
-        //este es el array de imágenes que había en merge:
-            $producto->images->each(function($archivo){
-                $archivo->file;
-            });
-        */
     }
 
     /**
@@ -87,8 +67,6 @@ class ProductController extends Controller
             $product->tags()->sync($request->tags);
             $product->save();
         }
-
-        //Aquí: subida de imágenes en el directorio correspondiente
 
         $product->stores()->attach($request->stores, [
             'stock' => $request->stock,
@@ -151,12 +129,10 @@ class ProductController extends Controller
         }
 
         if(isset($request->tags)){
-            //hay que mandarle los ids como números, no como objetos
             $product->tags()->sync($request->tags);
             $product->save();
         }
 
-        //*aquí*: ver cómo modificar las imágenes
         $product->stores()->sync($request->stores);
 
         $product->update($request->all());
@@ -219,7 +195,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->stores()->detach($request->stores);
     }
-    // funcion para recibir todos los nombres de los productos
+
     public function getNames(){
         return Product::select('name', 'id')->get();
     }

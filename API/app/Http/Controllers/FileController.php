@@ -23,7 +23,7 @@ class FileController extends Controller
         foreach($files as $file){
             switch($file->type){
                 case 'document': $file->document; break;
-                case 'profile_imgs': $file->profileImgs; break; //llamada a la función en File.php
+                case 'profile_imgs': $file->profileImgs; break;
                 case 'store_imgs': $file->storeImgs; break;
                 case 'brand_imgs': $file->brandImgs; break;
                 case 'product_imgs': $file->productImgs; break;
@@ -33,53 +33,13 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
-
-        // Route::post('/upload', function(Request $request) {
-        //     $files = $request->file('product_img');
-        //     $urls = [];
-
-        //     foreach($files as $file) {
-        //         $path = $file->store('public/images/product_img');
-        //         $url = Storage::url($path);
-        //         $urls[] = $url;
-        //     }
-
-        //     return response()->json(['urls' => $urls]);
-        // })
-
-        //$user = Auth::user();
-
-        //if($request->has('url') || $request->has('objectURL') || $request->upload) {
         if($request->has('url')) {
 
-            //aquí: dd($request) para ver la validación - mirar en docs de laravel para imágenes
             $file = File::create($request->all());
-
-            // $product = new ProductImg();
-            // $product->file_id = $file->id;
-
-            // $productId = Product::find($request->product_id);
-            // $product->product_id = $productId->id;
-            // $product->save();
-
-            //$image_name = time() . '.' . $request->upload->extension();
-            // $request->file('upload')->store('public/images/product_imgs');
-
-            // Validator::make($request->all(), [
-            //     'user_id' => 'required',
-            //     'url' => 'required',
-            //     'image_type' => 'required',
-            //     'deleted' => 'required',
-            //     'product_id' => 'required',
-            //     'upload' => 'required',
-            // ])->validate();
-
-            //Mirar aquí para asignar el id del usuario identificado (algo como user_id = auth()->id)
 
             switch($file->image_type){
                 case 'document': $document = new Document();
                                 $document->file_id = $file->id;
-                                //$document->expiration_date = date('Y-m-d H:i:s');
                                 $document->expiration_date = $request->expiration_date;
                                 $document->save(); break;
 
@@ -99,14 +59,7 @@ class FileController extends Controller
 
                                     $productId = Product::find($request->product_id);
                                     $product->product_id = $productId->id;
-                                    $product->save();
-
-                                    //$request->file('upload')->store('public/images/product_imgs');
-                                    // $path = $file->store('public/images/product_imgs');
-                                    // $url = Storage::url($path);
-                                    //$urls[] = $url;
-
-                                    break;
+                                    $product->save(); break;
 
                 case 'brand_imgs': $brand = new BrandImg();
                                     $brand->file_id = $file->id;
@@ -117,11 +70,6 @@ class FileController extends Controller
             }
 
         }
-        else{
-            echo 'error'; //añadir gestión de errores
-        }
-
-
     }
 
     public function show($id){
@@ -137,11 +85,10 @@ class FileController extends Controller
         return $file;
     }
 
-    //Función planteada por si es necesario cambiar el tipo de documento, pero en realidad servirá para marcar documentos como eliminados o no (deleted).
     public function update(Request $request, $id){
         $file = File::find($id);
 
-        $file->update($request->all()); //para modificar el campo type dentro de un file concreto
+        $file->update($request->all());
 
         switch($file->type){
             case 'document': $document = Document::find($id);

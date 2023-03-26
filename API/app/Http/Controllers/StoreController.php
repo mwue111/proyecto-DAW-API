@@ -22,7 +22,6 @@ class StoreController extends Controller{
                 $schedule->timeSlot;
             });
             $store->specialDays;
-            //$store->owner->user;
             $store->address;
             if($store->address !=null)
             $store->address->town->state;
@@ -83,7 +82,6 @@ class StoreController extends Controller{
         $store->update($request->all());
 
         if(isset($request->address)){
-            //haciendo referencia a la función que une los modelos se tiene acceso a las funciones de la clase relacionada (AddressController en este caso)
             $store->address()->update($request->address, $request->address_id);
         }
     }
@@ -92,7 +90,6 @@ class StoreController extends Controller{
        return Store::destroy($id);
     }
 
-    //actualizar un registro (aparte porque puede que al actualizar una tienda no sea necesario actualizar su horario)
     public function setSchedule(Request $request, $id){
         $store = Store::find($id);
         $store->fill($request->all());
@@ -100,7 +97,6 @@ class StoreController extends Controller{
         $store->save();
     }
 
-    //eliminar los horarios de una tienda (hay persistencia de datos: al borrar la tienda se borran)
     public function deleteSchedule($id){
         $store = Store::find($id);
         $store->schedules()->detach();
@@ -117,7 +113,6 @@ class StoreController extends Controller{
         $store->products()->detach($request->products);
     }
 
-    //dejado aparte porque al actualizar una tienda puede que no sea necesario cambiar sus días de horario especial
     public function setSpecialDay(Request $request, $id){
         $store = Store::find($id);
         $store->fill($request->all());
@@ -125,21 +120,18 @@ class StoreController extends Controller{
         $store->save();
     }
 
-    //Hay persistencia de datos
     public function deleteSpecialDay($id){
         $store = Store::find($id);
         $store->specialDays()->detach();
     }
 
-    // funcion para recibir todos los nombres de las tiendas
     public function getNames(){
         return Store::select('name', 'id')->get();
     }
 
     public function deleteOldStores(Request $request){
-        //todo en formato fechas
-        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));     //now() con horario en España
-        $date->sub(DateInterval::createFromDateString($request->data . ' months')); //llamada al método sub, a la clase dateinterval que recoge data y lo interpreta como meses
+        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));
+        $date->sub(DateInterval::createFromDateString($request->data . ' months'));
         $test = $date->format('Y-m-d H:i:s');
 
         $oldStores = Store::where("updated_at", "<", $test)->where("deleted", "=", "1")->get();

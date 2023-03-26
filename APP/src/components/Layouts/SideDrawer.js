@@ -5,7 +5,6 @@ import { Button } from 'primereact/button'
 import NavLink from '@/components/NavLink'
 import { useRouter } from 'next/router'
 import ApplicationLogo from '@/components/ApplicationLogo'
-//Cambios aquí: añadida la clase mx-8 en la línea 13
 
 const SideDrawer = () => {
     const [visibleLeft, setVisibleLeft] = useState(false);
