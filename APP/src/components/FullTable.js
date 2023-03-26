@@ -51,7 +51,7 @@ const FullTable = () => {
         <Column
           header="Image"
           body={row => (
-            (row.images[0]?.file.url) ? (<img src={row.images[0]?.file.url} alt={row.name} width="100" />) :
+            (row.product_img[0]?.file.url) ? (<img src={row.product_img[0]?.file.url} alt={row.name} width="100" />) :
               <img src="https://via.placeholder.com/100" alt={row.name} width="100" />
             
           )}
