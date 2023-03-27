@@ -67,4 +67,9 @@ class UserController extends Controller{
         $user = User::destroy($id);
         return $user;
     }
+
+    public function findUsername ($username){
+        $user = User::where('username', $username)->first();
+        return $user->id;
+    }
 }

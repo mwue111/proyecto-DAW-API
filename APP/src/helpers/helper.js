@@ -183,7 +183,6 @@ export function changedJson(oldData, newData){
 
     changed = headersDB(changed);
 
-    console.log('changed: ', changed);
     return changed;
 }
 
@@ -266,7 +265,6 @@ export function productStoreFilterFormatter(productList, storeList){
 
 export function getTagColor(tag){
     let color = 'bg-blue-200 text-blue-700';
-    console.log(tag)
     switch (tag) {
         case 'Vegano':color = 'bg-green-200 text-green-700';
             break;

@@ -25,7 +25,6 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'file' => ['nullable', 'file', 'max:1000'],
         ]);
 
         $user = User::create([
@@ -38,20 +37,10 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/files', $filename);
-            $user->files()->create([
-                'url' => $filename,
-                'image_type' => 'file',
-            ]);
-        }
-
         event(new Registered($user));
 
         Auth::login($user);
-
+        
         return response()->noContent();
     }
 }

@@ -33,68 +33,53 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
-        //$user = Auth::user();
+        
+        $validator=Validator::make($request->all(),[
+            'image_type'=>'required',
+            'user_id'=>'required'
+        ]);
 
-        //if($request->has('url') || $request->has('objectURL') || $request->upload) {
-        if($request->has('url')) {
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
 
-            //aquí: dd($request) para ver la validación - mirar en docs de laravel para imágenes
-            $file = File::create($request->all());
+        if($request->has('file')) {
+            $file = $request->file('file');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/files/'.$request->image_type , $name);
 
-            // $product = new ProductImg();
-            // $product->file_id = $file->id;
-
-            // $productId = Product::find($request->product_id);
-            // $product->product_id = $productId->id;
-            // $product->save();
-
-            //$image_name = time() . '.' . $request->upload->extension();
-            // $request->file('upload')->store('public/images/product_imgs');
-
-            // Validator::make($request->all(), [
-            //     'user_id' => 'required',
-            //     'url' => 'required',
-            //     'image_type' => 'required',
-            //     'deleted' => 'required',
-            //     'product_id' => 'required',
-            //     'upload' => 'required',
-            // ])->validate();
-
-            //Mirar aquí para asignar el id del usuario identificado (algo como user_id = auth()->id)
+            $file = File::create([
+                'user_id' => $request->user_id,
+                'url' => public_path().'/files/'.$name,
+                'image_type' => $request->image_type,
+                'deleted' => false
+            ]);
 
             switch($file->image_type){
-                case 'document': $document = new Document();
+                case '"document"': $document = new Document();
                                 $document->file_id = $file->id;
-                                //$document->expiration_date = date('Y-m-d H:i:s');
-                                $document->expiration_date = $request->expiration_date;
+                                $document->expiration_date = \Carbon\Carbon::now()->addYears(2);
                                 $document->save(); break;
 
-                case 'profile_imgs': $profile = new ProfileImg();
+                case '"profile_imgs"': $profile = new ProfileImg();
                                     $profile->file_id = $file->id;
                                     $profile->save(); break;
 
-                case 'store_imgs': $store = new StoreImg();
+                case '"store_imgs"': $store = new StoreImg();
                                 $store->file_id = $file->id;
 
                                 $storeId = Store::find($request->store_id);
                                 $store->store_id = $storeId->id;
                                 $store->save(); break;
 
-                case 'product_imgs': $product = new ProductImg();
+                case '"product_imgs"': $product = new ProductImg();
                                     $product->file_id = $file->id;
 
                                     $productId = Product::find($request->product_id);
                                     $product->product_id = $productId->id;
-                                    $product->save();
+                                    $product->save(); break;
 
-                                    //$request->file('upload')->store('public/images/product_imgs');
-                                    // $path = $file->store('public/images/product_imgs');
-                                    // $url = Storage::url($path);
-                                    //$urls[] = $url;
-
-                                    break;
-
-                case 'brand_imgs': $brand = new BrandImg();
+                case '"brand_imgs"': $brand = new BrandImg();
                                     $brand->file_id = $file->id;
 
                                     $brandId = Brand::find($request->brand_id);
@@ -102,12 +87,15 @@ class FileController extends Controller
                                     $brand->save(); break;
             }
 
-        }
-        else{
-            echo 'error'; //añadir gestión de errores
+            $response["status"] = "successs";
+            $response["message"] = "Success! file(s) uploaded";
         }
 
-
+        else {
+            $response["status"] = "failed";
+            $response["message"] = "Failed! file(s) not uploaded";
+        }
+        return response()->json($response);
     }
 
     public function show($id){

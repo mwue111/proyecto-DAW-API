@@ -37,14 +37,14 @@ function RecommendedProducts () {
   const getRandomProducts = () => {
     const randomProducts = [];
     if (products.length > 6) {
-      while (randomProducts.length < 9) {
+      while (randomProducts.length < 3) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];
         if (!randomProducts.includes(randomProduct)) {
           randomProducts.push(randomProduct);
         }
       }
-    }else{
+    }else if(products.length > 3){
       while (randomProducts.length < 3) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];
