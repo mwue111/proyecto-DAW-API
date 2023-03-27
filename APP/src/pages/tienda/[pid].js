@@ -11,6 +11,7 @@ import StoreInfo from '@/components/StoreInfo'
 import { useAuth } from '@/hooks/auth'
 import EditStoreDialog from '@/components/EditStoreDialog'
 import { Image } from 'primereact/image'
+import AddNewProductAccordion from '../../components/AddProductAccordion'
 
 
 
@@ -37,23 +38,25 @@ const Tienda = () => {
 
     const renderListItem = (data) => {
         return (
-            <div className="col-12">
-                <div className="flex flex-column align-items-center p-3 w-full md:flex-row">
-{/*                     <img className="md:w-11rem w-9 shadow-2 md:my-0 md:mr-5 mr-0 my-5" src={`https://primereact.org/images/product/${data.image}`}  alt={data.name} />
- */}                    <div className="text-center md:text-left md:flex-1">
-                        <div className="text-2xl font-bold"><a href={`/producto/${data.id}`}>{data.name}</a></div>
-                        <div className="mb-3">{data.description}</div>
-                        <i className="pi pi-tag vertical-align-middle mr-2"></i>
-                        <span className="vertical-align-middle font-semibold">{data.pivot.stock}</span>
-                    </div>
-                    <div className="flex md:flex-column mt-5 justify-content-between align-items-center md:w-auto w-full">
-                        <span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">{data.pivot.value}€</span>
-                        <span className={`product-badge `}>{data.pivot.unit}</span>
-                    </div>
+          <div className='col-12'>
+            <div className='flex flex-column align-items-center p-3 w-full md:flex-row'>
+              <div className='text-center md:text-left md:flex-1'>
+                <div className='text-2xl font-bold'>
+                  <a href={`/producto/${data.id}`}>{data.name}</a>
                 </div>
+                <div className='mb-3'>{data.description}</div>
+                <i className='pi pi-tag vertical-align-middle mr-2'></i>
+                <span className='vertical-align-middle font-semibold'>{data.pivot.stock}</span>
+              </div>
+              <div className='flex md:flex-column mt-5 justify-content-between align-items-center md:w-auto w-full'>
+                <span className='align-self-center text-2xl font-semibold mb-2 md:align-self-end'>{data.pivot.value}€</span>
+                <span className={`product-badge `}>{data.pivot.unit}</span>
+              </div>
             </div>
-        );
-    };
+          </div>
+        )
+      }
+    
 
     const itemTemplate = (store, layout) => {
         if (!store) {
@@ -63,29 +66,34 @@ const Tienda = () => {
         return renderListItem(store);
     };
 
-    console.log(selectedStore?.store_imgs.length>0)
-
     return (
         <AppLayout
         header={selectedStore && 
             <div className='flex flex-col justify-items-center'>
               <StoreTitle store={selectedStore} />
               {((user.type =="owner" && user.id === selectedStore?.user_id) || user.type =="administrator") &&
+                <div className='flex flex-col justify-items-center'>
                 <EditStoreDialog store={selectedStore} onUpdate={handleStoreUpdated} />
+                <AddNewProductAccordion store={selectedStore} onUpdate={handleStoreUpdated} />
+                </div>
               }
             </div>
           }
         >
             <Head>
-                <title>LocAlmeria - {selectedStore? selectedStore.name : "Tienda"}</title>
+            {selectedStore? <title>LocAlmeria -  {selectedStore.name} : "Tienda"</title>: <title>LocAlmeria -  Tienda</title>}
             </Head>
             <div className="py-12">
             <div className="max-w-6xl mx-auto grid grid-cols-4 gap-8 mb-5 bg-white rounded-lg">
-            <div className="col-span-1">
-            {selectedStore &&
+            <div className="col-span-1 flex justify-center items-center ml-4">
+            {selectedStore && (
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
-                    {selectedStore?.store_imgs.length>0 ?<Image src={selectedStore?.store_imgs[0]} width={300} height={300} alt={selectedStore?.name}/>: <Image src="https://via.placeholder.com/300x300.png?text=No+Image" width={300} height={300} alt={selectedStore?.name}/>}
-                </div>}
+                    {selectedStore?.store_imgs.length>0 ?
+                        <Image src={selectedStore?.store_imgs[0].file.url} width={300} height={300} alt={selectedStore?.name} style={{ display: 'block' }} />
+                        : <Image src="https://via.placeholder.com/300x300.png?text=No+Image" width={300} height={300} alt={selectedStore?.name} style={{ display: 'block' }} />
+                    }
+                </div>
+            )}
             </div>
             <div className="col-span-2 p-6">
                 {selectedStore && <StoreInfo info={selectedStore}/>}

@@ -61,20 +61,28 @@ function RecommendedProducts () {
   const productTemplate = (product) => {
     return (
       <div className="product">
-        {product.product_img?.length > 0 ? (
-          <img src={product.product_img[0].file.url} alt={product.name} />
-        ) : (
-          <img
-            src="https://via.placeholder.com/300x200.png?text=No+Image"
-            alt="No Image"
-          />
-        )}
-        <div className="product-details">
-          <h4>{product.name}</h4>
-        </div>
+        <a href={`/producto/${product.id}`}>
+          {product.product_img?.length > 0 ? (
+            <img
+              src={product.product_img[0].file.url}
+              alt={product.name}
+              style={{ maxWidth: 300, maxHeight: 200 }}
+            />
+          ) : (
+            <img
+              src="https://via.placeholder.com/300x200.png?text=No+Image"
+              alt="No Image"
+              style={{ maxWidth: 400, maxHeight: 400 }}
+            />
+          )}
+          <div className="product-details">
+            <h4>{product.name}</h4>
+          </div>
+        </a>
       </div>
     );
-  }
+  };
+  
 
   return (
     <>

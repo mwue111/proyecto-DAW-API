@@ -240,6 +240,7 @@ const Register = () => {
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 onChange={handleFileChange}
                 className="block mt-1 w-full"
+                required
               />
             </div>
           </div>
