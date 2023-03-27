@@ -90,7 +90,6 @@ class StoresTableSeeder extends Seeder
             'updated_at' => '2021-01-01 00:00:00',
         ]);
 
-        //8
         DB::table('stores')->insert([
             'name' => 'Carnicería López',
             'address_id' => 6,
@@ -106,7 +105,7 @@ class StoresTableSeeder extends Seeder
             'updated_at' => '2021-01-01 00:00:00',
         ]);
 
-        //9
+
         DB::table('stores')->insert([
             'name' => 'Pescadería Joaquín',
             'address_id' => 7,
@@ -122,7 +121,7 @@ class StoresTableSeeder extends Seeder
             'updated_at' => '2021-01-01 00:00:00',
         ]);
 
-        //10
+
         DB::table('stores')->insert([
             'name' => 'Frutería Anita',
             'address_id' => 8,
