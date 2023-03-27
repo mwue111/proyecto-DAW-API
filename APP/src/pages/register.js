@@ -13,7 +13,7 @@ import axios from '@/lib/axios'
 
 
 const Register = () => {
-  const { register, user } = useAuth({
+  const { register, login } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
@@ -28,7 +28,7 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [errors, setErrors] = useState([])
   const [file, setFile] = useState(null);
-  let userId;
+  const [status, setStatus] = useState(null)
 
   const submitForm = event => {
     event.preventDefault()
@@ -44,7 +44,6 @@ const Register = () => {
       password_confirmation: passwordConfirmation,
       setErrors,
     }).then(() => {
-
         axios.get('/usuario/encuentra/' + username)
           .then(response => {
             const userId = response.data;
@@ -66,6 +65,16 @@ const Register = () => {
             console.log('Error:', error.response.data);
           });
     });
+
+    setTimeout(() => {
+      login({
+        email,
+        password,
+        setErrors,
+        setStatus,
+      })
+    }
+    , 1000);
   }
 
   const handleFileChange = event => {
