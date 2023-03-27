@@ -55,6 +55,7 @@ const filteredProducts = products.filter(product =>
         selectionMode="single"
         selection={null}
         onRowClick={row => window.location.href = `/producto/${row.data.id}`}
+        style={{ marginTop: "1em" }}
       >
         <Column field="name" header="Name" sortable />
         <Column

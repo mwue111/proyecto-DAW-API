@@ -10,6 +10,7 @@ use App\Models\Town;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use App\Models\User;
 
 class StoreController extends Controller{
     public function index(){
@@ -154,4 +155,35 @@ class StoreController extends Controller{
         return $oldStores;
     }
 
+    public function getDefaultStore(Request $request)
+{
+    $user = User::find($request->user_id);
+
+    $defaultStore = new Store();
+    $defaultStore->name = 'La tienda de ' . $request->username; 
+    $defaultStore->description = 'Descripcion de mi tienda';
+    $defaultStore->email = 'mi@tienda.com';
+    $defaultStore->telephone1 = '1234567890';
+    $defaultStore->telephone2 = '';
+    $defaultStore->deleted = false;
+    $defaultStore->user_id = $user->id;
+
+    $defaultAddress = new Address();
+    $defaultAddress->road_type = 'Calle';
+    $defaultAddress->zip_code = '12345';
+    $defaultAddress->number = '1';
+    $defaultAddress->name = 'Mayor';
+    $defaultAddress->remarks = '';
+    $defaultAddress->town_id = 1; 
+
+    $defaultAddress->save();
+
+    $defaultStore->address_id = $defaultAddress->id;
+
+    $defaultStore->save();
+
+    return $defaultStore;
 }
+
+}
+
