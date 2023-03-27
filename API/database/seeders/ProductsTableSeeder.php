@@ -72,7 +72,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 6,
             'deleted' => 0,
         ]);
-        //8
+
         DB::table('products')->insert([
             'name' => 'Tomate pera',
             'description' => 'Tomate carnoso, dulce, sabroso y con una piel muy fina',

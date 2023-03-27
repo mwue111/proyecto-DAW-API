@@ -174,7 +174,7 @@ class FilesTableSeeder extends Seeder
             'image_type' => 'store_imgs',
             'deleted' => 0,
         ]);
-        //25
+
         DB::table('files')->insert([
             'user_id' => 3,
             'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWxSttjehGqhC2Gn3wimfc2KUmmdmWj83IGf09V5idCn_zlEJuXMBrfWxJz7n1uRFL3GE&usqp=CAU',
@@ -195,5 +195,153 @@ class FilesTableSeeder extends Seeder
             'image_type' => 'store_imgs',
             'deleted' => 0,
         ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://delahuertacasa.com/wp-content/uploads/2022/01/tomate-pera-product.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://www.elhuertourbano.net/wp-content/uploads/tomate-del-tipo-pera.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/616sz7TSGnS._AC_SX522_.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://supercostablanca.es/3729-large_default/asturiana-leche-entera-1l.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://img.interempresas.net/fotos/1341264.jpeg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://img.interempresas.net/fotos/1341264.jpeg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202206/29/00120641600968____4__600x600.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://s.cdnmpro.com/321239485/p/l/7/cereales-all-bran~387.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://frujuaida.com/wp-content/uploads/2022/05/03125-1.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://frujuaida.com/wp-content/uploads/2022/05/00084-1.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://canalcocina.es/medias/_cache/zoom-461372ac05133b4210522ae187d2cf50-920-518.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://legumbreslosrecuencos.com/wp-content/uploads/2021/12/Lentejas-Pardinas-Bolsa.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://www.lavozdeltajo.com/fotos/49/atun.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2020/02/congelar-latas-de-atun-anna1311.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://www.codionline.es/documents/10180/10526/34668_G.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://hortadeleixample.es/86-large_default/huevos-ecologicos.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://productosgourmet.online/blog/wp-content/uploads/2020/05/por-que-comprar-huevos-ecologicos-5-1024x1024.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://resigras.es/wp-content/uploads/2018/10/iStock-528742647-1170x781.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxojPX_WlIQ66ks8GwfWwt8ypWqisQSvv3xJRFf51GLaBq57qK4wo1O3sK2WnUS938s88&usqp=CAU',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202202/18/00120930500341____2__600x600.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202002/05/00120930500044____2__600x600.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
     }
 }
