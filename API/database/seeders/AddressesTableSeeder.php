@@ -50,5 +50,104 @@ class AddressesTableSeeder extends Seeder
             'town_id' => '1',
             'remarks' => 'Vícar'
         ]);
+        //6
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04000',
+            'number' => '8',
+            'name' => 'Hermanos Pinzón',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Avenida',
+            'zip_code' => '04001',
+            'number' => '20',
+            'name' => 'Pablo Iglesias',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Paseo',
+            'zip_code' => '04008',
+            'number' => '1',
+            'name' => 'Almería',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04001',
+            'number' => '1',
+            'name' => 'Machado',
+            'town_id' => '2',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04010',
+            'number' => '10',
+            'name' => 'Juan de la Cruz',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Avenida',
+            'zip_code' => '04013',
+            'number' => '3',
+            'name' => 'de la Estación',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04001',
+            'number' => '5',
+            'name' => 'San Juan Bosco',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Boulevard',
+            'zip_code' => '04005',
+            'number' => '3',
+            'name' => 'Gustavo Villapalos',
+            'town_id' => '1',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Carretera',
+            'zip_code' => '04023',
+            'number' => '8',
+            'name' => 'Níjar',
+            'town_id' => '3',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Calle',
+            'zip_code' => '04024',
+            'number' => '1',
+            'name' => 'Guillermo Reina',
+            'town_id' => '2',
+            'remarks' => ''
+        ]);
+
+        DB::table('addresses')->insert([
+            'road_type' => 'Avenida',
+            'zip_code' => '04005',
+            'number' => '3',
+            'name' => 'Zaplana',
+            'town_id' => '3',
+            'remarks' => ''
+        ]);
     }
 }

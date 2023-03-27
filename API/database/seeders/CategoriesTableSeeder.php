@@ -31,17 +31,52 @@ class CategoriesTableSeeder extends Seeder
         ]);
 
         DB::table('categories')->insert([
-            'name' => 'Salsas',
+            'name' => 'Cereales',
             'parent_category_id' => 1
         ]);
 
         DB::table('categories')->insert([
-            'name' => 'Yogures',
+            'name' => 'Tubérculos',
             'parent_category_id' => 2
         ]);
 
         DB::table('categories')->insert([
-            'name' => 'Sin bífidus',
+            'name' => 'Leguminosas',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Lácteos',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Pescados',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Carnes',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Huevos',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Aceites',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Grasas',
+            'parent_category_id' => 5
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Azúcar',
             'parent_category_id' => 5
         ]);
     }

@@ -21,7 +21,7 @@ class BrandsTableSeeder extends Seeder
         ]);
         DB::table('brands')->insert([
             'name' => 'Juver',
-            'description' => 'COmpañía líder en los zumos de frutas y verduras',
+            'description' => 'Compañía líder en los zumos de frutas y verduras',
         ]);
         DB::table('brands')->insert([
             'name' => 'Danone',
@@ -30,6 +30,34 @@ class BrandsTableSeeder extends Seeder
         DB::table('brands')->insert([
             'name' => 'Cocacola',
             'description' => 'Bebidas refrescantes',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'El Pozo',
+            'description' => 'Embutidos',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Asturiana',
+            'description' => 'Lácteos de calidad',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Campofrío',
+            'description' => 'Embutidos',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Kellogs',
+            'description' => 'Cereales de calidad',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Don Simón',
+            'description' => 'Zumos naturales',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Gallina Blanca',
+            'description' => 'Caldos caseros',
+        ]);
+        DB::table('brands')->insert([
+            'name' => 'Azucarera',
+            'description' => 'Azúcar de distintos tipos',
         ]);
     }
 }

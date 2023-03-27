@@ -16,15 +16,12 @@ class AdministratorsTableSeeder extends Seeder
     public function run()
     {
         DB::table('administrators')->insert([
+            'user_id' => 1,
+            'last_login' => '2022-11-14 00:00:00'
+        ]);
+        DB::table('administrators')->insert([
             'user_id' => 2,
             'last_login' => '2022-11-14 00:00:00'
-        ]);
-        DB::table('administrators')->insert([
-            'user_id' => 3,
-            'last_login' => '2022-11-14 00:00:00'
-        ]);
-        DB::table('administrators')->insert([
-            'user_id' => 4,  
         ]);
     }
 }

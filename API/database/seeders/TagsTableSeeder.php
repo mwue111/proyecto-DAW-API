@@ -31,8 +31,38 @@ class TagsTableSeeder extends Seeder
         ]);
 
         DB::table('tags')->insert([
-            'name' => 'Diabéticos',
+            'name' => 'Sin azúcar',
             'description' => 'Productos para diabéticos',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Ecológico',
+            'description' => 'Productos ecológico',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Sin aditivos',
+            'description' => 'Productos sin aditivos',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Sin conservantes',
+            'description' => 'Productos sin conservantes',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Sin colorantes',
+            'description' => 'Productos sin colorantes',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Cultivo sostenible',
+            'description' => 'Productos de sultivo sostenible',
+        ]);
+
+        DB::table('tags')->insert([
+            'name' => 'Origen local',
+            'description' => 'Productos de origen local',
         ]);
     }
 }

@@ -72,6 +72,102 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 6,
             'deleted' => 0,
         ]);
+        //8
+        DB::table('products')->insert([
+            'name' => 'Tomate pera',
+            'description' => 'Tomate carnoso, dulce, sabroso y con una piel muy fina',
+            'brand_id' => 1,
+            'category_id' => 3,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Leche entera',
+            'description' => 'Leche procedente de animales con bienestar garantizado',
+            'brand_id' => 6,
+            'category_id' => 2,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Fresa',
+            'description' => 'Las fresas son ricas en fibra, antioxidantes, vitaminas y minerales, lo que ayuda a mantener un intestino saludable.',
+            'brand_id' => 1,
+            'category_id' => 3,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'All-Bran',
+            'description' => 'cereales de trigo integral y combinacion de fruta como uvas pasas, manzana, plátano, coco y avellana.',
+            'brand_id' => 8,
+            'category_id' => 4,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Patatas',
+            'description' => 'Fuente de hierro, zinc y cobre.',
+            'brand_id' => 1,
+            'category_id' => 5,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Lentejas',
+            'description' => 'Las lentejas son ricas en proteínas, minerales, vitaminas y fibra.',
+            'brand_id' => 1,
+            'category_id' => 6,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Atún',
+            'description' => 'El atún es rico en ácidos grasos Omega3.',
+            'brand_id' => 5,
+            'category_id' => 7,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Jamón york',
+            'description' => 'Fiambre derivado de la carne de cerdo.',
+            'brand_id' => 5,
+            'category_id' => 8,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Huevos ecológicos',
+            'description' => 'Procedentes de gallinas que viven en corrales al aire libre.',
+            'brand_id' => 6,
+            'category_id' => 9,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Aceite de oliva',
+            'description' => 'Aceite vegetal de uso principalmente culinario. Se obtiene del fruto del olivo (Olea europaea), denominado oliva o aceituna.',
+            'brand_id' => 1,
+            'category_id' => 10,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Margarina',
+            'description' => 'Mezcla de aceites compuestos mayoritariamente por grasas insaturadas.',
+            'brand_id' => 6,
+            'category_id' => 11,
+            'deleted' => 0,
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Azúcar blanco',
+            'description' => 'Mezcla de aceites compuestos mayoritariamente por grasas insaturadas.',
+            'brand_id' => 11,
+            'category_id' => 12,
+            'deleted' => 0,
+        ]);
 
         // crea 40 seeds de productos de alimentación y 40 de bebidas
 /*

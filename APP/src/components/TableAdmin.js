@@ -87,7 +87,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     useEffect(() => {
         axios.get(fetchUrl)
-            .then(res => setData(formatJson(res.data, table)))
+            .then(res => setData(formatJson(res.data, table)));
 
         let cityOptions = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
@@ -141,6 +141,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setTags(tagList);
 
         setSingleDeleted(false);
+        console.log(fetchUrl);
 
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
