@@ -42,39 +42,31 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $product = Product::create($request->all());
+{
+    $product = new Product();
+    $product->name = $request->input('name');
+    $product->description = $request->input('description');
+    $product->category_id = $request->input('category_id');
+    $product->save();
 
-        if(isset($request->brand)) {
-            $brandId = DB::table('brands')->select('id')
-                                        ->where('id', $request->brand)
-                                        ->first()
-                                        ->id;
-            $brand = Brand::find($brandId);
-            $product->brand_id = $brand->id;
-        }
-
-        if(isset($request->category)) {
-            $categoryId = DB::table('categories')->select('id')
-                                                ->where('id', $request->category)
-                                                ->first()
-                                                ->id;
-            $category = Category::find($categoryId);
-            $product->category_id = $category->id;
-        }
-
-        if(isset($request->tags)) {
-            $product->tags()->sync($request->tags);
-            $product->save();
-        }
-
-        $product->stores()->attach($request->stores, [
-            'stock' => $request->stock,
-            'value' => $request->value,
-            'remarks' => $request->remarks
-        ]);
-        return response()->json($product, 201);
+    if ($request->has('tags')) {
+        $tags = json_decode($request->input('tags'));
+        $tags = collect($tags)->mapWithKeys(function ($tag) {
+            return [$tag => ['created_at' => now(), 'updated_at' => now()]];
+        })->toArray();
+        $product->tags()->sync($tags);
     }
+
+    $stores = json_decode($request->input('stores'));
+        $product->stores()->attach($stores, [
+            'stock' => $request->input('stock'),
+            'value' => $request->input('value'),
+            'unit' => $request->input('unit'),
+            'remarks' => $request->input('remarks')
+        ]);
+
+    return response()->json($request);
+}
 
     /**
      * Display the specified resource.
@@ -218,5 +210,10 @@ class ProductController extends Controller
             });
         }
         return $oldProducts;
+    }
+
+    public function findProductName ($product){
+        $product = Product::where('name', $product)->first();
+        return $product->id;
     }
 }

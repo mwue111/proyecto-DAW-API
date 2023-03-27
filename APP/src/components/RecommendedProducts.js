@@ -36,8 +36,8 @@ function RecommendedProducts () {
 
   const getRandomProducts = () => {
     const randomProducts = [];
-    if (products.length > 6) {
-      while (randomProducts.length < 3) {
+    if (products.length > 9) {
+      while (randomProducts.length <6) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];
         if (!randomProducts.includes(randomProduct)) {
@@ -87,7 +87,7 @@ function RecommendedProducts () {
   return (
     <>
       {randomProducts && randomProducts.length > 0 && (
-        <Carousel value={randomProducts} itemTemplate={productTemplate} numVisible={3} numScroll={3} responsiveOptions={responsiveOptions}></Carousel>
+        <Carousel value={randomProducts} itemTemplate={productTemplate} numVisible={3} numScroll={3} responsiveOptions={responsiveOptions} circular ></Carousel>
       )}
     </>
   );

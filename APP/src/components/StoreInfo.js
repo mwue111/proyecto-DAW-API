@@ -25,8 +25,6 @@ function StoreInfo({ info, editable }) {
     setEditMode(false)
   }
 
-  console.log(editable)
-
   return (
     <div>
       {editable && (
