@@ -37,7 +37,7 @@ const Producto = () => {
                         <span className="vertical-align-middle font-semibold">{data.pivot.stock}</span>
                     </div>
                     {user?.type != undefined ?<div className="flex md:flex-column mt-5 justify-content-between align-items-center md:w-auto w-full">
-                        <span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">${data.pivot.value}</span>
+                        <span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">{data.pivot.value}€</span>
                         <span className={`product-badge `}>{data.pivot.unit}</span>
                     </div>:<span className="align-self-center text-2xl font-semibold mb-2 md:align-self-end">Inicia sesión para ver el precio</span>}
                 </div>
@@ -90,6 +90,9 @@ const Producto = () => {
                 <HeaderProduct data={selectedProduct}/>
             }
         >
+            <Head>
+                <title>LocAlmeria - {selectedProduct? selectedProduct.name : "Tienda"}</title>
+            </Head>
             <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

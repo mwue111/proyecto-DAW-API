@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 const Login = () => {
     const router = useRouter()
@@ -47,6 +48,9 @@ const Login = () => {
 
     return (
         <GuestLayout>
+            <Head>
+                <title>LocAlmeria - Ingresa con tu cuenta</title>
+            </Head> 
             <AuthCard
                 logo={
                     <Link href="/">
@@ -54,7 +58,7 @@ const Login = () => {
                     </Link>
                 }>
                 {/* Session Status */}
-                <AuthSessionStatus className="mb-4" status={status} />
+                <AuthSessionStatus className="mb-2" status={status} />
 
                 <form onSubmit={submitForm}>
                     {/* Email Address */}

@@ -33,35 +33,53 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
-        if($request->has('url')) {
+        
+        $validator=Validator::make($request->all(),[
+            'image_type'=>'required',
+            'user_id'=>'required'
+        ]);
 
-            $file = File::create($request->all());
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        if($request->has('file')) {
+            $file = $request->file('file');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/files/'.$request->image_type , $name);
+
+            $file = File::create([
+                'user_id' => $request->user_id,
+                'url' => public_path().'/files/'.$name,
+                'image_type' => $request->image_type,
+                'deleted' => false
+            ]);
 
             switch($file->image_type){
-                case 'document': $document = new Document();
+                case '"document"': $document = new Document();
                                 $document->file_id = $file->id;
-                                $document->expiration_date = $request->expiration_date;
+                                $document->expiration_date = \Carbon\Carbon::now()->addYears(2);
                                 $document->save(); break;
 
-                case 'profile_imgs': $profile = new ProfileImg();
+                case '"profile_imgs"': $profile = new ProfileImg();
                                     $profile->file_id = $file->id;
                                     $profile->save(); break;
 
-                case 'store_imgs': $store = new StoreImg();
+                case '"store_imgs"': $store = new StoreImg();
                                 $store->file_id = $file->id;
 
                                 $storeId = Store::find($request->store_id);
                                 $store->store_id = $storeId->id;
                                 $store->save(); break;
 
-                case 'product_imgs': $product = new ProductImg();
+                case '"product_imgs"': $product = new ProductImg();
                                     $product->file_id = $file->id;
 
                                     $productId = Product::find($request->product_id);
                                     $product->product_id = $productId->id;
                                     $product->save(); break;
 
-                case 'brand_imgs': $brand = new BrandImg();
+                case '"brand_imgs"': $brand = new BrandImg();
                                     $brand->file_id = $file->id;
 
                                     $brandId = Brand::find($request->brand_id);
@@ -69,7 +87,15 @@ class FileController extends Controller
                                     $brand->save(); break;
             }
 
+            $response["status"] = "successs";
+            $response["message"] = "Success! file(s) uploaded";
         }
+
+        else {
+            $response["status"] = "failed";
+            $response["message"] = "Failed! file(s) not uploaded";
+        }
+        return response()->json($response);
     }
 
     public function show($id){

@@ -8,9 +8,12 @@ import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
+import Head from 'next/head'
+import axios from '@/lib/axios'
+
 
 const Register = () => {
-  const { register } = useAuth({
+  const { register, login } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
@@ -24,21 +27,58 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [errors, setErrors] = useState([])
+  const [file, setFile] = useState(null);
+  const [status, setStatus] = useState(null)
 
   const submitForm = event => {
     event.preventDefault()
-
+  
     register({
       name,
       username,
       surname1,
       surname2,
-      type,
+      type:type,
       email,
       password,
       password_confirmation: passwordConfirmation,
       setErrors,
-    })
+    }).then(() => {
+        axios.get('/usuario/encuentra/' + username)
+          .then(response => {
+            const userId = response.data;
+                     
+            if (type === 'owner' && file) {
+              const formData = new FormData();
+              formData.append('file', file);
+              formData.append('user_id', userId);
+              formData.append('image_type', 'document');
+              
+              axios.post('/archivo', formData).then(response => {
+                console.log(response);
+              }).catch(error => {
+                console.log(error);
+              });
+            }
+          })
+          .catch(error => {
+            console.log('Error:', error.response.data);
+          });
+    });
+
+    setTimeout(() => {
+      login({
+        email,
+        password,
+        setErrors,
+        setStatus,
+      })
+    }
+    , 1000);
+  }
+
+  const handleFileChange = event => {
+    setFile(event.target.files[0]);
   }
 
   return (
@@ -50,7 +90,10 @@ const Register = () => {
           </Link>
         }
       >
-        <form onSubmit={submitForm}>
+        <Head>
+          <title>LocAlmeria - Registro de nuevo usuario</title>
+        </Head>
+        <form onSubmit={submitForm} encType="multipart/form-data">
           {/* Name */}
           <div className="mt-4">
             <Label htmlFor="name">Nombre</Label>
@@ -82,100 +125,144 @@ const Register = () => {
                 required
               />
 
-              <InputError messages={errors.surname1} className="mt-2" />
-            </div>
+            <InputError messages={errors.surname1} className="mt-2" />
+        </div>
 
-            <div className="w-1/2 ml-2">
-              <Label htmlFor="surname2">Apellido 2</Label>
+        <div className="w-1/2 ml-2">
+          <Label htmlFor="surname2">Apellido 2</Label>
 
-              <Input
-                id="surname2"
-                type="text"
-                value={surname2}
-                className="block mt-1 w-full rounded-r-md"
-                onChange={event => setSurname2(event.target.value)}
-              />
+          <Input
+            id="surname2"
+            type="text"
+            value={surname2}
+            className="block mt-1 w-full rounded-r-md"
+            onChange={event => setSurname2(event.target.value)}
+          />
 
-              <InputError messages={errors.surname2} className="mt-2" />
-            </div>
-          </div>
+          <InputError messages={errors.surname2} className="mt-2" />
+        </div>
+      </div>
 
-          {/* Username */}
-          <div className="mt-4">
-            <Label htmlFor="username">Usuario</Label>
+      {/* Username */}
+      <div className="mt-4">
+        <Label htmlFor="username">Usuario</Label>
 
-            <Input
-              id="username"
-              type="text"
-              value={username}
-              className="block mt-1 w-full"
-              onChange={event => setUsername(event.target.value)}
-              required
+        <Input
+          id="username"
+          type="text"
+          value={username}
+          className="block mt-1 w-full"
+          onChange={event => setUsername(event.target.value)}
+          required
+        />
+
+        <InputError messages={errors.username} className="mt-2" />
+      </div>
+
+      {/* Email Address */}
+      <div className="mt-4">
+        <Label htmlFor="email">Email</Label>
+
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          className="block mt-1 w-full"
+          onChange={event => setEmail(event.target.value)}
+          required
+        />
+
+        <InputError messages={errors.email} className="mt-2" />
+      </div>
+
+      {/* Password */}
+      <div className="mt-4">
+        <Label htmlFor="password">Contraseña / Confirmar contraseña</Label>
+
+        <div className="flex items-center rounded-md border border-gray-200">
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            className="block w-full rounded-l-md mt-1"
+            onChange={event => setPassword(event.target.value)}
+            required
+            autoComplete="new-password"
+          />
+
+          <Input
+            id="passwordConfirmation"
+            type="password"
+            value={passwordConfirmation}
+            className="block w-full rounded-r-md mt-1"
+            onChange={event => setPasswordConfirmation(event.target.value)}
+            required
+          />
+        </div>
+
+        <InputError messages={errors.password} className="mt-2" />
+      </div>
+
+      {/* Role */}
+      <div className="mt-4 flex justify-between">
+        <div className="w-1/2 mr-2">
+          <Label htmlFor="type">Tipo</Label>
+          <label htmlFor="owner" className="ml-2">
+            Dueño de tienda
+            <input
+              id="owner"
+              type="radio"
+              value="owner"
+              checked={type === 'owner'}
+              onChange={event => setType(event.target.value)}
             />
+          </label>
+          <label htmlFor="client" className="ml-2">
+            Usuario normal
+            <input
+              id="client"
+              type="radio"
+              value="client"
+              checked={type === 'client'}
+              onChange={event => setType(event.target.value)}
+            />
+          </label>
+        </div>
 
-            <InputError messages={errors.username} className="mt-2" />
+        {/* File upload */}
+        {type === 'owner' && (
+          <div className="w-1/2 mr-2">
+            <Label htmlFor="file">Archivo</Label>
+            <div className="overflow-hidden">
+              <input
+                id="file"
+                type="file"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                onChange={handleFileChange}
+                className="block mt-1 w-full"
+                required
+              />
+            </div>
           </div>
+        )}
+      </div>
 
-          <input type="hidden" name="role" value="user" />
+      {/* Hidden Role Input */}
+          <input type="hidden" name="type" value={type} />
 
-          {/* Email Address */}
-          <div className="mt-4">
-                        <Label htmlFor="email">Email</Label>
-
-                        <Input
-                            id="email"
-                            type="email"
-                            value={email}
-                            className="block mt-1 w-full"
-                            onChange={event => setEmail(event.target.value)}
-                            required
-                        />
-
-                        <InputError messages={errors.email} className="mt-2" />
-                    </div>
-                    
-
-                    {/* Password */}
-                      <div className="mt-4">
-                        <Label htmlFor="password">Contraseña / Confirmar contraseña</Label>
-
-                        <div className="flex items-center rounded-md border border-gray-200">
-                          <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            className="block w-full rounded-l-md mt-1"
-                            onChange={event => setPassword(event.target.value)}
-                            required
-                            autoComplete="new-password"
-                          />
-
-                          <Input
-                            id="passwordConfirmation"
-                            type="password"
-                            value={passwordConfirmation}
-                            className="block w-full rounded-r-md mt-1"
-                            onChange={event => setPasswordConfirmation(event.target.value)}
-                            required
-                          />
-                        </div>
-
-                        <InputError messages={errors.password} className="mt-2" />
-                      </div>
-
-                    <div className="flex items-center justify-end mt-4">
-                        <Link
-                            href="/login"
-                            className="underline text-sm text-gray-600 hover:text-gray-900">
-                            ¿Ya es usuario? Inicie sesión
-                        </Link>
-
-                        <Button className="ml-4">Registrarse</Button>
-                    </div>
-                </form>
-            </AuthCard>
-        </GuestLayout>
-    )
-}
+          <div className="flex items-center justify-end mt-4">
+            <Link
+                      href="/login"
+                      className="underline text-sm text-gray-600 hover:text-gray-900"
+                    >
+            ¿Ya es usuario? Inicie sesión
+            </Link>
+            <Button className="ml-4">Registrarse</Button>
+          </div>
+        </form>
+      </AuthCard>
+    </GuestLayout>
+  )
+  }
 
 export default Register

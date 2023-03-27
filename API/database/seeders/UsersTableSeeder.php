@@ -51,7 +51,7 @@ class UsersTableSeeder extends Seeder{
             'surname1' => 'Martínez',
             'surname2' => 'Montero',
             'email' => 'chanchitofeliz@nombrereal.com',
-            'password' => 'password',
+            'password' => '$2y$10$j5OH9LfhWO6rUgOa1dQxkOMhyOcQMaKzwsaAw2oQKW8jhVOqDfIu.',
             'birth_date' => '2020-09-03',
             'type' => 'owner',
             'deleted' => 0,

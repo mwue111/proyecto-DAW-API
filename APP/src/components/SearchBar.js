@@ -13,28 +13,41 @@ const SearchBar = () => {
     const router = useRouter();
 
     const search = (event) => {
-        let query = event.query;
-        let _filteredData = [];
-
-        for (let data of dataFilter) {
-            let filteredItems = data.items.filter((item) => item.label.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-
-            if (filteredItems && filteredItems.length) {
-                _filteredData.push({ ...data, ...{ items: filteredItems } });
-            }
-        }
+        const query = event.query.toLowerCase().replace(/[àáâãäå]/g, 'a')
+                                                  .replace(/[èéêë]/g, 'e')
+                                                  .replace(/[ìíîï]/g, 'i')
+                                                  .replace(/[òóôõö]/g, 'o')
+                                                  .replace(/[ùúûü]/g, 'u');
+        const _filteredData = dataFilter.map(group => {
+          const filteredItems = group.items.filter((item) => {
+            const normalizedItem = item.label.toLowerCase().replace(/[àáâãäå]/g, 'a')
+                                                                .replace(/[èéêë]/g, 'e')
+                                                                .replace(/[ìíîï]/g, 'i')
+                                                                .replace(/[òóôõö]/g, 'o')
+                                                                .replace(/[ùúûü]/g, 'u');
+            return normalizedItem.includes(query);
+          });
+      
+          return { ...group, items: filteredItems };
+        }).filter(group => group.items.length);
+      
         setFilteredData(_filteredData);
-    }
+      };
+      
 
     useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda')  //cambiado '/nombre' en ambos axios.
-        .then((response) => {
-            setStores(response.data);
-        })
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/producto')
-        .then((response) => {
-            setProducts(response.data);
-        })
+        try{
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/tienda/nombre')
+            .then((response) => {
+                setStores(response.data);
+            })
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/producto/nombre')
+            .then((response) => {
+                setProducts(response.data);
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }, []);
 
     useEffect(() => {

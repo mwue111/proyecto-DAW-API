@@ -8,7 +8,7 @@ function StoreSchedule({schedule}) {
   return (
     <div className="card flex justify-content-center">
             <i className='pi pi-calendar mr-2' style={{ color: 'slateblue' }}></i>
-            <div onClick={(e) => op.current.toggle(e)} >{formatJsonHorarioDia(schedule)}<i className="pi pi-angle-down" style={{ color: 'slateblue' }}></i> </div>
+            <div onClick={(e) => op.current.toggle(e)} >Ahora: {formatJsonHorarioDia(schedule)}<i className="pi pi-angle-down" style={{ color: 'slateblue' }}></i> </div>
             <OverlayPanel ref={op}>
               {formatJsonHorario(schedule).map((item) => {
                 return <div>{item}</div>;

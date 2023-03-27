@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Carousel } from 'primereact/carousel';
 import axios from 'axios';
 
-function ProductCarousel() {
+function RecommendedProducts () {
   const [products, setProducts] = useState([]);
   const responsiveOptions = [
     {
@@ -36,7 +36,15 @@ function ProductCarousel() {
 
   const getRandomProducts = () => {
     const randomProducts = [];
-    if (products.length > 0) {
+    if (products.length > 6) {
+      while (randomProducts.length < 3) {
+        const randomIndex = Math.floor(Math.random() * products.length);
+        const randomProduct = products[randomIndex];
+        if (!randomProducts.includes(randomProduct)) {
+          randomProducts.push(randomProduct);
+        }
+      }
+    }else if(products.length > 3){
       while (randomProducts.length < 3) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const randomProduct = products[randomIndex];
@@ -53,20 +61,28 @@ function ProductCarousel() {
   const productTemplate = (product) => {
     return (
       <div className="product">
-        {product.product_img?.length > 0 ? (
-          <img src={product.product_img[0].file.url} alt={product.name} />
-        ) : (
-          <img
-            src="https://via.placeholder.com/300x200.png?text=No+Image"
-            alt="No Image"
-          />
-        )}
-        <div className="product-details">
-          <h4>{product.name}</h4>
-        </div>
+        <a href={`/producto/${product.id}`}>
+          {product.product_img?.length > 0 ? (
+            <img
+              src={product.product_img[0].file.url}
+              alt={product.name}
+              style={{ maxWidth: 300, maxHeight: 200 }}
+            />
+          ) : (
+            <img
+              src="https://via.placeholder.com/300x200.png?text=No+Image"
+              alt="No Image"
+              style={{ maxWidth: 400, maxHeight: 400 }}
+            />
+          )}
+          <div className="product-details">
+            <h4>{product.name}</h4>
+          </div>
+        </a>
       </div>
     );
-  }
+  };
+  
 
   return (
     <>
@@ -76,4 +92,4 @@ function ProductCarousel() {
     </>
   );
 }
-export default ProductCarousel;
+export default RecommendedProducts;

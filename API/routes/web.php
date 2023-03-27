@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/usuario/encuentra/{username}', 'UserController@findUsername');
 Route::get('/tienda/nombre', 'StoreController@getNames');
 Route::get('/producto/nombre', 'ProductController@getNames');
 Route::post('/tienda/borrar', 'StoreController@deleteOldStores');

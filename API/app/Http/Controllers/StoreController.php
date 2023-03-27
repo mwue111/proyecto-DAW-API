@@ -81,8 +81,15 @@ class StoreController extends Controller{
         $store = Store::find($id);
         $store->update($request->all());
 
-        if(isset($request->address)){
-            $store->address()->update($request->address, $request->address_id);
+        if (isset($request->address)) {
+            $address = $store->address;
+            if(isset($request->address['town']['id'])){
+                $town = Town::find($request->address['town']['id']);
+                $address->town_id = $town->id;
+            }
+            $address->update($request->address);
+            $store->address_id = $address->id;
+            $store->save();
         }
     }
 
