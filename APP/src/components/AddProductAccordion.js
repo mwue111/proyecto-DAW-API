@@ -117,7 +117,7 @@ const AddNewProductAccordion = ({ store }) => {
     return (
         <div>
             <Accordion activeIndex={accordionActiveIndex}>
-                <AccordionTab header="Add New Product">
+                <AccordionTab header="Añadir nuevo producto">
                     <div className="p-fluid">
                         <div className="p-field">
                             <label htmlFor="name">Nombre</label>
