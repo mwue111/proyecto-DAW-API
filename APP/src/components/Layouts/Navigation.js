@@ -26,16 +26,13 @@ const Navigation = ({ user }) => {
                     <div className="flex">
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
-
-                            {user?.type===undefined?
                             <Link href="/">
-                                <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                                <div className="flex items-center">
+                                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                                    <span className="text-xl font-bold ml-2">Localmeria</span>
+                                </div>
                             </Link>
-                            :<Link href="/dashboard">
-                                <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
-                            </Link>}
                         </div>
-
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
