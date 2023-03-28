@@ -50,6 +50,7 @@ export function formatJsonDireccion (address){
 
 export function formatJsonHorario (schedules){
     let horario = [];
+    if(schedules == null) return ["no hay horario"];
     schedules.map((item) => {
         horario.push(formatJsonDia(item.day_of_week) + ": " + item.time_slot.open_time + " - " + item.time_slot.closed_time + " \n");
     })
@@ -65,8 +66,9 @@ export function formatJsonHorarioCadena (schedules){
 }
 
 export function formatJsonHorarioDia (schedules){
+    if(schedules == null) return "no hay horario";
     let horario='Cerrado';
-    let schedule=schedules.filter((item) => {
+    let schedule=schedules?.filter((item) => {
         if(item.day_of_week === (new Date().getDay())){
             return item;
         }

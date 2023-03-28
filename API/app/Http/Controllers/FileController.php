@@ -74,9 +74,7 @@ class FileController extends Controller
 
                 case '"product_imgs"': $product = new ProductImg();
                                     $product->file_id = $file->id;
-
-                                    $productId = Product::find($request->product_id);
-                                    $product->product_id = $productId->id;
+                                    $product->product_id = Product::latest()->first()->id;
                                     $product->save(); break;
 
                 case '"brand_imgs"': $brand = new BrandImg();

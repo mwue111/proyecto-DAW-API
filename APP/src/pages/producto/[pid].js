@@ -25,11 +25,13 @@ const Producto = () => {
         })
     }, [pid])
 
+    console.log()
+
     const listItem = (data) => {
         return (
             <div className="col-12">
                 <div className="flex flex-column align-items-center p-3 w-full md:flex-row">
-                    <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={data.image} alt={data.name} />
+                    {data.image && <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={data.image} alt={data.name} />}
                     <div className="text-center md:text-left md:flex-1">
                         <div className="text-2xl font-bold"><a href={`/tienda/${data.id}`}>{data.name}</a></div>
                         <div className="mb-3">{data.description}</div>

@@ -18,7 +18,7 @@ import AddNewProductAccordion from '../../components/AddProductAccordion'
 const Tienda = () => {
 
     const { user } = useAuth()
-    const [selectedStore, setSelectedStore] = useState(null);
+    const [selectedStore, setSelectedStore] = useState({});
     const router = useRouter();
     const { pid } = router.query;  //id recibida por parametro
     const [storeUpdated, setStoreUpdated] = useState(false);
@@ -35,7 +35,7 @@ const Tienda = () => {
     const handleStoreUpdated = () => {
         setStoreUpdated(!storeUpdated);
     };
-
+    
     const renderListItem = (data) => {
         return (
           <div className='col-12'>
@@ -71,7 +71,7 @@ const Tienda = () => {
         header={selectedStore && 
             <div className='flex flex-col justify-items-center'>
               <StoreTitle store={selectedStore} />
-              {((user.type =="owner" && user.id === selectedStore?.user_id) || user.type =="administrator") &&
+              {((user?.type =="owner" && user?.id === selectedStore?.user_id) || user?.type =="administrator") &&
                 <div className='flex flex-col justify-items-center'>
                 <EditStoreDialog store={selectedStore} onUpdate={handleStoreUpdated} />
                 <AddNewProductAccordion store={selectedStore} onUpdate={handleStoreUpdated} />
@@ -88,7 +88,7 @@ const Tienda = () => {
             <div className="col-span-1 flex justify-center items-center ml-4">
             {selectedStore && (
                 <div className='border-8 border-color-slate-800 rounded-l-lg'>
-                    {selectedStore?.store_imgs.length>0 ?
+                    {selectedStore?.store_imgs?.length>0 ?
                         <Image src={selectedStore?.store_imgs[0].file.url} width={300} height={300} alt={selectedStore?.name} style={{ display: 'block' }} />
                         : <Image src="https://via.placeholder.com/300x300.png?text=No+Image" width={300} height={300} alt={selectedStore?.name} style={{ display: 'block' }} />
                     }

@@ -7,6 +7,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { FileUpload } from 'primereact/fileupload';
+import { useAuth } from '@/hooks/auth';
 
 const AddNewProductAccordion = ({ store }) => {
     const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ const AddNewProductAccordion = ({ store }) => {
         unit: '',
         image: null,
     });
+    const { user } = useAuth();
     const [accordionActiveIndex, setAccordionActiveIndex] = useState(null);
     const [tags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -54,6 +56,10 @@ const AddNewProductAccordion = ({ store }) => {
             });
     }, []);
 
+    const handleImageUpload = (event) => {
+        setFormData({ ...formData, file: event.files[0] });
+    };
+
     const handleSave = () => {
         const formDataWithImage = new FormData();
         formDataWithImage.append('name', formData.name);
@@ -66,10 +72,8 @@ const AddNewProductAccordion = ({ store }) => {
         formDataWithImage.append('value', formData.value);
         formDataWithImage.append('remarks', formData.remarks);
         formDataWithImage.append('unit', formData.unit);
-        formDataWithImage.append('image', formData.image);
-
-        console.log(formDataWithImage)
-
+        formDataWithImage.append('file', formData.file);
+    
         axios
             .post(process.env.NEXT_PUBLIC_BACKEND_URL+'/producto', formDataWithImage)
             .then(() => {
@@ -91,6 +95,21 @@ const AddNewProductAccordion = ({ store }) => {
             .catch((error) => {
                 console.error(error);
             });
+
+            if (formData.file) {
+            const formData = new FormData();
+            formData.append('file', formData.file);
+            formData.append('user_id', user.id);
+            formData.append('image_type', 'product_imgs');
+            
+            axios.post('/archivo', formData).then(response => {
+                console.log(response);
+            }).catch(error => {
+                console.log(error);
+            });
+            }
+
+        window.location.reload();
     };
 
     const handleCancel = () => {
@@ -103,15 +122,11 @@ const AddNewProductAccordion = ({ store }) => {
             stores: [store.id],
             stock: '',
             value: '',
-            remarks: '',
+            remarks: '',    
             unit: '',
             image: null,
         });
         setAccordionActiveIndex(null);
-    };
-
-    const handleImageUpload = (event) => {
-        setFormData({ ...formData, image: event.files[0] });
     };
 
     return (
@@ -136,9 +151,9 @@ const AddNewProductAccordion = ({ store }) => {
                                 onChange={(e) => setFormData({ ...formData, brand_id: e.value })}
                                 optionLabel="name"
                                 optionValue="id"
-                                placeholder="Select a brand"
+                                placeholder="Selecciona una marca"
                                 filter
-                                filterPlaceholder="Search brand"
+                                filterPlaceholder="Busca una marca"
                             />
                         </div>
                         <div className="p-field">
@@ -150,9 +165,9 @@ const AddNewProductAccordion = ({ store }) => {
                                 onChange={(e) => setFormData({ ...formData, category_id: e.value })}
                                 optionLabel="name"
                                 optionValue="id"
-                                placeholder="Select a category"
+                                placeholder="Selecciona una categoria"
                                 filter
-                                filterPlaceholder="Search category"
+                                filterPlaceholder="Busca una categoria"
                             />
                         </div>
                         <div className="p-field">
@@ -164,9 +179,9 @@ const AddNewProductAccordion = ({ store }) => {
                                 onChange={(e) => setFormData({ ...formData, tags: e.value })}
                                 optionLabel="name"
                                 optionValue="id"
-                                placeholder="Select tags"
+                                placeholder="Selecciona etiquetas"
                                 filter
-                                filterPlaceholder="Search tags"
+                                filterPlaceholder="Busca etiquetas"
                             />
                         </div>
                         <div className="p-field">
@@ -182,8 +197,8 @@ const AddNewProductAccordion = ({ store }) => {
                             <InputTextarea id="remarks" value={formData.remarks} onChange={(e) => setFormData({ ...formData, remarks: e.target.value })} />
                         </div>
                         <div className="p-field">
-                            <label htmlFor="unit">Unidad</label>
-                            <InputText id="unit" value={formData.unit} onChange={(e) => setFormData({ ...formData, unit: e.target.value })} />
+                            <label htmlFor="unit">Unidad de medida</label>
+                            <InputText id="unit" value={formData.unit} onChange={(e) => setFormData({ ...formData, unit: e.target.value })} placeholder="Kg, Litro, Docena..." />
                         </div>
                         <div className="p-field">
                             <label htmlFor="image">Imagen</label>

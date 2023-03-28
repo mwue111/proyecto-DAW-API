@@ -55,7 +55,10 @@ const Register = () => {
               formData.append('image_type', 'document');
               
               axios.post('/archivo', formData).then(response => {
-                console.log(response);
+                axios.get(process.env.NEXT_PUBLIC_BACKEND_URL +'/default-store?user_id=' + userId + '&username='+username)
+                  .then(response => {
+                    console.log(response);
+                  })
               }).catch(error => {
                 console.log(error);
               });
@@ -74,7 +77,7 @@ const Register = () => {
         setStatus,
       })
     }
-    , 1000);
+    , 1500);
   }
 
   const handleFileChange = event => {

@@ -15,11 +15,30 @@ const FullTable = () => {
     });
   }, []);
 
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(filterText.toLowerCase()) ||
-    product.tags.some(tag => tag.name.toLowerCase().includes(filterText.toLowerCase())) ||
-    product.category.name.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const normalizedFilterText = filterText
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
+
+const filteredProducts = products.filter(product =>
+  product.name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .includes(normalizedFilterText) ||
+  product.tags.some(tag =>
+    tag.name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .includes(normalizedFilterText)
+  ) ||
+  product.category?.name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .includes(normalizedFilterText)
+);
 
   const handleFilterChange = e => {
     setFilterText(e.target.value);
@@ -36,6 +55,7 @@ const FullTable = () => {
         selectionMode="single"
         selection={null}
         onRowClick={row => window.location.href = `/producto/${row.data.id}`}
+        style={{ marginTop: "1em" }}
       >
         <Column field="name" header="Name" sortable />
         <Column

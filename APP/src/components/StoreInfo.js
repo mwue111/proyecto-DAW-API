@@ -4,12 +4,12 @@ import StoreSchedule from '@/components/StoreSchedule'
 import { Button } from 'primereact/button'
 
 function StoreInfo({ info, editable }) {
-  const [editMode, setEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    name: info.name,
-    address: info.address,
-    email: info.email,
-  })
+    name: info?.name,
+    address: info?.address,
+    email: info?.email,
+  });
 
   const handleInputChange = (e) => {
     setFormData({
@@ -24,8 +24,6 @@ function StoreInfo({ info, editable }) {
     // ...
     setEditMode(false)
   }
-
-  console.log(editable)
 
   return (
     <div>
@@ -61,7 +59,7 @@ function StoreInfo({ info, editable }) {
           info.email
         )}
         <br />
-        <StoreSchedule schedule={info.schedules} />
+        <StoreSchedule schedule={info?.schedules} />
       </div>
     </div>
   )

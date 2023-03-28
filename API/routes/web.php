@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/default-store', 'StoreController@getDefaultStore');
+Route::get('/producto/encuentra/{name}', 'ProductController@findProductName');
 Route::get('/usuario/encuentra/{username}', 'UserController@findUsername');
 Route::get('/tienda/nombre', 'StoreController@getNames');
 Route::get('/producto/nombre', 'ProductController@getNames');
