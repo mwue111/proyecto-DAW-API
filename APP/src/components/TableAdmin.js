@@ -179,6 +179,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const saveItem = () =>{
+
         setSubmitted(true);
         setItemDialog(false);
 
@@ -250,6 +251,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
+        setRecharge(true);
         setChangedItem(item);
         setItemDialog(false);
         setItem({});
