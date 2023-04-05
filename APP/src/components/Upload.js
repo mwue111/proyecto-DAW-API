@@ -8,24 +8,44 @@ import { Tag } from 'primereact/tag';
 function Upload( { setProductPic } ) {
 
     const [newImage, setNewImage] = useState([]);
+    const [data, setData] = useState({});
     const [totalSize, setTotalSize] = useState(0);
     const toast = useRef(null);
     const fileUploadRef = useRef(null);
 
     useEffect(() => {
         setProductPic(newImage);
-    }, [newImage]);
+        // console.log('data en Upload: ', data);
+        console.log('newImage en Upload: ', newImage);
+    }, [newImage, data]);
 
     const onTemplateSelect = (e) => {
 
+        //lo que estaba:
         let _totalSize = totalSize;
         const files = Array.from(e.files);
+        console.log('files: ', files);
 
-        const fileObjects = files.map((file) =>
-            file.objectURL
-        );
+        const fileObjects = [];
 
-        setNewImage(prevImage => [...prevImage, ...fileObjects]);
+        files.map((file) => {
+            console.log(file);
+            fileObjects.push(file);
+        });
+
+        console.log('fileObjects: ', fileObjects)
+        setNewImage(prevImage => [{...prevImage, ...fileObjects}]);
+
+        /* Formato de fileObjects:
+        Al seleccionar un elemento:
+        {"objectURL": "blob:http://localhost:3000/a5884298-8260-4841-a774-6e1eaaecb471"}
+
+        Al hacer selección múltiple:
+        [
+            {"objectURL": "blob:http://localhost:3000/a5884298-8260-4841-a774-6e1eaaecb471"},
+            {"objectURL": "blob:http://localhost:3000/e075731a-75d0-49f9-a6c4-40672500ee1a"},
+        ]
+        */
 
         files.forEach(file => {
             _totalSize += file.size;
@@ -33,6 +53,8 @@ function Upload( { setProductPic } ) {
 
         setTotalSize(_totalSize);
 
+        //No permite selección múltiple simultánea
+        //setNewImage(prevImage => [{...prevImage, file: e.files[0]}]);
     }
 
     const onTemplateRemove = (file, callback) => {

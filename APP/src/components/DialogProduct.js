@@ -48,24 +48,51 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
     useEffect(() => {
         setItem(dataForm);
-    }, [dataForm, productPic]);
+        console.log('dataForm en DialogProduct: ', dataForm);
+    }, [dataForm]);
 
     const uploadHandler = (data) => {
         if(product.product_img){
-            setProductPic(data);
+            console.log('data en uploadHandler: ', data);
 
-            const oldImages = [];
+            /*
+            Data en selección múltiple:
+            [
+                { <-data[0]:
+                    "0": {"objectURL": "blob:http://localhost:3000/666812da-6a1a-415f-abe6-72d58c5e25d6"},
+                    "1": {"objectURL": "blob:http://localhost:3000/2f0f7638-fffb-42fb-801e-eed035ec1f1b"}
+                }
+            ]
 
-            for(let i = 0; i < product.product_img.length; i++) {
-                oldImages.push(product.product_img[i]);
-            }
+            */
 
-            data.forEach(item => oldImages.push(item));
+            //Almaceno las imágenes antiguas para que no entre siempre en el if de tableAdmin
+            const allImages = product.product_img;
 
-            setProductPic(oldImages);
+            data.forEach(item => {
+                //console.log('item: ', Object.values(item))
+                const files = Object.values(item);
+                for(let i = 0; i < files.length; i ++){
+                    allImages.push(files[i]);
+                }
+            });
+            //console.log('allImages: ', allImages);
 
-            newProduct['product_img'] = oldImages;
-            setDataForm(newProduct);
+            //viejo
+            // const oldImages = [];
+
+            // for(let i = 0; i < product.product_img.length; i++) {
+            //     oldImages.push(product.product_img[i]);
+            // }
+
+            // console.log('oldImages: ', oldImages);
+
+            // data.forEach(item => oldImages.push(item));
+
+            // setProductPic(oldImages);
+
+            // newProduct['product_img'] = oldImages;
+            // setDataForm(newProduct);
         }
     }
 

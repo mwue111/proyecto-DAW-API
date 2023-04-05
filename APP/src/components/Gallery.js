@@ -38,8 +38,8 @@ function Gallery( {rowData, table} ) {
                 else{
                     res.data.map((item) => {
                         newImages.push({
-                            itemImageSrc: item,
-                            thumbnailImageSrc: item,
+                            itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
+                            thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
                             alt: `imagen de ${table}`,
                             title: `item id: ${itemId}`
                         });

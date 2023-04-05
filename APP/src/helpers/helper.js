@@ -211,7 +211,7 @@ function formatJsonProducto (productos){
             descripcion: item.description,
             tienda: item.stores,
             deleted: item.deleted,
-            marca: item.brand.name,
+            marca: item.brand?.name,
             categoria: item.category.name,
             tags: item.tags,
             product_img: item.product_img,

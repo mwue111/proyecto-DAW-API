@@ -141,7 +141,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setTags(tagList);
 
         setSingleDeleted(false);
-        console.log(fetchUrl);
+        //console.log(fetchUrl);
 
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
@@ -192,6 +192,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         }
 
         if (item.id) {
+
             if(item.user_id){
                 item.user_id = item.user_id.id;
             }
@@ -209,16 +210,36 @@ const TableAdmin = ({ fetchUrl, table }) => {
             if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
 
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
-                    if(typeof(jsonDB['product_img'][i]) !== 'object'){
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
-                            'user_id': 7,
-                            'url': jsonDB['product_img'][i],
-                            'image_type': 'product_imgs',
-                            'deleted': 0,
-                            'product_id': item.id
-                        }, { headers });
+                    if(jsonDB['product_img'][i] instanceof File){
+                        console.log('archivo: ', jsonDB['product_img'][i].name);
+                        const formData = new FormData();
+                        formData.append('file', jsonDB['product_img'][i]);
+                        formData.append('user_id', user.id);
+                        formData.append('image_type', 'product_imgs');
+                        formData.append('product_id', item.id);
+                        formData.append('name', jsonDB['product_img'][i].name);
+
+                        for(var key of formData.entries()){
+                            console.log(key[0], ' - ', key[1]);
+                        }
+
+                        console.log('qué estoy mandando: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData);
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                            .then(res => console.log('res: ', res));
                     }
                 }
+
+                // for(let i = 0; i < jsonDB['product_img'].length; i++){
+                //     if(typeof(jsonDB['product_img'][i]) !== 'object'){
+                //         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
+                //             'user_id': user.id,
+                //             'url': jsonDB['product_img'][i],
+                //             'image_type': 'product_imgs',
+                //             'deleted': 0,
+                //             'product_id': item.id
+                //         }, { headers });
+                //     }
+                // }
             }
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
