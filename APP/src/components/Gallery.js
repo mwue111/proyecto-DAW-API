@@ -21,7 +21,7 @@ function Gallery( {rowData, table} ) {
 
     const getImage = async (itemId, table) => {
 
-        console.log('itemId y table: ', itemId, ' - ', table);
+        //console.log('itemId y table: ', itemId, ' - ', table);
         setLoading(true);
 
         await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)

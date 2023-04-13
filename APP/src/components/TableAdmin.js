@@ -223,7 +223,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             console.log(key[0], ' - ', key[1]);
                         }
 
-                        console.log('qué estoy mandando: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData);
+                        //console.log('qué estoy mandando: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData);
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                             .then(res => console.log('res: ', res));
                     }
@@ -546,7 +546,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 footer={itemDialogFooter}
                 onHide={hideDialog}
             >
-                {table === 'tienda' && <DialogStore store={item} setItem={setItem} cities={cities} owners={owners} />}
+                {table === 'tienda' &&
+
+                    <DialogStore store={item}
+                                setItem={setItem}
+                                cities={cities}
+                                owners={owners}
+                    />}
                 {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
                 {/* {table === 'usuario' && <DialogUser user={item} />} */}
 

@@ -42,15 +42,16 @@ class FileController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors(),400);
         }
-
         if($request->has('file')){
-            if($request->file('file') !== null) {
+            if($request->image_type === 'product_imgs') {
+                $name = time() . $request->name;
+                $request->file->storeAs('public/images/' . $request->image_type, $name);
+
+            }
+            else if($request->image_type === 'document'){
                 $file = $request->file('file');
                 $name = time().$file->getClientOriginalName();
                 $file->move(public_path().'/files/'.$request->image_type , $name);
-            }
-            else{
-                $request->file->store('product_imgs', 'public');
             }
 
             switch($request->image_type){
@@ -89,7 +90,7 @@ class FileController extends Controller
                 case 'product_imgs': $name = time() . $request->name;
                                     $file = File::create([
                                         'user_id' => $request->user_id,
-                                        'url' => '/files/product_imgs/' . $name,
+                                        'url' => '/storage/images/product_imgs/' . $name,
                                         'image_type' => $request->image_type,
                                         'deleted' => 0
                                     ]);
@@ -159,7 +160,13 @@ class FileController extends Controller
     }
 
     public function destroy($id){
-        return File::destroy($id);
+        //No hay destroy: se marca deleted = 1
+
+        $file = File::findOrFail($id);
+        $url = $file->url;
+        $url = str_replace('storage', 'public', $file->url);
+        Storage::delete($url);
+        return $file->delete();
     }
 
     public function getImages($table, $id){
