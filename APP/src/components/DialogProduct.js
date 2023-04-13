@@ -7,6 +7,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
+import Images from './Images';
 
 const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => {
     const newProduct = product;
@@ -155,9 +156,13 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
                 </Fieldset>
                 <br/>
-                <Fieldset legend='Imagen del producto'>
+                <Fieldset legend='Subir nuevas imágenes'>
                     <Upload item={product} setProductPic={(data) => {uploadHandler(data)}}
                     />
+                </Fieldset>
+                <br />
+                <Fieldset legend='Editar imágenes existentes'>
+                    <Images />
                 </Fieldset>
             </div>
         </div>
