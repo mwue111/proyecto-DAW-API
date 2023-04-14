@@ -58,8 +58,8 @@ class ProductsTableSeeder extends Seeder
         ]);
 
         DB::table('products')->insert([
-            'name' => 'Danonino de palo',
-            'description' => 'Danonino fake que no contiene bífidus',
+            'name' => 'Polo de fresa',
+            'description' => 'Polos de yogurt sabor a fresa.',
             'brand_id' => 3,
             'category_id' => 6,
             'deleted' => 0,

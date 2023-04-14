@@ -141,9 +141,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setTags(tagList);
 
         setSingleDeleted(false);
-        console.log(fetchUrl);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
+       }, [fetchUrl, recharge, changedItem, dataToDelete, singleDeleted]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -179,7 +178,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const saveItem = () =>{
-
         setSubmitted(true);
         setItemDialog(false);
 
@@ -251,11 +249,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
-        setRecharge(true);
+        setOldItem({});
         setChangedItem(item);
         setItemDialog(false);
         setItem({});
-        setOldItem({});
     }
 
     const editItem = (item) => {

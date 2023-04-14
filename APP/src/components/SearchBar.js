@@ -51,8 +51,10 @@ const SearchBar = () => {
     }, []);
 
     useEffect(() => {
-        const storesProductsFilter=productStoreFilterFormatter(products, stores);
-        setDataFilter(storesProductsFilter);
+        if(stores){
+            const storesProductsFilter=productStoreFilterFormatter(products, stores);
+            setDataFilter(storesProductsFilter);
+        }
     }, [stores,products]);
 
     const groupedItemTemplate = (item) => {

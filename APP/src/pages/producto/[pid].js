@@ -93,7 +93,7 @@ const Producto = () => {
             }
         >
             <Head>
-                <title>LocAlmeria - {selectedProduct? selectedProduct.name : "Tienda"}</title>
+                <title>LocAlmeria - {selectedProduct? selectedProduct.name : "Producto"}</title>
             </Head>
             <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

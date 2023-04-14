@@ -14,8 +14,12 @@ function ProductCarousel({ images }) {
     return (
       <div className="product-item">
         <div className="product-item-content">
-          <div className="mb-3">
-            <Image src={image.file ? image.file.url : "https://via.placeholder.com/250x250.png?text=No+Image"} alt={image.file ? "Image" : "No Image"} width="250" preview />
+          <div className="mb-3" style={{ overflow: "hidden" }}>
+            <img 
+              src={image.file ? image.file.url : "https://via.placeholder.com/250x250.png?text=No+Image"} 
+              alt={image.file ? "Image" : "No Image"} 
+              style={{ objectFit: "contain", maxWidth: "300px", maxHeight: "200px", width: "100%", height: "100%" }}
+            />
           </div>
         </div>
       </div>
@@ -29,4 +33,4 @@ function ProductCarousel({ images }) {
   )
 }
 
-export default ProductCarousel
+export default ProductCarousel;

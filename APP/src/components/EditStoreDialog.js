@@ -156,16 +156,16 @@ const EditStoreDialog = ({ store, onUpdate}) => {
                     <Dropdown name='address.road_type' value={road_type} options={optionsRoadType} onChange={handleChange} placeholder='Selecciona un tipo de vía' required/>
                     <br/>
                     <label htmlFor='address.name'>Nombre de la calle:</label>
-                    <InputText name='address.name' defaultValue={updatedStore.address.name} onChange={handleChange} required />
+                    <InputText name='address.name' defaultValue={updatedStore.address?.name ? updatedStore.address.name : null} onChange={handleChange} required />
                     <br/>
                     <label htmlFor='adress.number'>Número</label>
-                    <InputNumber name='address.number' value={updatedStore.address.number} onValueChange={handleChange} mode='decimal' required />
+                    <InputNumber name='address.number' value={updatedStore.address?.number ? updatedStore.address.number : null} onValueChange={handleChange} mode='decimal' required />
                     <br/>
                     <label htmlFor='address.zip_code'>Código postal</label>
-                    <InputText name='address.zip_code' defaultValue={updatedStore.address.zip_code} onChange={handleChange} required />
+                    <InputText name='address.zip_code' defaultValue={updatedStore.address?.zip_code ? updatedStore.address.zip_code : null} onChange={handleChange} required />
                     <br/>
                     <label htmlFor='address.remarks'>Comentarios adicionales:</label>
-                    <InputTextarea name='address.remarks' defaultValue={updatedStore.address.remarks} onChange={handleChange} rows={5}/>
+                    <InputTextarea name='address.remarks' defaultValue={updatedStore.address?.remarks ? updatedStore.address.remarks : null} onChange={handleChange} rows={5}/>
                     <br />
                     <label htmlFor='address.town.name'>Ciudad:</label>
                     <Dropdown name='address.town.name' value={dropdownCity} options={cities} onChange={handleChange} placeholder='Selecciona una ciudad' optionLabel='name' required/>
