@@ -553,7 +553,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                 cities={cities}
                                 owners={owners}
                     />}
-                {table === 'producto' && <DialogProduct product={item} setItem={setItem} allCategories={prodCategories} brands={brands} allTags={tags} table={table}/>}
+                {table === 'producto' &&
+
+                    <DialogProduct product={item}
+                                setItem={setItem}
+                                allCategories={prodCategories}
+                                brands={brands}
+                                allTags={tags}
+                                table={table}
+                    />}
                 {/* {table === 'usuario' && <DialogUser user={item} />} */}
 
             </Dialog>

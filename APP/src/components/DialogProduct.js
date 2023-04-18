@@ -9,7 +9,7 @@ import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
 import Images from './Images';
 
-const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => {
+const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table }) => {
     const newProduct = product;
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
@@ -20,6 +20,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
     let categoryId;
 
     const selectedTags = [];
+
+    // console.log('item en dialogProduct: ', product);
 
     for(let i = 0; i < brandsList.length; i++) {
         if(product.marca === brandsList[i].name) {
@@ -49,12 +51,12 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
     useEffect(() => {
         setItem(dataForm);
-        console.log('dataForm en DialogProduct: ', dataForm);
+        // console.log('dataForm en DialogProduct: ', dataForm);
     }, [dataForm]);
 
     const uploadHandler = (data) => {
         if(product.product_img){
-            console.log('data en uploadHandler: ', data);
+            // console.log('data en uploadHandler: ', data);
 
             /*
             Data en selección múltiple:
@@ -162,7 +164,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
                 </Fieldset>
                 <br />
                 <Fieldset legend='Editar imágenes existentes'>
-                    <Images />
+                    <Images table={table} product={product}/>
                 </Fieldset>
             </div>
         </div>

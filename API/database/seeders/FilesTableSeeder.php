@@ -56,70 +56,70 @@ class FilesTableSeeder extends Seeder
         //8
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680683009Pomelo1.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo1.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //9
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680683009Pomelo2.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //10
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680683009Pomelo3.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //11
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680683009Pomelo4.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo4.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //12
         DB::table('files')->insert([
             'user_id' => 7,
-            'url' => '/files/product_imgs/1680686161bulgur.jpg',
+            'url' => '/storage/images/product_imgs/1680686161bulgur.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //13
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/files/product_imgs/1680686161bulgur2.jpg',
+            'url' => '/storage/images/product_imgs/1680686161bulgur2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //14
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680686234bulgur3.jpg',
+            'url' => '/storage/images/product_imgs/1680686234bulgur3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //15
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/files/product_imgs/1680686290platano.jpg',
+            'url' => '/storage/images/product_imgs/1680686290platano.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //16
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => '/files/product_imgs/1680686384platano2.jpg',
+            'url' => '/storage/images/product_imgs/1680686384platano2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //17
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/files/product_imgs/1680686460zumo_pina.jpg',
+            'url' => '/storage/images/product_imgs/1680686460zumo_pina.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -127,14 +127,14 @@ class FilesTableSeeder extends Seeder
         //18
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => '/files/product_imgs/1680686460zumo_pina2.jpg',
+            'url' => '/storage/images/product_imgs/1680686460zumo_pina2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //19
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/files/product_imgs/1680686512ron.png',
+            'url' => '/storage/images/product_imgs/1680686512ron.png',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
