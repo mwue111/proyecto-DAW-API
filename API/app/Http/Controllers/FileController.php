@@ -165,7 +165,7 @@ class FileController extends Controller
         $file = File::findOrFail($id);
         $url = $file->url;
         $url = str_replace('storage', 'public', $file->url);
-        Storage::delete($url);
+        // Storage::delete($url);   //comentado para que no borre del servidor mientras se prueba
         return $file->delete();
     }
 

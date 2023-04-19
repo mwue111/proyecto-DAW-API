@@ -56,14 +56,14 @@ class FilesTableSeeder extends Seeder
         //8
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680683009Pomelo1.jpg',
+            'url' => '/storage/images/product_imgs/1681926637Pomelo1.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //9
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680683009Pomelo2.jpg',
+            'url' => '/storage/images/product_imgs/1681926637Pomelo2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
