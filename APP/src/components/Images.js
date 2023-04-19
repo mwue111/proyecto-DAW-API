@@ -14,10 +14,20 @@ function Images({ table, product }){
             })
     }, []);
 
-    console.log('oldImages: ', oldImages);
     return (
-        <div>
-          <Image src={process.env.NEXT_PUBLIC_BACKEND_URL + "/storage/images/product_imgs/1680683009Pomelo3.jpg"} zoomSrc={process.env.NEXT_PUBLIC_BACKEND_URL + "/storage/images/product_imgs/1680683009Pomelo3.jpg"} alt="imagen" width="80" height='60' preview/>
+        <div className="flex">
+            {oldImages.length > 0 && oldImages.map(pic =>
+                <Image src={process.env.NEXT_PUBLIC_BACKEND_URL + pic}
+                        zoomSrc={process.env.NEXT_PUBLIC_BACKEND_URL + pic}
+                        alt={`Foto de ${product.nombre}`}
+                        width='80'
+                        height='60'
+                        preview
+                        key={pic}
+                        className='p-2 m-auto'
+                        onClick={() => {console.log('ok')}}
+                />)
+            }
         </div>
       )
 }
