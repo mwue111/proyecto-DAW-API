@@ -54,6 +54,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         // console.log('dataForm en DialogProduct: ', dataForm);
     }, [dataForm]);
 
+    const handleDelete = (data) => {
+        console.log('data: ', data);
+    }
+
     const uploadHandler = (data) => {
         if(product.product_img){
             // console.log('data en uploadHandler: ', data);
@@ -164,7 +168,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br />
                 <Fieldset legend='Editar imágenes existentes'>
-                    <Images table={table} product={product}/>
+                    <Images table={table} product={product} setImagesToDelete={(data) => {handleDelete(data)}}/>
                 </Fieldset>
             </div>
         </div>

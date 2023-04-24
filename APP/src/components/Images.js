@@ -2,24 +2,17 @@ import React, { useState, useEffect, Component } from 'react'
 import { Image } from 'primereact/image';
 import axios from 'axios';
 
-function Images({ table, product }){
+function Images({ table, product, setImagesToDelete }){
     const productId = product.id;
-    // const imagesToDelete = [];
 
-    // const [oldImages, setOldImages] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
     // const [dataToDelete, setDataToDelete] = useState([]);
-    // const icon = (<i className="pi pi-check"></i>);
 
     //Para traer el objeto entero:
     const [fullProduct, setFullProduct] = useState([]);
     const [imgData, setImgData] = useState({});
 
     useEffect(() => {
-        // axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${productId}`)
-        //     .then(res => {
-        //         setOldImages(res.data);
-        //     })
 
         let allImages = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/producto/${productId}`)
@@ -34,7 +27,8 @@ function Images({ table, product }){
             })
             .catch(error => console.log(error));
 
-        console.log('selectedImages: ', selectedImages);
+            setImagesToDelete(selectedImages);
+            console.log('selectedImages: ', selectedImages);
     }, [selectedImages]);
 
     const handleDelete = (pic) => {
@@ -47,8 +41,6 @@ function Images({ table, product }){
         }
 
         console.log('selectedImages: ', selectedImages);
-
-        // console.log('imagesToDelete: ', imagesToDelete);
 
         // for(let i = 0; i < product.product_img.length; i++){
         //     if(product.product_img[i].file.url === pic && !imagesToDelete.includes(product.product_img[i].file.id)){
@@ -74,24 +66,8 @@ function Images({ table, product }){
         // }
     }
 
-
-
     return (
         <div className="flex">
-            {/* {oldImages.length > 0 && oldImages.map(pic =>
-                <Image src={process.env.NEXT_PUBLIC_BACKEND_URL + pic}
-                        zoomSrc={process.env.NEXT_PUBLIC_BACKEND_URL + pic}
-                        alt={`Foto de ${product.nombre}`}
-                        width='80'
-                        height='60'
-                        // template={icon}
-                        // preview
-                        key={pic}
-                        className={`p-2 m-auto cursor-pointer ${imagesToDelete.includes(pic) ? 'border-4 border-blue-500' : ''}`}
-                        // onClick={() => handleDelete(process.env.NEXT_PUBLIC_BACKEND_URL + pic)}
-                        onClick={() => handleDelete(pic)}
-                />)
-            } */}
             {fullProduct.length > 0 && fullProduct.map(pic =>
                 <Image
                     src={process.env.NEXT_PUBLIC_BACKEND_URL + pic.url}
@@ -101,12 +77,8 @@ function Images({ table, product }){
                     width='80'
                     height='60'
                     onClick={() => handleDelete(pic.id)}
-                    // className={`${imagesToDelete.includes(pic.id) ? 'p-2 m-auto cursor-pointer border-4 border-blue-500' : 'p-2 m-auto cursor-pointer'}`}
-                    className={`p-2 m-auto cursor-pointer ${
-                        selectedImages.includes(pic.id)
-                          ? 'border-4 border-blue-500'
-                          : ''
-                      }`}
+                    className={`p-2 m-auto cursor-pointer ${selectedImages.includes(pic.id) ?
+                        'border-4 border-green-600' : '' }`}
                 />
             )}
         </div>

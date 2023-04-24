@@ -207,7 +207,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             const jsonDB = changedJson(oldItem, item);
 
-            if(item.product_img && item.product_img.length !== oldItem.product_img.length ){
+            if(item.product_img && item.product_img.length !== oldItem.product_img.length){
 
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
                     if(jsonDB['product_img'][i] instanceof File){
@@ -223,23 +223,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             console.log(key[0], ' - ', key[1]);
                         }
 
-                        //console.log('qué estoy mandando: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData);
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
-
-                // for(let i = 0; i < jsonDB['product_img'].length; i++){
-                //     if(typeof(jsonDB['product_img'][i]) !== 'object'){
-                //         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', {
-                //             'user_id': user.id,
-                //             'url': jsonDB['product_img'][i],
-                //             'image_type': 'product_imgs',
-                //             'deleted': 0,
-                //             'product_id': item.id
-                //         }, { headers });
-                //     }
-                // }
             }
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });

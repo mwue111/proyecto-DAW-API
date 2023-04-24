@@ -160,8 +160,6 @@ class FileController extends Controller
     }
 
     public function destroy($id){
-        //No hay destroy: se marca deleted = 1
-
         $file = File::findOrFail($id);
         $url = $file->url;
         $url = str_replace('storage', 'public', $file->url);
