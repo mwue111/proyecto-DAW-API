@@ -159,6 +159,7 @@ export function changedJson(oldData, newData){
             }
         }
         else{
+            // console.log('oldData[item] en else: ', oldData[item]);
             if(item === 'tags'){
 
                 let oldTagsId = [];
@@ -172,8 +173,12 @@ export function changedJson(oldData, newData){
                 }
             }
 
-            if (item === 'product_img' && JSON.stringify(oldData[item]) !== JSON.stringify(newData[item])){
+            if(item === 'product_img' && JSON.stringify(oldData[item]) !== JSON.stringify(newData[item])){
                 changed[item] = newData[item];
+            }
+
+            if(item === 'img_delete'){
+                console.log('entra');
             }
         }
     })
@@ -215,7 +220,6 @@ function formatJsonProducto (productos){
             categoria: item.category.name,
             tags: item.tags,
             product_img: item.product_img,
-
         }
     })
     return data;

@@ -51,11 +51,13 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     useEffect(() => {
         setItem(dataForm);
-        // console.log('dataForm en DialogProduct: ', dataForm);
+        console.log('dataForm en DialogProduct: ', dataForm);
     }, [dataForm]);
 
     const handleDelete = (data) => {
-        console.log('data: ', data);
+        // console.log('data: ', data);
+        dataForm['img_delete'] = data;
+        // console.log('dataForm en handleDelete: ', dataForm);
     }
 
     const uploadHandler = (data) => {

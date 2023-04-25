@@ -51,7 +51,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "tiendas": [],
         "tags": [],
         "imagen": "",
-        "deleted": 0
+        "deleted": 0,
+        "img_delete" : [],
     }
 
     const emptyUser = {
@@ -205,6 +206,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.categoria = item.categoria.name;
             }
 
+            console.log('item antes de mandar a changedJson: ', item);
+            console.log('oldItem antes de mandar a changedJson: ', oldItem);
             const jsonDB = changedJson(oldItem, item);
 
             if(item.product_img && item.product_img.length !== oldItem.product_img.length){
@@ -226,6 +229,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                             .then(res => console.log('res: ', res));
                     }
+                }
+            }
+
+            if(item.img_delete && item.img_delete.length > 0){
+                let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
+
+                for(let i = 0; i < item.img_delete.length; i++){
+                    axios.delete(url + '/' + item.img_delete[i])
+                        .then(res => {
+                            console.log(res.data + ' eliminada');
+                        })
+                        .catch(error => console.log('Ha ocurrido un error: ', error));
                 }
             }
 

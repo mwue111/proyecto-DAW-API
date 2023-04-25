@@ -28,7 +28,7 @@ function Images({ table, product, setImagesToDelete }){
             .catch(error => console.log(error));
 
             setImagesToDelete(selectedImages);
-            console.log('selectedImages: ', selectedImages);
+
     }, [selectedImages]);
 
     const handleDelete = (pic) => {
@@ -41,29 +41,6 @@ function Images({ table, product, setImagesToDelete }){
         }
 
         console.log('selectedImages: ', selectedImages);
-
-        // for(let i = 0; i < product.product_img.length; i++){
-        //     if(product.product_img[i].file.url === pic && !imagesToDelete.includes(product.product_img[i].file.id)){
-        //         imagesToDelete.push(product.product_img[i].file.id);
-        //     }
-        // }
-
-        // console.log(imagesToDelete);
-
-        // let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
-
-        //la petición de axios tiene que hacerse en TableAdmin
-
-        // if(confirm('¿Seguro que quieres eliminar esta imagen?')){
-        //     for(let i = 0; imagesToDelete.length; i++){
-        //         axios.delete(url + '/' + imagesToDelete[i])
-        //             .then(res => {
-        //                 console.log(res.data + ' - eliminado')
-        //                 // setDataToDelete(imagesToDelete);
-        //             })
-        //             .catch(error => console.log('error: ', error))
-        //     }
-        // }
     }
 
     return (
