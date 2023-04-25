@@ -21,7 +21,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     const selectedTags = [];
 
-    // console.log('item en dialogProduct: ', product);
+    console.log('item en dialogProduct: ', product);
 
     for(let i = 0; i < brandsList.length; i++) {
         if(product.marca === brandsList[i].name) {
@@ -169,9 +169,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     />
                 </Fieldset>
                 <br />
-                <Fieldset legend='Editar imágenes existentes'>
+                {product.id &&
+                <Fieldset legend='Eliminar imágenes existentes'>
                     <Images table={table} product={product} setImagesToDelete={(data) => {handleDelete(data)}}/>
-                </Fieldset>
+                </Fieldset>}
             </div>
         </div>
     );

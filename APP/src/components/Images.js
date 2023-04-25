@@ -6,11 +6,7 @@ function Images({ table, product, setImagesToDelete }){
     const productId = product.id;
 
     const [selectedImages, setSelectedImages] = useState([]);
-    // const [dataToDelete, setDataToDelete] = useState([]);
-
-    //Para traer el objeto entero:
     const [fullProduct, setFullProduct] = useState([]);
-    const [imgData, setImgData] = useState({});
 
     useEffect(() => {
 
