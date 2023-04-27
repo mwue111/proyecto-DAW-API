@@ -269,6 +269,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 itemDB.category = itemDB.category.id;
             }
 
+            if(itemDB.tags){
+                console.log('tags: ', itemDB.tags);
+            }
+
+            console.log('item nuevo: ', itemDB);
+
             axios.post(fetchUrl, itemDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });

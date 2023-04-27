@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductImg;
+use App\Models\File;
 use DB;
 use DateTime;
 use DateTimeZone;
@@ -43,19 +45,52 @@ class ProductController extends Controller
      */
     public function store(Request $request)
 {
+    // dd($request->all());
     $product = new Product();
     $product->name = $request->input('name');
     $product->description = $request->input('description');
-    $product->category_id = $request->input('category_id');
+    $product->category_id = $request->input('category');
+    $product->brand_id = $request->input('brand');
+    $product->deleted = $request->input('deleted');
+    // dd($product);
     $product->save();
 
-    if ($request->has('tags')) {
-        $tags = json_decode($request->input('tags'));
-        $tags = collect($tags)->mapWithKeys(function ($tag) {
-            return [$tag => ['created_at' => now(), 'updated_at' => now()]];
-        })->toArray();
-        $product->tags()->sync($tags);
+    if($request->has('files')) {
+        // dd($request->all());
+
+        foreach($request->files as $pic){
+            $pic->storeAs('public/images/product_imgs/', time() . $request->name);
+        }
+
+        $image = File::create([
+            'user_id' => 2, //cambiar
+            'url' => '/storage/images/product_imgs/' . time() . $request->name,
+            'image_type' => 'product_imgs',
+            'deleted' => 0
+        ]);
+
+        $productImg = new ProductImg();
+        $productImg->file_id = $image->id;
+        $productImg->product_id = $product->id;
+        $productImg->save();
+
+        // $productImg = $product->productImg()->store();
     }
+
+    if($request->has('tags')){
+        $product->tags()->sync($request->tags);
+        $product->save();
+    }
+
+    // if ($request->has('tags')) {
+    //     // $tags = json_decode($request->input('tags'));
+    //     $tags = json_encode($request->input('tags'));
+    //     $tags = collect($tags)->mapWithKeys(function ($tag) {
+    //         return [$tag => ['created_at' => now(), 'updated_at' => now()]];
+    //     })->toArray();
+    //     dd($tags);
+    //     $product->tags()->sync($tags);
+    // }
 
     $stores = json_decode($request->input('stores'));
         $product->stores()->attach($stores, [
@@ -64,6 +99,7 @@ class ProductController extends Controller
             'unit' => $request->input('unit'),
             'remarks' => $request->input('remarks')
         ]);
+
 
     return response()->json($request);
 }
