@@ -277,8 +277,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             setTimeout(() => {
                 if(itemDB.product_img){
-                    console.log('itemDB: ', itemDB);
-                    console.log('entra en TableAdmin: ', itemDB['product_img']);
 
                     for(let i = 0; i < itemDB['product_img'].length; i++){
                         const formData = new FormData();
@@ -286,10 +284,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', user.id);
                         formData.append('image_type', 'product_imgs');
                         formData.append('name', itemDB['product_img'][i].name);
-
-                        for(var key of formData.entries()){
-                            console.log(key[0], ' - ', key[1]);
-                        }
 
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                                 .then(res => console.log('res: ', res));

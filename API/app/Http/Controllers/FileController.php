@@ -97,7 +97,6 @@ class FileController extends Controller
                                     $product = new ProductImg();
                                     $product->file_id = $file->id;
                                     if(!$request->product_id){
-                                        // dd(Product::latest('id')->first());
                                         $product->product_id = Product::latest('id')->first()->id;
                                     }
                                     else{
