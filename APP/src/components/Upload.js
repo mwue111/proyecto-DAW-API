@@ -16,7 +16,7 @@ function Upload( { setProductPic } ) {
     useEffect(() => {
         setProductPic(newImage);
         // console.log('data en Upload: ', data);
-        // console.log('newImage en Upload: ', newImage);
+        console.log('newImage en Upload: ', newImage);
     }, [newImage, data]);
 
     const onTemplateSelect = (e) => {
@@ -24,17 +24,18 @@ function Upload( { setProductPic } ) {
         //lo que estaba:
         let _totalSize = totalSize;
         const files = Array.from(e.files);
-        console.log('files: ', files);
+        // console.log('files: ', files);
 
         const fileObjects = [];
 
         files.map((file) => {
-            console.log(file);
             fileObjects.push(file);
         });
 
-        console.log('fileObjects: ', fileObjects)
+        // console.log('fileObjects: ', fileObjects)
         setNewImage(prevImage => [{...prevImage, ...fileObjects}]);
+
+        // puede que haya que cambiar el setter por algo como esto: setNewImage(prevImage => [...prevImage, fileObjects]);
 
         /* Formato de fileObjects:
         Al seleccionar un elemento:

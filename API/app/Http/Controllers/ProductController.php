@@ -52,30 +52,7 @@ class ProductController extends Controller
     $product->category_id = $request->input('category');
     $product->brand_id = $request->input('brand');
     $product->deleted = $request->input('deleted');
-    // dd($product);
     $product->save();
-
-    if($request->has('files')) {
-        // dd($request->all());
-
-        foreach($request->files as $pic){
-            $pic->storeAs('public/images/product_imgs/', time() . $request->name);
-        }
-
-        $image = File::create([
-            'user_id' => 2, //cambiar
-            'url' => '/storage/images/product_imgs/' . time() . $request->name,
-            'image_type' => 'product_imgs',
-            'deleted' => 0
-        ]);
-
-        $productImg = new ProductImg();
-        $productImg->file_id = $image->id;
-        $productImg->product_id = $product->id;
-        $productImg->save();
-
-        // $productImg = $product->productImg()->store();
-    }
 
     if($request->has('tags')){
         $product->tags()->sync($request->tags);

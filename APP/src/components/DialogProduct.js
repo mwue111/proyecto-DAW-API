@@ -62,7 +62,6 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     const uploadHandler = (data) => {
         if(product.product_img){
-            // console.log('data en uploadHandler: ', data);
 
             /*
             Data en selección múltiple:
@@ -79,13 +78,11 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
             const allImages = product.product_img;
 
             data.forEach(item => {
-                //console.log('item: ', Object.values(item))
                 const files = Object.values(item);
                 for(let i = 0; i < files.length; i ++){
                     allImages.push(files[i]);
                 }
             });
-            //console.log('allImages: ', allImages);
 
             //viejo
             // const oldImages = [];

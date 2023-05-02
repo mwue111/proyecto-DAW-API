@@ -74,7 +74,11 @@ function Gallery( {rowData, table} ) {
     ];
 
     const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
+        //problema aquí: se ha probado esto y if(item), no renderiza src cuando se hace por segunda/tercera vez
+        //Probar si es por la falta de useEffect: traer todas las imágenes al principio y llevarlas a getImage().
+        return <img src={item?.itemImageSrc} alt={item?.alt} style={{ width: '90%', display: 'block' }} />;
+        // if(item){
+        // }
     }
 
     const thumbnailTemplate = (item) => {
