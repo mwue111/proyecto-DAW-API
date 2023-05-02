@@ -50,7 +50,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "ofertas":[],
         "tiendas": [],
         "tags": [],
-        "imagen": "",
+        "product_img": [],
         "deleted": 0,
         "img_delete" : [],
     }
@@ -144,7 +144,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSingleDeleted(false);
         //console.log(fetchUrl);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);    //item añadido tras ver que falla Gallery
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -273,9 +273,28 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 console.log('tags: ', itemDB.tags);
             }
 
-            console.log('item nuevo: ', itemDB);
-
             axios.post(fetchUrl, itemDB, { headers });
+
+            setTimeout(() => {
+                if(itemDB.product_img){
+                    console.log('itemDB: ', itemDB);
+                    console.log('entra en TableAdmin: ', itemDB['product_img']);
+
+                    for(let i = 0; i < itemDB['product_img'].length; i++){
+                        const formData = new FormData();
+                        formData.append('file', itemDB['product_img'][i]);
+                        formData.append('user_id', user.id);
+                        formData.append('image_type', 'product_imgs');
+                        formData.append('name', itemDB['product_img'][i].name);
+
+                        for(var key of formData.entries()){
+                            console.log(key[0], ' - ', key[1]);
+                        }
+
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                                .then(res => console.log('res: ', res));
+                    }}
+            }, 2000);
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
