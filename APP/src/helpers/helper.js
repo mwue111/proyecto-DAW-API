@@ -112,8 +112,6 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
-    console.log('oldData: ', oldData);
-    console.log('newData: ', newData);
 
     Object.keys(oldData).map(item => {
         if(!Array.isArray(oldData[item])){
@@ -161,7 +159,6 @@ export function changedJson(oldData, newData){
             }
         }
         else{
-            // console.log('oldData[item] en else: ', oldData[item]);
             if(item === 'tags'){
 
                 let oldTagsId = [];

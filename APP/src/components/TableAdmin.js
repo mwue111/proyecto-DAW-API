@@ -206,8 +206,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.categoria = item.categoria.name;
             }
 
-            console.log('item antes de mandar a changedJson: ', item);
-            console.log('oldItem antes de mandar a changedJson: ', oldItem);
             const jsonDB = changedJson(oldItem, item);
 
             if(item.product_img && item.product_img.length !== oldItem.product_img.length){

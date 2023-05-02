@@ -6,6 +6,8 @@ import axios from 'axios';
 
 function Gallery( {rowData, table} ) {
 
+    // console.log('rowData: ', rowData.id, ' - table: ', table);
+
     let defaultImages = [
         {
             itemImageSrc: '',
@@ -19,10 +21,40 @@ function Gallery( {rowData, table} ) {
     const [loading, setLoading] = useState();
     const galleria = useRef(null);
 
-    const getImage = async (itemId, table) => {
+    // useEffect(() => {
+    //     axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${rowData.id}`)
+    //         .then(res => {
+    //             let imagesToDisplay = [];
 
-        //console.log('itemId y table: ', itemId, ' - ', table);
+    //             if(res.data.length === 0) {
+    //                 imagesToDisplay.push({
+    //                     itemImageSrc: 'https://media.istockphoto.com/id/1319717836/es/vector/ning%C3%BAn-vector-de-icono-de-signo-de-c%C3%A1mara-de-fotos.jpg?s=170667a&w=0&k=20&c=UwNQQM1WyAQXWVayIwQlSefX-ycCuugxKo41nxzcSpc=',
+    //                     alt: 'No hay imágenes disponibles.',
+    //                     title: 'sin imágenes'
+    //                 });
+    //             }
+    //             else{
+    //                 res.data.map((item) => {
+    //                     imagesToDisplay.push({
+    //                         itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
+    //                         thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
+    //                         alt: `Imagen de ${table}`,
+    //                         title: `Imagen de ${rowData.nombre}`
+    //                     });
+    //                 });
+    //             }
+    //             setImages(imagesToDisplay);
+    //         })
+    // }, [])
+
+    const getImage = async (itemId, table) => {
+    // const getImage = () => {
+
         setLoading(true);
+
+        // galleria.current.show();
+        // setLoading(false);
+        // setNewWindow(true)
 
         await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
@@ -37,6 +69,7 @@ function Gallery( {rowData, table} ) {
                 }
                 else{
                     res.data.map((item) => {
+                        console.log('¿Qué me llega de back? ', item)
                         newImages.push({
                             itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
                             thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
@@ -45,10 +78,14 @@ function Gallery( {rowData, table} ) {
                         });
                     });
                 }
+
                 setImages(newImages);
             })
             .then(() => {
+                //*aquí* Las imágenes al borrar llegan bien del back, pero el seteo no actualiza
+                console.log('Images: ', images);
                 setLoading(false);
+
                 galleria.current.show();
             })
             .catch(error => console.log('Ha ocurrido un error: ', error))
@@ -74,11 +111,9 @@ function Gallery( {rowData, table} ) {
     ];
 
     const itemTemplate = (item) => {
+
         //problema aquí: se ha probado esto y if(item), no renderiza src cuando se hace por segunda/tercera vez
-        //Probar si es por la falta de useEffect: traer todas las imágenes al principio y llevarlas a getImage().
         return <img src={item?.itemImageSrc} alt={item?.alt} style={{ width: '90%', display: 'block' }} />;
-        // if(item){
-        // }
     }
 
     const thumbnailTemplate = (item) => {
@@ -108,6 +143,7 @@ function Gallery( {rowData, table} ) {
                     icon="pi pi-external-link"
                     onClick={() =>
                         getImage(rowData.id, table)
+                        // getImage()
                     }
                 />
             }
