@@ -22,41 +22,9 @@ function Gallery( {rowData, table} ) {
     const [activeIndex, setActiveIndex] = useState(0);
     const galleria = useRef(null);
 
-    // useEffect(() => {
-    //     axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${rowData.id}`)
-    //         .then(res => {
-    //             let imagesToDisplay = [];
-
-    //             if(res.data.length === 0) {
-    //                 imagesToDisplay.push({
-    //                     itemImageSrc: 'https://media.istockphoto.com/id/1319717836/es/vector/ning%C3%BAn-vector-de-icono-de-signo-de-c%C3%A1mara-de-fotos.jpg?s=170667a&w=0&k=20&c=UwNQQM1WyAQXWVayIwQlSefX-ycCuugxKo41nxzcSpc=',
-    //                     alt: 'No hay imágenes disponibles.',
-    //                     title: 'sin imágenes'
-    //                 });
-    //             }
-    //             else{
-    //                 res.data.map((item) => {
-    //                     imagesToDisplay.push({
-    //                         itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
-    //                         thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
-    //                         alt: `Imagen de ${table}`,
-    //                         title: `Imagen de ${rowData.nombre}`
-    //                     });
-    //                 });
-    //             }
-    //             setImages(imagesToDisplay);
-    //         })
-    // }, [])
-
     const getImage = (itemId, table) => {
-    // const getImage = () => {
-        // setImages(defaultImages);
         setActiveIndex(0);
         setLoading(true);
-
-        // galleria.current.show();
-        // setLoading(false);
-        // setNewWindow(true)
 
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
@@ -82,17 +50,17 @@ function Gallery( {rowData, table} ) {
 
                 setImages(newImages);
             })
-            .then(() => {
-                setLoading(false);
-                galleria.current.show();
-            })
-            .catch(error => console.log('Ha ocurrido un error: ', error))
-            // .finally(() => {
+            // .then(() => {
             //     setLoading(false);
-            //     if(galleria.current) {
-            //         galleria.current.show();
-            //     }
+            //     galleria.current.show();
             // })
+            .catch(error => console.log('Ha ocurrido un error: ', error))
+            .finally(() => {
+                setLoading(false);
+                if(galleria.current) {
+                    galleria.current.show();
+                }
+            })
     }
 
     const responsiveOptions = [
@@ -146,7 +114,6 @@ function Gallery( {rowData, table} ) {
                     icon="pi pi-external-link"
                     onClick={() =>
                         getImage(rowData.id, table)
-                        // getImage()
                     }
                 />
             }

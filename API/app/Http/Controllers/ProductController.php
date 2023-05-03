@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -44,42 +45,56 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    // dd($request->all());
-    $product = new Product();
-    $product->name = $request->input('name');
-    $product->description = $request->input('description');
-    $product->category_id = $request->input('category');
-    $product->brand_id = $request->input('brand');
-    $product->deleted = $request->input('deleted');
-    $product->save();
+    {
 
-    if($request->has('tags')){
-        $product->tags()->sync($request->tags);
-        $product->save();
-    }
-
-    // if ($request->has('tags')) {
-    //     // $tags = json_decode($request->input('tags'));
-    //     $tags = json_encode($request->input('tags'));
-    //     $tags = collect($tags)->mapWithKeys(function ($tag) {
-    //         return [$tag => ['created_at' => now(), 'updated_at' => now()]];
-    //     })->toArray();
-    //     dd($tags);
-    //     $product->tags()->sync($tags);
-    // }
-
-    $stores = json_decode($request->input('stores'));
-        $product->stores()->attach($stores, [
-            'stock' => $request->input('stock'),
-            'value' => $request->input('value'),
-            'unit' => $request->input('unit'),
-            'remarks' => $request->input('remarks')
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'brand' => 'required|numeric',
+            'category' => 'required|numeric',
+            'deleted' => 'required|numeric',
+            'product_img' => 'mimes:jpg,jpeg,bmp,png'
         ]);
 
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+        dd($validator);
+        // dd($request->all());
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->category_id = $request->input('category');
+        $product->brand_id = $request->input('brand');
+        $product->deleted = $request->input('deleted');
+        $product->save();
 
-    return response()->json($request);
-}
+        if($request->has('tags')){
+            $product->tags()->sync($request->tags);
+            $product->save();
+        }
+
+        // if ($request->has('tags')) {
+        //     // $tags = json_decode($request->input('tags'));
+        //     $tags = json_encode($request->input('tags'));
+        //     $tags = collect($tags)->mapWithKeys(function ($tag) {
+        //         return [$tag => ['created_at' => now(), 'updated_at' => now()]];
+        //     })->toArray();
+        //     dd($tags);
+        //     $product->tags()->sync($tags);
+        // }
+
+        $stores = json_decode($request->input('stores'));
+            $product->stores()->attach($stores, [
+                'stock' => $request->input('stock'),
+                'value' => $request->input('value'),
+                'unit' => $request->input('unit'),
+                'remarks' => $request->input('remarks')
+            ]);
+
+
+        return response()->json($request);
+    }
 
     /**
      * Display the specified resource.
