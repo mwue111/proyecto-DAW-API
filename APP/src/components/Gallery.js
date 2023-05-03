@@ -19,6 +19,7 @@ function Gallery( {rowData, table} ) {
 
     const [images, setImages] = useState(defaultImages);
     const [loading, setLoading] = useState();
+    const [activeIndex, setActiveIndex] = useState(0);
     const galleria = useRef(null);
 
     // useEffect(() => {
@@ -47,16 +48,17 @@ function Gallery( {rowData, table} ) {
     //         })
     // }, [])
 
-    const getImage = async (itemId, table) => {
+    const getImage = (itemId, table) => {
     // const getImage = () => {
-
+        // setImages(defaultImages);
+        setActiveIndex(0);
         setLoading(true);
 
         // galleria.current.show();
         // setLoading(false);
         // setNewWindow(true)
 
-        await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
                 let newImages = [];
 
@@ -69,7 +71,6 @@ function Gallery( {rowData, table} ) {
                 }
                 else{
                     res.data.map((item) => {
-                        console.log('¿Qué me llega de back? ', item)
                         newImages.push({
                             itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
                             thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
@@ -82,13 +83,16 @@ function Gallery( {rowData, table} ) {
                 setImages(newImages);
             })
             .then(() => {
-                //*aquí* Las imágenes al borrar llegan bien del back, pero el seteo no actualiza
-                console.log('Images: ', images);
                 setLoading(false);
-
                 galleria.current.show();
             })
             .catch(error => console.log('Ha ocurrido un error: ', error))
+            // .finally(() => {
+            //     setLoading(false);
+            //     if(galleria.current) {
+            //         galleria.current.show();
+            //     }
+            // })
     }
 
     const responsiveOptions = [
@@ -111,9 +115,7 @@ function Gallery( {rowData, table} ) {
     ];
 
     const itemTemplate = (item) => {
-
-        //problema aquí: se ha probado esto y if(item), no renderiza src cuando se hace por segunda/tercera vez
-        return <img src={item?.itemImageSrc} alt={item?.alt} style={{ width: '90%', display: 'block' }} />;
+        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '90%', display: 'block' }} />;
     }
 
     const thumbnailTemplate = (item) => {
@@ -134,7 +136,8 @@ function Gallery( {rowData, table} ) {
                 circular fullScreen showItemNavigators
                 item={itemTemplate}
                 thumbnail={thumbnailTemplate}
-                activeIndex={0}
+                activeIndex={activeIndex}
+                onItemChange={(e) => {setActiveIndex(e.index)}}
             />
 
             { loading == true ? <ProgressSpinner style={{width: '30%', height: '30%'}} strokeWidth="5" /> :
