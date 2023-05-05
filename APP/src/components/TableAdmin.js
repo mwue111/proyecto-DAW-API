@@ -220,9 +220,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('product_id', item.id);
                         formData.append('name', jsonDB['product_img'][i].name);
 
-                        for(var key of formData.entries()){
-                            console.log(key[0], ' - ', key[1]);
-                        }
+                        // for(var key of formData.entries()){
+                        //     console.log(key[0], ' - ', key[1]);
+                        // }
 
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                             .then(res => console.log('res: ', res));
@@ -241,6 +241,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         .catch(error => console.log('Ha ocurrido un error: ', error));
                 }
             }
+
+            console.log('jsonDB: ', jsonDB, '- item.id: ', item.id);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
@@ -271,6 +273,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 console.log('tags: ', itemDB.tags);
             }
 
+            // console.log('url: ', fetchUrl, 'item: ', itemDB);
+
             axios.post(fetchUrl, itemDB, { headers });
 
             setTimeout(() => {
@@ -282,6 +286,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', user.id);
                         formData.append('image_type', 'product_imgs');
                         formData.append('name', itemDB['product_img'][i].name);
+
+                        // for(var key of formData.entries()){
+                        //     console.log(key[0], ' - ', key[1]);
+                        // }
 
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                                 .then(res => console.log('res: ', res));

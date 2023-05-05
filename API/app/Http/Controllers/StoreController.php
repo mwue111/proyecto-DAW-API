@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\StoreImg;
@@ -35,6 +36,19 @@ class StoreController extends Controller{
     }
 
     public function store(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'name' => 'required',
+            'telephone1' => 'required|numeric|min:9',
+            'telephone2' => 'numeric',
+            'description' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
         $address = Address::create($request->address);
 
         $store = new Store($request->all());
@@ -160,7 +174,7 @@ class StoreController extends Controller{
     $user = User::find($request->user_id);
 
     $defaultStore = new Store();
-    $defaultStore->name = 'La tienda de ' . $request->username; 
+    $defaultStore->name = 'La tienda de ' . $request->username;
     $defaultStore->description = 'Descripcion de mi tienda';
     $defaultStore->email = 'mi@tienda.com';
     $defaultStore->telephone1 = '1234567890';
@@ -174,7 +188,7 @@ class StoreController extends Controller{
     $defaultAddress->number = '1';
     $defaultAddress->name = 'Mayor';
     $defaultAddress->remarks = '';
-    $defaultAddress->town_id = 1; 
+    $defaultAddress->town_id = 1;
 
     $defaultAddress->save();
 

@@ -46,21 +46,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'brand' => 'required|numeric',
             'category' => 'required|numeric',
             'deleted' => 'required|numeric',
-            'product_img' => 'mimes:jpg,jpeg,bmp,png'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
-        dd($validator);
-        // dd($request->all());
+
         $product = new Product();
         $product->name = $request->input('name');
         $product->description = $request->input('description');
@@ -125,6 +122,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'string',
+            'description' => 'string',
+            'brand' => 'numeric',
+            'category' => 'numeric'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
         $product = Product::find($id);
 
         if(isset($request->category)){
