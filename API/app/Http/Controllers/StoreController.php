@@ -41,8 +41,9 @@ class StoreController extends Controller{
             'email' => 'required|email',
             'name' => 'required',
             'telephone1' => 'required|numeric|min:9',
-            'telephone2' => 'numeric',
-            'description' => 'required'
+            'telephone2' => 'numeric|min:9',
+            'description' => 'required',
+            'user_id' => 'required|numeric'
         ]);
 
         if($validator->fails()){
@@ -93,6 +94,19 @@ class StoreController extends Controller{
     }
 
     public function update(Request $request, $id){
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'email',
+            'name' => 'regex:/^([A-Za-zÑñáéíóúÁÉÍÓÚ0-9 ]+)$/',
+            'telephone1' => 'numeric|min:9',
+            'telephone2' => 'numeric|min:9',
+            'description' => 'string'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
         $store = Store::find($id);
         $store->update($request->all());
 

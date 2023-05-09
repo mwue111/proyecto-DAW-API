@@ -39,6 +39,15 @@ class FileController extends Controller
             'user_id'=>'required'
         ]);
 
+        if($request->image_type !== 'document'){
+            $validatorImg = Validator::make($request->all(), [
+                'file' => 'mimes:jpeg,jpg,png'
+            ]);
+            if($validatorImg->fails()){
+                return response()->json($validatorImg->errors(), 400);
+            }
+        }
+
         if($validator->fails()){
             return response()->json($validator->errors(),400);
         }

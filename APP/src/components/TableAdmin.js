@@ -242,7 +242,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
-            console.log('jsonDB: ', jsonDB, '- item.id: ', item.id);
+            console.log('PRODUCTO CAMBIADO\njsonDB: ', jsonDB, '- item.id: ', item.id);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
@@ -273,7 +273,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 console.log('tags: ', itemDB.tags);
             }
 
-            // console.log('url: ', fetchUrl, 'item: ', itemDB);
+            console.log('PRODUCTO NUEVO\nitem: ', itemDB);
 
             axios.post(fetchUrl, itemDB, { headers });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Owner;
 
@@ -26,6 +27,16 @@ class OwnerController extends Controller{
     }
 
     public function update(Request $request, $id){
+
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|numeric',
+            'verified' => 'required|numeric'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
         $owner = Owner::find($id);
         $owner->update($request->all());
         return $owner;

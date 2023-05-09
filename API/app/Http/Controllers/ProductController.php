@@ -125,8 +125,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'string',
             'description' => 'string',
-            'brand' => 'numeric',
-            'category' => 'numeric'
+            'brand' => 'string',
+            'category' => 'string'
         ]);
 
         if($validator->fails()){
