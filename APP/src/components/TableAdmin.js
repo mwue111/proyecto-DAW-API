@@ -56,7 +56,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const emptyUser = {
-        //Cambiar estructura en DialogUser
+        "username": "",
+        "name": "",
+        "apellido1": "",
+        "apellido2": "",
+        "email": "",
+        "fecha_nacimiento": "",
+        "type": "",
+        "deleted": 0
     }
 
     const { user } = useAuth();
@@ -144,7 +151,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSingleDeleted(false);
         //console.log(fetchUrl);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);    //item añadido tras ver que falla Gallery
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -155,6 +162,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         switch(table){
             case 'tienda': setItem(emptyStore); break;
             case 'producto': setItem(emptyProduct); break;
+            case 'usuario': setItem(emptyUser); break;
         }
 
         setSubmitted(false);
@@ -579,7 +587,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                 setItem={setItem}
                                 cities={cities}
                                 owners={owners}
-                    />}
+                />}
+
                 {table === 'producto' &&
 
                     <DialogProduct product={item}
@@ -588,8 +597,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                 brands={brands}
                                 allTags={tags}
                                 table={table}
-                    />}
-                {/* {table === 'usuario' && <DialogUser user={item} />} */}
+                />}
+
+                {table === 'usuario' &&
+
+                    <DialogUser user={item}
+
+                />}
 
             </Dialog>
 

@@ -12,7 +12,7 @@ export function formatJson (cosa, tipo){
             data=formatJsonProducto(cosa)
             break;
         case 'usuario':
-            //data=formatUsuario(cosa)
+            data=formatJsonUsuario(cosa);
             break;
         default:
             break;
@@ -218,6 +218,37 @@ function formatJsonProducto (productos){
         }
     })
     return data;
+}
+
+///////////////////////////////////////////
+// USUARIO
+///////////////////////////////////////////
+function formatJsonUsuario(usuarios){
+    const data = usuarios.map((usuario) => {
+        return {
+            id: usuario.id,
+            fecha_nacimiento: birthDateFormat(usuario.birth_date),
+            deleted: usuario.deleted,
+            email: usuario.email,
+            nombre: usuario.name,
+            apellido1: usuario.surname1,
+            apellido2: usuario.surname2,
+            tipo: usuario.type,
+            username: usuario.username,
+        }
+    })
+    return data;
+}
+
+function birthDateFormat(date){
+    const bd = new Date(date);
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+
+    return bd.toLocaleDateString("es-ES", options);
 }
 
 ///////////////////////////////////////////
