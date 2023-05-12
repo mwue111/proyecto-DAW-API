@@ -17,6 +17,8 @@ import Gallery from 'components/Gallery';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
+    const userUrl = 'http://localhost:8000/auth';
+
     const emptyStore = {
         "nombre": "",
         "telefono1": "",
@@ -58,6 +60,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const emptyUser = {
         "username": "",
         "name": "",
+        "password": "",
+        "password_c": "",
         "apellido1": "",
         "apellido2": "",
         "email": "",
@@ -281,9 +285,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 console.log('tags: ', itemDB.tags);
             }
 
-            console.log('ITEM NUEVO\nitem: ', itemDB);
+            if(table === 'usuario'){
+                console.log('USUARIO NUEVO\nitem: ', itemDB);
+                console.log('se manda a ', userUrl, '/register');
+                // axios.post(userUrl, '/register');
 
-            // axios.post(fetchUrl, itemDB, { headers });
+            }
+            else{
+                axios.post(fetchUrl, itemDB, { headers });
+            }
 
             setTimeout(() => {
                 if(itemDB.product_img){

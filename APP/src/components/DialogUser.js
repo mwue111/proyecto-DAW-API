@@ -39,6 +39,14 @@ const DialogUser = ({ user }) => {
                     <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange}/>
                     <br/>
                     <br/>
+                    <label htmlFor='password'>Contraseña: </label>
+                    <InputText name='password' id='userUsername' defaultValue={dataForm.password} onChange={handleInputChange}/>
+                    <br/>
+                    <br/>
+                    <label htmlFor='password'>Confirmar contraseña: </label>
+                    <InputText name='password' id='userUsername' defaultValue={dataForm.password_C} onChange={handleInputChange}/>
+                    <br/>
+                    <br/>
                     <label htmlFor='name'>Nombre: </label>
                     <InputText name='name' id='userName' defaultValue={dataForm.nombre} onChange={handleInputChange} />
                     <br/>
