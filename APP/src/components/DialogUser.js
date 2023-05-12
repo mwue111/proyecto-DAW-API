@@ -11,17 +11,11 @@ const DialogUser = ({ user }) => {
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
     let BirthDate = new Date(milisec);
-
-    // const [username, setUsername] = useState(user.username);
-    const [name, setName] = useState(user.name);
-    const [surname1, setSurname1] = useState(user.surname1);
-    const [surname2, setSurname2] = useState(user.surname2);
-    const [email, setEmail] = useState(user.email);
-    const [birthDate, setBirthDate] = useState(BirthDate);
-    const [type, setType] = useState(user.type);
-    const toast = useRef(null);
-
     const [dataForm, setDataForm] = useState(user);
+
+    // useEffect(() => {
+    //     setItem(dataForm)
+    // }, [dataForm])
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
@@ -29,8 +23,11 @@ const DialogUser = ({ user }) => {
         const name = target.name;   //name del input: X
 
         if(name !== null){
-
+         dataForm[name] = value;
         }
+
+        setDataForm(dataForm);
+        // console.log('dataForm: ', dataForm);
 
     }
 
@@ -43,26 +40,26 @@ const DialogUser = ({ user }) => {
                     <br/>
                     <br/>
                     <label htmlFor='name'>Nombre: </label>
-                    <InputText name='name' id='userName' defaultValue={name} onChange={handleInputChange} />
+                    <InputText name='name' id='userName' defaultValue={dataForm.nombre} onChange={handleInputChange} />
                     <br/>
                     <br/>
                     <label htmlFor='surname1'>Primer apellido: </label>
-                    <InputText name='surname1' id='surname1' defaultValue={surname1} onChange={handleInputChange}/>
+                    <InputText name='apellido1' id='surname1' defaultValue={dataForm.apellido1} onChange={handleInputChange}/>
                     <br/>
                     <br/>
                     <label htmlFor='surname2'>Segundo apellido:</label>
-                    <InputText name='surname2' id='surname2' defaultValue={surname2} onChange={handleInputChange} />
+                    <InputText name='apellido2' id='surname2' defaultValue={dataForm.apellido2} onChange={handleInputChange} />
                     <br/>
                     <br/>
                     <label htmlFor='email'>Email: </label>
-                    <InputText name='email' id='userEmail' defaultValue={email} onChange={handleInputChange} />
+                    <InputText name='email' id='userEmail' defaultValue={dataForm.email} onChange={handleInputChange} />
                     <br/>
                     <br/>
-                    <label htmlFor='birthDate'>Fecha de nacimiento: </label>
-                    <Calendar id='birthDate' name='birthDate' value={birthDate} onChange={handleInputChange} showIcon/>
+                    <label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </label>
+                    <Calendar id='birthDate' name='fecha_nacimiento' value={dataForm.fecha_nacimiento} onChange={handleInputChange} showIcon/>
                     <br/>
-                    <label htmlFor='userType'>Tipo:</label>
-                    <InputText value={type} disabled/>
+                    <label htmlFor='type'>Tipo:</label>
+                    <InputText name="type" value={dataForm.tipo} onChange={handleInputChange}/>
                 </Fieldset>
             </div>
         </div>

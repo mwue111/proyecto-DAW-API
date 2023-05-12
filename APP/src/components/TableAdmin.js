@@ -281,9 +281,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 console.log('tags: ', itemDB.tags);
             }
 
-            console.log('PRODUCTO NUEVO\nitem: ', itemDB);
+            console.log('ITEM NUEVO\nitem: ', itemDB);
 
-            axios.post(fetchUrl, itemDB, { headers });
+            // axios.post(fetchUrl, itemDB, { headers });
 
             setTimeout(() => {
                 if(itemDB.product_img){
@@ -602,6 +602,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {table === 'usuario' &&
 
                     <DialogUser user={item}
+                                // setItem={setItem}
 
                 />}
 
