@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Label from '@/components/Label'
 import { InputText } from 'primereact/inputtext';
+import InputError from '@/components/InputError';
 import { Fieldset } from 'primereact/fieldset';
 import { Input } from 'postcss';
 import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
 
-const DialogUser = ({ user }) => {
+const DialogUser = ({ user, errors }) => {
     // console.log('user: ', user);
 
+    console.log('Errores en DialogUser: ', errors.username);
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
     let BirthDate = new Date(milisec);
     const [dataForm, setDataForm] = useState(user);
+    // const [errors, setErrors] = useState([]);
 
     // useEffect(() => {
     //     setItem(dataForm)
@@ -31,45 +35,57 @@ const DialogUser = ({ user }) => {
 
     }
 
+    const submitForm = event => {
+        event.preventDefault()
+    }
+
     return(
         <div>
+            <form onSubmit={submitForm} encType="multipart/form-data">
             <div className='field'>
                 <Fieldset legend='Datos del usuario'>
-                    <label htmlFor='username'>Nombre de usuario: </label>
-                    <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange}/>
+                    <Label htmlFor='username'>Nombre de usuario: </Label>
+                    <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange} required />
+                    <InputError messages={errors.username} />
+                    {/*
+                    className="p-invalid"
+                    */}
                     <br/>
                     <br/>
-                    <label htmlFor='password'>Contraseña: </label>
-                    <InputText name='password' id='userUsername' defaultValue={dataForm.password} onChange={handleInputChange}/>
+                    <Label htmlFor='password'>Contraseña: </Label>
+                    <InputText name='password' id='userUsername' defaultValue={dataForm.password} onChange={handleInputChange} required/>
+                    {/* type="password" */}
                     <br/>
                     <br/>
-                    <label htmlFor='password'>Confirmar contraseña: </label>
-                    <InputText name='password' id='userUsername' defaultValue={dataForm.password_C} onChange={handleInputChange}/>
+                    <Label htmlFor='password'>Confirmar contraseña: </Label>
+                    <InputText name='password_c' id='userUsername' defaultValue={dataForm.password_C} onChange={handleInputChange} required/>
+                    {/* type="password" */}
                     <br/>
                     <br/>
-                    <label htmlFor='name'>Nombre: </label>
-                    <InputText name='name' id='userName' defaultValue={dataForm.nombre} onChange={handleInputChange} />
+                    <Label htmlFor='name'>Nombre: </Label>
+                    <InputText name='name' id='userName' defaultValue={dataForm.nombre} onChange={handleInputChange} required/>
                     <br/>
                     <br/>
-                    <label htmlFor='surname1'>Primer apellido: </label>
-                    <InputText name='apellido1' id='surname1' defaultValue={dataForm.apellido1} onChange={handleInputChange}/>
+                    <Label htmlFor='surname1'>Primer apellido: </Label>
+                    <InputText name='apellido1' id='surname1' defaultValue={dataForm.apellido1} onChange={handleInputChange} required/>
                     <br/>
                     <br/>
-                    <label htmlFor='surname2'>Segundo apellido:</label>
+                    <Label htmlFor='surname2'>Segundo apellido:</Label>
                     <InputText name='apellido2' id='surname2' defaultValue={dataForm.apellido2} onChange={handleInputChange} />
                     <br/>
                     <br/>
-                    <label htmlFor='email'>Email: </label>
-                    <InputText name='email' id='userEmail' defaultValue={dataForm.email} onChange={handleInputChange} />
+                    <Label htmlFor='email'>Email: </Label>
+                    <InputText name='email' type='email' id='userEmail' defaultValue={dataForm.email} onChange={handleInputChange} required/>
                     <br/>
                     <br/>
-                    <label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </label>
-                    <Calendar id='birthDate' name='fecha_nacimiento' value={dataForm.fecha_nacimiento} onChange={handleInputChange} showIcon/>
+                    <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
+                    <Calendar id='birthDate' name='fecha_nacimiento' value={dataForm.fecha_nacimiento} onChange={handleInputChange} showIcon required/>
                     <br/>
-                    <label htmlFor='type'>Tipo:</label>
+                    <Label htmlFor='type'>Tipo:</Label>
                     <InputText name="type" value={dataForm.tipo} onChange={handleInputChange}/>
                 </Fieldset>
             </div>
+            </form>
         </div>
     )
 }

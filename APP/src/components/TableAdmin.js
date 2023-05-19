@@ -17,8 +17,6 @@ import Gallery from 'components/Gallery';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
-    const userUrl = 'http://localhost:8000/auth';
-
     const emptyStore = {
         "nombre": "",
         "telefono1": "",
@@ -96,6 +94,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
     const [recharge, setRecharge] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         axios.get(fetchUrl)
@@ -286,9 +285,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             if(table === 'usuario'){
+
                 console.log('USUARIO NUEVO\nitem: ', itemDB);
-                console.log('se manda a ', userUrl, '/register');
-                // axios.post(userUrl, '/register');
+                console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
+
+                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
+                .catch(error => {
+                    console.log(error.response.data);
+                    setErrors(error.response.data);
+                    // throw error
+                });
 
             }
             else{
@@ -323,6 +329,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem({});
         setOldItem({});
     }
+
+    // function getCookie(name) {
+    //     const cookies = document.cookie.split(';');
+    //     for (let i = 0; i < cookies.length; i++) {
+    //       const cookie = cookies[i].trim();
+    //       if (cookie.startsWith(`${name}=`)) {
+    //         return cookie.substring(name.length + 1);
+    //       }
+    //     }
+    //     return null;
+    //   }
 
     const editItem = (item) => {
         const _item = objectProfoundCopy(item);
@@ -612,6 +629,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {table === 'usuario' &&
 
                     <DialogUser user={item}
+                                errors={errors}
                                 // setItem={setItem}
 
                 />}

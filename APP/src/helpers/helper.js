@@ -192,6 +192,9 @@ export function headersDB(oldHeaders){
             case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'marca': oldHeaders['brand'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'categoria': oldHeaders['category'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'apellido1': oldHeaders['surname1'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'apellido2': oldHeaders['surname2'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'fecha_nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
     return oldHeaders;
 }

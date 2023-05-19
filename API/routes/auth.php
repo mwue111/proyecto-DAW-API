@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-//Aquí: https://desarrolloweb.com/articulos/laravel-breeze
+Route::post('/admin-register', [RegisteredUserController::class, 'adminStore'])->middleware('guest');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
