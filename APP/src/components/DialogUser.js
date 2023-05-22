@@ -1,20 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Label from '@/components/Label'
 import { InputText } from 'primereact/inputtext';
-import InputError from '@/components/InputError';
 import { Fieldset } from 'primereact/fieldset';
-import { Input } from 'postcss';
-import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
+import { Dropdown } from 'primereact/dropdown';
+
+import InputError from '@/components/InputError';
+import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
-    // console.log('user: ', user);
 
-    console.log('Errores en DialogUser: ', errors.username);
+    console.log('user: ', user);
+    console.log('errores: ', errors);
+
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
     let BirthDate = new Date(milisec);
+    const types = ['client','administrator','owner'];
+    let fullName = '';
+    if(user.nombre){
+        fullName = user.nombre.split(' ');
+    }
+
     const [dataForm, setDataForm] = useState(user);
+    const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
     // const [errors, setErrors] = useState([]);
 
     // useEffect(() => {
@@ -27,16 +36,22 @@ const DialogUser = ({ user, errors }) => {
         const name = target.name;   //name del input: X
 
         if(name !== null){
+            switch(name){
+                case 'name': console.log('name: ', value); break;
+                case 'type': setDropdownType(value);break;
+            }
+
          dataForm[name] = value;
         }
 
         setDataForm(dataForm);
-        // console.log('dataForm: ', dataForm);
+        console.log('dataForm: ', dataForm);
 
     }
 
     const submitForm = event => {
-        event.preventDefault()
+        event.preventDefault();
+
     }
 
     return(
@@ -46,10 +61,9 @@ const DialogUser = ({ user, errors }) => {
                 <Fieldset legend='Datos del usuario'>
                     <Label htmlFor='username'>Nombre de usuario: </Label>
                     <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange} required />
-                    <InputError messages={errors.username} />
-                    {/*
-                    className="p-invalid"
-                    */}
+                    {/* <Message severity="error" text="Username is required" /> */}
+                    {/* <InputError messages={errors.username} /> */}
+
                     <br/>
                     <br/>
                     <Label htmlFor='password'>Contraseña: </Label>
@@ -63,15 +77,15 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='name'>Nombre: </Label>
-                    <InputText name='name' id='userName' defaultValue={dataForm.nombre} onChange={handleInputChange} required/>
+                    <InputText name='name' id='userName' defaultValue={fullName[0]} onChange={handleInputChange} required/>
                     <br/>
                     <br/>
                     <Label htmlFor='surname1'>Primer apellido: </Label>
-                    <InputText name='apellido1' id='surname1' defaultValue={dataForm.apellido1} onChange={handleInputChange} required/>
+                    <InputText name='apellido1' id='surname1' defaultValue={fullName[1]} onChange={handleInputChange} required/>
                     <br/>
                     <br/>
                     <Label htmlFor='surname2'>Segundo apellido:</Label>
-                    <InputText name='apellido2' id='surname2' defaultValue={dataForm.apellido2} onChange={handleInputChange} />
+                    <InputText name='apellido2' id='surname2' defaultValue={fullName[2]} onChange={handleInputChange} />
                     <br/>
                     <br/>
                     <Label htmlFor='email'>Email: </Label>
@@ -82,7 +96,7 @@ const DialogUser = ({ user, errors }) => {
                     <Calendar id='birthDate' name='fecha_nacimiento' value={dataForm.fecha_nacimiento} onChange={handleInputChange} showIcon required/>
                     <br/>
                     <Label htmlFor='type'>Tipo:</Label>
-                    <InputText name="type" value={dataForm.tipo} onChange={handleInputChange}/>
+                    <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
                 </Fieldset>
             </div>
             </form>

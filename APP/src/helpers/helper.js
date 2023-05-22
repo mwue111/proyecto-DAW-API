@@ -112,6 +112,8 @@ function formatJsonDia(day){
 //2. Función para sustituir sólo los campos cambiados y mandarlos a la BD
 export function changedJson(oldData, newData){
     let changed = {};
+    console.log('oldData: ', oldData);
+    console.log('newData: ', newData);
 
     Object.keys(oldData).map(item => {
         if(!Array.isArray(oldData[item])){
@@ -230,17 +232,19 @@ function formatJsonUsuario(usuarios){
     const data = usuarios.map((usuario) => {
         return {
             id: usuario.id,
-            fecha_nacimiento: birthDateFormat(usuario.birth_date),
-            deleted: usuario.deleted,
-            email: usuario.email,
-            nombre: usuario.name,
-            apellido1: usuario.surname1,
-            apellido2: usuario.surname2,
-            tipo: usuario.type,
             username: usuario.username,
+            nombre: formatName(usuario.name, usuario.surname1, usuario.surname2),
+            email: usuario.email,
+            'fecha de nacimiento': birthDateFormat(usuario.birth_date),
+            deleted: usuario.deleted,
+            tipo: usuario.type,
         }
     })
     return data;
+}
+
+function formatName(name, surname1, surname2) {
+    return name + ' ' + surname1 + ' ' + surname2;
 }
 
 function birthDateFormat(date){

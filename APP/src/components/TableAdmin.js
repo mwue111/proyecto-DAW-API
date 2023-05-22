@@ -93,7 +93,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
-    const [recharge, setRecharge] = useState(false);
+    // const [recharge, setRecharge] = useState(false);
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
@@ -154,7 +154,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setSingleDeleted(false);
         //console.log(fetchUrl);
 
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, recharge]);
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);//recharge
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -291,39 +291,41 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                 .catch(error => {
-                    console.log(error.response.data);
+                    console.log('Errores en TableAdmin: ', error.response.data);
                     setErrors(error.response.data);
                     // throw error
-                });
-
+                })
             }
             else{
                 axios.post(fetchUrl, itemDB, { headers });
             }
 
-            setTimeout(() => {
-                if(itemDB.product_img){
+            if(itemDB.product_img){
+                setTimeout(() => {
+                    // if(itemDB.product_img){
 
-                    for(let i = 0; i < itemDB['product_img'].length; i++){
-                        const formData = new FormData();
-                        formData.append('file', itemDB['product_img'][i]);
-                        formData.append('user_id', user.id);
-                        formData.append('image_type', 'product_imgs');
-                        formData.append('name', itemDB['product_img'][i].name);
+                        for(let i = 0; i < itemDB['product_img'].length; i++){
+                            const formData = new FormData();
+                            formData.append('file', itemDB['product_img'][i]);
+                            formData.append('user_id', user.id);
+                            formData.append('image_type', 'product_imgs');
+                            formData.append('name', itemDB['product_img'][i].name);
 
-                        // for(var key of formData.entries()){
-                        //     console.log(key[0], ' - ', key[1]);
-                        // }
+                            // for(var key of formData.entries()){
+                            //     console.log(key[0], ' - ', key[1]);
+                            // }
 
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
-                                .then(res => console.log('res: ', res));
-                    }}
-            }, 2000);
+                            axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                                    .then(res => console.log('res: ', res));
+                        }
+                    // }
+                }, 2000);
+            }
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
         }
 
-        setRecharge(true);
+        // setRecharge(true);
         setChangedItem(item);
         setItemDialog(false);
         setItem({});
@@ -631,7 +633,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     <DialogUser user={item}
                                 errors={errors}
                                 // setItem={setItem}
-
                 />}
 
             </Dialog>
