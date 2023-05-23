@@ -182,6 +182,7 @@ export function changedJson(oldData, newData){
     })
 
     changed = headersDB(changed);
+    console.log('changed: ', changed)
     return changed;
 }
 
@@ -194,7 +195,7 @@ export function headersDB(oldHeaders){
             case 'descripcion': oldHeaders['description'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'marca': oldHeaders['brand'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'categoria': oldHeaders['category'] = oldHeaders[item]; delete oldHeaders[item]; break;
-            case 'apellido1': oldHeaders['surname1'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'apellido': oldHeaders['surname1'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'apellido2': oldHeaders['surname2'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'fecha_nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
@@ -233,7 +234,9 @@ function formatJsonUsuario(usuarios){
         return {
             id: usuario.id,
             username: usuario.username,
-            nombre: formatName(usuario.name, usuario.surname1, usuario.surname2),
+            nombre: usuario.name,
+            apellido: usuario.surname1,
+            apellido2: usuario.surname2,
             email: usuario.email,
             'fecha de nacimiento': birthDateFormat(usuario.birth_date),
             deleted: usuario.deleted,
@@ -241,10 +244,6 @@ function formatJsonUsuario(usuarios){
         }
     })
     return data;
-}
-
-function formatName(name, surname1, surname2) {
-    return name + ' ' + surname1 + ' ' + surname2;
 }
 
 function birthDateFormat(date){
