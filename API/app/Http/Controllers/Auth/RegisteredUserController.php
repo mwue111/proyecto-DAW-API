@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], //'unique:users, columna a comprobar, id a ignorar' https://laravel.com/docs/4.2/validation#rule-unique
+            'birth_date' => ['string'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required'],
             'password_c' => ['required', 'same:password']
@@ -66,6 +67,7 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'surname1' => $request->surname1,
             'surname2' => $request->surname2,
+            'birth_date' => $request->birth_date,
             'type' => $request->type,
             'email' => $request->email,
             'password' => Hash::make($request->password),

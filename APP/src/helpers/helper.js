@@ -257,25 +257,6 @@ function birthDateFormat(date){
     return bd.toLocaleDateString("es-ES", options);
 }
 
-export function formatDate(date) {
-    console.log('fecha: ', date);
-    const dateObject = new Date(date);
-
-    const year = dateObject.getFullYear();
-    const month = dateObject.getMonth() + 1;
-    const day = dateObject.getDate();
-    // const hours = dateObject.getHours();
-    // const minutes = dateObject.getMinutes();
-    // const seconds = dateObject.getSeconds();
-
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    // const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    // const mysqlDateFormat = `${formattedDate} ${formattedTime}`;
-
-    console.log('MySQL date format: ', formattedDate)
-    return new Date(formattedDate);
-}
-
 ///////////////////////////////////////////
 // SearchBar
 ///////////////////////////////////////////

@@ -282,11 +282,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             if(table === 'usuario'){
-                // console.log('USUARIO NUEVO\nitem: ', itemDB);
-                console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
-                // console.log('nacimiento en saveItem: ', itemDB.birth_date);
+                // console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
                 console.log('nacimiento: ', itemDB.birth_date);
-                itemDB.birth_date = formatDate(itemDB.birth_date);
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
                 // .catch(error => {
