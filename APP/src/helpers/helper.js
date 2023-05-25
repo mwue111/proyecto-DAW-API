@@ -197,7 +197,7 @@ export function headersDB(oldHeaders){
             case 'categoria': oldHeaders['category'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'apellido': oldHeaders['surname1'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'apellido2': oldHeaders['surname2'] = oldHeaders[item]; delete oldHeaders[item]; break;
-            case 'fecha_nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }});
     return oldHeaders;
 }
@@ -238,7 +238,7 @@ function formatJsonUsuario(usuarios){
             apellido: usuario.surname1,
             apellido2: usuario.surname2,
             email: usuario.email,
-            'fecha de nacimiento': birthDateFormat(usuario.birth_date),
+            nacimiento: birthDateFormat(usuario.birth_date),
             deleted: usuario.deleted,
             tipo: usuario.type,
         }
@@ -255,6 +255,25 @@ function birthDateFormat(date){
     };
 
     return bd.toLocaleDateString("es-ES", options);
+}
+
+export function formatDate(date) {
+    console.log('fecha: ', date);
+    const dateObject = new Date(date);
+
+    const year = dateObject.getFullYear();
+    const month = dateObject.getMonth() + 1;
+    const day = dateObject.getDate();
+    // const hours = dateObject.getHours();
+    // const minutes = dateObject.getMinutes();
+    // const seconds = dateObject.getSeconds();
+
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    // const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // const mysqlDateFormat = `${formattedDate} ${formattedTime}`;
+
+    console.log('MySQL date format: ', formattedDate)
+    return new Date(formattedDate);
 }
 
 ///////////////////////////////////////////

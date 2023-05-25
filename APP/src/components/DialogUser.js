@@ -11,16 +11,12 @@ import { Message } from 'primereact/message';
 const DialogUser = ({ user, errors }) => {
 
     console.log('user: ', user);
+    const validBirthDay = new Date(user.nacimiento);
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
     let BirthDate = new Date(milisec);
     const types = ['client','administrator','owner'];
-
-    // let fullName = '';
-    // if(user.nombre){
-    //     fullName = user.nombre.split(' ');
-    // }
 
     const [dataForm, setDataForm] = useState(user);
     const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
@@ -33,6 +29,7 @@ const DialogUser = ({ user, errors }) => {
         if(name !== null){
             switch(name){
                 case 'type': setDropdownType(value);break;
+                // case 'nacimiento': formatDate(value); break;
             }
 
             dataForm[name] = value;
@@ -41,6 +38,25 @@ const DialogUser = ({ user, errors }) => {
         setDataForm(dataForm);
         console.log('dataForm: ', dataForm);
 
+    }
+
+    const formatDate = (date) => {
+        console.log('fecha: ', date);
+        const dateObject = new Date(date);
+
+        const year = dateObject.getFullYear();
+        const month = dateObject.getMonth() + 1;
+        const day = dateObject.getDate();
+        // const hours = dateObject.getHours();
+        // const minutes = dateObject.getMinutes();
+        // const seconds = dateObject.getSeconds();
+
+        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        // const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        // const mysqlDateFormat = `${formattedDate} ${formattedTime}`;
+
+        console.log('MySQL date format: ', formattedDate)
+        return formattedDate;
     }
 
     const submitForm = event => {
@@ -87,7 +103,8 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar id='birthDate' name='fecha_nacimiento' value={dataForm.fecha_nacimiento} onChange={handleInputChange} showIcon required/>
+                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/>
+                    {/* <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
                     <br/>
                     <Label htmlFor='type'>Tipo:</Label>
                     <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>

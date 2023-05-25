@@ -8,7 +8,7 @@ import DialogStore from 'components/DialogStore';
 import DialogProduct from 'components/DialogProduct';
 import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
-import { formatJson, changedJson, objectProfoundCopy} from '@/helpers/helper';
+import { formatJson, changedJson, objectProfoundCopy, formatDate} from '@/helpers/helper';
 import axios from 'axios';
 import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
@@ -60,10 +60,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "name": "",
         "password": "",
         "password_c": "",
-        "apellido1": "",
+        "apellido": "",
         "apellido2": "",
         "email": "",
-        "fecha_nacimiento": "",
+        "nacimiento": "",
         "type": "",
         "deleted": 0
     }
@@ -152,8 +152,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setTags(tagList);
 
         setSingleDeleted(false);
-        //console.log(fetchUrl);
-
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);//recharge
 
     if (!data.length) {
@@ -260,7 +258,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
         }
         else {
-
             const itemDB = headersDB(item);
 
             if(itemDB.user_id){
@@ -285,16 +282,18 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             if(table === 'usuario'){
-
-                console.log('USUARIO NUEVO\nitem: ', itemDB);
+                // console.log('USUARIO NUEVO\nitem: ', itemDB);
                 console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
+                // console.log('nacimiento en saveItem: ', itemDB.birth_date);
+                console.log('nacimiento: ', itemDB.birth_date);
+                itemDB.birth_date = formatDate(itemDB.birth_date);
 
-                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
-                .catch(error => {
-                    console.log('Errores en TableAdmin: ', error.response.data);
-                    setErrors(error.response.data);
-                    // throw error
-                })
+                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
+                // .catch(error => {
+                //     console.log('Errores en TableAdmin: ', error.response.data);
+                //     setErrors(error.response.data);
+                //     // throw error
+                // })
             }
             else{
                 axios.post(fetchUrl, itemDB, { headers });
