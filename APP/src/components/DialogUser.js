@@ -10,7 +10,7 @@ import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    console.log('user: ', user);
+    // console.log('user: ', user);
     const validBirthDay = new Date(user.nacimiento);
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
@@ -36,7 +36,7 @@ const DialogUser = ({ user, errors }) => {
         }
 
         setDataForm(dataForm);
-        console.log('dataForm: ', dataForm);
+        // console.log('dataForm: ', dataForm);
 
     }
 

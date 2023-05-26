@@ -151,8 +151,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 })})
         setTags(tagList);
 
+        console.log('submitted en useEffect: ', submitted)
         setSingleDeleted(false);
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted]);//recharge
+       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -166,12 +167,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
             case 'usuario': setItem(emptyUser); break;
         }
 
-        setSubmitted(false);
+        setSubmitted(!submitted);
+        console.log('submitted en openNew: ', submitted);
         setItemDialog(true);
     }
 
     const hideDialog = () => {
         setChangedItem(oldItem);
+        console.log('submitted en hideDialog: ', submitted);
         setSubmitted(false);
         setItemDialog(false);
     }
@@ -190,8 +193,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const saveItem = () =>{
 
-        setSubmitted(true);
-        setItemDialog(false);
+        // setSubmitted(true);
+        // setItemDialog(false);
 
         const headers = {
             'Content-Type': 'application/json'
@@ -221,7 +224,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                 for(let i = 0; i < jsonDB['product_img'].length; i++){
                     if(jsonDB['product_img'][i] instanceof File){
-                        console.log('archivo: ', jsonDB['product_img'][i].name);
+                        // console.log('archivo: ', jsonDB['product_img'][i].name);
                         const formData = new FormData();
                         formData.append('file', jsonDB['product_img'][i]);
                         formData.append('user_id', user.id);
@@ -256,6 +259,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
+            // setSubmitted(true);
         }
         else {
             const itemDB = headersDB(item);
@@ -277,13 +281,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 itemDB.category = itemDB.category.id;
             }
 
-            if(itemDB.tags){
-                console.log('tags: ', itemDB.tags);
-            }
+            // if(itemDB.tags){
+            //     console.log('tags: ', itemDB.tags);
+            // }
 
             if(table === 'usuario'){
                 // console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
-                console.log('nacimiento: ', itemDB.birth_date);
+                // console.log('nacimiento: ', itemDB.birth_date);
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
                 // .catch(error => {
@@ -319,8 +323,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
+            // setSubmitted(true);
         }
 
+        console.log('submitted en saveItem: ', submitted);
+        setSubmitted(true);
         // setRecharge(true);
         setChangedItem(item);
         setItemDialog(false);
