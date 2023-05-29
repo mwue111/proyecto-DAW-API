@@ -73,6 +73,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        //Añadir subida de fotos
+
         // return $this->sendResponse('Registro realizado con éxito');
     }
 }

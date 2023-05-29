@@ -78,7 +78,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [deleteDataDialog, setDeleteDataDialog] = useState(false);
     const [item, setItem] = useState({});
     const [selectedData, setSelectedData] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
+    const [submitted, setSubmitted] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
@@ -93,12 +93,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [prodCategories, setProdCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
-    // const [recharge, setRecharge] = useState(false);
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         axios.get(fetchUrl)
-            .then(res => setData(formatJson(res.data, table)));
+            .then(res => {
+                setData(formatJson(res.data, table));
+                setSubmitted(false);
+            });
 
         let cityOptions = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
@@ -150,8 +152,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         'id': tag.id});
                 })})
         setTags(tagList);
-
-        console.log('submitted en useEffect: ', submitted)
         setSingleDeleted(false);
        }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
@@ -167,15 +167,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             case 'usuario': setItem(emptyUser); break;
         }
 
-        setSubmitted(!submitted);
-        console.log('submitted en openNew: ', submitted);
         setItemDialog(true);
     }
 
     const hideDialog = () => {
         setChangedItem(oldItem);
-        console.log('submitted en hideDialog: ', submitted);
-        setSubmitted(false);
         setItemDialog(false);
     }
 
@@ -192,10 +188,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const saveItem = () =>{
-
-        // setSubmitted(true);
-        // setItemDialog(false);
-
         const headers = {
             'Content-Type': 'application/json'
         };
@@ -259,7 +251,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item actualizado', life: 3000 });
-            // setSubmitted(true);
         }
         else {
             const itemDB = headersDB(item);
@@ -289,7 +280,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 // console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
                 // console.log('nacimiento: ', itemDB.birth_date);
 
-                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
+                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                 // .catch(error => {
                 //     console.log('Errores en TableAdmin: ', error.response.data);
                 //     setErrors(error.response.data);
@@ -323,13 +314,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item guardado', life: 3000 });
-            // setSubmitted(true);
+            setSubmitted(true);
         }
 
-        console.log('submitted en saveItem: ', submitted);
-        setSubmitted(true);
-        // setRecharge(true);
-        setChangedItem(item);
         setItemDialog(false);
         setItem({});
         setOldItem({});

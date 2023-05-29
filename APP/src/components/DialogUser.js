@@ -84,7 +84,7 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/>
+                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon className="custom-calendar" required/>
                     {/* <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
                     <br/>
                     <Label htmlFor='type'>Tipo:</Label>
