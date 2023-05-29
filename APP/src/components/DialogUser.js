@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Fieldset } from 'primereact/fieldset';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
+import Upload from './Upload';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
@@ -38,6 +39,10 @@ const DialogUser = ({ user, errors }) => {
         setDataForm(dataForm);
         // console.log('dataForm: ', dataForm);
 
+    }
+
+    const uploadHandler = data => {
+        console.log('imagen subida: ', data);
     }
 
     const submitForm = event => {
@@ -89,6 +94,9 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <Label htmlFor='type'>Tipo:</Label>
                     <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
+                    <br/>
+                    <Label htmlFor='profile_imgs'>Avatar:</Label>
+                    <Upload item={user} setProductPic={(data) => uploadHandler(data)}></Upload>
                 </Fieldset>
             </div>
             </form>
