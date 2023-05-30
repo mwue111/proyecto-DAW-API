@@ -43,6 +43,7 @@ const DialogUser = ({ user, errors }) => {
 
     const uploadHandler = data => {
         console.log('imagen subida: ', data);
+
     }
 
     const submitForm = event => {

@@ -277,15 +277,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // }
 
             if(table === 'usuario'){
-                // console.log('se manda: ', process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers });
-                // console.log('nacimiento: ', itemDB.birth_date);
-
+                //Si data tiene imagen, hacer una llamada a la ruta de fileController
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
-                // .catch(error => {
-                //     console.log('Errores en TableAdmin: ', error.response.data);
-                //     setErrors(error.response.data);
-                //     // throw error
-                // })
             }
             else{
                 axios.post(fetchUrl, itemDB, { headers });

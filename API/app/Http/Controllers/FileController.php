@@ -51,11 +51,17 @@ class FileController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors(),400);
         }
+
         if($request->has('file')){
             if($request->image_type === 'product_imgs') {
                 $name = time() . $request->name;
                 $request->file->storeAs('public/images/' . $request->image_type, $name);
 
+            }
+            else if($request->image_type === 'profile_imgs'){
+                $name = time() . $request->name;
+                $request->file->storeAs('public/images/' . $request->image_type, $name);
+                // $request->file->storeAs('public/images/' . $request->image_type . '/' . $request->user_id, $name);
             }
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
