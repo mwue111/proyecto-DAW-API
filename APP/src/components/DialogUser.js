@@ -42,8 +42,19 @@ const DialogUser = ({ user, errors }) => {
     }
 
     const uploadHandler = data => {
-        console.log('imagen subida: ', data);
+        if(user.profile_imgs){
+            console.log('imagen subida: ', data);
+            dataForm['profile_imgs'] = data;
 
+            const allImages = user.profile_imgs;
+
+            data.forEach(item => {
+                const files = Object.values(item);
+                for(let i = 0; i < files.length; i ++){
+                    allImages.push(files[i]);
+                }
+            });
+        }
     }
 
     const submitForm = event => {
@@ -97,7 +108,7 @@ const DialogUser = ({ user, errors }) => {
                     <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
                     <br/>
                     <Label htmlFor='profile_imgs'>Avatar:</Label>
-                    <Upload item={user} setProductPic={(data) => uploadHandler(data)}></Upload>
+                    <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>
                 </Fieldset>
             </div>
             </form>

@@ -53,6 +53,8 @@ class FileController extends Controller
         }
 
         if($request->has('file')){
+            //poner los if dentro del switch
+
             if($request->image_type === 'product_imgs') {
                 $name = time() . $request->name;
                 $request->file->storeAs('public/images/' . $request->image_type, $name);
@@ -83,8 +85,25 @@ class FileController extends Controller
                                 $document->save();
                                 break;
 
-                case '"profile_imgs"': $profile = new ProfileImg(); //TODO
+                case 'profile_imgs':
+                                    $name = time() . $request->name;
+                                    $file = File::create([
+                                        'user_id' => $request->user_id,
+                                        'url' => '/files/' . $request->image_type . '/' . $name,
+                                        'image_type' => $request->image_type,
+                                        'deleted' => 0
+                                    ]);
+                                    $profile = new ProfileImg();
                                     $profile->file_id = $file->id;
+
+                                    //Si ya existe en la tabla file un campo con el user_id y una profile_imgs, que lo borre
+                                    // $old_profile = File::where('user_id', '=', $request->user_id)->where('image_type', '=', 'profile_imgs')->first();
+                                    // if($old_profile){
+                                    //     $old_image = substr($old_profile->url, 20);
+                                    //     Storage::disk('public')->delete($old_profile);
+                                    //     $old_profile->delete();
+                                    // }
+
                                     $profile->save(); break;
 
                 case '"store_imgs"': $name = time(). $request->name;    //TODO

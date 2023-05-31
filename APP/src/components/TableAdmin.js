@@ -65,6 +65,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "email": "",
         "nacimiento": "",
         "type": "",
+        "profile_imgs": [],
         "deleted": 0
     }
 
@@ -277,8 +278,30 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // }
 
             if(table === 'usuario'){
-                //Si data tiene imagen, hacer una llamada a la ruta de fileController
-                axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
+                console.log('usuario que llega: ', itemDB);
+                // axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
+
+                if(itemDB.profile_imgs){
+                    console.log('hay imagen: ', itemDB['profile_imgs']);
+                    for(let i = 0; i < itemDB['profile_imgs'].length; i++){
+                        if(itemDB['profile_imgs'][i] instanceof File){
+                            console.log('entra a file: ', itemDB['profile_imgs'][i]);
+                             const formData = new FormData();
+                            formData.append('file', itemDB['profile_imgs'][i]);
+                            formData.append('image_type', 'profile_imgs');
+                            formData.append('user_id', user.id);
+                            formData.append('name', itemDB['profile_imgs'][i].name);
+
+                            // for(var key of formData.entries()){
+                            //     console.log(key[0], ' - ', key[1]);
+                            // }
+                            axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivos', formData)
+                                .then(res => console.log('res: ', res));
+                        }
+                    }
+
+
+                }
             }
             else{
                 axios.post(fetchUrl, itemDB, { headers });
@@ -314,17 +337,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem({});
         setOldItem({});
     }
-
-    // function getCookie(name) {
-    //     const cookies = document.cookie.split(';');
-    //     for (let i = 0; i < cookies.length; i++) {
-    //       const cookie = cookies[i].trim();
-    //       if (cookie.startsWith(`${name}=`)) {
-    //         return cookie.substring(name.length + 1);
-    //       }
-    //     }
-    //     return null;
-    //   }
 
     const editItem = (item) => {
         const _item = objectProfoundCopy(item);
