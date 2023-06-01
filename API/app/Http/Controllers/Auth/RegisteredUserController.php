@@ -73,6 +73,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        return response()->json($user);
+
         // return $this->sendResponse('Registro realizado con éxito');
     }
 }

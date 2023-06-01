@@ -7,6 +7,7 @@ import axios from 'axios';
 function Gallery( {rowData, table} ) {
 
     // console.log('rowData: ', rowData.id, ' - table: ', table);
+    //Aquí: ejemplo de URL que debe mostrarse para ver las fotos de perfil de los usuarios: http://localhost:8000/storage/images/profile_imgs/users/4/free.jpg
 
     let defaultImages = [
         {
