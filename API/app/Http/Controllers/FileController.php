@@ -61,7 +61,7 @@ class FileController extends Controller
 
             }
             else if($request->image_type === 'profile_imgs'){
-                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->user_id, $request->name);
+                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, $request->name);
             }
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
@@ -87,37 +87,23 @@ class FileController extends Controller
                                     $name = $request->name;
                                     $file = File::create([
                                         'user_id' => $request->user_id,
-                                        'url' => '/storage/images/' . $request->image_type . '/users/' . $request->user_id .'/'. $name,
+                                        'url' => '/storage/images/' . $request->image_type . '/users/' . $request->username .'/'. $name,
                                         'image_type' => $request->image_type,
                                         'deleted' => 0
                                     ]);
                                     $profile = new ProfileImg();
                                     $profile->file_id = $file->id;
-                                    /*
-                                    if ($old_profile) {
-                                        // Get the file path from the URL
-                                        $filePath = str_replace('/storage', 'public', $old_profile->url);
-
-                                        // Delete the file
-                                        Storage::disk('local')->delete($filePath);
-
-                                        // Update the URL to the new file
-                                        $old_profile->url = '/storage/images/' . $request->image_type . '/users/' . $request->user_id .'/'. $name;
-                                        $old_profile->save();
-                                    } else {
-                                        // No old profile picture found, so save the new one
-                                        $profile->save();
-                                    }
-                                    */
 
                                     //Si ya existe en la tabla file un campo con el user_id y una profile_imgs, que lo borre
-                                    $old_profile = File::where('user_id', '=', $request->user_id)->where('image_type', '=', 'profile_imgs')->first();
+                                    $old_profile = File::where('user_id', '=', $request->user_id)->where('image_type', '=', 'profile_imgs')
+                                                                                                ->orderBy('id', 'desc')
+                                                                                                ->skip(1)
+                                                                                                ->take(1)
+                                                                                                ->first();
+
                                     if($old_profile){
-                                        $filePath = str_replace('/storage', 'public', $old_profile->url);
-                                        // dd($old_profile);
-                                        // dd(substr($old_profile->url, 37));
-                                        Storage::disk('local')->delete($filePath);
-                                    //     $old_profile->delete();
+                                        $path = str_replace('/storage/', '/public/', $old_profile->url);
+                                        Storage::delete($path);
                                     }
                                     $profile->save(); break;
 

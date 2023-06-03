@@ -279,13 +279,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             if(table === 'usuario'){
                 let userId;
+                let username;
                 console.log('usuario que llega: ', itemDB);
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                     .then(res => {
                         userId = res.data.id;
+                        username = res.data.username;
                         console.log('res: ', userId);
 
-                        if(itemDB.profile_imgs){
+                        if(itemDB.profile_imgs.length > 0){
                             for(let i = 0; i < itemDB['profile_imgs'].length; i++){
                                 if(itemDB['profile_imgs'][i] instanceof File){
                                     console.log('entra a file: ', itemDB['profile_imgs'][i]);
@@ -293,6 +295,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                     formData.append('file', itemDB['profile_imgs'][i]);
                                     formData.append('image_type', 'profile_imgs');
                                     formData.append('user_id', userId);
+                                    formData.append('username', username);
                                     formData.append('name', itemDB['profile_imgs'][i].name);
 
                                     // for(var key of formData.entries()){
