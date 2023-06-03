@@ -104,6 +104,7 @@ class FileController extends Controller
                                     if($old_profile){
                                         $path = str_replace('/storage/', '/public/', $old_profile->url);
                                         Storage::delete($path);
+                                        $old_profile->delete();
                                     }
                                     $profile->save(); break;
 
