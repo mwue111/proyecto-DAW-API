@@ -29,8 +29,7 @@ const DialogUser = ({ user, errors }) => {
 
         if(name !== null){
             switch(name){
-                case 'type': setDropdownType(value);break;
-                // case 'nacimiento': formatDate(value); break;
+                case 'type': setDropdownType(value); break;
             }
 
             dataForm[name] = value;
@@ -42,19 +41,43 @@ const DialogUser = ({ user, errors }) => {
     }
 
     const uploadHandler = data => {
-        if(user.profile_imgs){
-            console.log('imagen subida: ', data);
-            dataForm['profile_imgs'] = data;
 
-            const allImages = user.profile_imgs;
+        if(user.profile_imgs || user.files){
+            const allFiles = [];
 
-            data.forEach(item => {
-                const files = Object.values(item);
-                for(let i = 0; i < files.length; i ++){
-                    allImages.push(files[i]);
+            handleFiles(data, allFiles);
+
+            for(let i = 0; i < allFiles.length; i++){
+                if(allFiles[i] instanceof File){
+                    if((allFiles[i].type).toString().includes('application/pdf')){
+                        console.log('es un pdf.');
+                        dataForm['files'] = data;
+
+                        const allFiles = user.files;
+
+                        handleFiles(data, allFiles);
+                    }
+                    else{
+                        console.log('es una imagen.');
+                        dataForm['profile_imgs'] = data;
+
+                        const allImages = user.profile_imgs;
+
+                        handleFiles(data, allImages);
+                    }
                 }
-            });
+            }
         }
+    }
+
+    const handleFiles = (data, allFiles) => {
+        return data.forEach(item => {
+            const files = Object.values(item);
+
+            for(let i = 0; i < files.length; i++) {
+                allFiles.push(files[i]);
+            }
+        })
     }
 
     const submitForm = event => {
@@ -104,11 +127,21 @@ const DialogUser = ({ user, errors }) => {
                     <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon className="custom-calendar" required/>
                     {/* <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
                     <br/>
+                    <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
+                    <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>
+                    <br/>
                     <Label htmlFor='type'>Tipo:</Label>
                     <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
-                    <br/>
-                    <Label htmlFor='profile_imgs'>Avatar:</Label>
-                    <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>
+
+                    {dropdownType === 'owner' &&
+
+                    <>
+                        <br />
+                        <Label htmlFor='files'>Documentos que acreditan titularidad del negocio: </Label>
+                        <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="files"></Upload>
+                    </>
+
+                    }
                 </Fieldset>
             </div>
             </form>

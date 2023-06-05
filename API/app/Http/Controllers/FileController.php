@@ -108,7 +108,6 @@ class FileController extends Controller
                                     }
                                     $profile->save(); break;
 
-
                 case '"store_imgs"': $name = time(). $request->name;    //TODO
                                     $file = File::create([
                                         'user_id' => $request->user_id,

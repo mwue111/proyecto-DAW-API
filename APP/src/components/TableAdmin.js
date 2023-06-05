@@ -66,6 +66,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "nacimiento": "",
         "type": "",
         "profile_imgs": [],
+        "files": [],
         "deleted": 0
     }
 
@@ -305,6 +306,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                         .then(res => console.log('res: ', res));
                                 }
                             }
+                        }
+
+                        if(itemDB.files.length > 0) {
+                            console.log('ha subido un documento.');
                         }
                     });
             }

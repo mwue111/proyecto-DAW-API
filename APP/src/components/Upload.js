@@ -135,7 +135,7 @@ function Upload( { setProductPic } ) {
                 ref={fileUploadRef}
                 name="upload"
                 multiple
-                accept="image/*"
+                accept="*"
                 maxFileSize={1000000}
                 onSelect={onTemplateSelect}
                 onError={onTemplateClear}
