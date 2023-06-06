@@ -58,8 +58,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const emptyUser = {
         "username": "",
         "name": "",
-        "password": "",
-        "password_c": "",
         "apellido": "",
         "apellido2": "",
         "email": "",
@@ -248,7 +246,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
-            console.log('PRODUCTO CAMBIADO\njsonDB: ', jsonDB, '- item.id: ', item.id);
+            console.log('ITEM CAMBIADO\njsonDB: ', jsonDB);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
@@ -281,17 +279,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
             if(table === 'usuario'){
                 let userId;
                 let username;
-                // console.log('usuario que llega: ', itemDB);
+
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                     .then(res => {
                         userId = res.data.id;
                         username = res.data.username;
-                        // console.log('res: ', userId);
 
                         if(itemDB.profile_imgs.length > 0){
                             for(let i = 0; i < itemDB['profile_imgs'].length; i++){
                                 if(itemDB['profile_imgs'][i] instanceof File){
-                                    // console.log('entra a file: ', itemDB['profile_imgs'][i]);
                                     const formData = new FormData();
                                     formData.append('file', itemDB['profile_imgs'][i]);
                                     formData.append('image_type', 'profile_imgs');
@@ -299,9 +295,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                                     formData.append('username', username);
                                     formData.append('name', itemDB['profile_imgs'][i].name);
 
-                                    // for(var key of formData.entries()){
-                                    //     console.log(key[0], ' - ', key[1]);
-                                    // }
                                     axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                                         .then(res => console.log('res: ', res));
                                 }
@@ -309,20 +302,14 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         }
 
                         if(itemDB.files.length > 0) {
-                            // console.log('ha subido un documento:', itemDB.files);
                             for(let i = 0; i < itemDB['files'].length; i++) {
                                 if(itemDB['files'][i] instanceof File){
-                                    // console.log("itemDB['files'][i]: ", itemDB['files'][i]);
                                     const formData = new FormData();
                                     formData.append('file', itemDB['files'][i]);
                                     formData.append('image_type', 'document');
                                     formData.append('user_id', userId);
                                     formData.append('username', username);
                                     formData.append('name', itemDB['files'][i].name);
-
-                                    // for(var key of formData.entries()){
-                                    //     console.log(key[0], ' - ', key[1]);
-                                    // }
 
                                     axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                                         .then(res => console.log('res de archivo: ', res));

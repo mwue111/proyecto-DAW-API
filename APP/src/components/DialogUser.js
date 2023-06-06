@@ -5,18 +5,21 @@ import { Fieldset } from 'primereact/fieldset';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
+import { birthDateObject } from '@/helpers/helper';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    // console.log('user: ', user);
-    const validBirthDay = new Date(user.nacimiento);
+    console.log('user: ', user);
+    // const validBirthDay = birthDateObject(user.nacimiento);
+    // console.log(validBirthDay)
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
     let BirthDate = new Date(milisec);
+
     const types = ['client','administrator','owner'];
 
     const [dataForm, setDataForm] = useState(user);
@@ -94,17 +97,6 @@ const DialogUser = ({ user, errors }) => {
                     <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange} required />
                     {/* <Message severity="error" text="Username is required" /> */}
                     {/* <InputError messages={errors.username} /> */}
-
-                    <br/>
-                    <br/>
-                    <Label htmlFor='password'>Contraseña: </Label>
-                    <InputText name='password' id='userUsername' defaultValue={dataForm.password} onChange={handleInputChange} required/>
-                    {/* type="password" */}
-                    <br/>
-                    <br/>
-                    <Label htmlFor='password'>Confirmar contraseña: </Label>
-                    <InputText name='password_c' id='userUsername' defaultValue={dataForm.password_C} onChange={handleInputChange} required/>
-                    {/* type="password" */}
                     <br/>
                     <br/>
                     <Label htmlFor='name'>Nombre: </Label>
@@ -124,8 +116,10 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon className="custom-calendar" required/>
-                    {/* <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
+                    <Calendar id='birthDate' name='nacimiento' value={user.nacimiento} onChange={handleInputChange} showIcon className="custom-calendar" required/>
+                    {/* value={validBirthDay ? validBirthDay : null}
+
+                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
                     <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>

@@ -257,6 +257,31 @@ function birthDateFormat(date){
     return bd.toLocaleDateString("es-ES", options);
 }
 
+export function birthDateObject(date) {
+    const months = {
+        enero: 0,
+        febrero: 1,
+        marzo: 2,
+        abril: 3,
+        mayo: 4,
+        junio: 5,
+        julio: 6,
+        agosto: 7,
+        septiembre: 8,
+        octubre: 9,
+        noviembre: 10,
+        diciembre: 11
+    }
+
+    const dividedDateString = date.split(' ');
+
+    const day = parseInt(dividedDateString[0]);
+    const month = months[dividedDateString[2]];
+    const year = parseInt(dividedDateString[4]);
+
+    return new Date(year, month, day);
+}
+
 ///////////////////////////////////////////
 // SearchBar
 ///////////////////////////////////////////
