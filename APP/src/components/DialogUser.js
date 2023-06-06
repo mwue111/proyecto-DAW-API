@@ -50,7 +50,7 @@ const DialogUser = ({ user, errors }) => {
             for(let i = 0; i < allFiles.length; i++){
                 if(allFiles[i] instanceof File){
                     if((allFiles[i].type).toString().includes('application/pdf')){
-                        console.log('es un pdf.');
+                        // console.log('es un pdf.');
                         dataForm['files'] = data;
 
                         const allFiles = user.files;
@@ -58,7 +58,7 @@ const DialogUser = ({ user, errors }) => {
                         handleFiles(data, allFiles);
                     }
                     else{
-                        console.log('es una imagen.');
+                        // console.log('es una imagen.');
                         dataForm['profile_imgs'] = data;
 
                         const allImages = user.profile_imgs;

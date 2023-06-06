@@ -66,7 +66,8 @@ class FileController extends Controller
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
                 $name = time().$file->getClientOriginalName();
-                $file->move(public_path().'/files/'.$request->image_type , $name);
+                // $file->move(public_path().'/files/'.$request->image_type , $name);
+                $file->storeAs('public/docs/users/' . $request->username, $name);
             }
 
             switch($request->image_type){
