@@ -246,18 +246,47 @@ function formatJsonUsuario(usuarios){
     return data;
 }
 
-function birthDateFormat(date){
-    const bd = new Date(date);
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    };
+// function birthDateFormat(date){
+//     const bd = new Date(date);
+//     const options = {
+//         year: 'numeric',
+//         month: 'long',
+//         day: 'numeric'
+//     };
 
-    return bd.toLocaleDateString("es-ES", options);
-}
+//     return bd.toLocaleDateString("es-ES", options);
+// }
+
+export function birthDateFormat(date) {
+    const bd = new Date(date);
+    const day = bd.getDate();
+    const month = getMonthName(bd.getMonth());
+    const year = bd.getFullYear();
+
+    return `${day} de ${month} de ${year}`;
+  }
+
+  function getMonthName(month) {
+    const months = [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ];
+    return months[month];
+  }
 
 export function birthDateObject(date) {
+    console.log('fecha que llega: ', date);
+
     const months = {
         enero: 0,
         febrero: 1,
@@ -273,13 +302,18 @@ export function birthDateObject(date) {
         diciembre: 11
     }
 
+
     const dividedDateString = date.split(' ');
 
     const day = parseInt(dividedDateString[0]);
     const month = months[dividedDateString[2]];
     const year = parseInt(dividedDateString[4]);
+    const dateObj =  new Date(year, month, day);
 
+    // console.log('fecha final: ', new Date(year, month, day));
+    // const formattedDate = dateObj.toISOString().split("T")[0];
     return new Date(year, month, day);
+    return formattedDate;
 }
 
 ///////////////////////////////////////////

@@ -6,6 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
 import { birthDateObject } from '@/helpers/helper';
+import { birthDateFormat } from '@/helpers/helper';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
@@ -13,8 +14,6 @@ import { Message } from 'primereact/message';
 const DialogUser = ({ user, errors }) => {
 
     console.log('user: ', user);
-    // const validBirthDay = birthDateObject(user.nacimiento);
-    // console.log(validBirthDay)
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
@@ -24,6 +23,25 @@ const DialogUser = ({ user, errors }) => {
 
     const [dataForm, setDataForm] = useState(user);
     const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    // const validBirthDay = birthDateObject(user.nacimiento);
+    // console.log('validBD: ', validBirthDay)
+    // useEffect(() => {
+    //     console.log('selectedDate: ', selectedDate)
+    // }, [selectedDate]);
+
+    const checkDate = (date) => {
+        console.log('fecha que llega a checkDate: ', date);
+        const formattedDate = birthDateFormat(date);
+        const bdIbject = birthDateObject(formattedDate);
+        setSelectedDate(formattedDate);
+
+        dataForm['nacimiento'] = selectedDate;
+        // console.log('formattedDate: ', formattedDate);
+        //Thu Apr 13 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
+
+    }
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
@@ -33,6 +51,10 @@ const DialogUser = ({ user, errors }) => {
         if(name !== null){
             switch(name){
                 case 'type': setDropdownType(value); break;
+                case 'nacimiento': checkDate(value);
+                                // // setSelectedDate(value);
+                                // dataForm[name] = selectedDate;
+                                break;
             }
 
             dataForm[name] = value;
@@ -88,6 +110,8 @@ const DialogUser = ({ user, errors }) => {
 
     }
 
+    const isoDateString = "2023-05-03T22:00:00.000Z";
+
     return(
         <div>
             <form onSubmit={submitForm} encType="multipart/form-data">
@@ -116,10 +140,8 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar id='birthDate' name='nacimiento' value={user.nacimiento} onChange={handleInputChange} showIcon className="custom-calendar" required/>
-                    {/* value={validBirthDay ? validBirthDay : null}
-
-                    <Calendar id='birthDate' name='nacimiento' value={dataForm.nacimiento} onChange={handleInputChange} showIcon required/> */}
+                    <Calendar name='nacimiento' value={user.id ? selectedDate : ''} onChange={handleInputChange} showIcon required />
+                    {/* value={validBirthDay ? validBirthDay : null}*/}
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
                     <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>

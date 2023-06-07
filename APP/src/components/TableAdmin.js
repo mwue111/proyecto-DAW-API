@@ -277,8 +277,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // }
 
             if(table === 'usuario'){
+                console.log('usuario en saveItem: ', itemDB);
                 let userId;
                 let username;
+
+                if(itemDB.birth_date){
+                    const timezoneOffset = itemDB.birth_date.getTimezoneOffset();
+                    const adjustedDate = new Date(itemDB.birth_date.getTime() - timezoneOffset * 60 * 1000);
+                    const formattedDate = adjustedDate.toISOString().split("T")[0];
+
+                    itemDB.birth_date = formattedDate;
+                }
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                     .then(res => {
