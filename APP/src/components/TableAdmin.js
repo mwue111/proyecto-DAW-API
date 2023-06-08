@@ -8,7 +8,7 @@ import DialogStore from 'components/DialogStore';
 import DialogProduct from 'components/DialogProduct';
 import DialogUser from 'components/DialogUser';
 import { Toast } from 'primereact/toast';
-import { formatJson, changedJson, objectProfoundCopy, formatDate} from '@/helpers/helper';
+import { formatJson, changedJson, objectProfoundCopy, formatDate } from '@/helpers/helper';
 import axios from 'axios';
 import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
@@ -49,12 +49,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
         },
         "descripcion": "",
         "nombre": "",
-        "ofertas":[],
+        "ofertas": [],
         "tiendas": [],
         "tags": [],
         "product_img": [],
         "deleted": 0,
-        "img_delete" : [],
+        "img_delete": [],
     }
 
     const emptyUser = {
@@ -98,6 +98,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
+
         axios.get(fetchUrl)
             .then(res => {
                 setData(formatJson(res.data, table));
@@ -106,7 +107,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         let cityOptions = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
-                .then(res => {res.data.map((item) => {
+            .then(res => {
+                res.data.map((item) => {
                     cityOptions.push({
                         'name': item.name,
                         'id': item.id
@@ -117,7 +119,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         let ownerOptions = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/propietario')
-                .then(res => {res.data.map((item) => {
+            .then(res => {
+                res.data.map((item) => {
                     ownerOptions.push({
                         'name': item.user.name,
                         'id': item.user.id
@@ -128,34 +131,41 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         let categories = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/categoria')
-                .then(res => {res.data.map((item) => {
+            .then(res => {
+                res.data.map((item) => {
                     categories.push({
                         'name': item.name,
                         'id': item.id
                     });
-                })})
+                })
+            })
         setProdCategories(categories);
 
         let brandList = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/marca')
-                .then(res => {res.data.map((item) => {
+            .then(res => {
+                res.data.map((item) => {
                     brandList.push({
                         'name': item.name,
                         'id': item.id
                     });
-                    })})
+                })
+            })
         setBrands(brandList);
 
         let tagList = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/etiqueta')
-                .then(res => {res.data.map((tag) => {
+            .then(res => {
+                res.data.map((tag) => {
                     tagList.push({
                         'name': tag.name,
-                        'id': tag.id});
-                })})
+                        'id': tag.id
+                    });
+                })
+            })
         setTags(tagList);
         setSingleDeleted(false);
-       }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
+    }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
     if (!data.length) {
         return <div>No se han encontrado datos</div>
@@ -163,7 +173,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const openNew = () => {
 
-        switch(table){
+        switch (table) {
             case 'tienda': setItem(emptyStore); break;
             case 'producto': setItem(emptyProduct); break;
             case 'usuario': setItem(emptyUser); break;
@@ -189,35 +199,35 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteOldDialog(false);
     }
 
-    const saveItem = () =>{
+    const saveItem = () => {
         const headers = {
             'Content-Type': 'application/json'
         };
 
-        if(item.tags){
+        if (item.tags) {
             item.tags = formatTags(item.tags);
         }
 
         if (item.id) {
 
-            if(item.user_id){
+            if (item.user_id) {
                 item.user_id = item.user_id.id;
             }
 
-            if(item.marca){
+            if (item.marca) {
                 item.marca = item.marca.name;
             }
 
-            if(item.categoria){
+            if (item.categoria) {
                 item.categoria = item.categoria.name;
             }
 
             const jsonDB = changedJson(oldItem, item);
 
-            if(item.product_img && item.product_img.length !== oldItem.product_img.length){
+            if (item.product_img && item.product_img.length !== oldItem.product_img.length) {
 
-                for(let i = 0; i < jsonDB['product_img'].length; i++){
-                    if(jsonDB['product_img'][i] instanceof File){
+                for (let i = 0; i < jsonDB['product_img'].length; i++) {
+                    if (jsonDB['product_img'][i] instanceof File) {
                         // console.log('archivo: ', jsonDB['product_img'][i].name);
                         const formData = new FormData();
                         formData.append('file', jsonDB['product_img'][i]);
@@ -236,10 +246,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
-            if(item.img_delete && item.img_delete.length > 0){
+            if (item.img_delete && item.img_delete.length > 0) {
                 let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
 
-                for(let i = 0; i < item.img_delete.length; i++){
+                for (let i = 0; i < item.img_delete.length; i++) {
                     axios.delete(url + '/' + item.img_delete[i])
                         .then(res => {
                             console.log(res.data + ' eliminada');
@@ -248,7 +258,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
-            if(jsonDB.birth_date){
+            if (jsonDB.birth_date) {
                 jsonDB.birth_date = formattedDate(jsonDB.birth_date);
             }
 
@@ -261,20 +271,20 @@ const TableAdmin = ({ fetchUrl, table }) => {
         else {
             const itemDB = headersDB(item);
 
-            if(itemDB.user_id){
+            if (itemDB.user_id) {
                 itemDB.user_id = itemDB.user_id.id;
             }
 
-            if(itemDB.address && itemDB.address.town){
+            if (itemDB.address && itemDB.address.town) {
                 itemDB.address.town_id = itemDB.address.town.id;
                 delete itemDB.address.town;
             }
 
-            if(itemDB.brand){
+            if (itemDB.brand) {
                 itemDB.brand = itemDB.brand.id;
             }
 
-            if(itemDB.category){
+            if (itemDB.category) {
                 itemDB.category = itemDB.category.id;
             }
 
@@ -282,12 +292,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
             //     console.log('tags: ', itemDB.tags);
             // }
 
-            if(table === 'usuario'){
+            if (table === 'usuario') {
                 console.log('usuario en saveItem: ', itemDB);
                 let userId;
                 let username;
 
-                if(itemDB.birth_date){
+                if (itemDB.birth_date) {
                     itemDB.birth_date = formattedDate(itemDB.birth_date);
                 }
 
@@ -296,9 +306,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         userId = res.data.id;
                         username = res.data.username;
 
-                        if(itemDB.profile_imgs.length > 0){
-                            for(let i = 0; i < itemDB['profile_imgs'].length; i++){
-                                if(itemDB['profile_imgs'][i] instanceof File){
+                        if (itemDB.profile_imgs.length > 0) {
+                            for (let i = 0; i < itemDB['profile_imgs'].length; i++) {
+                                if (itemDB['profile_imgs'][i] instanceof File) {
                                     const formData = new FormData();
                                     formData.append('file', itemDB['profile_imgs'][i]);
                                     formData.append('image_type', 'profile_imgs');
@@ -312,9 +322,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             }
                         }
 
-                        if(itemDB.files.length > 0) {
-                            for(let i = 0; i < itemDB['files'].length; i++) {
-                                if(itemDB['files'][i] instanceof File){
+                        if (itemDB.files.length > 0) {
+                            for (let i = 0; i < itemDB['files'].length; i++) {
+                                if (itemDB['files'][i] instanceof File) {
                                     const formData = new FormData();
                                     formData.append('file', itemDB['files'][i]);
                                     formData.append('image_type', 'document');
@@ -329,28 +339,28 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         }
                     });
             }
-            else{
+            else {
                 axios.post(fetchUrl, itemDB, { headers });
             }
 
-            if(itemDB.product_img){
+            if (itemDB.product_img) {
                 setTimeout(() => {
                     // if(itemDB.product_img){
 
-                        for(let i = 0; i < itemDB['product_img'].length; i++){
-                            const formData = new FormData();
-                            formData.append('file', itemDB['product_img'][i]);
-                            formData.append('user_id', user.id);
-                            formData.append('image_type', 'product_imgs');
-                            formData.append('name', itemDB['product_img'][i].name);
+                    for (let i = 0; i < itemDB['product_img'].length; i++) {
+                        const formData = new FormData();
+                        formData.append('file', itemDB['product_img'][i]);
+                        formData.append('user_id', user.id);
+                        formData.append('image_type', 'product_imgs');
+                        formData.append('name', itemDB['product_img'][i].name);
 
-                            // for(var key of formData.entries()){
-                            //     console.log(key[0], ' - ', key[1]);
-                            // }
+                        // for(var key of formData.entries()){
+                        //     console.log(key[0], ' - ', key[1]);
+                        // }
 
-                            axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
-                                    .then(res => console.log('res: ', res));
-                        }
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                            .then(res => console.log('res: ', res));
+                    }
                     // }
                 }, 2000);
             }
@@ -381,7 +391,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const formatTags = (tags) => {
         let tagId = [];
 
-        for(let i = 0; i < tags.length; i++){
+        for (let i = 0; i < tags.length; i++) {
             tagId.push(tags[i].id);
         }
 
@@ -390,10 +400,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const deleteItem = () => {
 
-        if(item.id){
+        if (item.id) {
             item.deleted = 1;
 
-            if(item.tags){
+            if (item.tags) {
                 item.tags = formatTags(item.tags);
             }
 
@@ -420,10 +430,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const undoDelete = () => {
 
-        if(item.id){
+        if (item.id) {
             item.deleted = 0;
 
-            if(item.tags){
+            if (item.tags) {
                 item.tags = formatTags(item.tags);
             }
 
@@ -445,7 +455,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             'Content-Type': 'application/json'
         };
 
-        axios.post(fetchUrl + '/borrar', {"data": months}, { headers })
+        axios.post(fetchUrl + '/borrar', { "data": months }, { headers })
             .then(res => setDataToDelete(formatJson(res.data, table))
             );
         setDeleteOldDialog(true);
@@ -462,7 +472,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 .then(response => {
                     console.log(response.data + ' - eliminado');
                     setDataToDelete(arrayToDelete)
-                    })
+                })
                 .catch(error => console.log(error + ' - ha habido un error'))
         })
 
@@ -481,13 +491,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const deleteSingleOldItem = (rowData) => {
-        return(
-           <Button icon='pi pi-trash' className='p-button p-button-danger' label='Eliminar registro' onClick={() => {deleteSingleItem(rowData)}} />
+        return (
+            <Button icon='pi pi-trash' className='p-button p-button-danger' label='Eliminar registro' onClick={() => { deleteSingleItem(rowData) }} />
         )
     }
 
     const goToData = (row) => {
-        switch(table){
+        switch (table) {
             case 'tienda': window.location.href = `/tienda/${row.data.id}`; break;
             case 'producto': window.location.href = `/producto/${row.data.id}`; break;
         }
@@ -497,20 +507,32 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return (
             <React.Fragment>
                 {rowData.deleted == 0 ? <div className="space-x-4"><Button icon="pi pi-pencil" className="p-button-rounded p-button-success" onClick={() => editItem(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning "  onClick={() => confirmDeleteItem(rowData)} /></div>
-                 :
-                <div className="flex justify-center"><Button icon="pi pi-refresh" label="Undo" className="p-button-raised p-button-outlined p-button-plain" onClick={() => confirmUndoDelete(rowData)} /></div>
+                    <Button icon="pi pi-trash" className="p-button-rounded p-button-warning " onClick={() => confirmDeleteItem(rowData)} /></div>
+                    :
+                    <div className="flex justify-center"><Button icon="pi pi-refresh" label="Undo" className="p-button-raised p-button-outlined p-button-plain" onClick={() => confirmUndoDelete(rowData)} /></div>
                 }
             </React.Fragment>
         );
     }
 
     const imagesBodyTemplate = (rowData) => {
-        return(
+        return (
             <React.Fragment>
                 <div className="space-x-4">
 
-                    <Gallery rowData={rowData} table={table}/>
+                    <Gallery rowData={rowData} table={table} />
+
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    const avatarBodyTemplate = (rowData) => {
+        return (
+            <React.Fragment>
+                <div className="space-x-4">
+
+                    <Gallery rowData={rowData} table={table} />
 
                 </div>
             </React.Fragment>
@@ -546,7 +568,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     )
 
     const paginatorButton = () => {
-        return(
+        return (
             <React.Fragment>
                 <Button icon="pi pi-plus" className="p-button p-button-success mr-2" label="Añadir nuevo registro" onClick={openNew} />
             </React.Fragment>
@@ -561,11 +583,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
             setDropdownValue(e.value);
         }
 
-        return(
+        return (
             <React.Fragment>
                 <div className='flex items-center space-x-2'>
                     <Dropdown value={dropdownValue} options={monthAmount} editable onChange={handleInputChange} placeholder='Meses de antiguedad' />
-                    <Button icon="pi pi-trash" className="p-button p-button-danger" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()}/>
+                    <Button icon="pi pi-trash" className="p-button p-button-danger" label="Eliminar registros antiguos" onClick={() => confirmDeleteOld()} />
                 </div>
             </React.Fragment>
         )
@@ -573,7 +595,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if(typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id'){
+            if (typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id') {
                 acum[key] = value;
             }
             return acum;
@@ -592,42 +614,58 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <div className="card">
 
-                    <DataTable
-                        value={data}
-                        rowClassName={rowClass}
-                        responsiveLayout="scroll"
-                        paginator
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                        paginatorLeft={paginatorButton}
-                        paginatorRight={deleteOldItemsButton}
-                        rows={5}
-                        selectionMode="single"
-                        selection={null}
-                        onRowClick={goToData}
-                    >
+                <DataTable
+                    value={data}
+                    rowClassName={rowClass}
+                    responsiveLayout="scroll"
+                    paginator
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+                    paginatorLeft={paginatorButton}
+                    paginatorRight={deleteOldItemsButton}
+                    rows={5}
+                    selectionMode="single"
+                    selection={null}
+                    onRowClick={goToData}
+                >
 
-                        {Object.keys(filteredData[0]).map((key) => (
-                            <Column field={key}
-                                    header={key}
-                                    key={key}
-                            />
-                        ))}
-
-                        {<Column field={'imágenes'}
-                                header={'imágenes'}
-                                key={'imágenes'}
-                                body={imagesBodyTemplate}
-                        />}
-
-                        <Column
-                            body={actionBodyTemplate}
-                            header='Acciones'
-                            exportable={false}
-                            style={{ minWidth: '8rem' }}
-                            key={item.id}
+                    {Object.keys(filteredData[0]).map((key) => (
+                        <Column field={key}
+                            header={key}
+                            key={key}
                         />
+                    ))}
 
-                    </DataTable>
+                    {table === 'usuario' ? (
+                        <Column
+                            field={'avatar'}
+                            header={'Avatar'}
+                            key={'avatar'}
+                            body={avatarBodyTemplate}
+                        />
+                    ) : (
+                        <Column
+                            field={'imágenes'}
+                            header={'imágenes'}
+                            key={'imágenes'}
+                            body={imagesBodyTemplate}
+                        />
+                    )}
+{/*
+                    {<Column field={'imágenes'}
+                        header={'imágenes'}
+                        key={'imágenes'}
+                        body={imagesBodyTemplate}
+                    />} */}
+
+                    <Column
+                        body={actionBodyTemplate}
+                        header='Acciones'
+                        exportable={false}
+                        style={{ minWidth: '8rem' }}
+                        key={item.id}
+                    />
+
+                </DataTable>
             </div>
 
             <Dialog
@@ -641,27 +679,27 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {table === 'tienda' &&
 
                     <DialogStore store={item}
-                                setItem={setItem}
-                                cities={cities}
-                                owners={owners}
-                />}
+                        setItem={setItem}
+                        cities={cities}
+                        owners={owners}
+                    />}
 
                 {table === 'producto' &&
 
                     <DialogProduct product={item}
-                                setItem={setItem}
-                                allCategories={prodCategories}
-                                brands={brands}
-                                allTags={tags}
-                                table={table}
-                />}
+                        setItem={setItem}
+                        allCategories={prodCategories}
+                        brands={brands}
+                        allTags={tags}
+                        table={table}
+                    />}
 
                 {table === 'usuario' &&
 
                     <DialogUser user={item}
-                                errors={errors}
-                                // setItem={setItem}
-                />}
+                        errors={errors}
+                    // setItem={setItem}
+                    />}
 
             </Dialog>
 
@@ -674,7 +712,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 onHide={hideDeleteItemDialog}
             >
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem'}}/>
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {item && <span>¿Seguro/a que quieres eliminar este item?</span>}
                 </div>
 
@@ -682,7 +720,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <Dialog
                 visible={undoDeleteDialog}
-                style={{ width: '450px '}}
+                style={{ width: '450px ' }}
                 header='Recuperar elemento'
                 modal
                 footer={undoDeleteDialogFooter}
@@ -704,10 +742,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
             >
                 <div className='confirmation-content'>
                     <div className='flex align-items justify-center bg-yellow-200 p-6 rounded-2xl'>
-                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }}/>
+                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                         <span>Vas a borrar permanentemente estos registros antiguos. ¿Estás seguro/a?</span>
                     </div>
-                    <br/>
+                    <br />
                     <DataTable
                         value={dataToDelete}
                         size='small'
@@ -716,9 +754,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     >
                         {Object.keys(filteredData[0]).map((key) => (
                             <Column field={key} header={key} key={key} />
-                            )
+                        )
                         )}
-                        <Column  body={deleteSingleOldItem}/>
+                        <Column body={deleteSingleOldItem} />
                     </DataTable>
                 </div>
             </Dialog>
