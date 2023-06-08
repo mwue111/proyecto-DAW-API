@@ -308,7 +308,7 @@ export function birthDateObject(date) {
     const day = parseInt(dividedDateString[0]);
     const month = months[dividedDateString[2]];
     const year = parseInt(dividedDateString[4]);
-    const dateObj =  new Date(year, month, day);
+    // const dateObj =  new Date(year, month, day);
 
     // console.log('fecha final: ', new Date(year, month, day));
     // const formattedDate = dateObj.toISOString().split("T")[0];

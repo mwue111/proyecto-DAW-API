@@ -23,38 +23,24 @@ const DialogUser = ({ user, errors }) => {
 
     const [dataForm, setDataForm] = useState(user);
     const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
 
-    // const validBirthDay = birthDateObject(user.nacimiento);
-    // console.log('validBD: ', validBirthDay)
-    // useEffect(() => {
-    //     console.log('selectedDate: ', selectedDate)
-    // }, [selectedDate]);
+    useEffect(() => {
+        console.log('selectedDate: ', selectedDate)
+    }, []);
 
-    const checkDate = (date) => {
-        console.log('fecha que llega a checkDate: ', date);
-        const formattedDate = birthDateFormat(date);
-        const bdIbject = birthDateObject(formattedDate);
-        setSelectedDate(formattedDate);
 
-        dataForm['nacimiento'] = selectedDate;
-        // console.log('formattedDate: ', formattedDate);
-        //Thu Apr 13 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
-
-    }
+    //value: Thu Apr 13 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
-        const value = target.value; //valor del input: Y
+        let value = target.value; //valor del input: Y
         const name = target.name;   //name del input: X
 
         if(name !== null){
             switch(name){
                 case 'type': setDropdownType(value); break;
-                case 'nacimiento': checkDate(value);
-                                // // setSelectedDate(value);
-                                // dataForm[name] = selectedDate;
-                                break;
+                case 'nacimiento': value = birthDateFormat(value); break;
             }
 
             dataForm[name] = value;
@@ -140,7 +126,7 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar name='nacimiento' value={user.id ? selectedDate : ''} onChange={handleInputChange} showIcon required />
+                    <Calendar name='nacimiento' value={selectedDate} onChange={handleInputChange} showIcon required />
                     {/* value={validBirthDay ? validBirthDay : null}*/}
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>

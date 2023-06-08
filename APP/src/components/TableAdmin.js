@@ -14,6 +14,7 @@ import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
 import { headersDB } from 'helpers/helper.js';
 import Gallery from 'components/Gallery';
+import { birthDateObject } from '@/helpers/helper';
 
 const TableAdmin = ({ fetchUrl, table }) => {
 
@@ -282,6 +283,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 let username;
 
                 if(itemDB.birth_date){
+                    itemDB.birth_date = birthDateObject(itemDB.birth_date);
+
                     const timezoneOffset = itemDB.birth_date.getTimezoneOffset();
                     const adjustedDate = new Date(itemDB.birth_date.getTime() - timezoneOffset * 60 * 1000);
                     const formattedDate = adjustedDate.toISOString().split("T")[0];
