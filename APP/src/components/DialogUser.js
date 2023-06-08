@@ -40,7 +40,7 @@ const DialogUser = ({ user, errors }) => {
         if(name !== null){
             switch(name){
                 case 'type': setDropdownType(value); break;
-                case 'nacimiento': value = birthDateFormat(value); break;
+                case 'nacimiento': value = birthDateFormat(value); setSelectedDate(birthDateObject(value)); break;
             }
 
             dataForm[name] = value;

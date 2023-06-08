@@ -285,7 +285,7 @@ export function birthDateFormat(date) {
   }
 
 export function birthDateObject(date) {
-    console.log('fecha que llega: ', date);
+    console.log('fecha que llega a birthDateObject en helper: ', date);
 
     const months = {
         enero: 0,
@@ -313,7 +313,6 @@ export function birthDateObject(date) {
     // console.log('fecha final: ', new Date(year, month, day));
     // const formattedDate = dateObj.toISOString().split("T")[0];
     return new Date(year, month, day);
-    return formattedDate;
 }
 
 ///////////////////////////////////////////

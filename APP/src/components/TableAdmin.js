@@ -247,6 +247,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 }
             }
 
+            if(jsonDB.birth_date){
+                console.log('jsonDB.birth_date antes de ir a birthDateObject: ', jsonDB.birth_date)
+                jsonDB.birth_date = birthDateObject(jsonDB.birth_date);
+                console.log('jsonDB.birth_date después de ir a birthDateObject: ', jsonDB.birth_date)
+                const timezoneOffset = jsonDB.birth_date.getTimezoneOffset();
+                console.log('timezoneOffset: ', timezoneOffset);
+                const adjustedDate = new Date(jsonDB.birth_date.getTime() - timezoneOffset * 60 * 1000);
+                console.log('adjustedDate: ', adjustedDate);
+                const formattedDate = adjustedDate.toISOString().split("T")[0];
+                console.log('formattedDate: ', formattedDate);
+
+                jsonDB.birth_date = formattedDate;
+                console.log('jsonDB.birth_date después de todos los cambios: ', formattedDate);
+            }
+
             console.log('ITEM CAMBIADO\njsonDB: ', jsonDB);
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
@@ -283,13 +298,19 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 let username;
 
                 if(itemDB.birth_date){
+                    console.log('itemDB.birth_date antes de ir a birthDateObject: ', itemDB.birth_date)
                     itemDB.birth_date = birthDateObject(itemDB.birth_date);
+                    console.log('itemDB.birth_date después de ir a birthDateObject: ', itemDB.birth_date)
 
                     const timezoneOffset = itemDB.birth_date.getTimezoneOffset();
+                    console.log('timezoneOffset: ', timezoneOffset);
                     const adjustedDate = new Date(itemDB.birth_date.getTime() - timezoneOffset * 60 * 1000);
+                    console.log('adjustedDate: ', adjustedDate);
                     const formattedDate = adjustedDate.toISOString().split("T")[0];
+                    console.log('formattedDate: ', formattedDate);
 
                     itemDB.birth_date = formattedDate;
+                    console.log('itemDB.birth_date después de todos los cambios: ', formattedDate);
                 }
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
