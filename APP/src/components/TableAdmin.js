@@ -14,6 +14,7 @@ import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
 import { headersDB } from 'helpers/helper.js';
 import Gallery from 'components/Gallery';
+import Avatar from 'components/Avatar';
 import { birthDateObject } from '@/helpers/helper';
 import { formattedDate } from '@/helpers/helper';
 
@@ -164,6 +165,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 })
             })
         setTags(tagList);
+
         setSingleDeleted(false);
     }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
@@ -516,30 +518,44 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const imagesBodyTemplate = (rowData) => {
-        return (
-            <React.Fragment>
-                <div className="space-x-4">
-
-                    <Gallery rowData={rowData} table={table} />
-
-                </div>
-            </React.Fragment>
-        )
+        if(compareKeys(rowData, emptyUser)){
+            console.log('es un usuario')
+            return null;
+        }
+        else{
+            return (
+                <React.Fragment>
+                    <div className="space-x-4">
+                        <Gallery rowData={rowData} table={table} />
+                    </div>
+                </React.Fragment>
+            )
+        }
     }
 
     const avatarBodyTemplate = (rowData) => {
-        return (
 
-            // return <img src={`https://primefaces.org/cdn/primereact/images/product/${rowData.image}`} alt={rowData.image} className="w-6rem shadow-2 border-round" />;
-            <p>test</p>
-            // <React.Fragment>
-            //     <div className="space-x-4">
+        if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
+            console.log('rowData[0]: ', rowData)
+            console.log('no es un usuario');
+            return null;
+        }
+        else{
+            return (
+                <React.Fragment>
+                    <div className="space-x-4">
+                        <Avatar rowData={rowData} table={table} />
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
 
-            //         <Gallery rowData={rowData} table={table} />
+    function compareKeys(a, b) {
+        const aKeys = Object.keys(a).sort();
+        const bKeys = Object.keys(b).sort();
 
-            //     </div>
-            // </React.Fragment>
-        )
+        return JSON.stringify(aKeys[0]) === JSON.stringify(bKeys[0]);
     }
 
     const itemDialogFooter = (
@@ -638,26 +654,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         />
                     ))}
 
-                    {/* {table === 'usuario' ? (
-                        <Column
-                            field={'avatar'}
-                            header={'Avatar'}
-                            key={'avatar'}
-                            body={avatarBodyTemplate}
-                        />
-                    ) : (
-                        <Column
-                            field={'imágenes'}
-                            header={'imágenes'}
-                            key={'imágenes'}
-                            body={imagesBodyTemplate}
-                        />
-                    )} */}
-
-                    {<Column field={'imágenes'}
-                        header={'imágenes'}
-                        key={'imágenes'}
-                        body={imagesBodyTemplate}
+                    {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        header={ table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        key={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        body={ table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
                     />}
 
                     <Column

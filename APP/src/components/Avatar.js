@@ -1,0 +1,44 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
+
+function Avatar( {rowData, table} ) {
+    // console.log('rowData en avatar: ', rowData);
+
+    const [avatar, setAvatar] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${rowData.id}`)
+            .then(res => {
+                if(res.data.length){
+                    res.data.map((item) => {
+                        setAvatar(item.url);
+                    })
+                }
+                else{
+                    console.log('no tiene avatar');
+                }
+            })
+            .catch(err => console.log('Ha ocurrido un error: ', err))
+            .finally(() => {
+                setIsLoading(false);
+            })
+    })
+
+    if(isLoading){
+        return <ProgressSpinner style={{width: '20%', height: '20%'}} strokeWidth='5' />
+    }
+
+    return(
+        <div>
+            <img src={process.env.NEXT_PUBLIC_BACKEND_URL + avatar}
+                alt={`imagen de perfil de ${rowData.username}`}
+                style={{ width: 86, borderRadius: 15}}
+            />
+        </div>
+    )
+
+}
+
+export default Avatar;
