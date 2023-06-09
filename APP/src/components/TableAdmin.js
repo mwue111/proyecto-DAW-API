@@ -529,13 +529,16 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const avatarBodyTemplate = (rowData) => {
         return (
-            <React.Fragment>
-                <div className="space-x-4">
 
-                    <Gallery rowData={rowData} table={table} />
+            // return <img src={`https://primefaces.org/cdn/primereact/images/product/${rowData.image}`} alt={rowData.image} className="w-6rem shadow-2 border-round" />;
+            <p>test</p>
+            // <React.Fragment>
+            //     <div className="space-x-4">
 
-                </div>
-            </React.Fragment>
+            //         <Gallery rowData={rowData} table={table} />
+
+            //     </div>
+            // </React.Fragment>
         )
     }
 
@@ -635,7 +638,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         />
                     ))}
 
-                    {table === 'usuario' ? (
+                    {/* {table === 'usuario' ? (
                         <Column
                             field={'avatar'}
                             header={'Avatar'}
@@ -649,13 +652,13 @@ const TableAdmin = ({ fetchUrl, table }) => {
                             key={'imágenes'}
                             body={imagesBodyTemplate}
                         />
-                    )}
-{/*
+                    )} */}
+
                     {<Column field={'imágenes'}
                         header={'imágenes'}
                         key={'imágenes'}
                         body={imagesBodyTemplate}
-                    />} */}
+                    />}
 
                     <Column
                         body={actionBodyTemplate}
