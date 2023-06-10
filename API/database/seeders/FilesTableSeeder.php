@@ -84,21 +84,21 @@ class FilesTableSeeder extends Seeder
         //12
         DB::table('files')->insert([
             'user_id' => 7,
-            'url' => '/storage/images/product_imgs/1680686161bulgur.jpg',
+            'url' => '/storage/images/product_imgs/1686293838bulgur3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //13
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/storage/images/product_imgs/1680686161bulgur2.jpg',
+            'url' => '/storage/images/product_imgs/1686293838bulgur.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //14
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680686234bulgur3.jpg',
+            'url' => '/storage/images/product_imgs/1686293837bulgur2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
