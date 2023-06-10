@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
-function Avatar( {rowData, table} ) {
-    // console.log('rowData en avatar: ', rowData);
+function Avatar( {users, table} ) {
+    // console.log('users en avatar: ', users);
 
     const [avatar, setAvatar] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${rowData.id}`)
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${users.id}`)
             .then(res => {
                 if(res.data.length){
                     res.data.map((item) => {
@@ -33,7 +33,7 @@ function Avatar( {rowData, table} ) {
     return(
         <div>
             <img src={process.env.NEXT_PUBLIC_BACKEND_URL + avatar}
-                alt={`imagen de perfil de ${rowData.username}`}
+                alt={`imagen de perfil de ${users.username}`}
                 style={{ width: 86, borderRadius: 15}}
             />
         </div>
