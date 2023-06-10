@@ -13,11 +13,12 @@ function Avatar( {users, table} ) {
             .then(res => {
                 if(res.data.length){
                     res.data.map((item) => {
+                        console.log('item: ',item)
                         setAvatar(item.url);
                     })
                 }
                 else{
-                    console.log('no tiene avatar');
+                    // console.log('El usuario no tiene avatar');
                 }
             })
             .catch(err => console.log('Ha ocurrido un error: ', err))

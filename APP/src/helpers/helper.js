@@ -242,7 +242,7 @@ function formatJsonUsuario(usuarios) {
             email: usuario.email,
             nacimiento: birthDateFormat(usuario.birth_date),
             deleted: usuario.deleted,
-            tipo: usuario.type,
+            tipo: usuario.type
         }
     })
     return data;

@@ -13,7 +13,7 @@ import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    console.log('user: ', user);
+    // console.log('user: ', user);
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);
@@ -53,7 +53,7 @@ const DialogUser = ({ user, errors }) => {
 
     const uploadHandler = data => {
 
-        if(user.profile_imgs || user.files){
+        // if(user.profile_imgs || user.files){
             const allFiles = [];
 
             handleFiles(data, allFiles);
@@ -78,7 +78,7 @@ const DialogUser = ({ user, errors }) => {
                     }
                 }
             }
-        }
+        // }
     }
 
     const handleFiles = (data, allFiles) => {
