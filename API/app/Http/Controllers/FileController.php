@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\ProfileImg;
@@ -221,7 +222,10 @@ class FileController extends Controller
                                 return $image->file->url;
                             });
                             break;
-            case 'usuario': echo 'ok'; break;
+            case 'usuario': $user = User::with('files.profileImgs')->findOrFail($id);
+                            // dd($user->files->where('image_type', '=', 'profile_imgs'));
+                            $images = $user->files->where('image_type', '=', 'profile_imgs');
+                            break;
         }
 
         return $images;

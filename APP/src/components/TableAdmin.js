@@ -14,6 +14,7 @@ import { Galleria } from 'primereact/galleria';
 import { Dropdown } from 'primereact/dropdown';
 import { headersDB } from 'helpers/helper.js';
 import Gallery from 'components/Gallery';
+import Avatar from 'components/Avatar';
 import { birthDateObject } from '@/helpers/helper';
 import { formattedDate } from '@/helpers/helper';
 
@@ -70,6 +71,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "deleted": 0
     }
 
+    let consecutiveMatches = 0;
+
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [itemDialog, setItemDialog] = useState(false);
@@ -96,6 +99,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [brands, setBrands] = useState([]);
     const [tags, setTags] = useState([]);
     const [errors, setErrors] = useState([]);
+    const [matches, setMatches] = useState(0);
 
     useEffect(() => {
 
@@ -164,6 +168,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 })
             })
         setTags(tagList);
+
         setSingleDeleted(false);
     }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
@@ -515,28 +520,87 @@ const TableAdmin = ({ fetchUrl, table }) => {
         );
     }
 
+    const checkData = (rowData) => {
+        if(compareKeys(rowData, emptyUser)) {
+            console.log('Es un usuario.');
+            const users = rowData;
+            avatarBodyTemplate(users);
+        }
+        else if(compareKeys(rowData, emptyProduct)){
+            console.log('Es un producto.');
+            const products = rowData;
+            imagesBodyTemplate(products);
+        }
+        else if(compareKeys(rowData, emptyStore)) {
+            console.log('Es una tienda.');
+            const store = rowData;
+            imagesBodyTemplate(store);
+        }
+    }
+
     const imagesBodyTemplate = (rowData) => {
-        return (
-            <React.Fragment>
-                <div className="space-x-4">
-
-                    <Gallery rowData={rowData} table={table} />
-
-                </div>
-            </React.Fragment>
-        )
+        // console.log('rowData que llega a imagesBodyTemplate: ', rowData)
+        if(compareKeys(rowData, emptyUser)){
+            return null;
+        }
+        else{
+            return (
+                <React.Fragment>
+                    <div className="space-x-4">
+                        <Gallery rowData={rowData} table={table} />
+                    </div>
+                </React.Fragment>
+            )
+        }
     }
 
     const avatarBodyTemplate = (rowData) => {
-        return (
-            <React.Fragment>
-                <div className="space-x-4">
+        // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
+        if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
+            return null;
+        }
+        else{
+            return (
+                <React.Fragment>
+                    <div className="space-x-4">
+                        <Avatar users={rowData} table={table} />
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
 
-                    <Gallery rowData={rowData} table={table} />
+    function compareKeys(a, b) {
+        // console.log('a: ', a);
+        // console.log('b: ', b);
 
-                </div>
-            </React.Fragment>
-        )
+        const aKeys = Object.keys(a).sort();
+        const bKeys = Object.keys(b).sort();
+
+        // while(matches < 4){
+        //     if(JSON.stringify(aKeys[0]) === JSON.stringify(bKeys[0])){
+        //         setMatches(4);
+        //     //Aquí ya se sabe que las siguientes 4 serán el mismo objeto también
+        //     console.log(aKeys, ' - ', bKeys)
+        //         console.log(JSON.stringify(aKeys[0]), ' - ', JSON.stringify(bKeys[0]))
+        //         console.log('Son el mismo objeto');
+
+        //     }
+        // }
+
+
+        // if(JSON.stringify(aKeys[0]) === JSON.stringify(bKeys[0])){
+        //     setMatches(consecutiveMatches++);
+        // //Aquí ya se sabe que las siguientes 4 serán el mismo objeto también
+        // console.log(aKeys, ' - ', bKeys)
+        //     console.log(JSON.stringify(aKeys[0]), ' - ', JSON.stringify(bKeys[0]))
+        //     console.log('Son el mismo objeto');
+
+        // }
+
+        // console.log('Matches: ', matches);
+
+        return JSON.stringify(aKeys[0]) === JSON.stringify(bKeys[0]);
     }
 
     const itemDialogFooter = (
@@ -593,6 +657,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
+    //test - para ver cuántas veces itera y manda rowData
+    const filteredDataRows = (data) => {
+        console.log('data: ', data);
+        return data;
+    }
+
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
             if (typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id') {
@@ -608,13 +678,19 @@ const TableAdmin = ({ fetchUrl, table }) => {
         }
     }
 
+    const columns = Object.keys(filteredData[0]).map((key) => ({
+        field: key,
+        header: key,
+        key: key,
+      }));
+
     return (
         <div className="dataTable-crud">
             <Toast ref={toast} />
 
             <div className="card">
-
                 <DataTable
+                    // value={filteredDataRows(data)}
                     value={data}
                     rowClassName={rowClass}
                     responsiveLayout="scroll"
@@ -628,34 +704,23 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     onRowClick={goToData}
                 >
 
-                    {Object.keys(filteredData[0]).map((key) => (
+                    {/* {Object.keys(filteredData[0]).map((key) => (
                         <Column field={key}
                             header={key}
                             key={key}
                         />
+                    ))} */}
+
+                    {columns.map((column) => (
+                        <Column {...column} />
                     ))}
 
-                    {table === 'usuario' ? (
-                        <Column
-                            field={'avatar'}
-                            header={'Avatar'}
-                            key={'avatar'}
-                            body={avatarBodyTemplate}
-                        />
-                    ) : (
-                        <Column
-                            field={'imágenes'}
-                            header={'imágenes'}
-                            key={'imágenes'}
-                            body={imagesBodyTemplate}
-                        />
-                    )}
-{/*
-                    {<Column field={'imágenes'}
-                        header={'imágenes'}
-                        key={'imágenes'}
-                        body={imagesBodyTemplate}
-                    />} */}
+                    {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        header={ table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        key={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        body={ table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
+                        // body={rowData => checkData(rowData)}
+                    />}
 
                     <Column
                         body={actionBodyTemplate}

@@ -126,7 +126,7 @@ const DialogUser = ({ user, errors }) => {
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar name='nacimiento' value={selectedDate} onChange={handleInputChange} showIcon required />
+                    <Calendar name='nacimiento' value={selectedDate} onChange={handleInputChange} showIcon required dateFormat='dd/mm/yy' />
                     {/* value={validBirthDay ? validBirthDay : null}*/}
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
