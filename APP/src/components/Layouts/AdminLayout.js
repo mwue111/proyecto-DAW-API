@@ -1,9 +1,10 @@
-import Navigation from '@/components/Layouts/Navigation'
 import AdminNavigation from '@/components/Layouts/AdminNavigation'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 import { useState } from 'react';
 import TableAdmin from '@/components/TableAdmin'
+import CookieNotice from '../CookieNotice'
+
 
 // Cuando hay un usuario admin registrado
 
@@ -37,6 +38,7 @@ const AdminLayout = () => {
                     <TableAdmin fetchUrl={process.env.NEXT_PUBLIC_BACKEND_URL + `/${content}`} table={content} />
                 </main>
             </div>
+            <CookieNotice />
         </div>
     )
 }

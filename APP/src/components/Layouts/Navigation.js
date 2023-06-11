@@ -19,7 +19,7 @@ const Navigation = ({ user }) => {
     const [open, setOpen] = useState(false)
 
     return (
-        <nav className="bg-white border-b border-gray-100">
+        <nav className="flex justify-between bg-gray-900 text-white">
             {/* Primary Navigation Menu */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
@@ -29,7 +29,7 @@ const Navigation = ({ user }) => {
                             <Link href="/">
                                 <div className="flex items-center">
                                     <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
-                                    <span className="text-xl font-bold ml-2">Localmeria</span>
+                                    <span className="text-xl font-bold ml-2 hover:text-red-600">Localmeria</span>
                                 </div>
                             </Link>
                         </div>
@@ -39,7 +39,7 @@ const Navigation = ({ user }) => {
                             <NavLink
                                 href="/dashboard"
                                 active={router.pathname === '/dashboard'}>
-                                Dashboard
+                                Productos
                             </NavLink>
                         </div>
                         {user?.type === 'administrator' && (
@@ -64,44 +64,39 @@ const Navigation = ({ user }) => {
                             align="right"
                             width="48"
                             trigger={
-                                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                                    <div>{user?.name}</div>
-
-                                    <div className="ml-1">
-                                        <svg
-                                            className="fill-current h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20">
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </div>
+                                <button className="flex items-center text-sm font-medium text-gray-100 hover:text-red-400 focus:outline-none transition duration-150 ease-in-out">
+                                <div className="text-white"><i className="pi pi-user" style={{ fontSize: '1.5rem' }}></i></div>
                                 </button>
-                            }>
-                            {/* Authentication */}
+                            }
+                            >
+                            {/* Dropdown Menu */}
                             <DropdownButton onClick={logout}>
                                 Logout
                             </DropdownButton>
                         </Dropdown>
                     </div>
                     ) : (
-                        <div className="hidden sm:flex sm:items-center sm:ml-6 space-x-4">
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <div className="flex items-center">
                                 <SearchBar />
                             </div>
-                            <NavLink
+                            <Link
                                 href="/register"
-                                active={router.pathname === '/register'}>
+                                className={`my-4 inline-flex items-center px-4 py-2 rounded-md font-bold leading-5 text-gray-900 bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:bg-yellow-500 transition duration-150 ease-in-out ${
+                                router.pathname === '/register' ? 'font-bold' : ''
+                                }`}
+                            >
                                 Registrarse
-                            </NavLink>
-                            <NavLink
+                            </Link>
+
+                            <Link
                                 href="/login"
-                                active={router.pathname === '/login'}>
+                                className={`my-4 ml-4 inline-flex items-center px-4 py-2 rounded-md font-bold leading-5 text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-gray-300 transition duration-150 ease-in-out ${
+                                router.pathname === '/login' ? 'font-bold' : ''
+                                }`}
+                            >
                                 Login
-                            </NavLink>
+                            </Link>
                         </div>
                     )}
 
@@ -175,9 +170,9 @@ const Navigation = ({ user }) => {
                                 <div className="font-medium text-sm text-gray-500">
                                     {user?.email}
                                 </div>
+                                <img src="https://www.gravatar.com/av" alt="avatar" />
                             </div>
                         </div>
-
                         <div className="mt-3 space-y-1">
                             {/* Authentication */}
                             <ResponsiveNavButton onClick={logout}>

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Link from 'next/link'
+import CookieNotice from '@/components/CookieNotice'
 import { useAuth } from '@/hooks/auth'
 import Navigation from '@/components/Layouts/Navigation'
 
@@ -149,6 +149,7 @@ export default function Home() {
               </div>
             </div>
           </footer>
+          <CookieNotice />
         </>
     )
 }
