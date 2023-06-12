@@ -26,7 +26,7 @@ const DialogUser = ({ user, errors }) => {
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
 
     useEffect(() => {
-        console.log('selectedDate: ', selectedDate)
+        // console.log('selectedDate: ', selectedDate)
     }, []);
 
 

@@ -9,17 +9,10 @@ function Avatar( {users, table} ) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // console.log('Qué se está mandando: ', process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${users.id}`);
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${users.id}`)
             .then(res => {
-                if(res.data.length){
-                    res.data.map((item) => {
-                        console.log('item: ',item)
-                        setAvatar(item.url);
-                    })
-                }
-                else{
-                    // console.log('El usuario no tiene avatar');
-                }
+                setAvatar(res.data.url);
             })
             .catch(err => console.log('Ha ocurrido un error: ', err))
             .finally(() => {

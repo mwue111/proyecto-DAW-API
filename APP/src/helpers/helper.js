@@ -260,8 +260,6 @@ export function birthDateFormat(date) {
 }
 
 export function birthDateObject(date) {
-    console.log('fecha que llega a birthDateObject en helper: ', date);
-
     const months = {
         enero: 0,
         febrero: 1,

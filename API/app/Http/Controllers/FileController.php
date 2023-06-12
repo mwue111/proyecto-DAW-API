@@ -224,10 +224,10 @@ class FileController extends Controller
                             break;
             case 'usuario': $user = User::with('files.profileImgs')->findOrFail($id);
                             // dd($user->files->where('image_type', '=', 'profile_imgs'));
-                            $images = $user->files->where('image_type', '=', 'profile_imgs');
+                            $images = $user->files->where('image_type', '=', 'profile_imgs')->first();
+                            // dd($images);
                             break;
         }
-
         return $images;
     }
 }

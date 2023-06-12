@@ -228,6 +228,29 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.categoria = item.categoria.name;
             }
 
+            if(item.profile_imgs){
+
+                console.log('Hay una imagen: ', item);
+                for (let i = 0; i < item['profile_imgs'].length; i++) {
+                    if (item['profile_imgs'][i] instanceof File) {
+                        const formData = new FormData();
+                        formData.append('file', item['profile_imgs'][i]);
+                        formData.append('image_type', 'profile_imgs');
+                        formData.append('user_id', item.id);
+                        formData.append('username', item.username);
+                        formData.append('name', item['profile_imgs'][i].name);
+
+                        // for(var key of formData.entries()){
+                        //     console.log(key[0], ' - ', key[1] )
+                        // }
+
+                        // axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
+                            .then(res => console.log('res: ', res));
+                    }
+                }
+            }
+
             const jsonDB = changedJson(oldItem, item);
 
             if (item.product_img && item.product_img.length !== oldItem.product_img.length) {
@@ -269,28 +292,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             console.log('ITEM CAMBIADO\njsonDB: ', jsonDB);
-
-            if(item.profile_imgs){
-
-                console.log('Hay una imagen: ', item);
-                for (let i = 0; i < item['profile_imgs'].length; i++) {
-                    if (item['profile_imgs'][i] instanceof File) {
-                        const formData = new FormData();
-                        formData.append('file', item['profile_imgs'][i]);
-                        formData.append('image_type', 'profile_imgs');
-                        formData.append('user_id', item.id);
-                        formData.append('username', item.username);
-                        formData.append('name', item['profile_imgs'][i].name);
-
-                        // for(var key of formData.entries()){
-                        //     console.log(key[0], ' - ', key[1] )
-                        // }
-
-                        axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
-                            .then(res => console.log('res: ', res));
-                    }
-                }
-            }
 
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
 
