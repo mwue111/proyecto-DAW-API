@@ -107,6 +107,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
             .then(res => {
                 setData(formatJson(res.data, table));
                 setSubmitted(false);
+                if(table === 'usuario'){
+                    //traer las imágenes de perfil
+                }
             });
 
         let cityOptions = [];
@@ -544,55 +547,62 @@ const TableAdmin = ({ fetchUrl, table }) => {
         );
     }
 
-    const checkData = (rowData) => {
-        if(compareKeys(rowData, emptyUser)) {
-            console.log('Es un usuario.');
-            const users = rowData;
-            avatarBodyTemplate(users);
-        }
-        else if(compareKeys(rowData, emptyProduct)){
-            console.log('Es un producto.');
-            const products = rowData;
-            imagesBodyTemplate(products);
-        }
-        else if(compareKeys(rowData, emptyStore)) {
-            console.log('Es una tienda.');
-            const store = rowData;
-            imagesBodyTemplate(store);
-        }
-    }
+    // const checkData = (rowData) => {
+    //     if(compareKeys(rowData, emptyUser)) {
+    //         console.log('Es un usuario.');
+    //         const users = rowData;
+    //         avatarBodyTemplate(users);
+    //     }
+    //     else if(compareKeys(rowData, emptyProduct)){
+    //         console.log('Es un producto.');
+    //         const products = rowData;
+    //         imagesBodyTemplate(products);
+    //     }
+    //     else if(compareKeys(rowData, emptyStore)) {
+    //         console.log('Es una tienda.');
+    //         const store = rowData;
+    //         imagesBodyTemplate(store);
+    //     }
+    // }
 
     const imagesBodyTemplate = (rowData) => {
+        return (
+            <React.Fragment>
+                <div className="space-x-4">
+                    <Gallery rowData={rowData} table={table} />
+                </div>
+            </React.Fragment>
+        )
         // console.log('rowData que llega a imagesBodyTemplate: ', rowData)
-        if(compareKeys(rowData, emptyUser)){
-            return null;
-        }
-        else{
-            return (
-                <React.Fragment>
-                    <div className="space-x-4">
-                        <Gallery rowData={rowData} table={table} />
-                    </div>
-                </React.Fragment>
-            )
-        }
+        // if(compareKeys(rowData, emptyUser)){
+        //     return null;
+        // }
+        // else{
+        //     return (
+        //         <React.Fragment>
+        //             <div className="space-x-4">
+        //                 <Gallery rowData={rowData} table={table} />
+        //             </div>
+        //         </React.Fragment>
+        //     )
+        // }
     }
 
-    const avatarBodyTemplate = (rowData) => {
-        // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
-        if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
-            return null;
-        }
-        else{
-            return (
-                <React.Fragment>
-                    <div className="space-x-4">
-                        <Avatar users={rowData} table={table} />
-                    </div>
-                </React.Fragment>
-            )
-        }
-    }
+    // const avatarBodyTemplate = (rowData) => {
+    //     // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
+    //     if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
+    //         return null;
+    //     }
+    //     else{
+    //         return (
+    //             <React.Fragment>
+    //                 <div className="space-x-4">
+    //                     <Avatar users={rowData} table={table} />
+    //                 </div>
+    //             </React.Fragment>
+    //         )
+    //     }
+    // }
 
     function compareKeys(a, b) {
         // console.log('a: ', a);
@@ -739,12 +749,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         <Column {...column} />
                     ))}
 
-                    {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                    {/* {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         header={ table !== 'usuario' ? 'imágenes' : 'avatar'}
                         key={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         body={ table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
                         // body={rowData => checkData(rowData)}
-                    />}
+                    />} */}
+
+                    { table !== 'usuario' &&
+
+                        <Column field='imágenes'
+                                header='imágenes'
+                                key='imágenes'
+                                body={imagesBodyTemplate}
+                        />
+                    }
 
                     <Column
                         body={actionBodyTemplate}

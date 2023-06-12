@@ -232,6 +232,7 @@ function formatJsonProducto(productos) {
 // USUARIO
 ///////////////////////////////////////////
 function formatJsonUsuario(usuarios) {
+    console.log('usuarios: ', usuarios)
     const data = usuarios.map((usuario) => {
         return {
             id: usuario.id,
@@ -242,7 +243,8 @@ function formatJsonUsuario(usuarios) {
             email: usuario.email,
             nacimiento: birthDateFormat(usuario.birth_date),
             deleted: usuario.deleted,
-            tipo: usuario.type
+            tipo: usuario.type,
+            avatar: usuario.profile_imgs
         }
     })
     return data;

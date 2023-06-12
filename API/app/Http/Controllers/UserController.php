@@ -11,7 +11,10 @@ use App\Models\Administrator;
 class UserController extends Controller{
 
     public function index(){
-        $users = User::all();
+        $users = User::with('files')->get();
+
+        // $users = User::with('image_type')
+
         foreach($users as $user){
             switch($user->type){
                 case 'client': $user->client; break;
@@ -25,9 +28,9 @@ class UserController extends Controller{
 
     // public function store(Request $request){
     //     $user = User::create($request->all());
-    
+
     //     switch($user->type){
-    //         case 'client': $client = new Client(); 
+    //         case 'client': $client = new Client();
     //                     $client->user_id = $user->id;
     //                     $client->save(); break;
     //         case 'owner': $owner = new Owner();
@@ -39,7 +42,7 @@ class UserController extends Controller{
     //                     $admin->last_login = date('Y-m-d H:i:s');
     //                     $admin->save(); break;
     //     }
-        
+
     //     /*
     //     if($user->type == 'client'){
     //         $client = new Client();
@@ -47,7 +50,7 @@ class UserController extends Controller{
     //         $client->save();
     //     }
     //     */
-    //     //convertirlo en switch con los datos 
+    //     //convertirlo en switch con los datos
     // }
 
     public function show($id){
