@@ -13,7 +13,7 @@ import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    // console.log('user: ', user);
+    console.log('user: ', user);
 
     {/*Para obtener la fecha de nacimiento de los usuarios*/}
     let milisec = Date.parse(user.birth_date);

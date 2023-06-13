@@ -107,9 +107,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
             .then(res => {
                 setData(formatJson(res.data, table));
                 setSubmitted(false);
-                if(table === 'usuario'){
-                    //traer las imágenes de perfil
-                }
             });
 
         let cityOptions = [];
@@ -171,8 +168,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 })
             })
         setTags(tagList);
-
         setSingleDeleted(false);
+
     }, [fetchUrl, changedItem, dataToDelete, singleDeleted, submitted]);
 
     if (!data.length) {
@@ -588,20 +585,31 @@ const TableAdmin = ({ fetchUrl, table }) => {
         // }
     }
 
-    // const avatarBodyTemplate = (rowData) => {
-    //     // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
-    //     if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
-    //         return null;
-    //     }
-    //     else{
-    //         return (
-    //             <React.Fragment>
-    //                 <div className="space-x-4">
-    //                     <Avatar users={rowData} table={table} />
-    //                 </div>
-    //             </React.Fragment>
-    //         )
-    //     }
+    const avatarBodyTemplate = (rowData) => {
+        // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
+        if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
+            return null;
+        }
+        else{
+            return (
+                <React.Fragment>
+                    <div className="space-x-4">
+                        <Avatar users={rowData} table={table} />
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
+
+       //Comentado: trayéndome las url desde el back para ver si hay menos comparaciones
+    // const avatarBodyTemplate = () => {
+    //     return (
+    //         <React.Fragment>
+    //             <div className="space-x-4">
+    //                 <Avatar users={data} table={table} />
+    //             </div>
+    //         </React.Fragment>
+    //     )
     // }
 
     function compareKeys(a, b) {
@@ -699,7 +707,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if (typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id') {
+            if (typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id' && key != 'avatar') {
                 acum[key] = value;
             }
             return acum;
@@ -749,21 +757,32 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         <Column {...column} />
                     ))}
 
-                    {/* {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
+                    {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         header={ table !== 'usuario' ? 'imágenes' : 'avatar'}
                         key={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         body={ table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
                         // body={rowData => checkData(rowData)}
-                    />} */}
+                    />}
 
-                    { table !== 'usuario' &&
+                    {/* { table !== 'usuario' &&
 
                         <Column field='imágenes'
                                 header='imágenes'
                                 key='imágenes'
                                 body={imagesBodyTemplate}
                         />
-                    }
+                    } */}
+
+                    {/* Comentado: trayéndome las url desde el back para ver si hay menos comparaciones
+
+                    { table === 'usuario' &&
+
+                        <Column field='avatar'
+                                header='avatar'
+                                key='avatar'
+                                body={avatarBodyTemplate}
+                        />
+                    } */}
 
                     <Column
                         body={actionBodyTemplate}

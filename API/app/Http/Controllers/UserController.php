@@ -11,11 +11,15 @@ use App\Models\Administrator;
 class UserController extends Controller{
 
     public function index(){
-        $users = User::with('files')->get();
-
-        // $users = User::with('image_type')
+        $users = User::all();
+        //Comentado: mandado al front el usuario con las url de imágenes de perfil
+        // $users = User::with('files')->get();
+        // $data = [];
+        // $data['users'] = $users;
 
         foreach($users as $user){
+            // $data['avatar'][] = $user->files->where('image_type', 'profile_imgs')->first();
+
             switch($user->type){
                 case 'client': $user->client; break;
                 case 'owner': $user->owner; break;
@@ -23,35 +27,9 @@ class UserController extends Controller{
             }
 
         }
+        // return $data;
         return $users;
     }
-
-    // public function store(Request $request){
-    //     $user = User::create($request->all());
-
-    //     switch($user->type){
-    //         case 'client': $client = new Client();
-    //                     $client->user_id = $user->id;
-    //                     $client->save(); break;
-    //         case 'owner': $owner = new Owner();
-    //                     $owner->user_id = $user->id;
-    //                     $owner->verified = 0;
-    //                     $owner->save(); break;
-    //         case 'administrator': $admin = new Administrator();
-    //                     $admin->user_id = $user->id;
-    //                     $admin->last_login = date('Y-m-d H:i:s');
-    //                     $admin->save(); break;
-    //     }
-
-    //     /*
-    //     if($user->type == 'client'){
-    //         $client = new Client();
-    //         $client->user_id = $user->id;
-    //         $client->save();
-    //     }
-    //     */
-    //     //convertirlo en switch con los datos
-    // }
 
     public function show($id){
         $user = User::find($id);
