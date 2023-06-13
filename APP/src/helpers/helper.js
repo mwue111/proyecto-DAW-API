@@ -199,6 +199,7 @@ export function headersDB(oldHeaders) {
             case 'apellido': oldHeaders['surname1'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'apellido2': oldHeaders['surname2'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'tipo': oldHeaders['type'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }
     });
     return oldHeaders;

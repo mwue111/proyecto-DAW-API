@@ -40,8 +40,6 @@ class User extends Authenticatable
         return $this->hasMany(File::class);
     }
 
-    //Función que relacione a un usuario con su imagen de perfil (1:1)
-
     public function owner(){
         return $this->hasOne(Owner::class);
     }

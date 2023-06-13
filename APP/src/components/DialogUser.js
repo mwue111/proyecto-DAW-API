@@ -15,31 +15,24 @@ const DialogUser = ({ user, errors }) => {
 
     console.log('user: ', user);
 
-    {/*Para obtener la fecha de nacimiento de los usuarios*/}
-    let milisec = Date.parse(user.birth_date);
-    let BirthDate = new Date(milisec);
-
     const types = ['client','administrator','owner'];
-
     const [dataForm, setDataForm] = useState(user);
-    const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
+    // const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
+    const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
 
     useEffect(() => {
         // console.log('selectedDate: ', selectedDate)
     }, []);
 
-
-    //value: Thu Apr 13 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
-
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
-        let value = target.value; //valor del input: Y
+        let value = target.value;   //valor del input: Y
         const name = target.name;   //name del input: X
 
         if(name !== null){
             switch(name){
-                case 'type': setDropdownType(value); break;
+                case 'tipo': setDropdownValue(value); break;
                 case 'nacimiento': value = birthDateFormat(value); setSelectedDate(birthDateObject(value)); break;
             }
 
@@ -47,7 +40,7 @@ const DialogUser = ({ user, errors }) => {
         }
 
         setDataForm(dataForm);
-        // console.log('dataForm: ', dataForm);
+        console.log('dataForm: ', dataForm);
 
     }
 
@@ -96,8 +89,6 @@ const DialogUser = ({ user, errors }) => {
 
     }
 
-    const isoDateString = "2023-05-03T22:00:00.000Z";
-
     return(
         <div>
             <form onSubmit={submitForm} encType="multipart/form-data">
@@ -132,10 +123,10 @@ const DialogUser = ({ user, errors }) => {
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
                     <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>
                     <br/>
-                    <Label htmlFor='type'>Tipo:</Label>
-                    <Dropdown name="type" value={dropdownType} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
+                    <Label htmlFor='tipo'>Tipo:</Label>
+                    <Dropdown name="tipo" value={dropdownValue} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
 
-                    {dropdownType === 'owner' &&
+                    {dropdownValue === 'owner' &&
 
                     <>
                         <br />
