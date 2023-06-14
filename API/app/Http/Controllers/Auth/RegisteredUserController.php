@@ -57,8 +57,6 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], //'unique:users, columna a comprobar, id a ignorar' https://laravel.com/docs/4.2/validation#rule-unique
             'birth_date' => ['string'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
-            // 'password' => ['required'],
-            // 'password_confirmation' => ['required', 'same:password']
         ]);
 
         if($validator->fails()) {

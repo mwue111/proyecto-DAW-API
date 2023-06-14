@@ -23,7 +23,7 @@ const DialogUser = ({ user, errors }) => {
     // const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
     const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(0);
 
     useEffect(() => {
         // console.log('selectedDate: ', selectedDate)
@@ -37,7 +37,16 @@ const DialogUser = ({ user, errors }) => {
         if(name !== null){
             switch(name){
                 case 'tipo': setDropdownValue(value); break;
-                case 'nacimiento': value = birthDateFormat(value); setSelectedDate(birthDateObject(value)); break;
+                case 'nacimiento': value = birthDateFormat(value);
+                                    setSelectedDate(birthDateObject(value)); break;
+                case 'verificado': if(value === true){
+                                        value = 1;
+                                        setChecked(value);
+                                    }
+                                    else{
+                                        value = 0;
+                                        setChecked(value);
+                                    }; break;
             }
 
             dataForm[name] = value;
@@ -99,51 +108,98 @@ const DialogUser = ({ user, errors }) => {
             <div className='field'>
                 <Fieldset legend='Datos del usuario'>
                     <Label htmlFor='username'>Nombre de usuario: </Label>
-                    <InputText name='username' id='userUsername' defaultValue={dataForm.username} onChange={handleInputChange} required />
+                    <InputText name='username'
+                                id='userUsername'
+                                defaultValue={dataForm.username}
+                                onChange={handleInputChange}
+                                required
+                    />
                     {/* <Message severity="error" text="Username is required" /> */}
                     {/* <InputError messages={errors.username} /> */}
                     <br/>
                     <br/>
                     <Label htmlFor='name'>Nombre: </Label>
-                    <InputText name='nombre' id='name' defaultValue={dataForm.nombre} onChange={handleInputChange} required/>
+                    <InputText name='nombre'
+                                id='name'
+                                defaultValue={dataForm.nombre}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
                     <Label htmlFor='surname1'>Primer apellido: </Label>
-                    <InputText name='apellido' id='surname1' defaultValue={dataForm.apellido} onChange={handleInputChange} required/>
+                    <InputText name='apellido'
+                                id='surname1'
+                                defaultValue={dataForm.apellido}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
                     <Label htmlFor='surname2'>Segundo apellido:</Label>
-                    <InputText name='apellido2' id='surname2' defaultValue={dataForm.apellido2} onChange={handleInputChange} />
+                    <InputText name='apellido2'
+                                id='surname2'
+                                defaultValue={dataForm.apellido2}
+                                onChange={handleInputChange}
+                    />
                     <br/>
                     <br/>
                     <Label htmlFor='email'>Email: </Label>
-                    <InputText name='email' type='email' id='userEmail' defaultValue={dataForm.email} onChange={handleInputChange} required/>
+                    <InputText name='email'
+                                type='email'
+                                id='userEmail'
+                                defaultValue={dataForm.email}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
                     <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
-                    <Calendar name='nacimiento' value={selectedDate} onChange={handleInputChange} showIcon required dateFormat='dd/mm/yy' />
+                    <Calendar name='nacimiento'
+                            value={selectedDate}
+                            onChange={handleInputChange}
+                            showIcon
+                            required
+                            dateFormat='dd/mm/yy'
+                    />
                     {/* value={validBirthDay ? validBirthDay : null}*/}
+
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
-                    <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="profile_imgs"></Upload>
+                    <Upload item={user}
+                            setProductPic={(data) => uploadHandler(data)}
+                            name="profile_imgs"
+                    />
+
                     <br/>
                     <Label htmlFor='tipo'>Tipo:</Label>
-                    <Dropdown name="tipo" value={dropdownValue} options={types} placeholder="Seleccione el tipo" onChange={handleInputChange}/>
+                    <Dropdown name="tipo"
+                            value={dropdownValue}
+                            options={types}
+                            placeholder="Seleccione el tipo"
+                            onChange={handleInputChange}
+                    />
 
                     {dropdownValue === 'owner' &&
 
                     <>
                         <br />
                         <Label htmlFor='files'>Documentos que acreditan titularidad del negocio: </Label>
-                        <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="files"></Upload>
+                        <Upload item={user}
+                                setProductPic={(data) => uploadHandler(data)}
+                                name="files"
+                        />
+
                         <br />
-                        <Label htmlFor='verified'>Dueño verificado: </Label>
-                        <ToggleButton checked={checked} onChange={(e) => setChecked(e.value)} />
+                        <Label htmlFor='verificado'>Dueño verificado: </Label>
+                        <ToggleButton checked={checked}
+                                    value={checked}
+                                    onChange={(data) =>handleInputChange(data)}
+                                    name='verificado'
+                        />
                     </>
 
                     }
-
-
                 </Fieldset>
             </div>
             </form>

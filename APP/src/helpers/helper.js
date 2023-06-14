@@ -200,6 +200,7 @@ export function headersDB(oldHeaders) {
             case 'apellido2': oldHeaders['surname2'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'nacimiento': oldHeaders['birth_date'] = oldHeaders[item]; delete oldHeaders[item]; break;
             case 'tipo': oldHeaders['type'] = oldHeaders[item]; delete oldHeaders[item]; break;
+            case 'verificado': oldHeaders['verified'] = oldHeaders[item]; delete oldHeaders[item]; break;
         }
     });
     return oldHeaders;
@@ -256,6 +257,7 @@ function formatJsonUsuario(usuarios) {
             deleted: usuario.deleted,
             tipo: usuario.type,
             // avatar: usuario.files?.url ? usuario.files.url : ''
+            verificado: usuario.owner?.verified
         }
     })
     return data;

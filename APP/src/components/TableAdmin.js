@@ -68,7 +68,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "type": "",
         "profile_imgs": [],
         "files": [],
-        "deleted": 0
+        "deleted": 0,
+        "verified": 0,
     }
 
     let consecutiveMatches = 0;
@@ -437,17 +438,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             const jsonDB = changedJson(oldItem, item);
+            console.log('jsonDB en deleteItem: ', jsonDB, '- item.id: ', item.id);
 
             const headers = {
                 'Content-Type': 'application/json'
             };
-
+            // console.log('url: ', fetchUrl + '/' + item.id, jsonDB, { headers });
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
         }
 
         setDeleteItemDialog(false);
         toast.current.show({ severity: 'success', summary: '¡Perfecto!', detail: 'Item eliminado', life: 3000 });
-        setRecharge(true);
     }
 
     const confirmUndoDelete = (item) => {
@@ -707,7 +708,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
-            if (typeof value !== 'object' && key != 'deleted' && key != 'updated_at' && key != 'user_id' && key != 'avatar') {
+            if (typeof value !== 'object' &&
+                key != 'deleted' &&
+                key != 'updated_at' &&
+                key != 'user_id' &&
+                key != 'avatar' &&
+                key != 'verificado') {
                 acum[key] = value;
             }
             return acum;
@@ -716,7 +722,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
     const rowClass = (data) => {
         return {
-            'deleted': data.deleted == 1
+            'deleted': data.deleted == 1,
+            'verificado': data.verificado == 0,
         }
     }
 

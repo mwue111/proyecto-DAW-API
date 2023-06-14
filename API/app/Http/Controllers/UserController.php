@@ -12,6 +12,7 @@ class UserController extends Controller{
 
     public function index(){
         $users = User::all();
+
         //Comentado: mandado al front el usuario con las url de imágenes de perfil
         // $users = User::with('files')->get();
         // $data = [];
@@ -39,6 +40,11 @@ class UserController extends Controller{
 
     public function update(Request $request, $id){
         $user = User::find($id);
+
+        if($request->verified !== null && $user->owner->findOrFail($id)){
+            $user->owner()->update($request->all());
+        }
+
         $user->update($request->all());
     }
 

@@ -15,8 +15,6 @@ function Upload( { setProductPic } ) {
 
     useEffect(() => {
         setProductPic(newImage);
-        // console.log('data en Upload: ', data);
-        console.log('newImage en Upload: ', newImage);
     }, [newImage, data]);
 
     const onTemplateSelect = (e) => {
