@@ -7,19 +7,23 @@ import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
 import { birthDateObject } from '@/helpers/helper';
 import { birthDateFormat } from '@/helpers/helper';
+import { ToggleButton } from 'primereact/togglebutton';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    console.log('user: ', user);
+    if(user.tipo === 'owner'){
+        console.log('user: ', user);
+    }
 
     const types = ['client','administrator','owner'];
     const [dataForm, setDataForm] = useState(user);
     // const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
     const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         // console.log('selectedDate: ', selectedDate)
@@ -132,9 +136,14 @@ const DialogUser = ({ user, errors }) => {
                         <br />
                         <Label htmlFor='files'>Documentos que acreditan titularidad del negocio: </Label>
                         <Upload item={user} setProductPic={(data) => uploadHandler(data)} name="files"></Upload>
+                        <br />
+                        <Label htmlFor='verified'>Dueño verificado: </Label>
+                        <ToggleButton checked={checked} onChange={(e) => setChecked(e.value)} />
                     </>
 
                     }
+
+
                 </Fieldset>
             </div>
             </form>

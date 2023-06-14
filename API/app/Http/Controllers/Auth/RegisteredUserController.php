@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+// use App\Models\Owner;
+// use App\Models\Administrator;
+// use App\Models\Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -70,11 +73,14 @@ class RegisteredUserController extends Controller
             'birth_date' => $request->birth_date,
             'type' => $request->type,
             'email' => $request->email,
-            // 'password' => Hash::make($request->password),
         ]);
 
-        return response()->json($user);
+        switch($user->type){
+            case 'owner': $user->owner()->create(['user_id' => $user->id, 'verified' => 0]); break;
+            case 'client': $user->client()->create(['user_id' => $user->id]); break;
+            case 'administrator': $user->administrator()->create(['user_id' => $user->id, 'last_login'=> now()]); break;
+        }
 
-        // return $this->sendResponse('Registro realizado con éxito');
+        return response()->json($user);
     }
 }
