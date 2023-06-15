@@ -229,7 +229,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.categoria = item.categoria.name;
             }
 
-            if(item.profile_imgs){
+            if (item.profile_imgs) {
 
                 console.log('Hay una imagen: ', item);
                 for (let i = 0; i < item['profile_imgs'].length; i++) {
@@ -247,6 +247,24 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                         // axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
                         axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
+                            .then(res => console.log('res: ', res));
+                    }
+                }
+            }
+
+            if(item.files){
+                for(let i = 0; i < item.files.length; i++){
+                    console.log('hay documento: ', item.files[i]);
+                    if(item.files[i] instanceof File){
+                        const formData = new FormData();
+                        formData.append('file', item.files[i]);
+                        formData.append('image_type', 'document');
+                        formData.append('user_id', item.id);
+                        formData.append('username', item.username);
+                        formData.append('name', item.files[i].name);
+
+                        //igual hay que usar post + id del usuario en lugar de put
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
@@ -431,7 +449,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const deleteItem = () => {
 
         if (item.id) {
-            if(item.verificado === 0){
+            if (item.verificado === 0) {
                 console.log('item en deleteItem: ', item.verificado);
             }
             // item.verificado = 1;
@@ -591,11 +609,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const avatarBodyTemplate = (rowData) => {
-        // console.log('rowData que llega a avatarBodyTemplate: ', rowData)
-        if(compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)){
+        if (compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)) {
             return null;
         }
-        else{
+        else {
             return (
                 <React.Fragment>
                     <div className="space-x-4">
@@ -604,9 +621,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 </React.Fragment>
             )
         }
+
     }
 
-       //Comentado: trayéndome las url desde el back para ver si hay menos comparaciones
+    //Comentado: trayéndome las url desde el back para ver si hay menos comparaciones
     // const avatarBodyTemplate = () => {
     //     return (
     //         <React.Fragment>
@@ -725,9 +743,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
     });
 
     const rowClass = (data) => {
-        if(data.deleted === 0){
+        if (data.deleted === 0) {
             return {
-                'verificado': data.verificado == 0}
+                'verificado': data.verificado == 0
+            }
         }
         return {
             'deleted': data.deleted == 1,
@@ -738,7 +757,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         field: key,
         header: key,
         key: key,
-      }));
+    }));
 
     return (
         <div className="dataTable-crud">
@@ -772,10 +791,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                     ))}
 
                     {<Column field={table !== 'usuario' ? 'imágenes' : 'avatar'}
-                        header={ table !== 'usuario' ? 'imágenes' : 'avatar'}
+                        header={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         key={table !== 'usuario' ? 'imágenes' : 'avatar'}
-                        body={ table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
-                        // body={rowData => checkData(rowData)}
+                        body={table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
+                    // body={rowData => checkData(rowData)}
                     />}
 
                     {/* { table !== 'usuario' &&

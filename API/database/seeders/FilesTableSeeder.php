@@ -511,5 +511,12 @@ class FilesTableSeeder extends Seeder
             'deleted' => 0,
         ]);
 
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => '/storage/images/profile_imgs/users/3meses/barber.jpg',
+            'image_type' => 'profile_imgs',
+            'deleted' => 0,
+        ]);
+
     }
 }

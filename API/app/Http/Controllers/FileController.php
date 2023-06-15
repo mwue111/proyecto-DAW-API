@@ -177,29 +177,46 @@ class FileController extends Controller
     }
 
     public function update(Request $request, $id){
-        $file = File::find($id);
 
-        $file->update($request->all());
+        // dd($request->file);
+        //encontrar al usuario al que pertenece el documento
+        $user = User::findOrFail($id);
 
-        switch($file->type){
-            case 'document': $document = Document::find($id);
-                             $document->update($request->all()); break;
-
-            case 'profile_imgs': $profile = ProfileImg::find($id);
-                                $profile->update($request->all()); break;
-
-            case 'store_imgs': $store = StoreImg::find($id);
-                                $store->update($request->all()); break;
-
-            case 'product_imgs': $product = ProductImg::find($id);
-                                $product->update($request->all()); break;
-
-            case 'brand_imgs': $brand = BrandImg::find($id);
-                                $brand->update($request->all()); break;
+        //encontrar ese usuario en la tabla files
+        foreach($user->files as $files) {
+            switch($files->image_type) {
+                case 'document': dd($files->image_type->update($request->all())); break;
+                // case 'profile_imgs': $files->image_type->update($request->all()); break;
+            }
         }
+        //ver si entre los documentos que tiene hay uno tipo document (o del tipo image_type que corresponda) y actualizarlo
 
-        $file->deleted = $request->deleted;
-        $file->save();
+        //guardar los cambios
+
+
+        //Lo que había antes:
+        // $file = File::find($id);
+        // $file->update($request->all());
+
+        // switch($file->type){
+        //     case 'document': $document = Document::find($id);
+        //                      $document->update($request->all()); break;
+
+        //     case 'profile_imgs': $profile = ProfileImg::find($id);
+        //                         $profile->update($request->all()); break;
+
+        //     case 'store_imgs': $store = StoreImg::find($id);
+        //                         $store->update($request->all()); break;
+
+        //     case 'product_imgs': $product = ProductImg::find($id);
+        //                         $product->update($request->all()); break;
+
+        //     case 'brand_imgs': $brand = BrandImg::find($id);
+        //                         $brand->update($request->all()); break;
+        // }
+
+        // $file->deleted = $request->deleted;
+        // $file->save();
     }
 
     public function destroy($id){

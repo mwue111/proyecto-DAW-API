@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Owner;
 use App\Models\Administrator;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
 class UserController extends Controller{
 
@@ -49,12 +52,42 @@ class UserController extends Controller{
     }
 
     public function destroy($id){
-        $user = User::destroy($id);
-        return $user;
+        $user = User::findOrFail($id);
+
+        switch($user->type) {
+            case 'owner': $user->owner->delete(); break;
+            case 'administrator': $user->administrator->delete(); break;
+            case 'client': $user->client->delete(); break;
+        }
+
+        $user->destroy($user->id);
+        // return User::destroy($id);
     }
 
     public function findUsername ($username){
         $user = User::where('username', $username)->first();
         return $user->id;
+    }
+
+    public function deleteOldUsers(Request $request) {
+        $date = new DateTime('now', new DateTimeZone('Europe/Madrid'));
+        $date->sub(DateInterval::createFromDateString($request->data . ' months'));
+        $format = $date->format('Y-m-d H:i:s');
+
+        $oldUsers = User::where('updated_at', '<', $format)->where('deleted', '=', '1')->get();
+
+        foreach($oldUsers as $oldUser) {
+        //     switch($oldUser->type) {
+        //         case 'owner': $oldUser->owner; break;
+        //         case 'administrator': $oldUser->administrator; break;
+        //         case 'client': $oldUser->client; break;
+        //     }
+
+            $oldUser->files->each(function ($url) {
+                $url->file;
+            });
+        }
+
+        return $oldUsers;
     }
 }

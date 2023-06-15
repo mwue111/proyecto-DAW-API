@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder{
 
@@ -43,6 +44,47 @@ class UsersTableSeeder extends Seeder{
             'birth_date' => '2020-09-03',
             'type' => 'owner',
             'deleted' => 0,
+        ]);
+
+        DB::table('users')->insert([
+            'username' => '3meses',
+            'name' => 'owner',
+            'surname1' => 'antiguo',
+            'surname2' => '',
+            'email' => 'ownerinactivo1@nombrereal.com',
+            'password' => '$2y$10$j5OH9LfhWO6rUgOa1dQxkOMhyOcQMaKzwsaAw2oQKW8jhVOqDfIu.',
+            'birth_date' => '2020-09-03',
+            'type' => 'owner',
+            'deleted' => 1,
+            'updated_at' => Carbon::now()->subMonths(3),
+            // 'updated_at' => '2023-03-15',   //3 meses
+        ]);
+
+        DB::table('users')->insert([
+            'username' => '6meses',
+            'name' => 'client',
+            'surname1' => 'antiguo',
+            'surname2' => 'Montero',
+            'email' => 'clientinactivo@nombrereal.com',
+            'password' => '$2y$10$j5OH9LfhWO6rUgOa1dQxkOMhyOcQMaKzwsaAw2oQKW8jhVOqDfIu.',
+            'birth_date' => '2020-09-03',
+            'type' => 'client',
+            'deleted' => 1,
+            'updated_at' => Carbon::now()->subMonths(6),
+            // 'updated_at' => '2023-01-15 00:00:00', //6 meses
+        ]);
+
+        DB::table('users')->insert([
+            'username' => 'muchosMeses',
+            'name' => 'admin',
+            'surname1' => 'antiguo',
+            'surname2' => '',
+            'email' => 'admininactivo@nombrereal.com',
+            'password' => '$2y$10$j5OH9LfhWO6rUgOa1dQxkOMhyOcQMaKzwsaAw2oQKW8jhVOqDfIu.',
+            'birth_date' => '2020-09-03',
+            'type' => 'administrator',
+            'deleted' => 1,
+            'updated_at' => '2021-01-01 00:00:00',
         ]);
 
     }

@@ -20,14 +20,14 @@ const DialogUser = ({ user, errors }) => {
 
     const types = ['client','administrator','owner'];
     const [dataForm, setDataForm] = useState(user);
-    // const [dropdownType, setDropdownType] = useState(user.type ? user.type : null);
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
     const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
-    const [checked, setChecked] = useState(0);
+
+    const [toggleValue, setToggleValue] = useState(user.verificado);
 
     useEffect(() => {
-        // console.log('selectedDate: ', selectedDate)
-    }, []);
+        console.log('toggleValue: ', toggleValue);
+    }, [toggleValue]);
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
@@ -39,14 +39,7 @@ const DialogUser = ({ user, errors }) => {
                 case 'tipo': setDropdownValue(value); break;
                 case 'nacimiento': value = birthDateFormat(value);
                                     setSelectedDate(birthDateObject(value)); break;
-                case 'verificado': if(value === true){
-                                        value = 1;
-                                        setChecked(value);
-                                    }
-                                    else{
-                                        value = 0;
-                                        setChecked(value);
-                                    }; break;
+                case 'verificado': setToggleValue(value); break;
             }
 
             dataForm[name] = value;
@@ -192,8 +185,7 @@ const DialogUser = ({ user, errors }) => {
 
                         <br />
                         <Label htmlFor='verificado'>Dueño verificado: </Label>
-                        <ToggleButton checked={checked}
-                                    value={checked}
+                        <ToggleButton checked={toggleValue}
                                     onChange={(data) =>handleInputChange(data)}
                                     name='verificado'
                         />
