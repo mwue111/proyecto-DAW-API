@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useState } from 'react';
 import TableAdmin from '@/components/TableAdmin'
 import CookieNotice from '../CookieNotice'
+import Footer from './Footer'
 
 
 // Cuando hay un usuario admin registrado
@@ -39,6 +40,7 @@ const AdminLayout = () => {
                 </main>
             </div>
             <CookieNotice />
+            <Footer />
         </div>
     )
 }

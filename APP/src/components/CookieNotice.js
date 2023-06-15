@@ -21,7 +21,7 @@ const CookieNotice = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 text-sm z-10 flex items-center">
+    <div className="fixed bottom-0 left-0 w-full bg-red-500 text-white p-4 text-sm z-10 flex items-center">
       <img src="/cookie.svg" alt="Cookie" className="w-6 h-6 mr-2" />
       <p className="flex-grow">
         Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia en nuestro sitio web.

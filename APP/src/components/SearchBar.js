@@ -46,7 +46,7 @@ const SearchBar = () => {
                 setProducts(response.data);
             })
         } catch (error) {
-            console.log(error)
+            setProducts([]);
         }
     }, []);
 
