@@ -431,6 +431,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const deleteItem = () => {
 
         if (item.id) {
+            if(item.verificado === 0){
+                console.log('item en deleteItem: ', item.verificado);
+            }
+            // item.verificado = 1;
             item.deleted = 1;
 
             if (item.tags) {
@@ -721,9 +725,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
     });
 
     const rowClass = (data) => {
+        if(data.deleted === 0){
+            return {
+                'verificado': data.verificado == 0}
+        }
         return {
             'deleted': data.deleted == 1,
-            'verificado': data.verificado == 0,
         }
     }
 
