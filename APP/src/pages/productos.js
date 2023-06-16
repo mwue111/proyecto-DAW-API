@@ -3,7 +3,7 @@ import Head from 'next/head'
 import FullTable from '../components/FullTable'
 import RecommendedProducts from '../components/RecommendedProducts'
 
-const Dashboard = () => {
+const Productos = () => {
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/producto';
 
     return (
@@ -17,7 +17,7 @@ const Dashboard = () => {
 
 
             <Head>
-                <title>Laravel - Dashboard</title>
+                <title>Buscador de productos</title>
             </Head>
 
             <div className="py-12">
@@ -38,4 +38,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Productos

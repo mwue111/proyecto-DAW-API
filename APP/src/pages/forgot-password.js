@@ -32,7 +32,7 @@ const ForgotPassword = () => {
                     </Link>
                 }>
                 <div className="mb-4 text-sm text-gray-600">
-                    ¿Olvidaste tu contraseña? No hay problema. Dinos el email con el que te registraste y te mandaremos un link de reinicio de contraseña que te permitirá cambiarla.         that will allow you to choose a new one.
+                    ¿Olvidaste tu contraseña? No hay problema. Dinos el email con el que te registraste y te mandaremos un link de reinicio de contraseña que te permitirá cambiarla.
                 </div>
 
                 {/* Session Status */}

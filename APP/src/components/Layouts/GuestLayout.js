@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import Navigation from '@/components/Layouts/Navigation'
+import CookieNotice from '../CookieNotice'
+import Footer from './Footer'
 
 const GuestLayout = ({ header, children }) => {
     return (
         <div>
             <Head>
-                <title>Guest Layout</title>
+                <title>Localmeria</title>
             </Head>
 
             <div className="min-h-screen bg-gray-100">
@@ -21,6 +23,8 @@ const GuestLayout = ({ header, children }) => {
             {/* Page Content */}
             <main className="bg-gray-100">{children}</main>
         </div>
+        <CookieNotice />
+        <Footer />
         </div>
     )
 }
