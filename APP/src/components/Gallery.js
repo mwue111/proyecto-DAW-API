@@ -6,6 +6,9 @@ import axios from 'axios';
 
 function Gallery( {rowData, table} ) {
 
+    // console.log('rowData: ', rowData.id, ' - table: ', table);
+    //Aquí: ejemplo de URL que debe mostrarse para ver las fotos de perfil de los usuarios: http://localhost:8000/storage/images/profile_imgs/users/4/free.jpg
+
     let defaultImages = [
         {
             itemImageSrc: '',
@@ -17,14 +20,14 @@ function Gallery( {rowData, table} ) {
 
     const [images, setImages] = useState(defaultImages);
     const [loading, setLoading] = useState();
+    const [activeIndex, setActiveIndex] = useState(0);
     const galleria = useRef(null);
 
-    const getImage = async (itemId, table) => {
-
-        console.log('itemId y table: ', itemId, ' - ', table);
+    const getImage = (itemId, table) => {
+        setActiveIndex(0);
         setLoading(true);
 
-        await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/imagenes/${table}/${itemId}`)
             .then(res => {
                 let newImages = [];
 
@@ -38,20 +41,27 @@ function Gallery( {rowData, table} ) {
                 else{
                     res.data.map((item) => {
                         newImages.push({
-                            itemImageSrc: item,
-                            thumbnailImageSrc: item,
+                            itemImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
+                            thumbnailImageSrc: process.env.NEXT_PUBLIC_BACKEND_URL + item,
                             alt: `imagen de ${table}`,
                             title: `item id: ${itemId}`
                         });
                     });
                 }
+
                 setImages(newImages);
             })
-            .then(() => {
-                setLoading(false);
-                galleria.current.show();
-            })
+            // .then(() => {
+            //     setLoading(false);
+            //     galleria.current.show();
+            // })
             .catch(error => console.log('Ha ocurrido un error: ', error))
+            .finally(() => {
+                setLoading(false);
+                if(galleria.current) {
+                    galleria.current.show();
+                }
+            })
     }
 
     const responsiveOptions = [
@@ -95,7 +105,8 @@ function Gallery( {rowData, table} ) {
                 circular fullScreen showItemNavigators
                 item={itemTemplate}
                 thumbnail={thumbnailTemplate}
-                activeIndex={0}
+                activeIndex={activeIndex}
+                onItemChange={(e) => {setActiveIndex(e.index)}}
             />
 
             { loading == true ? <ProgressSpinner style={{width: '30%', height: '30%'}} strokeWidth="5" /> :

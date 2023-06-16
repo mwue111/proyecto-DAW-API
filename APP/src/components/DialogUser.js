@@ -1,83 +1,200 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Label from '@/components/Label'
 import { InputText } from 'primereact/inputtext';
 import { Fieldset } from 'primereact/fieldset';
-import { Input } from 'postcss';
-import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
+import { Dropdown } from 'primereact/dropdown';
+import Upload from './Upload';
+import { birthDateObject } from '@/helpers/helper';
+import { birthDateFormat } from '@/helpers/helper';
+import { ToggleButton } from 'primereact/togglebutton';
 
-const DialogUser = ({ user }) => {
-    console.log('user: ', user);
+import InputError from '@/components/InputError';
+import { Message } from 'primereact/message';
 
-    {/*Para obtener la fecha de nacimiento de los usuarios*/}
-    let milisec = Date.parse(user.birth_date);
-    let BirthDate = new Date(milisec);
+const DialogUser = ({ user, errors }) => {
 
-    const [username, setUsername] = useState(user.username);
-    const [name, setName] = useState(user.name);
-    const [surname1, setSurname1] = useState(user.surname1);
-    const [surname2, setSurname2] = useState(user.surname2);
-    const [email, setEmail] = useState(user.email);
-    const [birthDate, setBirthDate] = useState(BirthDate);
-    const [type, setType] = useState(user.type);
-    const toast = useRef(null);
-
-
-    const onChangeUsername = (e) => {
-        setUsername(e.target.value);
+    if(user.tipo === 'owner'){
+        console.log('user: ', user);
     }
 
-    const onChangeName = (e) => {
-        setName(e.target.value);
+    const types = ['client','administrator','owner'];
+    const [dataForm, setDataForm] = useState(user);
+    const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
+    const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
+
+    const [toggleValue, setToggleValue] = useState(user.verificado);
+
+    useEffect(() => {
+        console.log('toggleValue: ', toggleValue);
+    }, [toggleValue]);
+
+    const handleInputChange = (e) => {
+        const target = e.target;    //el elemento html <input name="X">Y</input>
+        let value = target.value;   //valor del input: Y
+        const name = target.name;   //name del input: X
+
+        if(name !== null){
+            switch(name){
+                case 'tipo': setDropdownValue(value); break;
+                case 'nacimiento': value = birthDateFormat(value);
+                                    setSelectedDate(birthDateObject(value)); break;
+                case 'verificado': setToggleValue(value); break;
+            }
+
+            dataForm[name] = value;
+        }
+
+        setDataForm(dataForm);
+        console.log('dataForm: ', dataForm);
+
     }
 
-    const onChangeSurname1 = (e) => {
-        setSurname1(e.target.value);
+    const uploadHandler = data => {
+
+        // if(user.profile_imgs || user.files){
+            const allFiles = [];
+
+            handleFiles(data, allFiles);
+
+            for(let i = 0; i < allFiles.length; i++){
+                if(allFiles[i] instanceof File){
+                    if((allFiles[i].type).toString().includes('application/pdf')){
+                        // console.log('es un pdf.');
+                        dataForm['files'] = data;
+
+                        const allFiles = user.files;
+
+                        handleFiles(data, allFiles);
+                    }
+                    else{
+                        // console.log('es una imagen.');
+                        dataForm['profile_imgs'] = data;
+
+                        const allImages = user.profile_imgs;
+
+                        handleFiles(data, allImages);
+                    }
+                }
+            }
+        // }
     }
 
-    const onChangeSurname2 = (e) => {
-        setSurname2(e.target.value);
+    const handleFiles = (data, allFiles) => {
+        return data.forEach(item => {
+            const files = Object.values(item);
+
+            for(let i = 0; i < files.length; i++) {
+                allFiles.push(files[i]);
+            }
+        })
     }
 
-    const onChangeEmail = (e) => {
-        {/*Habría que comprobar que el email sea válido*/}
-        setEmail(e.target.value);
-    }
+    const submitForm = event => {
+        event.preventDefault();
 
-    const onBirthDayChange = (e) => {
-        setBirthDate(e.value);
     }
 
     return(
         <div>
+            <form onSubmit={submitForm} encType="multipart/form-data">
             <div className='field'>
                 <Fieldset legend='Datos del usuario'>
-                    <label htmlFor='username'>Nombre de usuario: </label>
-                    <InputText name='username' id='userUsername' defaultValue={username} onChange={onChangeUsername}/>
+                    <Label htmlFor='username'>Nombre de usuario: </Label>
+                    <InputText name='username'
+                                id='userUsername'
+                                defaultValue={dataForm.username}
+                                onChange={handleInputChange}
+                                required
+                    />
+                    {/* <Message severity="error" text="Username is required" /> */}
+                    {/* <InputError messages={errors.username} /> */}
                     <br/>
                     <br/>
-                    <label htmlFor='name'>Nombre: </label>
-                    <InputText name='name' id='userName' defaultValue={name} onChange={onChangeName} />
+                    <Label htmlFor='name'>Nombre: </Label>
+                    <InputText name='nombre'
+                                id='name'
+                                defaultValue={dataForm.nombre}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
-                    <label htmlFor='surname1'>Primer apellido: </label>
-                    <InputText name='surname1' id='surname1' defaultValue={surname1} onChange={onChangeSurname1}/>
+                    <Label htmlFor='surname1'>Primer apellido: </Label>
+                    <InputText name='apellido'
+                                id='surname1'
+                                defaultValue={dataForm.apellido}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
-                    <label htmlFor='surname2'>Segundo apellido:</label>
-                    <InputText name='surname2' id='surname2' defaultValue={surname2} onChange={onChangeSurname2} />
+                    <Label htmlFor='surname2'>Segundo apellido:</Label>
+                    <InputText name='apellido2'
+                                id='surname2'
+                                defaultValue={dataForm.apellido2}
+                                onChange={handleInputChange}
+                    />
                     <br/>
                     <br/>
-                    <label htmlFor='email'>Email: </label>
-                    <InputText name='email' id='userEmail' defaultValue={email} onChange={onChangeEmail} />
+                    <Label htmlFor='email'>Email: </Label>
+                    <InputText name='email'
+                                type='email'
+                                id='userEmail'
+                                defaultValue={dataForm.email}
+                                onChange={handleInputChange}
+                                required
+                    />
                     <br/>
                     <br/>
-                    <label htmlFor='birthDate'>Fecha de nacimiento: </label>
-                    <Calendar id='birthDate' name='birthDate' value={birthDate} onChange={onBirthDayChange} showIcon/>
+                    <Label htmlFor='fecha_nacimiento'>Fecha de nacimiento: </Label>
+                    <Calendar name='nacimiento'
+                            value={selectedDate}
+                            onChange={handleInputChange}
+                            showIcon
+                            required
+                            dateFormat='dd/mm/yy'
+                    />
+                    {/* value={validBirthDay ? validBirthDay : null}*/}
+
                     <br/>
-                    <label htmlFor='userType'>Tipo:</label>
-                    <InputText value={type} disabled/>
+                    <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
+                    <Upload item={user}
+                            setProductPic={(data) => uploadHandler(data)}
+                            name="profile_imgs"
+                    />
+
+                    <br/>
+                    <Label htmlFor='tipo'>Tipo:</Label>
+                    <Dropdown name="tipo"
+                            value={dropdownValue}
+                            options={types}
+                            placeholder="Seleccione el tipo"
+                            onChange={handleInputChange}
+                    />
+
+                    {dropdownValue === 'owner' &&
+
+                    <>
+                        <br />
+                        <Label htmlFor='files'>Documentos que acreditan titularidad del negocio: </Label>
+                        <Upload item={user}
+                                setProductPic={(data) => uploadHandler(data)}
+                                name="files"
+                        />
+
+                        <br />
+                        <Label htmlFor='verificado'>Dueño verificado: </Label>
+                        <ToggleButton checked={toggleValue}
+                                    onChange={(data) =>handleInputChange(data)}
+                                    name='verificado'
+                        />
+                    </>
+
+                    }
                 </Fieldset>
             </div>
+            </form>
         </div>
     )
 }

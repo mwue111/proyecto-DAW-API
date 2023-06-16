@@ -19,6 +19,7 @@ Route::get('/tienda/nombre', 'StoreController@getNames');
 Route::get('/producto/nombre', 'ProductController@getNames');
 Route::post('/tienda/borrar', 'StoreController@deleteOldStores');
 Route::post('/producto/borrar', 'ProductController@deleteOldProducts');
+Route::post('/usuario/borrar', 'UserController@deleteOldUsers');
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];

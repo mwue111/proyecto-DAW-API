@@ -56,70 +56,70 @@ class FilesTableSeeder extends Seeder
         //8
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg/640px-Citrus_paradisi_%28Grapefruit%2C_pink%29_white_bg.jpg',
+            'url' => '/storage/images/product_imgs/1681926637Pomelo1.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //9
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/2021-04/pomelo.jpg',
+            'url' => '/storage/images/product_imgs/1681926637Pomelo2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //10
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://actualfruveg.com/wp-content/uploads/2022/02/bea-pomelo-c-e1646326027737.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //11
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://images.ecestaticos.com/NQnGXX3dmMx3xZ9nKoxfFQNvTOQ=/75x40:1910x1411/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F703%2Fbce%2F642%2F703bce6420de19f2078f6a62c005bcf0.jpg',
+            'url' => '/storage/images/product_imgs/1680683009Pomelo4.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //12
         DB::table('files')->insert([
             'user_id' => 7,
-            'url' => 'https://linverd.com/es/wp-content/uploads/sites/3/2021/02/bulgur-600x334.jpg',
+            'url' => '/storage/images/product_imgs/1686293838bulgur3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //13
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpsmGb1HWNfSYvpkPoufD2jXtf7qM8ykJHbQGZ1iLjheo0HkMYmpj4IJEQi2lNvkCHlog&usqp=CAU',
+            'url' => '/storage/images/product_imgs/1686293838bulgur.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //14
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://www.frutoseco.com/1534-large_default/bulgur-500g.jpg',
+            'url' => '/storage/images/product_imgs/1686293837bulgur2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //15
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://static2.abc.es/media/bienestar/2019/07/25/platano-beneficios-kIyF--1200x630@abc.jpg',
+            'url' => '/storage/images/product_imgs/1680686290platano.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //16
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => 'https://statics-cuidateplus.marca.com/cms/styles/natural/azblob/platanos_0.jpg.webp?itok=Nm5QVrwg',
+            'url' => '/storage/images/product_imgs/1680686384platano2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //17
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://www.ayuno.es/wp-content/uploads/2017/12/Zumo-de-pin%CC%83a.jpg',
+            'url' => '/storage/images/product_imgs/1680686460zumo_pina.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -127,14 +127,14 @@ class FilesTableSeeder extends Seeder
         //18
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => 'https://www.consalud.es/estetic/uploads/s1/12/82/63/zumo_pina_beneficios_11052017_consalud.jpg',
+            'url' => '/storage/images/product_imgs/1680686460zumo_pina2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //19
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://marianomadrueno.es/wp-content/uploads/2019/08/brugal-anejo-ron-nueva-edicion-botella-70-cl-2021.png',
+            'url' => '/storage/images/product_imgs/1680686512ron.png',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -508,6 +508,13 @@ class FilesTableSeeder extends Seeder
             'user_id' => 3,
             'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDwrNiMtrhEZH0Snjyqebksz9KEaxfwPYLTdOjOWFA9Qz2gUwiPSX5QmP9Rp9gUlPvYkc&usqp=CAU',
             'image_type' => 'store_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 4,
+            'url' => '/storage/images/profile_imgs/users/3meses/barber.jpg',
+            'image_type' => 'profile_imgs',
             'deleted' => 0,
         ]);
 

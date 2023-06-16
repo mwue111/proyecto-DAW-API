@@ -12,18 +12,21 @@ class Profile_imgsTableSeeder extends Seeder
     {
         DB::table('profile_imgs')->insert([
             'file_id' => 1,
-        ]);        
+        ]);
         DB::table('profile_imgs')->insert([
             'file_id' => 2,
-        ]);        
+        ]);
         DB::table('profile_imgs')->insert([
             'file_id' => 3,
-        ]);        
+        ]);
         DB::table('profile_imgs')->insert([
             'file_id' => 4,
-        ]);        
+        ]);
         DB::table('profile_imgs')->insert([
             'file_id' => 5,
-        ]);        
+        ]);
+        DB::table('profile_imgs')->insert([
+            'file_id' => 73,
+        ]);
     }
 }

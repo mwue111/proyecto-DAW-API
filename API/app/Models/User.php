@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'birth_date',
         'type',
+        'deleted'
     ];
 
     protected $hidden = [
@@ -39,8 +40,6 @@ class User extends Authenticatable
     public function files(){
         return $this->hasMany(File::class);
     }
-
-    //Función que relacione a un usuario con su imagen de perfil (1:1)
 
     public function owner(){
         return $this->hasOne(Owner::class);
