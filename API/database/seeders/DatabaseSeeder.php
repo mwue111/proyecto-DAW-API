@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SalesTableSeeder::class);
         //Seeder añadido para poder hacer el CRUD:
         $this->call(Schedules_storesTableSeeder::class);
+        $this->call(CommentTableSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

@@ -1,6 +1,8 @@
 import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
+import CookieNotice from '../CookieNotice'
+import Footer from './Footer'
 
 //Cuando hay un usuario registrado
 
@@ -26,6 +28,8 @@ const AppLayout = ({ header, children }) => {
                 {/* Page Content */}
                 <main>{children}</main>
             </div>
+            <CookieNotice />
+            <Footer />
         </div>
     )
 }

@@ -37,5 +37,6 @@ class VerifyCsrfToken extends Middleware
         "documento*",
         "perfil*",
         'login*',
+        'comentario*',
     ];
 }
