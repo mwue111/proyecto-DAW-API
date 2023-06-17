@@ -12,6 +12,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('comentario');
+            $table->boolean('verified')->default(false);
             $table->timestamps();
         });
     }

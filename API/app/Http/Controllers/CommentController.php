@@ -28,10 +28,35 @@ class CommentController extends Controller
             'comentario' => 'required',
         ]);
 
-        $comment = Comment::create($validatedData);
+        $validatedData['verified'] = $request->input('verified', false); 
 
+        $comment = Comment::create($validatedData);
 
         return response()->json(['message' => 'Comentario enviado'], 200);
     }
+
+    public function show($id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        return response()->json($comment, 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+        $comment->update($request->all());
+
+        return response()->json(['message' => 'Comment updated'], 200);
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return response()->json(['message' => 'Comment deleted'], 200);
+    }
+
 }
 

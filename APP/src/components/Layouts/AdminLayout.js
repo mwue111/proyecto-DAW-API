@@ -5,6 +5,7 @@ import { useState } from 'react';
 import TableAdmin from '@/components/TableAdmin'
 import CookieNotice from '../CookieNotice'
 import Footer from './Footer'
+import TableComment from '@/components/TableComment'
 
 
 // Cuando hay un usuario admin registrado
@@ -36,7 +37,10 @@ const AdminLayout = () => {
                 {/* Page Content */}
                 <main>
                     {/*El content por defecto (tienda) es el que aparece al entrar en esta vista y cambiará según el setState que recibe admin navigation */}
-                    <TableAdmin fetchUrl={process.env.NEXT_PUBLIC_BACKEND_URL + `/${content}`} table={content} />
+                    {content =="comentario" 
+                    ? <TableComment fetchUrl={process.env.NEXT_PUBLIC_BACKEND_URL + `/${content}`} />
+                    : <TableAdmin fetchUrl={process.env.NEXT_PUBLIC_BACKEND_URL + `/${content}`} table={content} />
+                    }
                 </main>
             </div>
             <CookieNotice />

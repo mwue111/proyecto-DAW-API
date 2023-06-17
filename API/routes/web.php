@@ -90,6 +90,10 @@ require __DIR__.'/auth.php';
 Route::get('/imagenes/{table}/{id}', 'FileController@getImages');
 
 //Comentarios:
-Route::get('/comentario', 'App\Http\Controllers\CommentController@getAllComments');
 Route::post('/comentario', 'App\Http\Controllers\CommentController@store');
 Route::get('/comentario/random', 'App\Http\Controllers\CommentController@getRandomComments');
+Route::get('/comentario/{id}', 'App\Http\Controllers\CommentController@show');
+Route::put('/comentario/{id}', 'CommentController@update');
+Route::delete('/comentario/{id}', 'CommentController@destroy');
+Route::get('/comentario', 'App\Http\Controllers\CommentController@getAllComments');
+

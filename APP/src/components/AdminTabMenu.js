@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
-import { Button } from 'primereact/button'
-import Link from 'next/link'
-import NavLink from '@/components/NavLink'
 import { useRouter } from 'next/router'
 
 const AdminTabMenu = ({ setContent }) => {
@@ -13,7 +10,8 @@ const AdminTabMenu = ({ setContent }) => {
     const table = [
         {label: 'Tienda', icon: 'pi pi-fw pi-shopping-bag'},
         {label: 'Producto', icon: 'pi pi-fw pi-shopping-cart'},
-        {label: 'Usuario', icon: 'pi pi-fw pi-users'}
+        {label: 'Usuario', icon: 'pi pi-fw pi-users'},
+        {label: 'Comentario', icon: 'pi pi-fw pi-comment'},
     ];
 
     return (

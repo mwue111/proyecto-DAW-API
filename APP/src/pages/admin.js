@@ -5,6 +5,7 @@ const AdminPanel = () => {
     const product = process.env.NEXT_PUBLIC_BACKEND_URL + '/producto';
     const store = process.env.NEXT_PUBLIC_BACKEND_URL + '/tienda';
     const user = process.env.NEXT_PUBLIC_BACKEND_URL + '/usuario';
+    const comment = process.env.NEXT_PUBLIC_BACKEND_URL + '/comentario';
 
     return (
         <GuestLayout
@@ -20,6 +21,7 @@ const AdminPanel = () => {
                     <Table fetchUrl={product}/>
                     <Table fetchUrl={store}/>
                     <Table fetchUrl={user}/>
+                    <Table fetchUrl={comment}/>
                     </div>
               </div>
             </div>
