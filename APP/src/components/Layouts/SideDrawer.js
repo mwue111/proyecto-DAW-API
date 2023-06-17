@@ -17,14 +17,14 @@ const SideDrawer = () => {
                     <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
                     <br/>
                     <NavLink
-                        href="/dashboard"
-                        active={router.pathname === '/dashboard'}>
-                        Dashboard
+                        href="/productos"
+                        active={router.pathname === '/productos'}>
+                        Productos
                     </NavLink>
                     <br/>
                     <NavLink
-                        href="/test"
-                        active={router.pathname === '/test'}>
+                        href="/admin"
+                        active={router.pathname === '/admin'}>
                         Guest
                     </NavLink>
                     <br/>

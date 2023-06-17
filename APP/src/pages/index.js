@@ -18,24 +18,32 @@ export default function Home() {
       <Navigation user={user} />
 
       <div
-        className="py-20 bg-cover bg-no-repeat bg-fixed"
-        style={{
-          backgroundImage:
-            'url(https://thumbs.dreamstime.com/b/almer%C3%ADa-espa%C3%B1a-de-julio-puerta-entrada-al-mercado-central-vista-panor%C3%A1mica-durante-el-d%C3%ADa-216116383.jpg)',
-        }}
-      >
-        <div className="container m-auto text-center px-6">
-          <h2 className="text-4xl font-bold mb-2 text-white text-shadow-md">
-            ¡Ven al lado luminoso de las compras!
-          </h2>
-          <h3 className="text-2xl mb-8 text-gray-200 text-shadow-md">
-            Encuentra las mejores tiendas locales en Almería.
-          </h3>
-          <button className="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all">
-            ¡Busca mejores precios!
-          </button>
-        </div>
-      </div>
+  className="py-20 bg-cover bg-no-repeat bg-fixed bg-center flex items-center justify-center"
+  style={{
+    backgroundImage:
+      'url(https://thumbs.dreamstime.com/b/almer%C3%ADa-espa%C3%B1a-de-julio-puerta-entrada-al-mercado-central-vista-panor%C3%A1mica-durante-el-d%C3%ADa-216116383.jpg)',
+  }}
+>
+  <div className="container text-center">
+    <h2 className="text-4xl font-bold text-white mb-4 text-shadow">
+      ¡Ven al lado luminoso de las compras!
+    </h2>
+    <h3 className="text-2xl text-white mb-8 text-shadow">
+      Encuentra las mejores tiendas locales en Almería.
+    </h3>
+    <button className="bg-white text-gray-800 font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all">
+      ¡Busca mejores precios!
+    </button>
+  </div>
+  <style>{`
+    .text-shadow {
+      text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+    }
+  `}</style>
+</div>
+
+
+
 
       <section className="container mx-auto px-6 p-10">
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">

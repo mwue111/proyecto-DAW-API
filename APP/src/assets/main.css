@@ -1767,3 +1767,11 @@ select {
 .on-top{
   z-index: 9999; 
 }
+
+.darken {
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+}

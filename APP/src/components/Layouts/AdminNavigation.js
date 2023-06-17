@@ -115,8 +115,8 @@ const AdminNavigation = ({ user, setContent }) => {
                 <div className="block sm:hidden">
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href="/dashboard"
-                            active={router.pathname === '/dashboard'}>
+                            href="/productos"
+                            active={router.pathname === '/productos'}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>

@@ -85,7 +85,7 @@ const CommentForm = () => {
           <Dialog
             visible={displayDialog}
             onHide={() => setDisplayDialog(false)}
-            header="Response"
+            header="Comentario enviado"
             footer={dialogFooter}
             closable={false}
             style={{ width: '400px' }}

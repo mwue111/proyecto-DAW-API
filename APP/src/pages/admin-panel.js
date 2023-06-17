@@ -1,6 +1,4 @@
 import AdminLayout from '@/components/Layouts/AdminLayout'
-import ApplicationLogo from '@/components/ApplicationLogo';
-import NavLink from '@/components/NavLink';
 
 const AdminPanel = () => {
 
