@@ -264,7 +264,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('name', item.files[i].name);
 
                         //igual hay que usar post + id del usuario en lugar de put
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                        axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }

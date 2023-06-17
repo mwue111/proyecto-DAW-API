@@ -177,18 +177,61 @@ class FileController extends Controller
     }
 
     public function update(Request $request, $id){
-
-        // dd($request->file);
-        //encontrar al usuario al que pertenece el documento
         $user = User::findOrFail($id);
 
-        //encontrar ese usuario en la tabla files
-        foreach($user->files as $files) {
-            switch($files->image_type) {
-                case 'document': dd($files->image_type->update($request->all())); break;
-                // case 'profile_imgs': $files->image_type->update($request->all()); break;
+        if($request->has('file')){
+            //encontrar ese usuario en la tabla files
+            //Si no hay documentos, crear uno nuevo
+
+            //si hay documentos, entrará aquí:
+            foreach($user->files as $files) {
+                if($files){
+                    if(!$files->image_type === 'documents'){
+                        dd('no hay documentos'); //no entra aquí
+                    }
+                }
+                switch($files->image_type) {
+                    //si el documento es document:
+                    //subirlo al servidor
+                    //subirlo a la tabla files
+                    //eliminar o marcar como eliminados a los anteriores documentos o actualizar el que haya
+                    //subirlo a la tabla documents
+                    case 'document':
+                        $oldFile = File::findOrFail($files->id);    //al entrar en el foreach se supone que ya está el documento localizado
+                        //si no hay ningún documento subido, crear un registro en Files y en Documents
+                        $newFile = File::create([
+                            'user_id' => $request->user_id,
+                            'url' => public_path().'/files/'. $name,
+                            'image_type' => $request->image_type,
+                            'deleted' => false
+                        ]);
+                        $document = new Document();
+                        $document->file_id = $newFile->id;
+                        $document->expiration_date = \Carbon\Carbon::now()->addYears(2);
+                        $document->save();
+
+                        // if($oldFile){
+                        //     $oldFile->update(['deleted' => 1]);
+                        //     $path = str_replace('/storage/', '/public/', $oldFile->url);
+                        //     Storage::delete($path);
+                        //     $oldFile->delete();
+                        // }
+
+                        break;
+                    // case 'profile_imgs': $files->image_type->update($request->all()); break;
+                }
             }
+
+            $response["status"] = "successs";
+            $response["message"] = "Success! file(s) uploaded";
         }
+        else{
+            $response["status"] = "failed";
+            $response["message"] = "Failed! file(s) not uploaded";
+        }
+
+    return response()->json($response);
+
         //ver si entre los documentos que tiene hay uno tipo document (o del tipo image_type que corresponda) y actualizarlo
 
         //guardar los cambios
