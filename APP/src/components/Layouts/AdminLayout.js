@@ -13,7 +13,7 @@ const AdminLayout = () => {
     const { user } = useAuth({ middleware: 'auth' })
 
     //Creado el hook de state para poder establecer el estado y compartirlo a los hijos (adminNavigation y las tablas)
-    const [content, setContent] = useState('tienda');
+    const [content, setContent] = useState('usuario');
 
     return (
         <div>

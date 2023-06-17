@@ -18,5 +18,9 @@ class ClientsTableSeeder extends Seeder
         DB::table('clients')->insert([
             'user_id' => 1
         ]);
+
+        DB::table('clients')->insert([
+            'user_id' => 5
+        ]);
     }
 }

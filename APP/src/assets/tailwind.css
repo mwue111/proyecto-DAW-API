@@ -6,6 +6,10 @@
     .deleted{
         background-color: rgb(255, 205, 205)!important;
     }
+
+    .verificado{
+        background-color: rgb(255, 229, 181)!important;
+    }
 }
 
 

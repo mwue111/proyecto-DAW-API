@@ -13,6 +13,7 @@ import axios from '@/lib/axios'
 
 
 const Register = () => {
+    //hook personalizado, se saca de la función useAuth las funciones register y login
   const { register, login } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
@@ -32,7 +33,7 @@ const Register = () => {
 
   const submitForm = event => {
     event.preventDefault()
-  
+
     register({
       name,
       username,
@@ -47,13 +48,13 @@ const Register = () => {
         axios.get('/usuario/encuentra/' + username)
           .then(response => {
             const userId = response.data;
-                     
+
             if (type === 'owner' && file) {
               const formData = new FormData();
               formData.append('file', file);
               formData.append('user_id', userId);
               formData.append('image_type', 'document');
-              
+
               axios.post('/archivo', formData).then(response => {
                 axios.get(process.env.NEXT_PUBLIC_BACKEND_URL +'/default-store?user_id=' + userId + '&username='+username)
                   .then(response => {

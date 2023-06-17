@@ -7,8 +7,9 @@ import { FileUpload } from 'primereact/fileupload';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
+import Images from './Images';
 
-const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => {
+const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table }) => {
     const newProduct = product;
     const categoriesList = [...allCategories];
     const brandsList = [...brands];
@@ -19,6 +20,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
     let categoryId;
 
     const selectedTags = [];
+
+    console.log('item en dialogProduct: ', product);
 
     for(let i = 0; i < brandsList.length; i++) {
         if(product.marca === brandsList[i].name) {
@@ -48,24 +51,54 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
     useEffect(() => {
         setItem(dataForm);
-    }, [dataForm, productPic]);
+        console.log('dataForm en DialogProduct: ', dataForm);
+    }, [dataForm]);
+
+    const handleDelete = (data) => {
+        // console.log('data: ', data);
+        dataForm['img_delete'] = data;
+        // console.log('dataForm en handleDelete: ', dataForm);
+    }
 
     const uploadHandler = (data) => {
         if(product.product_img){
-            setProductPic(data);
 
-            const oldImages = [];
+            /*
+            Data en selección múltiple:
+            [
+                { <-data[0]:
+                    "0": {"objectURL": "blob:http://localhost:3000/666812da-6a1a-415f-abe6-72d58c5e25d6"},
+                    "1": {"objectURL": "blob:http://localhost:3000/2f0f7638-fffb-42fb-801e-eed035ec1f1b"}
+                }
+            ]
 
-            for(let i = 0; i < product.product_img.length; i++) {
-                oldImages.push(product.product_img[i]);
-            }
+            */
 
-            data.forEach(item => oldImages.push(item));
+            //Almaceno las imágenes antiguas para que no entre siempre en el if de tableAdmin
+            const allImages = product.product_img;
 
-            setProductPic(oldImages);
+            data.forEach(item => {
+                const files = Object.values(item);
+                for(let i = 0; i < files.length; i ++){
+                    allImages.push(files[i]);
+                }
+            });
 
-            newProduct['product_img'] = oldImages;
-            setDataForm(newProduct);
+            //viejo
+            // const oldImages = [];
+
+            // for(let i = 0; i < product.product_img.length; i++) {
+            //     oldImages.push(product.product_img[i]);
+            // }
+
+            // console.log('oldImages: ', oldImages);
+
+            // data.forEach(item => oldImages.push(item));
+
+            // setProductPic(oldImages);
+
+            // newProduct['product_img'] = oldImages;
+            // setDataForm(newProduct);
         }
     }
 
@@ -128,10 +161,15 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags }) => 
 
                 </Fieldset>
                 <br/>
-                <Fieldset legend='Imagen del producto'>
+                <Fieldset legend='Subir nuevas imágenes'>
                     <Upload item={product} setProductPic={(data) => {uploadHandler(data)}}
                     />
                 </Fieldset>
+                <br />
+                {product.id &&
+                <Fieldset legend='Eliminar imágenes existentes'>
+                    <Images table={table} product={product} setImagesToDelete={(data) => {handleDelete(data)}}/>
+                </Fieldset>}
             </div>
         </div>
     );

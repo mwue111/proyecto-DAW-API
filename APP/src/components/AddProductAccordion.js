@@ -73,7 +73,7 @@ const AddNewProductAccordion = ({ store }) => {
         formDataWithImage.append('remarks', formData.remarks);
         formDataWithImage.append('unit', formData.unit);
         formDataWithImage.append('file', formData.file);
-    
+
         axios
             .post(process.env.NEXT_PUBLIC_BACKEND_URL+'/producto', formDataWithImage)
             .then(() => {
@@ -101,7 +101,7 @@ const AddNewProductAccordion = ({ store }) => {
             formData.append('file', formData.file);
             formData.append('user_id', user.id);
             formData.append('image_type', 'product_imgs');
-            
+
             axios.post('/archivo', formData).then(response => {
                 console.log(response);
             }).catch(error => {
@@ -122,7 +122,7 @@ const AddNewProductAccordion = ({ store }) => {
             stores: [store.id],
             stock: '',
             value: '',
-            remarks: '',    
+            remarks: '',
             unit: '',
             image: null,
         });
