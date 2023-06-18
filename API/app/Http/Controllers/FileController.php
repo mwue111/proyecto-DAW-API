@@ -176,8 +176,6 @@ class FileController extends Controller
         if($request->has('file')){
             $hasDocuments = $user->files->where('image_type', 'document')->isNotEmpty();
             $hasProfileImg = $user->files->where('image_type', 'profile_imgs')->isNotEmpty();
-            // dd($hasDocuments);
-            // dd($hasProfileImg);
 
             //Si no hay documentos o imágenes de perfil previas, crear una nueva:
             if($request->image_type === 'document' && !$hasDocuments){
@@ -197,7 +195,6 @@ class FileController extends Controller
                 //itera sobre los documentos que tenga el usuario para ver remplazarlos
                 foreach($user->files as $files) {
                     switch($files->image_type) {
-                        //subirlo a la tabla documents
                         case 'document':
                             if($request->image_type === 'document'){
                                 //borrar en servidor
@@ -218,14 +215,12 @@ class FileController extends Controller
                                     'deleted' => false
                                 ]);
 
-                                //añadir en documents
+                                //añadir en la tabla documents
                                 $file->document()->create(['file_id' => $file->id, 'expiration_date' => \Carbon\Carbon::now()->addYears(2)]);
                             }
                             break;
 
                         case 'profile_imgs':
-                            // dd('continúa en update');
-                            // dd($request->image_type);
                             if($request->image_type === 'profile_imgs'){
                                 $oldProfile = File::findOrFail($files->id);
                                 $path = str_replace('/storage/', '/public/', $oldProfile->url);
