@@ -34,6 +34,7 @@ class FileController extends Controller
     }
 
     public function store(Request $request){
+
         $validator=Validator::make($request->all(),[
             'image_type'=>'required',
             'user_id'=>'required'
@@ -53,6 +54,7 @@ class FileController extends Controller
         }
 
         if($request->has('file')){
+            // dd('entra a has(file)');
             //poner los if dentro del switch
 
             if($request->image_type === 'product_imgs') {
@@ -65,25 +67,31 @@ class FileController extends Controller
             }
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
-                $name = time().$file->getClientOriginalName();
+                $name = time() . $request->name;
+                // $name = time().$file->getClientOriginalName();
+                // dd($name);
                 // $file->move(public_path().'/files/'.$request->image_type , $name);
 
                 $file->storeAs('public/docs/users/' . $request->username, $name);
+
             }
 
             switch($request->image_type){
-                case 'document': $file = File::create([
-                                        'user_id' => $request->user_id,
-                                        // 'url' => public_path().'/files/'. $name,
-                                        'url' => '/storage/docs/users/' . $request->username . '/'. $name,
-                                        'image_type' => $request->image_type,
-                                        'deleted' => false
-                                    ]);
+                case 'document':
+                                $file = File::create([
+                                    'user_id' => $request->user_id,
+                                    // 'url' => public_path().'/files/'. $name,
+                                    'url' => '/storage/docs/users/' . $request->username . '/'. $name,
+                                    'image_type' => $request->image_type,
+                                    'deleted' => false
+                                ]);
 
                                 $file->document()->create([
                                     'file_id' => $file->id,
                                     'expiration_date' => \Carbon\Carbon::now()->addYears(2)
-                                ]); break;
+                                ]);
+                                // dd($file);
+                                break;
 
                 case 'profile_imgs':
                                     $name = time() . $request->name;
@@ -166,65 +174,77 @@ class FileController extends Controller
         $user = User::findOrFail($id);
 
         if($request->has('file')){
-            // dd($request->image_type);
             $hasDocuments = $user->files->where('image_type', 'document')->isNotEmpty();
             $hasProfileImg = $user->files->where('image_type', 'profile_imgs')->isNotEmpty();
+            // dd($hasDocuments);
+            // dd($hasProfileImg);
 
             //Si no hay documentos o imágenes de perfil previas, crear una nueva:
             if($request->image_type === 'document' && !$hasDocuments){
+                // dd('entra 1');
                 $this->store($request);
             }
 
             if($request->image_type === 'profile_imgs' && !$hasProfileImg){
+                dd('entra 2');
                 $this->store($request);
             }
 
             else{
                 //nombre del nuevo documento
                 $name = time() . $request->name;
+
+                //itera sobre los documentos que tenga el usuario para ver remplazarlos
                 foreach($user->files as $files) {
                     switch($files->image_type) {
                         //subirlo a la tabla documents
                         case 'document':
-                            //borrar en servidor
-                            $oldFile = File::findOrFail($files->id);
-                            $path = str_replace('/storage/', '/public/', $oldFile->url);
-                            Storage::delete($path);
-                            $oldFile->delete();
+                            if($request->image_type === 'document'){
+                                //borrar en servidor
+                                $oldFile = File::findOrFail($files->id);
+                                $path = str_replace('/storage/', '/public/', $oldFile->url);
+                                Storage::delete($path);
+                                $oldFile->delete();
 
-                            //subir el nuevo documento a servidor
-                            $newFile = $request->file('file');
-                            $newFile->storeAs('public/docs/users/' . $request->username, $name);
+                                //subir el nuevo documento a servidor
+                                $newFile = $request->file('file');
+                                $newFile->storeAs('public/docs/users/' . $request->username, $name);
 
-                            //subir el nuevo documento a base de datos
-                            $file = File::create([
-                                'user_id' => $request->user_id,
-                                'url' => '/storage/docs/users/' . $request->username . '/' . $name,
-                                'image_type' => $request->image_type,
-                                'deleted' => false
-                            ]);
+                                //subir el nuevo documento a base de datos
+                                $file = File::create([
+                                    'user_id' => $request->user_id,
+                                    'url' => '/storage/docs/users/' . $request->username . '/' . $name,
+                                    'image_type' => $request->image_type,
+                                    'deleted' => false
+                                ]);
 
-                            //añadir en documents
-                            $file->document()->create(['file_id' => $file->id, 'expiration_date' => \Carbon\Carbon::now()->addYears(2)]);
+                                //añadir en documents
+                                $file->document()->create(['file_id' => $file->id, 'expiration_date' => \Carbon\Carbon::now()->addYears(2)]);
+                            }
                             break;
 
                         case 'profile_imgs':
-                            $oldProfile = File::findOrFail($files->id);
-                            $path = str_replace('/storage/', '/public/', $oldProfile->url);
-                            Storage::delete($path);
-                            $oldProfile->delete();
+                            // dd('continúa en update');
+                            // dd($request->image_type);
+                            if($request->image_type === 'profile_imgs'){
+                                $oldProfile = File::findOrFail($files->id);
+                                $path = str_replace('/storage/', '/public/', $oldProfile->url);
+                                Storage::delete($path);
+                                $oldProfile->delete();
 
-                            $newProfile = $request->file('file');
-                            $newProfile->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, time() . $request->name);
+                                $newProfile = $request->file('file');
+                                $newProfile->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, time() . $request->name);
 
-                            $file = File::create([
-                                        'user_id' => $request->user_id,
-                                        'url' => '/storage/images/' . $request->image_type . '/users/' . $request->username .'/'. $name,
-                                        'image_type' => $request->image_type,
-                                        'deleted' => 0
-                                    ]);
+                                $file = File::create([
+                                            'user_id' => $request->user_id,
+                                            'url' => '/storage/images/' . $request->image_type . '/users/' . $request->username .'/'. $name,
+                                            'image_type' => $request->image_type,
+                                            'deleted' => 0
+                                        ]);
 
-                            $file->profileImgs()->create(['file_id' => $file->id]);
+                                $file->profileImgs()->create(['file_id' => $file->id]);
+                            }
+
                             break;
                     }
                 }
@@ -238,31 +258,7 @@ class FileController extends Controller
             $response["message"] = "Failed! file(s) not uploaded";
         }
 
-    return response()->json($response);
-
-        //Lo que había antes:
-        // $file = File::find($id);
-        // $file->update($request->all());
-
-        // switch($file->type){
-        //     case 'document': $document = Document::find($id);
-        //                      $document->update($request->all()); break;
-
-        //     case 'profile_imgs': $profile = ProfileImg::find($id);
-        //                         $profile->update($request->all()); break;
-
-        //     case 'store_imgs': $store = StoreImg::find($id);
-        //                         $store->update($request->all()); break;
-
-        //     case 'product_imgs': $product = ProductImg::find($id);
-        //                         $product->update($request->all()); break;
-
-        //     case 'brand_imgs': $brand = BrandImg::find($id);
-        //                         $brand->update($request->all()); break;
-        // }
-
-        // $file->deleted = $request->deleted;
-        // $file->save();
+        return response()->json($response);
     }
 
     public function destroy($id){
