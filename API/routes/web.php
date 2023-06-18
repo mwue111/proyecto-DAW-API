@@ -88,3 +88,6 @@ require __DIR__.'/auth.php';
 
 //Obtener imágenes:
 Route::get('/imagenes/{table}/{id}', 'FileController@getImages');
+
+//Obtener avatar:
+Route::get('borrar/avatar/usuario/{id}', 'FileController@deleteAvatar');

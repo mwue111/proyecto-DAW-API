@@ -67,6 +67,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "nacimiento": "",
         "type": "",
         "profile_imgs": [],
+        "img_delete": [],
         "files": [],
         "deleted": 0,
         "verified": 0,
@@ -298,14 +299,24 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             if (item.img_delete && item.img_delete.length > 0) {
-                let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
+                if(table === 'usuario'){
+                    let url = process.env.NEXT_PUBLIC_BACKEND_URL + `/borrar/avatar/usuario/${item.img_delete}`;
+                    console.log('url: ', url);
+                    axios.get(url).then(res => {
+                        console.log('Imagen eliminada: ', res);
+                    })
 
-                for (let i = 0; i < item.img_delete.length; i++) {
-                    axios.delete(url + '/' + item.img_delete[i])
-                        .then(res => {
-                            console.log(res.data + ' eliminada');
-                        })
-                        .catch(error => console.log('Ha ocurrido un error: ', error));
+
+                }
+                else{
+                    let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
+                    for (let i = 0; i < item.img_delete.length; i++) {
+                        axios.delete(url + '/' + item.img_delete[i])
+                            .then(res => {
+                                console.log(res.data + ' eliminada');
+                            })
+                            .catch(error => console.log('Ha ocurrido un error: ', error));
+                    }
                 }
             }
 

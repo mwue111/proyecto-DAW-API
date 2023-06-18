@@ -36,8 +36,16 @@ class UserController extends Controller{
     }
 
     public function show($id){
+        //identificar al usuario
         $user = User::find($id);
-        $user->client;
+
+        foreach($user->files as $file){
+            if($file->image_type === 'profile_imgs'){
+                $user['avatar'] = $file->url;
+            }
+        }
+        // $user->client;
+
         return $user;
     }
 

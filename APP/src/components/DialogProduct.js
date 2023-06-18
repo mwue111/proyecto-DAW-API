@@ -133,18 +133,36 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
             <div className='field'>
                 <Fieldset legend='Datos del producto'>
                     <label htmlFor='nombre'>Nombre:</label>
-                    <InputText name='nombre' defaultValue={dataForm.nombre} onChange={handleInputChange}/>
+                    <InputText name='nombre'
+                                defaultValue={dataForm.nombre}
+                                onChange={handleInputChange}
+                    />
                     <br/>
                     <br/>
                     <label htmlFor='descripcion'>Descripción:</label>
-                    <InputTextarea name='descripcion' defaultValue={dataForm.descripcion} rows={5} onChange={handleInputChange}/>
+                    <InputTextarea name='descripcion'
+                                    defaultValue={dataForm.descripcion}
+                                    rows={5}
+                                    onChange={handleInputChange}
+                    />
                     <br/>
                     <br/>
                     <label htmlFor='marca'>Marca:</label>
-                    <Dropdown name='marca' value={dropdownBrand} options={brandsList} placeholder="Selecciona la marca" onChange={handleInputChange} optionLabel='name'/>
+                    <Dropdown name='marca'
+                                value={dropdownBrand}
+                                options={brandsList}
+                                placeholder="Selecciona la marca"
+                                onChange={handleInputChange}
+                                optionLabel='name'
+                    />
                     <br/>
                     <label htmlFor='categoria'>Categoría:</label>
-                    <Dropdown name='categoria' value={selectedCategory} onChange={handleInputChange} options={categoriesList} optionLabel='name'/>
+                    <Dropdown name='categoria'
+                                value={selectedCategory}
+                                onChange={handleInputChange}
+                                options={categoriesList}
+                                optionLabel='name'
+                    />
                     <br/>
                     <label htmlFor='tags'>Etiquetas:</label>
                     <MultiSelect
@@ -162,13 +180,15 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                 </Fieldset>
                 <br/>
                 <Fieldset legend='Subir nuevas imágenes'>
-                    <Upload item={product} setProductPic={(data) => {uploadHandler(data)}}
-                    />
+                    <Upload item={product} setProductPic={(data) => {uploadHandler(data)}}/>
                 </Fieldset>
                 <br />
                 {product.id &&
                 <Fieldset legend='Eliminar imágenes existentes'>
-                    <Images table={table} product={product} setImagesToDelete={(data) => {handleDelete(data)}}/>
+                    <Images table={table}
+                            product={product}
+                            setImagesToDelete={(data) => {handleDelete(data)}}
+                    />
                 </Fieldset>}
             </div>
         </div>

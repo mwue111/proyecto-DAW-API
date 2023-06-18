@@ -8,6 +8,7 @@ import Upload from './Upload';
 import { birthDateObject } from '@/helpers/helper';
 import { birthDateFormat } from '@/helpers/helper';
 import { ToggleButton } from 'primereact/togglebutton';
+import Images from './Images';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
@@ -28,6 +29,11 @@ const DialogUser = ({ user, errors }) => {
     useEffect(() => {
         console.log('toggleValue: ', toggleValue);
     }, [toggleValue]);
+
+    const handleDelete = (data) => {
+        console.log('data: ', data);
+        dataForm['img_delete'] = data;
+    }
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
@@ -162,6 +168,11 @@ const DialogUser = ({ user, errors }) => {
                     <Upload item={user}
                             setProductPic={(data) => uploadHandler(data)}
                             name="profile_imgs"
+                    />
+                    <Label>Eliminar actual imagen de perfil</Label>
+                    <Images product={user}
+                            table={'usuario'}
+                            setImagesToDelete={(data) => {handleDelete(data)}}
                     />
 
                     <br/>

@@ -9,34 +9,51 @@ function Images({ table, product, setImagesToDelete }){
     const [fullProduct, setFullProduct] = useState([]);
 
     useEffect(() => {
+        if(table === 'usuario'){
+            let avatarUrl = [];
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/usuario/${product.id}`)
+                .then(res => {
+                    avatarUrl.push({
+                        'id': res.data.id,
+                        'url': res.data.avatar
+                    });
 
-        let allImages = [];
-        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/producto/${productId}`)
-            .then(res => {
-                res.data.product_img.map((item) => {
-                    allImages.push({
-                        'id': item.file.id,
-                        'url': item.file.url
-                    })
-                })
-                setFullProduct(allImages);
+                    setFullProduct(avatarUrl);
             })
-            .catch(error => console.log(error));
+
+        }
+        else{
+            let allImages = [];
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + `/producto/${productId}`)
+                .then(res => {
+                    res.data.product_img.map((item) => {
+                        allImages.push({
+                            'id': item.file.id,
+                            'url': item.file.url
+                        })
+                    })
+                    setFullProduct(allImages);
+                })
+                .catch(error => console.log(error));
+        }
 
             setImagesToDelete(selectedImages);
 
     }, [selectedImages]);
 
-    const handleDelete = (pic) => {
+    const handleDeleteAvatar = (pic) => {
+        setSelectedImages([pic.id]);
+    }
 
+    const handleDelete = (pic) => {
+        // console.log('pic: ', pic)
         if(selectedImages.includes(pic)){
             setSelectedImages(selectedImages.filter((img) => img !== pic));
         }
         else{
             setSelectedImages([...selectedImages, pic]);
         }
-
-        console.log('selectedImages: ', selectedImages);
+        // console.log('selectedImages: ', selectedImages);
     }
 
     return (
@@ -49,7 +66,7 @@ function Images({ table, product, setImagesToDelete }){
                     key={pic.id}
                     width='80'
                     height='60'
-                    onClick={() => handleDelete(pic.id)}
+                    onClick={table === 'usuario' ? () => handleDeleteAvatar(pic) : () => handleDelete(pic.id)}
                     className={`p-2 m-auto cursor-pointer ${selectedImages.includes(pic.id) ?
                         'border-4 border-green-600' : '' }`}
                 />

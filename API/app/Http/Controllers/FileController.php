@@ -264,7 +264,17 @@ class FileController extends Controller
         return $file->delete();
     }
 
+    public function deleteAvatar($id){
+        $user = User::findOrFail($id);
+        foreach($user->files as $files){
+            if($files->image_type === 'profile_imgs'){
+                $this->destroy($files->id);
+            }
+        }
+    }
+
     public function getImages($table, $id){
+
         switch($table){
             case 'tienda': $store = Store::with('storeImgs')->find($id);
                             $images = $store->storeImgs->map(function($image){
@@ -278,6 +288,7 @@ class FileController extends Controller
                             break;
             case 'usuario': $user = User::with('files.profileImgs')->findOrFail($id);
                             $images = $user->files->where('image_type', '=', 'profile_imgs')->first();
+
                             break;
         }
         return $images;
