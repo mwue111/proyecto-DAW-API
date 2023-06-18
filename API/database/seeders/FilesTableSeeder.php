@@ -56,70 +56,70 @@ class FilesTableSeeder extends Seeder
         //8
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1681926637Pomelo1.jpg',
+            'url' => '/storage/images/product_imgs/1686903756pomeloImg.png',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //9
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1681926637Pomelo2.jpg',
+            'url' => '/storage/images/product_imgs/1686903754Pomelo4.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //10
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680683009Pomelo3.jpg',
+            'url' => '/storage/images/product_imgs/1686903753Pomelo3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //11
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680683009Pomelo4.jpg',
+            'url' => '/storage/images/product_imgs/1686903753Pomelo1.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //12
         DB::table('files')->insert([
             'user_id' => 7,
-            'url' => '/storage/images/product_imgs/1686293838bulgur3.jpg',
+            'url' => '/storage/images/product_imgs/1687115707bulgur2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //13
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/storage/images/product_imgs/1686293838bulgur.jpg',
+            'url' => '/storage/images/product_imgs/1687115707bulgur.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //14
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1686293837bulgur2.jpg',
+            'url' => '/storage/images/product_imgs/1687115708bulgur3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //15
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/storage/images/product_imgs/1680686290platano.jpg',
+            'url' => '/storage/images/product_imgs/1687115896platano2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //16
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => '/storage/images/product_imgs/1680686384platano2.jpg',
+            'url' => '/storage/images/product_imgs/1687115896platano.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //17
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => '/storage/images/product_imgs/1680686460zumo_pina.jpg',
+            'url' => '/storage/images/product_imgs/1687115964zumo_pina.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -127,14 +127,14 @@ class FilesTableSeeder extends Seeder
         //18
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => '/storage/images/product_imgs/1680686460zumo_pina2.jpg',
+            'url' => '/storage/images/product_imgs/1687115964zumo_pina2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //19
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => '/storage/images/product_imgs/1680686512ron.png',
+            'url' => '/storage/images/product_imgs/1687116036ron.png',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -142,14 +142,14 @@ class FilesTableSeeder extends Seeder
         //20
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://cdn.shopify.com/s/files/1/0359/6350/2725/products/006584-helado-de-Danonino-MPK-la-menorquina-en-casa_600x.jpg?v=1652865141',
+            'url' => '/storage/images/product_imgs/1687117792poloFresa.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
         //21
         DB::table('files')->insert([
             'user_id' => 1,
-            'url' => 'https://static.ulabox.com/media/178794_l1.jpg',
+            'url' => '/storage/images/product_imgs/1687117792poloFresa2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -196,149 +196,162 @@ class FilesTableSeeder extends Seeder
             'deleted' => 0,
         ]);
 
+        //tomate pera
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://delahuertacasa.com/wp-content/uploads/2022/01/tomate-pera-product.jpg',
+            'url' => '/storage/images/product_imgs/1687118542tomate-pera-product.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://www.elhuertourbano.net/wp-content/uploads/tomate-del-tipo-pera.jpg',
+            'url' => '/storage/images/product_imgs/1687118542tomate-del-tipo-pera.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //??
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118542tomate-pera.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //Leche entera asturiana
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118787leche_asturiana3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //fresas
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118963fresas2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/616sz7TSGnS._AC_SX522_.jpg',
+            'url' => '/storage/images/product_imgs/1687118963fresas.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //cereales kellogs
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119111allbran2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://supercostablanca.es/3729-large_default/asturiana-leche-entera-1l.jpg',
+            'url' => '/storage/images/product_imgs/1687119111allbran.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //patatas
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119183patata.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://img.interempresas.net/fotos/1341264.jpeg',
+            'url' => '/storage/images/product_imgs/1687119183patata2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //lentejas
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119236lenteja2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://img.interempresas.net/fotos/1341264.jpeg',
+            'url' => '/storage/images/product_imgs/1687119236lentejas.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //atún
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119341atun2.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202206/29/00120641600968____4__600x600.jpg',
+            'url' => '/storage/images/product_imgs/1687119341atun.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //jamón cocido
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119434jamonyork2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //huevos
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119628huevos3.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://s.cdnmpro.com/321239485/p/l/7/cereales-all-bran~387.jpg',
+            'url' => '/storage/images/product_imgs/1687119628hevos.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //AOVE
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119785AOVE2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //margarina
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119932margarina3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //Azúcar
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687120075azucar4.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
 
         DB::table('files')->insert([
             'user_id' => 2,
-            'url' => 'https://frujuaida.com/wp-content/uploads/2022/05/03125-1.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://frujuaida.com/wp-content/uploads/2022/05/00084-1.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://canalcocina.es/medias/_cache/zoom-461372ac05133b4210522ae187d2cf50-920-518.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://legumbreslosrecuencos.com/wp-content/uploads/2021/12/Lentejas-Pardinas-Bolsa.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://www.lavozdeltajo.com/fotos/49/atun.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2020/02/congelar-latas-de-atun-anna1311.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://www.codionline.es/documents/10180/10526/34668_G.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://hortadeleixample.es/86-large_default/huevos-ecologicos.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://productosgourmet.online/blog/wp-content/uploads/2020/05/por-que-comprar-huevos-ecologicos-5-1024x1024.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://resigras.es/wp-content/uploads/2018/10/iStock-528742647-1170x781.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxojPX_WlIQ66ks8GwfWwt8ypWqisQSvv3xJRFf51GLaBq57qK4wo1O3sK2WnUS938s88&usqp=CAU',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202202/18/00120930500341____2__600x600.jpg',
-            'image_type' => 'product_imgs',
-            'deleted' => 0,
-        ]);
-
-        DB::table('files')->insert([
-            'user_id' => 2,
-            'url' => 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/202002/05/00120930500044____2__600x600.jpg',
+            'url' => '/storage/images/product_imgs/1687120075azucar5.jpg',
             'image_type' => 'product_imgs',
             'deleted' => 0,
         ]);
@@ -517,6 +530,149 @@ class FilesTableSeeder extends Seeder
             'image_type' => 'profile_imgs',
             'deleted' => 0,
         ]);
+
+        //danonino fresa
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118002danoninoFresa.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118002danoninoFresa4.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118002danoninoFresa3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118002danoninoFresa2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //Leche entera asturiana
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118787leche_asturiana2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118787leche_asturiana.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118788asturiana-leche-entera-1l.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //fresas
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118963fresas-ecológicas.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687118963fresas.jpeg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);        
+        
+        //jamón cocido
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119434jamonyork3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119434jamonyork.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        
+        //huevos
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119628huevos2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //AOVE
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119786AOVE3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+        
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119786aove.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //margarina
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119932margarina2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687119932margarina3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        //Azúcar
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687120075azucar3.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687120075azucar2.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+        DB::table('files')->insert([
+            'user_id' => 2,
+            'url' => '/storage/images/product_imgs/1687120075azucar.jpg',
+            'image_type' => 'product_imgs',
+            'deleted' => 0,
+        ]);
+
+
 
     }
 }

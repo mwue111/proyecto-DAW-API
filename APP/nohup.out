@@ -1,0 +1,27 @@
+
+> breeze-next@0.1.0 dev
+> next dev
+
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+info  - Loaded env from /home/ubuntu/proyecto-DAW-API/APP/.env.development
+event - compiled client and server successfully in 736 ms (186 modules)
+wait  - compiling /404 (client and server)...
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for Compilation/modules|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2Fhome%2Fubuntu%2Fproyecto-DAW-API%2FAPP%2Fsrc%2Fpages%2F404.js&page=%2F404! from pack: TypeError: Cannot read properties of undefined (reading 'length')
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for ResolverCachePlugin|normal|default|fallback=[|assert=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/assert/assert.js|buffer=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/buffer/index.js|constants=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/constants-browserify/constants.json|crypto=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/crypto-browserify/index.js|domain=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/domain-browser/index.js|http=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/stream-http/index.js|https=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/https-browserify/index.js|os=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/os-browserify/browser.js|path=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/path-browserify/index.js|punycode=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/punycode/punycode.js|process=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/build/polyfills/process.js|querystring=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/querystring-es3/index.js|stream=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/stream-browserify/index.js|string_decoder=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/string_decoder/string_decoder.js|sys=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/util/util.js|timers=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/timers-browserify/main.js|tty=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/tty-browserify/index.js|util=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/util/util.js|vm=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/vm-browserify/index.js|zlib=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/browserify-zlib/index.js|events=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/events/events.js|setImmediate=|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/setimmediate/setImmediate.js|]|dependencyType=|commonjs|path=|/home/ubuntu/proyecto-DAW-API/APP|request=|./src/pages/404.js from pack: TypeError: Cannot read properties of undefined (reading 'length')
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for Compilation/modules|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/@next/react-refresh-utils/dist/loader.js!/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/build/webpack/loaders/next-swc-loader.js??ruleSet[1].rules[3].oneOf[2].use[1]!/home/ubuntu/proyecto-DAW-API/APP/src/pages/404.js from pack: TypeError: Cannot read properties of undefined (reading 'length')
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for Compilation/codeGeneration|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2Fhome%2Fubuntu%2Fproyecto-DAW-API%2FAPP%2Fsrc%2Fpages%2F404.js&page=%2F404!|webpack from pack: TypeError: Cannot read properties of undefined (reading 'length')
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for Compilation/codeGeneration|/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/compiled/@next/react-refresh-utils/dist/loader.js!/home/ubuntu/proyecto-DAW-API/APP/node_modules/next/dist/build/webpack/loaders/next-swc-loader.js??ruleSet[1].rules[3].oneOf[2].use[1]!/home/ubuntu/proyecto-DAW-API/APP/src/pages/404.js|webpack from pack: TypeError: Cannot read properties of undefined (reading 'length')
+<w> [webpack.cache.PackFileCacheStrategy] Restoring failed for Compilation/assets|chunkpages/404 from pack: TypeError: Cannot read properties of undefined (reading 'length')
+event - compiled client and server successfully in 554 ms (189 modules)
+warn  - Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+wait  - compiling / (client and server)...
+event - compiled client and server successfully in 580 ms (415 modules)
+warn  - Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: TypeError: Cannot read properties of undefined (reading 'length')
+
+> breeze-next@0.1.0 dev
+> next dev
+
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+info  - Loaded env from /home/ubuntu/proyecto-DAW-API/APP/.env.development
+event - compiled client and server successfully in 734 ms (186 modules)
