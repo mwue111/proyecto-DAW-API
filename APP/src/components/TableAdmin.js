@@ -240,19 +240,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', item.id);
                         formData.append('username', item.username);
                         formData.append('name', item['profile_imgs'][i].name);
+                        formData.append('_method', 'PUT');
 
                         // for(var key of formData.entries()){
                         //     console.log(key[0], ' - ', key[1] )
                         // }
 
-                        // axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        // axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
             }
 
             if(item.files){
+                console.log('item.id: ', item.id);
                 for(let i = 0; i < item.files.length; i++){
                     console.log('hay documento: ', item.files[i]);
                     if(item.files[i] instanceof File){
@@ -262,9 +264,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', item.id);
                         formData.append('username', item.username);
                         formData.append('name', item.files[i].name);
+                        formData.append('_method', 'PUT');
 
                         //igual hay que usar post + id del usuario en lugar de put
-                        axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        // axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
