@@ -15,25 +15,17 @@ use App\Models\User;
 
 class StoreController extends Controller{
     public function index(){
-        $stores = Store::all();
-        foreach($stores as $store){
-            $store->products;
-            $store->owner->user;
-            $store->owner;
-            $store->schedules->each(function($schedule){
-                $schedule->timeSlot;
-            });
-            $store->specialDays;
-            $store->address;
-            if($store->address !=null)
-            $store->address->town->state;
-            $store->storeImgs->each(function($image){
-                $image->file;
-            });
-        }
+            $stores = Store::with([
+                'products',
+                'owner.user',
+                'schedules.timeSlot',
+                'specialDays',
+                'address.town.state',
+                'storeImgs.file'
+            ])->get();
 
-        return $stores;
-    }
+            return $stores;
+        }
 
     public function store(Request $request){
 
@@ -45,20 +37,22 @@ class StoreController extends Controller{
             'description' => 'required',
             'user_id' => 'required|numeric'
         ]);
-
-        if($validator->fails()){
+    
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
-        $address = Address::create($request->address);
-
+    
+        $address = Address::create($request->get('address')); 
+    
         $store = new Store($request->all());
         $store->address_id = $address->id;
         $store->save();
+    
+        $store->products()->attach($request->get('products'));
+        $store->schedules()->attach($request->get('schedules'));
+        $store->specialDays()->attach($request->get('specialDays'));
 
-        $store->products()->attach($request->products);
-        $store->schedules()->attach($request->schedules);
-        $store->specialDays()->attach($request->specialDays);
+        return response()->json(['store_id' => $store->id]);
     }
 
     public function show($id){

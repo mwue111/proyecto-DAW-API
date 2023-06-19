@@ -16,7 +16,7 @@ class CommentController extends Controller
     
     public function getRandomComments()
     {
-        $comments = Comment::inRandomOrder()->take(3)->get();
+        $comments = Comment::where('verified', true)->inRandomOrder()->take(3)->get();
 
         return response()->json($comments, 200);
     }

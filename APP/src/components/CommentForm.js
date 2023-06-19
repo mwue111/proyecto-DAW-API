@@ -57,7 +57,7 @@ const CommentForm = () => {
     setNombre('');
     setComentario('');
     setCaptchaValue('');
-    setHasFilteredWords(false); // Reset state for filtered words
+    setHasFilteredWords(false); 
   };
 
   const dialogFooter = (

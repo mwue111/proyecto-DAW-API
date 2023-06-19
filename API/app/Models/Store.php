@@ -51,7 +51,7 @@ class Store extends Model{
     }
 
     public function owner(){
-        return $this->belongsTo(Owner::class, 'user_id');
+    return $this->belongsTo(Owner::class, 'user_id', 'user_id');
     }
 }
 
