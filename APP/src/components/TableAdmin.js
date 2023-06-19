@@ -107,6 +107,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         axios.get(fetchUrl)
             .then(res => {
+                // console.log('res: ', res);
                 setData(formatJson(res.data, table));
                 setSubmitted(false);
             });
@@ -547,6 +548,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const deleteSingleItem = (item) => {
+        console.log('item en deleteSingleItem: ', item);
+
         axios.delete(fetchUrl + '/' + item.id)
             .then(response => {
                 console.log(response.data + ' - eliminado');
@@ -623,6 +626,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const avatarBodyTemplate = (rowData) => {
+        // console.log('rowData: ', rowData);
+
         if (compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)) {
             return null;
         }
@@ -736,12 +741,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    //test - para ver cuántas veces itera y manda rowData
-    const filteredDataRows = (data) => {
-        console.log('data: ', data);
-        return data;
-    }
-
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
             if (typeof value !== 'object' &&
@@ -779,7 +778,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <div className="card">
                 <DataTable
-                    // value={filteredDataRows(data)}
                     value={data}
                     rowClassName={rowClass}
                     responsiveLayout="scroll"
@@ -808,7 +806,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         header={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         key={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         body={table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
-                    // body={rowData => checkData(rowData)}
                     />}
 
                     {/* { table !== 'usuario' &&

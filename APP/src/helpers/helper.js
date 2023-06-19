@@ -234,15 +234,7 @@ function formatJsonProducto(productos) {
 // USUARIO
 ///////////////////////////////////////////
 function formatJsonUsuario(usuarios) {
-    // console.log('usuarios: ', usuarios)
-
-    //Trayendo las urls desde back para ver si se hacen menos peticiones:
-    // const users = usuarios.users;
-    // const avatar = usuarios.avatar;
-
-    // for(let i = 0; i < users.length; i++){
-    //     users[i].files = avatar[i];
-    // }
+    // console.log('usuarios: ', usuarios);
 
     // const data = users.map((usuario) => {
     const data = usuarios.map((usuario) => {
@@ -256,10 +248,11 @@ function formatJsonUsuario(usuarios) {
             nacimiento: birthDateFormat(usuario.birth_date),
             deleted: usuario.deleted,
             tipo: usuario.type,
-            // avatar: usuario.files?.url ? usuario.files.url : ''
+            avatar: usuario.files,
             verificado: usuario.owner?.verified
         }
     })
+
     return data;
 }
 

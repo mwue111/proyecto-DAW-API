@@ -179,12 +179,10 @@ class FileController extends Controller
 
             //Si no hay documentos o imágenes de perfil previas, crear una nueva:
             if($request->image_type === 'document' && !$hasDocuments){
-                // dd('entra 1');
                 $this->store($request);
             }
 
             if($request->image_type === 'profile_imgs' && !$hasProfileImg){
-                dd('entra 2');
                 $this->store($request);
             }
 
@@ -260,7 +258,7 @@ class FileController extends Controller
         $file = File::findOrFail($id);
         $url = $file->url;
         $url = str_replace('storage', 'public', $file->url);
-        // Storage::delete($url);   //comentado para que no borre del servidor mientras se prueba
+        Storage::delete($url);   //comentado para que no borre del servidor mientras se prueba
         return $file->delete();
     }
 
