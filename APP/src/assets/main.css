@@ -1776,3 +1776,7 @@ select {
       rgba(0, 0, 0, 0.5)
     ),
 }
+
+.comment-button{
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}

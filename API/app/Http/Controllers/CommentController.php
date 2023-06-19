@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use ReCaptcha\ReCaptcha;
 
 class CommentController extends Controller
 {
@@ -21,14 +22,23 @@ class CommentController extends Controller
         return response()->json($comments, 200);
     }
 
-    public function store(Request $request)
-    {
+
+    public function store(Request $request){
+
         $validatedData = $request->validate([
             'nombre' => 'required',
             'comentario' => 'required',
+            'gRecaptchaToken' => 'required', 
         ]);
 
-        $validatedData['verified'] = $request->input('verified', false); 
+        $recaptcha = new ReCaptcha('6LfyQZ8mAAAAAHOoqc4Qt5eQiq3loRWOD8Dv_SfR');
+        $response = $recaptcha->verify($validatedData['gRecaptchaToken']);
+
+        if (!$response->isSuccess()) {
+            return response()->json(['message' => 'Invalid reCAPTCHA'], 400);
+        }
+
+        $validatedData['verified'] = $request->input('verified', false);
 
         $comment = Comment::create($validatedData);
 
