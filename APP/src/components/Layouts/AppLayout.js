@@ -26,7 +26,11 @@ const AppLayout = ({ header, children }) => {
                 </header>
 
                 {/* Page Content */}
-                <main>{children}</main>
+                <main
+                style={{
+                    backgroundImage:
+                      'url(/background.jpg)',
+                  }}>{children}</main>
             </div>
             <CookieNotice />
             <Footer />

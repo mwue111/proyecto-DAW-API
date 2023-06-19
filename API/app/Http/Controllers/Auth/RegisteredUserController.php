@@ -45,7 +45,11 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        switch($user->type){
+            case 'owner': $user->owner()->create(['user_id' => $user->id, 'verified' => 0]); break;
+            case 'client': $user->client()->create(['user_id' => $user->id]); break;
+            case 'administrator': $user->administrator()->create(['user_id' => $user->id, 'last_login'=> now()]); break;
+        }
 
         return response()->noContent();
     }

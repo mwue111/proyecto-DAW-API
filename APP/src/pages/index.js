@@ -45,7 +45,11 @@ export default function Home() {
 
 
 
-      <section className="container mx-auto px-6 p-10">
+      <section className="container mx-auto px-6 p-10" 
+      style={{
+        backgroundImage:
+          'url(/landingpage.png)',
+      }}>
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
           Tiendas locales en Almería
         </h2>

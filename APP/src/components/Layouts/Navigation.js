@@ -45,6 +45,16 @@ const Navigation = ({ user }) => {
                 Productos
               </NavLink>
             </div>
+            {user?.type === 'owner' && (
+              <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <NavLink
+                  href={`/tienda/${user.id}`}
+                  active={router.pathname === `${user.id}`}
+                >
+                  Mi tienda
+                </NavLink>
+              </div>
+            )}
             {user?.type === 'administrator' && (
               <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
