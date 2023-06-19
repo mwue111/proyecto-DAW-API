@@ -12,7 +12,7 @@ const CommentForm = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [hasFilteredWords, setHasFilteredWords] = useState(false);
 
-  const customCurseWords = ['polla', 'coño', 'puta'];
+  const customCurseWords = ['polla', 'coño', 'puta', 'capullo', 'gilipollas', 'mierda'];
   const customFilter = new RegExp(customCurseWords.join('|'), 'gi');
 
   const handleSubmitForm = async (e) => {
@@ -34,6 +34,8 @@ const CommentForm = () => {
     if (filteredWords) {
       setHasFilteredWords(true);
       setResponseMessage('Por favor no utilices palabras malsonantes');
+      setNombre('');
+      setComentario('');
       setDisplayDialog(true);
       return;
     }
