@@ -34,7 +34,7 @@ const SideDrawer = () => {
                         href="/admin"
                         active={router.pathname === '/admin'}>
                         Guest
-                    </NavLink> */}
+                    </NavLink>
                     <br/>
                     <NavLink
                         href="/tienda/1"
