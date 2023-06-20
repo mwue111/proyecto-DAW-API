@@ -491,7 +491,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             const headers = {
                 'Content-Type': 'application/json'
             };
-            // console.log('url: ', fetchUrl + '/' + item.id, jsonDB, { headers });
+            console.log('url: ', fetchUrl + '/' + item.id, jsonDB, { headers });
             axios.put(fetchUrl + '/' + item.id, jsonDB, { headers });
         }
 

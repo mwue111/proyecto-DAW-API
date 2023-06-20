@@ -16,11 +16,13 @@ class ClientsTableSeeder extends Seeder
     public function run()
     {
         DB::table('clients')->insert([
-            'user_id' => 1
+            'user_id' => 1,
+            'deleted' => 0,
         ]);
 
         DB::table('clients')->insert([
-            'user_id' => 5
+            'user_id' => 5,
+            'deleted' => 1,
         ]);
     }
 }

@@ -32,10 +32,10 @@ const DialogUser = ({ user, errors }) => {
         }
     }, [toggleValue]);
 
-    const handleDelete = (data) => {
-        console.log('data: ', data);
-        dataForm['img_delete'] = data;
-    }
+    // const handleDelete = (data) => {
+    //     console.log('data: ', data);
+    //     dataForm['img_delete'] = data;
+    // }
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
