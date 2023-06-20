@@ -44,8 +44,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     }
 
     const [dataForm, setDataForm] = useState(product);
-    const [selectedCategory, setSelectedCategory] = useState(product.categoria ? {'name': categoryName, 'id': categoryId} : null);
     const [dropdownBrand, setDropdownBrand] = useState(product.marca ? {'name': brandName, 'id': brandId } : null);
+    const [selectedCategory, setSelectedCategory] = useState(product.categoria ? {'name': categoryName, 'id': categoryId} : null);
     const [tags, setTags] = useState(tagList);
     const [productPic, setProductPic] = useState([]);
 
@@ -55,24 +55,11 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
     }, [dataForm]);
 
     const handleDelete = (data) => {
-        // console.log('data: ', data);
         dataForm['img_delete'] = data;
-        // console.log('dataForm en handleDelete: ', dataForm);
     }
 
     const uploadHandler = (data) => {
         if(product.product_img){
-
-            /*
-            Data en selección múltiple:
-            [
-                { <-data[0]:
-                    "0": {"objectURL": "blob:http://localhost:3000/666812da-6a1a-415f-abe6-72d58c5e25d6"},
-                    "1": {"objectURL": "blob:http://localhost:3000/2f0f7638-fffb-42fb-801e-eed035ec1f1b"}
-                }
-            ]
-
-            */
 
             //Almaceno las imágenes antiguas para que no entre siempre en el if de tableAdmin
             const allImages = product.product_img;
@@ -83,22 +70,6 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
                     allImages.push(files[i]);
                 }
             });
-
-            //viejo
-            // const oldImages = [];
-
-            // for(let i = 0; i < product.product_img.length; i++) {
-            //     oldImages.push(product.product_img[i]);
-            // }
-
-            // console.log('oldImages: ', oldImages);
-
-            // data.forEach(item => oldImages.push(item));
-
-            // setProductPic(oldImages);
-
-            // newProduct['product_img'] = oldImages;
-            // setDataForm(newProduct);
         }
     }
 

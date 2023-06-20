@@ -11,7 +11,7 @@ const AdminLayout = () => {
     const { user } = useAuth({ middleware: 'auth' })
 
     //Creado el hook de state para poder establecer el estado y compartirlo a los hijos (adminNavigation y las tablas)
-    const [content, setContent] = useState('usuario');
+    const [content, setContent] = useState('tienda');
 
     return (
         <div>
@@ -25,11 +25,11 @@ const AdminLayout = () => {
                 <AdminNavigation user={user} setContent={setContent}/>
 
                 {/* Page Heading */}
-                <header className="bg-white shadow">
+                {/* <header className="bg-white shadow">
                     <div className="max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
                         <div>Tabla de {content}</div>
                     </div>
-                </header>
+                </header> */}
 
                 {/* Page Content */}
                 <main>

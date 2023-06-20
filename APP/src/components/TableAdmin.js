@@ -107,7 +107,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         axios.get(fetchUrl)
             .then(res => {
-                // console.log('res: ', res);
                 setData(formatJson(res.data, table));
                 setSubmitted(false);
             });
@@ -223,12 +222,17 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 item.user_id = item.user_id.id;
             }
 
-            if (item.marca) {
+            if (item.marca && item.marca !== oldItem.marca) {
+                console.log('oldItem: ', oldItem);
+                console.log('entra en marca: ', item.marca);
                 item.marca = item.marca.name;
+                console.log('item.marca: ', item.marca);
             }
 
-            if (item.categoria) {
+            if (item.categoria && item.categoria !== oldItem.categoria) {
+                console.log('entra en categoría: ', item.categoria)
                 item.categoria = item.categoria.name;
+                console.log('item.categoria: ', item.categoria)
             }
 
             if (item.profile_imgs) {
