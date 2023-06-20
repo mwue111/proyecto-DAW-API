@@ -62,6 +62,7 @@ const DialogUser = ({ user, errors }) => {
 
         // if(user.profile_imgs || user.files){
             const allFiles = [];
+            let files = {};
 
             handleFiles(data, allFiles);
 
@@ -71,21 +72,27 @@ const DialogUser = ({ user, errors }) => {
                         // console.log('es un pdf.');
                         dataForm['files'] = data;
 
-                        const allFiles = user.files;
+                        // const allFiles = user.files;
+                        // handleFiles(data, allFiles);
 
-                        handleFiles(data, allFiles);
+                        files = user.files;
                     }
                     else{
                         // console.log('es una imagen.');
                         dataForm['profile_imgs'] = data;
 
-                        const allImages = user.profile_imgs;
-                        setHasAvatar(allImages);
+                        // const allImages = user.profile_imgs;
+                        // setHasAvatar(allImages);
+                        // handleFiles(data, allImages);
 
-                        handleFiles(data, allImages);
+                        files = user.profile_imgs;
+                        setHasAvatar(files);
+
                     }
+                    handleFiles(data, files);
                 }
             }
+
         // }
     }
 
@@ -167,7 +174,7 @@ const DialogUser = ({ user, errors }) => {
 
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
-                    <Upload item={user}
+                    <Upload
                             setProductPic={(data) => uploadHandler(data)}
                             name="profile_imgs"
                     />

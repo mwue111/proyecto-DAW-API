@@ -30,7 +30,6 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'verified' => ['numeric'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -39,7 +38,6 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'surname1' => $request->surname1,
             'surname2' => $request->surname2,
-            'verified' => $request->verified,
             'type' => $request->type,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -58,6 +56,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], //'unique:users, columna a comprobar, id a ignorar' https://laravel.com/docs/4.2/validation#rule-unique
             'birth_date' => ['string'],
+            'verified' => ['numeric'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
         ]);
 
@@ -71,12 +70,13 @@ class RegisteredUserController extends Controller
             'surname1' => $request->surname1,
             'surname2' => $request->surname2,
             'birth_date' => $request->birth_date,
+            'verified' => $request->verified,
             'type' => $request->type,
             'email' => $request->email,
         ]);
 
         switch($user->type){
-            case 'owner': $user->owner()->create(['user_id' => $user->id, 'verified' => 0]); break;
+            case 'owner': $user->owner()->create(['user_id' => $user->id, 'verified' => $request->verified]); break;
             case 'client': $user->client()->create(['user_id' => $user->id]); break;
             case 'administrator': $user->administrator()->create(['user_id' => $user->id, 'last_login'=> now()]); break;
         }
