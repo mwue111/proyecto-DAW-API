@@ -63,7 +63,8 @@ class FileController extends Controller
 
             }
             else if($request->image_type === 'profile_imgs'){
-                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, time() . $request->name);
+                $name = time() . $request->name;
+                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, $name);
             }
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
@@ -225,8 +226,9 @@ class FileController extends Controller
                                 Storage::delete($path);
                                 $oldProfile->delete();
 
+                                $name = time() . $request->name;
                                 $newProfile = $request->file('file');
-                                $newProfile->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, time() . $request->name);
+                                $newProfile->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, $name);
 
                                 $file = File::create([
                                             'user_id' => $request->user_id,
