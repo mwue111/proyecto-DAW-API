@@ -61,13 +61,14 @@ class UserController extends Controller{
         }
         if($request->deleted !== null){
             switch($user->type) {
-                case 'owner': $user->owner->update(['deleted' => $request->deleted]); break;
+                case 'owner': $user->owner->update(['deleted' => $request->deleted]);
+                            $user->owner->stores->each->update(['deleted' => $request->deleted]); break;
                 case 'client': $user->client->update(['deleted' => $request->deleted]); break;
                 case 'administrator': $user->administrator->update(['deleted' => $request->deleted]); break;
             }
 
-            if($user->files){
-                //...?
+            if($user->files) {
+                $user->files->each->update(['deleted' => $request->deleted]);
             }
         }
 
