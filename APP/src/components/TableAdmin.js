@@ -67,6 +67,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "nacimiento": "",
         "type": "",
         "profile_imgs": [],
+        "img_delete": [],
         "files": [],
         "deleted": 0,
         "verified": 0,
@@ -106,6 +107,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
         axios.get(fetchUrl)
             .then(res => {
+                // console.log('res: ', res);
                 setData(formatJson(res.data, table));
                 setSubmitted(false);
             });
@@ -240,19 +242,21 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', item.id);
                         formData.append('username', item.username);
                         formData.append('name', item['profile_imgs'][i].name);
+                        formData.append('_method', 'PUT');
 
                         // for(var key of formData.entries()){
                         //     console.log(key[0], ' - ', key[1] )
                         // }
 
-                        // axios.put(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        // axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
             }
 
             if(item.files){
+                console.log('item.id: ', item.id);
                 for(let i = 0; i < item.files.length; i++){
                     console.log('hay documento: ', item.files[i]);
                     if(item.files[i] instanceof File){
@@ -262,9 +266,10 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         formData.append('user_id', item.id);
                         formData.append('username', item.username);
                         formData.append('name', item.files[i].name);
+                        formData.append('_method', 'PUT');
 
-                        //igual hay que usar post + id del usuario en lugar de put
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
+                        // axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
@@ -295,14 +300,24 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
 
             if (item.img_delete && item.img_delete.length > 0) {
-                let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
+                if(table === 'usuario'){
+                    let url = process.env.NEXT_PUBLIC_BACKEND_URL + `/borrar/avatar/usuario/${item.img_delete}`;
+                    console.log('url: ', url);
+                    axios.get(url).then(res => {
+                        console.log('Imagen eliminada: ', res);
+                    })
 
-                for (let i = 0; i < item.img_delete.length; i++) {
-                    axios.delete(url + '/' + item.img_delete[i])
-                        .then(res => {
-                            console.log(res.data + ' eliminada');
-                        })
-                        .catch(error => console.log('Ha ocurrido un error: ', error));
+
+                }
+                else{
+                    let url = process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo';
+                    for (let i = 0; i < item.img_delete.length; i++) {
+                        axios.delete(url + '/' + item.img_delete[i])
+                            .then(res => {
+                                console.log(res.data + ' eliminada');
+                            })
+                            .catch(error => console.log('Ha ocurrido un error: ', error));
+                    }
                 }
             }
 
@@ -341,9 +356,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // }
 
             if (table === 'usuario') {
-                console.log('usuario en saveItem: ', itemDB);
+                console.log('Item: ', itemDB);
                 let userId;
                 let username;
+
+                if(itemDB.verified && itemDB.verified === true){
+                    console.log('hay verificado: ', itemDB);
+                    itemDB.verified = 1;
+                    console.log('tras el cambio: ', itemDB);
+                }
 
                 if (itemDB.birth_date) {
                     itemDB.birth_date = formattedDate(itemDB.birth_date);
@@ -351,6 +372,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                     .then(res => {
+                        console.log('res: ', res);
                         userId = res.data.id;
                         username = res.data.username;
 
@@ -532,6 +554,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const deleteSingleItem = (item) => {
+        console.log('item en deleteSingleItem: ', item);
+
         axios.delete(fetchUrl + '/' + item.id)
             .then(response => {
                 console.log(response.data + ' - eliminado');
@@ -608,6 +632,8 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }
 
     const avatarBodyTemplate = (rowData) => {
+        // console.log('rowData: ', rowData);
+
         if (compareKeys(rowData, emptyProduct) || compareKeys(rowData, emptyStore)) {
             return null;
         }
@@ -721,12 +747,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
         )
     }
 
-    //test - para ver cuántas veces itera y manda rowData
-    const filteredDataRows = (data) => {
-        console.log('data: ', data);
-        return data;
-    }
-
     const filteredData = data.map(item => {
         return Object.entries(item).reduce((acum, [key, value]) => {
             if (typeof value !== 'object' &&
@@ -742,6 +762,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     });
 
     const rowClass = (data) => {
+
         if (data.deleted === 0) {
             return {
                 'verificado': data.verificado == 0
@@ -764,7 +785,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             <div className="card">
                 <DataTable
-                    // value={filteredDataRows(data)}
                     value={data}
                     rowClassName={rowClass}
                     responsiveLayout="scroll"
@@ -793,7 +813,6 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         header={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         key={table !== 'usuario' ? 'imágenes' : 'avatar'}
                         body={table !== 'usuario' ? imagesBodyTemplate : avatarBodyTemplate}
-                    // body={rowData => checkData(rowData)}
                     />}
 
                     {/* { table !== 'usuario' &&

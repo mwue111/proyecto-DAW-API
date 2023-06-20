@@ -14,7 +14,11 @@ use DateInterval;
 class UserController extends Controller{
 
     public function index(){
-        $users = User::all();
+        // $users = User::all();
+
+        $users = User::with(['files' => function ($query) {
+            $query->where('image_type', 'profile_imgs');
+        }])->get();
 
         //Comentado: mandado al front el usuario con las url de imágenes de perfil
         // $users = User::with('files')->get();
@@ -36,8 +40,16 @@ class UserController extends Controller{
     }
 
     public function show($id){
+        //identificar al usuario
         $user = User::find($id);
-        $user->client;
+
+        foreach($user->files as $file){
+            if($file->image_type === 'profile_imgs'){
+                $user['avatar'] = $file->url;
+            }
+        }
+        // $user->client;
+
         return $user;
     }
 

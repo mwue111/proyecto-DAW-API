@@ -8,26 +8,34 @@ import Upload from './Upload';
 import { birthDateObject } from '@/helpers/helper';
 import { birthDateFormat } from '@/helpers/helper';
 import { ToggleButton } from 'primereact/togglebutton';
+import Images from './Images';
 
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
 
 const DialogUser = ({ user, errors }) => {
 
-    if(user.tipo === 'owner'){
-        console.log('user: ', user);
-    }
+    console.log('user: ', user);
 
     const types = ['client','administrator','owner'];
     const [dataForm, setDataForm] = useState(user);
     const [selectedDate, setSelectedDate] = useState(user.id ? birthDateObject(user.nacimiento) : null);
     const [dropdownValue, setDropdownValue] = useState(user.tipo ? user.tipo : null);
-
     const [toggleValue, setToggleValue] = useState(user.verificado);
+    const [hasAvatar, setHasAvatar] = useState(false);
 
     useEffect(() => {
         console.log('toggleValue: ', toggleValue);
+        if(user && user.avatar?.length > 0){
+            // console.log('tiene avatar: ', user.avatar);
+            setHasAvatar(true);
+        }
     }, [toggleValue]);
+
+    const handleDelete = (data) => {
+        console.log('data: ', data);
+        dataForm['img_delete'] = data;
+    }
 
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
@@ -72,6 +80,7 @@ const DialogUser = ({ user, errors }) => {
                         dataForm['profile_imgs'] = data;
 
                         const allImages = user.profile_imgs;
+                        setHasAvatar(allImages);
 
                         handleFiles(data, allImages);
                     }
@@ -155,7 +164,6 @@ const DialogUser = ({ user, errors }) => {
                             required
                             dateFormat='dd/mm/yy'
                     />
-                    {/* value={validBirthDay ? validBirthDay : null}*/}
 
                     <br/>
                     <Label htmlFor='profile_imgs'>Imagen de perfil:</Label>
@@ -163,6 +171,16 @@ const DialogUser = ({ user, errors }) => {
                             setProductPic={(data) => uploadHandler(data)}
                             name="profile_imgs"
                     />
+
+                    {/* {hasAvatar === true  &&
+                        <>
+                            <Label>Eliminar actual imagen de perfil</Label>
+                            <Images product={user}
+                                    table={'usuario'}
+                                    setImagesToDelete={(data) => {handleDelete(data)}}
+                            />
+                        </>
+                    } */}
 
                     <br/>
                     <Label htmlFor='tipo'>Tipo:</Label>

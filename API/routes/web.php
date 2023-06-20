@@ -97,3 +97,5 @@ Route::put('/comentario/{id}', 'CommentController@update');
 Route::delete('/comentario/{id}', 'CommentController@destroy');
 Route::get('/comentario', 'App\Http\Controllers\CommentController@getAllComments');
 
+//Obtener avatar:
+Route::get('borrar/avatar/usuario/{id}', 'FileController@deleteAvatar');
