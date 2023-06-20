@@ -63,7 +63,8 @@ class FileController extends Controller
 
             }
             else if($request->image_type === 'profile_imgs'){
-                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, time() . $request->name);
+                $name = time() . $request->name;
+                $request->file->storeAs('public/images/' . $request->image_type . '/users/' . $request->username, $name);
             }
             else if($request->image_type === 'document'){
                 $file = $request->file('file');
