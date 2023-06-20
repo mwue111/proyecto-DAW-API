@@ -10,6 +10,10 @@
     .verificado{
         background-color: rgb(255, 229, 181)!important;
     }
+
+    .si-verificado{
+        background-color: rgb(255, 255, 255)!important;
+    }
 }
 
 

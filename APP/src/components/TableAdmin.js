@@ -356,9 +356,15 @@ const TableAdmin = ({ fetchUrl, table }) => {
             // }
 
             if (table === 'usuario') {
-                console.log('usuario en saveItem: ', itemDB);
+                console.log('Item: ', itemDB);
                 let userId;
                 let username;
+
+                if(itemDB.verified && itemDB.verified === true){
+                    console.log('hay verificado: ', itemDB);
+                    itemDB.verified = 1;
+                    console.log('tras el cambio: ', itemDB);
+                }
 
                 if (itemDB.birth_date) {
                     itemDB.birth_date = formattedDate(itemDB.birth_date);
@@ -366,6 +372,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
                 axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin-register', itemDB, { headers })
                     .then(res => {
+                        console.log('res: ', res);
                         userId = res.data.id;
                         username = res.data.username;
 
@@ -756,6 +763,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     });
 
     const rowClass = (data) => {
+
         if (data.deleted === 0) {
             return {
                 'verificado': data.verificado == 0

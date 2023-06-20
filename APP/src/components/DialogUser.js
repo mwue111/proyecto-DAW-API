@@ -25,7 +25,8 @@ const DialogUser = ({ user, errors }) => {
     const [hasAvatar, setHasAvatar] = useState(false);
 
     useEffect(() => {
-        if(user.avatar.length > 0){
+        console.log('toggleValue: ', toggleValue);
+        if(user && user.avatar?.length > 0){
             // console.log('tiene avatar: ', user.avatar);
             setHasAvatar(true);
         }
