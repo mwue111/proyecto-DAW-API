@@ -64,7 +64,7 @@ function RecommendedProducts () {
         <a href={`/producto/${product.id}`}>
           {product.product_img?.length > 0 ? (
             <img
-              src={product.product_img[0].file.url}
+              src={process.env.NEXT_PUBLIC_BACKEND_URL + product.product_img[0].file.url}
               alt={product.name}
               style={{ maxWidth: 300, maxHeight: 200 }}
             />
