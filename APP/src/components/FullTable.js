@@ -100,7 +100,7 @@ const FullTable = (filter) => {
           body={row => (
             <div style={{ width: "100px", height: "100px" }}>
               <img
-                src={row.product_img[0]?.file.url || "https://via.placeholder.com/100"}
+                src={process.env.NEXT_PUBLIC_BACKEND_URL + row.product_img[0]?.file.url || "https://via.placeholder.com/100"}
                 alt={row.name}
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
