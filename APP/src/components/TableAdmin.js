@@ -780,7 +780,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
     }));
 
     return (
-        <div className="dataTable-crud">
+        <div className="dataTable-crud m-4">
             <Toast ref={toast} />
 
             <div className="card">

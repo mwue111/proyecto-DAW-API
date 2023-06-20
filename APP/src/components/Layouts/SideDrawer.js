@@ -5,6 +5,7 @@ import { Button } from 'primereact/button'
 import NavLink from '@/components/NavLink'
 import { useRouter } from 'next/router'
 import ApplicationLogo from '@/components/ApplicationLogo'
+import Link from 'next/link';
 
 const SideDrawer = () => {
     const [visibleLeft, setVisibleLeft] = useState(false);
@@ -13,8 +14,15 @@ const SideDrawer = () => {
     return(
         <div>
             <div className="card mx-8">
-                <Sidebar visible={visibleLeft} onHide={() => setVisibleLeft(false)}>
-                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                <Sidebar className="bg-gray-900 text-white" visible={visibleLeft} onHide={() => setVisibleLeft(false)}>
+                    <Link href="/">
+                        <div className='flex items-center'>
+                            <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                            <span className="text-xl font-bold ml-2 hover:text-red-600">
+                                Localmeria
+                            </span>
+                        </div>
+                    </Link>
                     <br/>
                     <NavLink
                         href="/productos"
@@ -26,7 +34,7 @@ const SideDrawer = () => {
                         href="/admin"
                         active={router.pathname === '/admin'}>
                         Guest
-                    </NavLink>
+                    </NavLink> */}
                     <br/>
                     <NavLink
                         href="/tienda/1"
