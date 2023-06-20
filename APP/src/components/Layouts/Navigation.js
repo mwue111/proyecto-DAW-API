@@ -75,7 +75,7 @@ const Navigation = ({ user }) => {
               </div>
               <Dropdown
                 align="right"
-                width="48"
+                width="auto"
                 trigger={
                   <button className="flex items-center text-sm font-medium text-gray-100 hover:text-red-400 focus:outline-none transition duration-150 ease-in-out">
                     <div className="text-white">
@@ -88,7 +88,37 @@ const Navigation = ({ user }) => {
                 }
               >
                 {/* Dropdown Menu */}
+                <div className="p-4">
+                <div className="flex items-center mb-4">
+                  <div className="flex-shrink-0">
+                    <svg
+                      className="h-10 w-10 fill-current text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <div className="font-medium leading-6 text-base text-gray-900">
+                      {user ? user.name : 'Invitado'}
+                    </div>
+                    <div className="font-medium leading-6 text-gray-400">
+                      <div className="email-container" style={{ whiteSpace: 'nowrap' }}>
+                        {user ? user.email : 'Por favor inicia sesión'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <DropdownButton onClick={logout}>Logout</DropdownButton>
+                </div>
               </Dropdown>
             </div>
           ) : (

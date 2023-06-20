@@ -10,6 +10,8 @@ function ProductCarousel({ images }) {
     }
   ];
 
+  console.log(images)
+
   const imageTemplate = (image) => {
     return (
       <div className="product-item">

@@ -5,9 +5,19 @@ import Navigation from '@/components/Layouts/Navigation';
 import Footer from '@/components/Layouts/Footer';
 import CommentForm from '@/components/CommentForm';
 import Testimonials from '@/components/Testimonials';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const { user } = useAuth({ middleware: 'guest' });
+  const router = useRouter();
+
+  const handleButtonClick = () => {
+    if (user) {
+      router.push('/productos');
+    } else {
+      router.push('/login');
+    }
+  };
 
   return (
     <>
@@ -17,33 +27,30 @@ export default function Home() {
 
       <Navigation user={user} />
 
-      <div
-  className="py-20 bg-cover bg-no-repeat bg-fixed bg-center flex items-center justify-center"
-  style={{
-    backgroundImage:
-      'url(https://thumbs.dreamstime.com/b/almer%C3%ADa-espa%C3%B1a-de-julio-puerta-entrada-al-mercado-central-vista-panor%C3%A1mica-durante-el-d%C3%ADa-216116383.jpg)',
-  }}
->
-  <div className="container text-center">
-    <h2 className="text-4xl font-bold text-white mb-4 text-shadow">
-      ¡Ven al lado luminoso de las compras!
-    </h2>
-    <h3 className="text-2xl text-white mb-8 text-shadow">
-      Encuentra las mejores tiendas locales en Almería.
-    </h3>
-    <button className="bg-white text-gray-800 font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all">
-      ¡Busca mejores precios!
-    </button>
-  </div>
-  <style>{`
-    .text-shadow {
-      text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-    }
-  `}</style>
-</div>
-
-
-
+      <div className="py-80 relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="https://images.mnstatic.com/0c/59/0c59a742b0dbfe091f2d170df864d496.jpg"
+            alt="Your Image"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-6xl font-extrabold text-white mb-4" style={{ textShadow: '2px 4px 4px black' }}>
+              ¡Ven al lado luminoso de las compras!
+            </h2>
+            <h3 className="text-3xl text-white font-extrabold mb-8" style={{ textShadow: '2px 4px 4px black' }}>
+              Encuentra las mejores tiendas locales en Almería.
+            </h3>
+            <button className="bg-white text-gray-800 font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all"
+              onClick={handleButtonClick}
+            >
+              ¡Busca mejores precios!
+            </button>
+          </div>
+        </div>
+      </div>
 
         <section
           className="px-0 p-10"
