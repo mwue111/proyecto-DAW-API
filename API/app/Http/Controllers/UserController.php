@@ -59,6 +59,17 @@ class UserController extends Controller{
         if($request->verified !== null && $user->owner->findOrFail($id)){
             $user->owner()->update($request->all());
         }
+        if($request->deleted !== null){
+            switch($user->type) {
+                case 'owner': $user->owner->update(['deleted' => $request->deleted]); break;
+                case 'client': $user->client->update(['deleted' => $request->deleted]); break;
+                case 'administrator': $user->administrator->update(['deleted' => $request->deleted]); break;
+            }
+
+            if($user->files){
+                //...?
+            }
+        }
 
         $user->update($request->all());
     }
