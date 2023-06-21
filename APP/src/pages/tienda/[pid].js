@@ -17,6 +17,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import DialogProduct from '@/components/DialogProduct';
 
+
 const Tienda = () => {
   
   const { user } = useAuth();
@@ -96,6 +97,16 @@ const Tienda = () => {
     setSelectedProduct(product);
   };
 
+  const formatTags = (tags) => {
+    let tagId = [];
+
+    for (let i = 0; i < tags.length; i++) {
+        tagId.push(tags[i].id);
+    }
+
+    return tagId;
+  }
+
   const handleButtonClick = () => {
     if (selectedProduct) {
       console.log('Selected product:', selectedProduct);
@@ -128,7 +139,6 @@ const Tienda = () => {
       )
       .then((response) => {
         console.log('Product added:', response.data);
-        // Fetch the updated store products
         axios
           .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${pid}`)
           .then((response) => {
@@ -149,6 +159,82 @@ const Tienda = () => {
     resetDialogData();
     }
   };
+
+  const handleAddNewProduct = () => {
+    if (
+      selectedProduct.nombre &&
+      selectedProduct.descripcion &&
+      selectedProduct.categoria &&
+      selectedProduct.marca &&
+      selectedProduct.tags
+    ) {
+      const productData = {
+        name: selectedProduct.nombre,
+        description: selectedProduct.descripcion,
+        category: selectedProduct.categoria.id,
+        brand: selectedProduct.marca.id,
+        tags: formatTags(selectedProduct.tags),
+        deleted: 0,
+      };
+      console.log('selectedProduct: ')
+      console.log(selectedProduct)
+
+  
+      axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto`, productData)
+        .then((response) => {
+          console.log('Product added:', response.data);
+  
+          if (selectedProduct.product_img) {
+            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto/${response.data.name}`) 
+          .then((response) => {
+            const productId = response.data.id;
+            console.log('productId: ', productId);
+          
+
+            setTimeout(() => {
+                // if(itemDB.product_img){
+
+                for (let i = 0; i < selectedProduct['product_img'].length; i++) {
+                    const formData = new FormData();
+                    formData.append('file', selectedProduct['product_img'][i]);
+                    formData.append('user_id', user.id);
+                    formData.append('image_type', 'product_imgs');
+                    formData.append('name', selectedProduct['product_img'][i].name);
+                    formData.append('product_id', productId);
+
+                    // for(var key of formData.entries()){
+                    //     console.log(key[0], ' - ', key[1]);
+                    // }
+
+                    axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                        .then(res => console.log('res: ', res));
+                }
+                // }
+            }, 2000);})
+          }
+          
+    
+
+              setSelectedStore((prevStore) => ({
+                ...prevStore,
+                products: response.data.products,
+              }));
+              axios
+              .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto`)
+              .then((response) => {
+                setProducts(response.data);
+              });
+              setShowNewDialog(false);
+            }
+            
+        )
+        .catch((error) => {
+          console.error('Failed to add product:', error);
+        });
+    }
+  };
+  
 
   const handleNewProduct = () => {
     setShowNewDialog(true);
@@ -267,15 +353,15 @@ const Tienda = () => {
   const itemDialogFooter = (
     <div>
       <Button
-        label="Save"
+        label="Añadir"
         icon="pi pi-check"
-        onClick={handleAddProduct}
+        onClick={handleAddNewProduct}
         className="p-button-success"
       />
       <Button
-        label="Cancel"
+        label="Cancelar"
         icon="pi pi-times"
-        onClick={handleCancelButtonClick}
+        onClick={()=>setShowNewDialog(false)}
         className="p-button-secondary"
       />
     </div>
@@ -453,7 +539,7 @@ const Tienda = () => {
             />
           </div>
           <div className="p-field">
-            <label htmlFor="unidadInput">Unidad</label>
+            <label htmlFor="unidadInput">Unidad de medida(Litro, Kilo)</label>
             <InputText
               id="unidadInput"
               value={dialogData.unidad}
@@ -480,12 +566,12 @@ const Tienda = () => {
           </div>
           <div className="p-field">
             <Button
-              label="Add Product"
+              label="Añadir producto"
               onClick={handleAddProduct}
               className="p-mr-2"
             />
             <Button
-              label="Cancel"
+              label="Cancelar"
               onClick={handleCancelButtonClick}
               className="p-button-secondary"
             />
@@ -518,7 +604,7 @@ const Tienda = () => {
                 header={`Añadir producto`}
                 modal className="p-fluid"
                 footer={itemDialogFooter}
-                onHide={() => setShowDeleteDialog(false)}
+                onHide={() => setShowNewDialog(false)}
             >
         <DialogProduct
           product={selectedProduct}

@@ -12,7 +12,6 @@ const AppLayout = ({ header, children }) => {
     return (
         <div>
             <Head>
-                    <title>Dahsboard</title>
             </Head>
 
             <div className="min-h-screen bg-gray-100">

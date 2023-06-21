@@ -246,6 +246,11 @@ class StoreController extends Controller{
     return response()->json(['message' => 'Product deleted from the store'], 200);
 }
 
+    public function getStoreByUser($id){
+        $stores = Store::where('user_id', $id)->get();
+        return $stores->first();
+    }
+
 
 
 }

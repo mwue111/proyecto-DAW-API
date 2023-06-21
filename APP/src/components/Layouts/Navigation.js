@@ -8,15 +8,29 @@ import ResponsiveNavLink, {
 import { DropdownButton } from '@/components/DropdownLink';
 import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
+import axios from 'axios';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
+  //haz una peticion a la api si el usuario es owner, para obtener el id de la tienda
+  const [store, setStore] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (user?.type === 'owner') {
+      axios
+        .get(process.env.NEXT_PUBLIC_BACKEND_URL + `/tienda/encontrar/${user.id}`)
+        .then((response) => {
+          setStore(response.data);
+        });
+    }
+  }, [user]);
 
   const { logout } = useAuth();
 
-  const [open, setOpen] = useState(false);
+ 
 
   return (
     <nav className="relative z-30 flex justify-between bg-gray-900 text-white on-top">
@@ -48,7 +62,7 @@ const Navigation = ({ user }) => {
             {user?.type === 'owner' && (
               <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  href={`/tienda/${user.id}`}
+                  href={`/tienda/${store?.id}`}
                   active={router.pathname === `${user.id}`}
                 >
                   Mi tienda
