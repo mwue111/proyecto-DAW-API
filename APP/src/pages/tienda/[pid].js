@@ -326,7 +326,7 @@ const Tienda = () => {
             </div>
             <div className="mb-3">{product.description}</div>
           </div>
-          {(user.type == "owner" || user.type == "administrator") ? (
+          {(user?.type == "owner" || user?.type == "administrator") ? (
           <div className='flex '>
             <div className="text-2xl font-bold">
                 {product.pivot.value} €/ {product.pivot.unit}
