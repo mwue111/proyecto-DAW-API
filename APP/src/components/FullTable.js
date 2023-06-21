@@ -90,19 +90,23 @@ const FullTable = () => {
         <Column
           header="Etiquetas"
           body={row => (
-            <ul>
-              {row.tags.map(tag => (
-                <li key={tag.id}>
-                  <Tag
-                    tag={tag.name}
-                    onClick={() => handleTagClick(tag.name)}
-                    onMouseDown={stopPropagation}
-                  />
-                </li>
-              ))}
-            </ul>
+            <>
+              {row.tags.length > 0 && (
+                <ul>
+                  {row.tags.map(tag => (
+                    <li key={tag.id}>
+                      <Tag
+                        tag={tag.name}
+                        onClick={() => handleTagClick(tag.name)}
+                        onMouseDown={stopPropagation}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
           )}
-        />
+/>
         <Column field="category.name" header="Categoría" sortable />
         <Column
           header="Foto"

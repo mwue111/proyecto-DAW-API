@@ -241,12 +241,13 @@ const Register = () => {
 
               <InputError messages={errors.password} className="mt-2" />
             </div>
-
+            <br />
+            <br />
 
               {/* File upload */}
               {type === 'owner' && (
-                <div className="w-1/2 mr-2">
-                  <Label htmlFor="file">Archivo</Label>
+                <div className="mr-2">
+                  <Label htmlFor="file">Debes subir un archivo que acredite tu propiedad</Label>
                   <div className="overflow-hidden">
                     <input
                       id="file"
