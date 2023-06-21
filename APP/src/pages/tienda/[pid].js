@@ -326,13 +326,24 @@ const Tienda = () => {
             </div>
             <div className="mb-3">{product.description}</div>
           </div>
+          {(user == "owner" || user == "administrator") ? (
           <div>
+            <div className="text-2xl font-bold">
+                {product.pivot.value} € / {product.pivot.unit}
+              </div>
             <Button
               icon="pi pi-minus"
               className="p-button-danger"
               onClick={() => handleDeleteProduct(product)}
             />
-          </div>
+          </div>) : 
+          (
+            <div>
+              <div className="text-2xl font-bold">
+                {product.pivot.value} € / {product.pivot.unit}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -390,7 +401,7 @@ const Tienda = () => {
                   store={selectedStore}
                   onUpdate={handleStoreUpdated}
                 />
-                <Panel header="Search and Select Product" toggleable>
+                <Panel header="Añade productos" toggleable>
                   <div className="p-fluid">
                     <div className="p-field">
                       <label htmlFor="searchInput">Search Product</label>
