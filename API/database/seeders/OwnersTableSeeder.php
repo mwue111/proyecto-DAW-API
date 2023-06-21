@@ -17,12 +17,14 @@ class OwnersTableSeeder extends Seeder
     {
         DB::table('owners')->insert([
             'user_id' => 3,
-            'verified' => 0
+            'verified' => 0,
+            'deleted' => 0,
         ]);
 
         DB::table('owners')->insert([
             'user_id' => 4,
-            'verified' => 1
+            'verified' => 1,
+            'deleted' => 0,
         ]);
     }
 }

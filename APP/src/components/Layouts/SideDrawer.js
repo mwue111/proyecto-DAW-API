@@ -25,15 +25,15 @@ const SideDrawer = () => {
                     </Link>
                     <br/>
                     <NavLink
+                        href="/"
+                        active={router.pathname === '/'}>
+                        Landing
+                    </NavLink> 
+                    <br/>
+                    <NavLink
                         href="/productos"
                         active={router.pathname === '/productos'}>
                         Productos
-                    </NavLink>
-                    <br/>
-                    <NavLink
-                        href="/admin"
-                        active={router.pathname === '/admin'}>
-                        Guest
                     </NavLink>
                     <br/>
                     <NavLink

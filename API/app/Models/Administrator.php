@@ -14,6 +14,7 @@ class Administrator extends Model
     protected $fillable = [
         'user_id',
         'last_login',
+        'deleted',
     ];
 
     public function user(){

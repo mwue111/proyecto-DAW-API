@@ -177,35 +177,76 @@ class StoreController extends Controller{
         return $oldStores;
     }
 
-    public function getDefaultStore(Request $request)
-{
-    $user = User::find($request->user_id);
+    public function getDefaultStore(Request $request){
+        $user = User::find($request->user_id);
 
-    $defaultStore = new Store();
-    $defaultStore->name = 'La tienda de ' . $request->username;
-    $defaultStore->description = 'Descripcion de mi tienda';
-    $defaultStore->email = 'mi@tienda.com';
-    $defaultStore->telephone1 = '1234567890';
-    $defaultStore->telephone2 = '';
-    $defaultStore->deleted = false;
-    $defaultStore->user_id = $user->id;
+        $defaultStore = new Store();
+        $defaultStore->name = 'La tienda de ' . $request->username;
+        $defaultStore->description = 'Descripcion de mi tienda';
+        $defaultStore->email = 'mi@tienda.com';
+        $defaultStore->telephone1 = '1234567890';
+        $defaultStore->telephone2 = '';
+        $defaultStore->deleted = false;
+        $defaultStore->user_id = $user->id;
 
-    $defaultAddress = new Address();
-    $defaultAddress->road_type = 'Calle';
-    $defaultAddress->zip_code = '12345';
-    $defaultAddress->number = '1';
-    $defaultAddress->name = 'Mayor';
-    $defaultAddress->remarks = '';
-    $defaultAddress->town_id = 1;
+        $defaultAddress = new Address();
+        $defaultAddress->road_type = 'Calle';
+        $defaultAddress->zip_code = '12345';
+        $defaultAddress->number = '1';
+        $defaultAddress->name = 'Mayor';
+        $defaultAddress->remarks = '';
+        $defaultAddress->town_id = 1;
 
-    $defaultAddress->save();
+        $defaultAddress->save();
 
-    $defaultStore->address_id = $defaultAddress->id;
+        $defaultStore->address_id = $defaultAddress->id;
 
-    $defaultStore->save();
+        $defaultStore->save();
 
-    return $defaultStore;
+        return $defaultStore;
+    }
+
+    public function productoExistente(Request $request){
+        $storeId = $request->input('storeId');
+        $productId = $request->input('productId');
+        $stock = $request->input('stock');
+        $precio = $request->input('precio');
+        $unidad = $request->input('unidad');
+        $comentarios = $request->input('comentarios');
+    
+        $store = Store::find($storeId);
+        $store->products()->attach($productId, [
+            'stock' => $stock,
+            'value' => $precio,
+            'unit' => $unidad,
+            'remarks' => $comentarios
+        ]);
+    
+        return response()->json(['message' => 'Product added to store successfully'], 200);
+    }
+
+    public function deleteProduct(Request $request){
+    $storeId = $request->input('storeId');
+    $productId = $request->input('productId');
+
+    $store = Store::find($storeId);
+
+    if (!$store) {
+        return response()->json(['message' => 'Store not found'], 404);
+    }
+
+    $product = $store->products()->find($productId);
+
+    if (!$product) {
+        return response()->json(['message' => 'Product not found in the store'], 404);
+    }
+
+    $store->products()->detach($productId);
+
+    return response()->json(['message' => 'Product deleted from the store'], 200);
 }
+
+
 
 }
 

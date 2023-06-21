@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/tienda/productoexistente', 'StoreController@productoExistente');
+Route::delete('/tienda/productoexistente', 'StoreController@deleteProduct')->name('store.product.delete');
 Route::get('/default-store', 'StoreController@getDefaultStore');
 Route::get('/producto/encuentra/{name}', 'ProductController@findProductName');
 Route::get('/usuario/encuentra/{username}', 'UserController@findUsername');
