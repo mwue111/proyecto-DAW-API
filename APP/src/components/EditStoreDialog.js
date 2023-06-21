@@ -9,20 +9,28 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
 
-const EditStoreDialog = ({ store, onUpdate}) => {
+/**
+ * EditStoreDialog component.
+ * Renders a dialog for editing store details.
+ * @param {Object} store - The store object.
+ * @param {Function} onUpdate - The function to call when the store is updated.
+ * @returns {JSX.Element} The rendered component.
+ */
+const EditStoreDialog = ({ store, onUpdate }) => {
     const { user } = useAuth();
     const [visible, setVisible] = useState(false);
     const [updatedStore, setUpdatedStore] = useState(store);
     const optionsRoadType = ['Calle', 'Avenida', 'Paseo', 'Boulevard', 'Carretera'];
     const [cities, setCities] = useState([]);
-    const [dropdownCity, setDropdownCity] = useState(store.address?.town ? {'name': store.address.town.name, 'id': store.address.town.id} : null);
-    const [ road_type, setRoadType ] = useState(store.address ? store.address.road_type : null);
+    const [dropdownCity, setDropdownCity] = useState(store.address?.town ? { 'name': store.address.town.name, 'id': store.address.town.id } : null);
+    const [road_type, setRoadType] = useState(store.address ? store.address.road_type : null);
 
-    
+
     useEffect(() => {
         let cityOptions = [];
         axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/ciudad')
-                .then(res => {res.data.map((item) => {
+            .then(res => {
+                res.data.map((item) => {
                     cityOptions.push({
                         'name': item.name,
                         'id': item.id
@@ -33,83 +41,91 @@ const EditStoreDialog = ({ store, onUpdate}) => {
     }, []);
 
     useEffect(() => {
-      setUpdatedStore(store);
+        setUpdatedStore(store);
     }, [store]);
-  
+
+    /**
+     * Handles the change event for input fields.
+     * @param {Event} e - The change event object.
+     */
     const handleChange = (e) => {
-        if(e.target.name === 'address.town.name'){
-            setUpdatedStore({ ...updatedStore, address: { town: { name: e.target.value.name, id:e.target.value.id } } });
+        if (e.target.name === 'address.town.name') {
+            setUpdatedStore({ ...updatedStore, address: { town: { name: e.target.value.name, id: e.target.value.id } } });
             setDropdownCity(e.target.value);
-        }else if (e.target.name === 'address.road_type'){
+        } else if (e.target.name === 'address.road_type') {
             setUpdatedStore({ ...updatedStore, address: { road_type: e.target.value } });
             setRoadType(e.target.value);
         }
-        else{
+        else {
             setUpdatedStore({ ...updatedStore, [e.target.name]: e.target.value });
         }
-      };
-      
-  
-      const handleUpdate = () => {
+    };
+
+    /**
+     * Handles the update action for the store.
+     */
+    const handleUpdate = () => {
         const changedFields = Object.keys(updatedStore).filter(
-          (key) => updatedStore[key] !== store[key]
+            (key) => updatedStore[key] !== store[key]
         );
         const updatedFields = {};
-      
-        let addressChanged = false; 
-      
+
+        let addressChanged = false;
+
         changedFields.forEach((field) => {
-          if (field.startsWith("address.")) {
-            addressChanged = true;
-      
-            if (!updatedFields.address) {
-              updatedFields.address = {};
+            if (field.startsWith("address.")) {
+                addressChanged = true;
+
+                if (!updatedFields.address) {
+                    updatedFields.address = {};
+                }
+
+                const addressField = field.replace("address.", "");
+                updatedFields.address[addressField] = updatedStore[field];
+            } else {
+                // Set the updated value for non-address fields
+                updatedFields[field] = updatedStore[field];
             }
-      
-            const addressField = field.replace("address.", "");
-            updatedFields.address[addressField] = updatedStore[field];
-          } else {
-            // Set the updated value for non-address fields
-            updatedFields[field] = updatedStore[field];
-          }
         });
-      
+
         if (addressChanged || (updatedFields.address && updatedFields.address.town)) {
-          updatedFields.address = {
-            ...updatedFields.address,
-            id: store.address.id,
-          };
+            updatedFields.address = {
+                ...updatedFields.address,
+                id: store.address.id,
+            };
         }
-      
+
         console.log(updatedFields);
-      
+
         axios
-          .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${store.id}`, updatedFields)
-          .then((response) => {
-            setVisible(false);
-            onUpdate();
-          });
-      };
-      
-      
-  
+            .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/${store.id}`, updatedFields)
+            .then((response) => {
+                setVisible(false);
+                onUpdate();
+            });
+    };
+
+    /**
+      * Renders the footer of the dialog.
+      * @returns {JSX.Element} The rendered footer component.
+      */
     const renderFooter = () => {
-      return (
-        <div>
-          <Button
-            label="Cancel"
-            icon="pi pi-times"
-            className="p-button-text"
-            onClick={() => setVisible(false)}
-          />
-          <Button
-            label="Apply Changes"
-            icon="pi pi-check"
-            className="p-button-text"
-            onClick={handleUpdate}
-          />
-        </div>
-      );
+        return (
+            <div>
+                <Button
+                    label="Cancel"
+                    icon="pi pi-times"
+                    className="p-button-text"
+                    onClick={() => setVisible(false)}
+                />
+                <Button
+                    label="Apply Changes"
+                    icon="pi pi-check"
+                    className="p-button-text"
+                    onClick={handleUpdate}
+                />
+            </div>
+        );
     };
 
     return (
@@ -189,4 +205,3 @@ const EditStoreDialog = ({ store, onUpdate}) => {
 };
 
 export default EditStoreDialog;
-  

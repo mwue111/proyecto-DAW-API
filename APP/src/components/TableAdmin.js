@@ -1,3 +1,4 @@
+// Importing necessary modules and components
 import React, { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -18,8 +19,15 @@ import Avatar from 'components/Avatar';
 import { birthDateObject } from '@/helpers/helper';
 import { formattedDate } from '@/helpers/helper';
 
+/**
+ * Functional component representing a table for administration purposes.
+ * @param {string} fetchUrl - The URL to fetch data from.
+ * @param {string} table - The type of table (e.g., 'store', 'product', 'user').
+ */
 const TableAdmin = ({ fetchUrl, table }) => {
+    // Initializations and state variables
 
+    // Empty store object structure
     const emptyStore = {
         "nombre": "",
         "telefono1": "",
@@ -39,9 +47,12 @@ const TableAdmin = ({ fetchUrl, table }) => {
             }
         },
         "user_id": "",
-        "deleted": 0
+        "deleted": 0,
+        // "store_img": [],
+        // "img_delete": [],
     }
 
+    // Empty product object structure
     const emptyProduct = {
         "marca": "",
         "categoria": {
@@ -58,6 +69,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
         "img_delete": [],
     }
 
+    // Empty user object structure
     const emptyUser = {
         "username": "",
         "name": "",
@@ -103,6 +115,9 @@ const TableAdmin = ({ fetchUrl, table }) => {
     const [errors, setErrors] = useState([]);
     const [matches, setMatches] = useState(0);
 
+    /**
+     * Fetches data from the specified URL and additional data options from different URLs.
+     */
     useEffect(() => {
 
         axios.get(fetchUrl)
@@ -178,6 +193,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
         return <div>No se han encontrado datos</div>
     }
 
+    /**
+     * Opens a new dialog based on the selected table.
+     * Sets the item to the corresponding empty object.
+     * Shows the item dialog.
+     */
     const openNew = () => {
 
         switch (table) {
@@ -189,23 +209,41 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItemDialog(true);
     }
 
+    /**
+     * Hides the item dialog.
+     * Sets the changed item back to the old item.
+     */
     const hideDialog = () => {
         setChangedItem(oldItem);
         setItemDialog(false);
     }
 
+    /**
+     * Hides the delete item dialog.
+     */
     const hideDeleteItemDialog = () => {
         setDeleteItemDialog(false);
     }
 
+    /**
+     * Hides the undo delete dialog.
+     */
     const hideUndoDeleteDialog = () => {
         setUndoDeleteDialog(false);
     }
 
+    /**
+     * Hides the delete old dialog.
+     */
     const hideDeleteOldDialog = () => {
         setDeleteOldDialog(false);
     }
 
+    /**
+     * Saves the item by making API requests and performing necessary operations.
+     * If the item has an 'id', it updates the item. Otherwise, it creates a new item.
+     * It handles image uploads, deletes, and other data transformations.
+     */
     const saveItem = () => {
         const headers = {
             'Content-Type': 'application/json'
@@ -281,23 +319,48 @@ const TableAdmin = ({ fetchUrl, table }) => {
 
             const jsonDB = changedJson(oldItem, item);
 
-            if (item.product_img && item.product_img.length !== oldItem.product_img.length) {
+            // if (item.product_img && item.product_img.length !== oldItem.product_img.length) {
 
-                for (let i = 0; i < jsonDB['product_img'].length; i++) {
-                    if (jsonDB['product_img'][i] instanceof File) {
-                        // console.log('archivo: ', jsonDB['product_img'][i].name);
+            //     for (let i = 0; i < jsonDB['product_img'].length; i++) {
+            //         if (jsonDB['product_img'][i] instanceof File) {
+            //             // console.log('archivo: ', jsonDB['product_img'][i].name);
+            //             const formData = new FormData();
+            //             formData.append('file', jsonDB['product_img'][i]);
+            //             formData.append('user_id', user.id);
+            //             formData.append('image_type', 'product_imgs');
+            //             formData.append('product_id', item.id);
+            //             formData.append('name', jsonDB['product_img'][i].name);
+
+            //             // for(var key of formData.entries()){
+            //             //     console.log(key[0], ' - ', key[1]);
+            //             // }
+
+            //             axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+            //                 .then(res => console.log('res: ', res));
+            //         }
+            //     }
+            // }
+
+            if(item.store_imgs || item.store_imgs.length !== oldItem.store_imgs.length) {
+                // console.log('hay imagen de tienda: ', item['store_imgs']);
+
+                for(let i = 0; i < item['store_imgs'].length; i++) {
+                    // console.log('entra: ', item['store_imgs'][i]);
+
+                    if(item['store_imgs'][i] instanceof File) {
                         const formData = new FormData();
-                        formData.append('file', jsonDB['product_img'][i]);
+                        formData.append('file', item['store_imgs'][i]);
                         formData.append('user_id', user.id);
-                        formData.append('image_type', 'product_imgs');
-                        formData.append('product_id', item.id);
-                        formData.append('name', jsonDB['product_img'][i].name);
+                        formData.append('image_type', 'store_imgs');
+                        formData.append('store_id', item.id);
+                        formData.append('name', item['store_imgs'][i].name);
+                        formData.append('_method', 'PUT');
 
-                        // for(var key of formData.entries()){
-                        //     console.log(key[0], ' - ', key[1]);
-                        // }
+                        for(var key of formData.entries()) {
+                            console.log(key[0], ' - ', key[1]);
+                        }
 
-                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/subir-archivo', formData)
+                        axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + `/subir-archivo/${item.id}`, formData)
                             .then(res => console.log('res: ', res));
                     }
                 }
@@ -447,6 +510,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItem({});
     }
 
+    /**
+     * Creates a profound copy of the item received to keep the old version of the edited item.
+     * Opens the item dialog.
+     * @param {object} item - The item that will change.
+     */
     const editItem = (item) => {
         const _item = objectProfoundCopy(item);
         setItem(item);
@@ -454,6 +522,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setItemDialog(true);
     }
 
+    /**
+     * Creates a profound copy of the item received.
+     * Opens the delete item dialog.
+     * @param {object} item
+     */
     const confirmDeleteItem = (item) => {
         const _item = objectProfoundCopy(item);
         setItem(item);
@@ -461,6 +534,11 @@ const TableAdmin = ({ fetchUrl, table }) => {
         setDeleteItemDialog(true);
     }
 
+    /**
+     *
+     * @param {object} tags
+     * @returns the array of tag's id.
+     */
     const formatTags = (tags) => {
         let tagId = [];
 
@@ -864,6 +942,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                         setItem={setItem}
                         cities={cities}
                         owners={owners}
+                        table={table}
                     />}
 
                 {table === 'producto' &&
@@ -879,7 +958,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
                 {table === 'usuario' &&
 
                     <DialogUser user={item}
-                        errors={errors}
+                        // errors={errors}
                     // setItem={setItem}
                     />}
 

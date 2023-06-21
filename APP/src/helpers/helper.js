@@ -37,7 +37,8 @@ function formatJsonTienda(tiendas) {
             address: item.address,
             schedules: item.schedules,
             deleted: item.deleted,
-            updated_at: item.updated_at
+            updated_at: item.updated_at,
+            // store_imgs: item.store_imgs,
         }
     })
     return data;

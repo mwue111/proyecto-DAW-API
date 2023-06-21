@@ -4,6 +4,11 @@ import axios from 'axios';
 import { productStoreFilterFormatter } from '@/helpers/helper';
 import { useRouter } from 'next/router';
 
+/**
+ * SearchBar component.
+ * Renders a search bar with autocomplete functionality for products and stores.
+ * @returns {JSX.Element} The rendered search bar component.
+ */
 const SearchBar = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [dataFilter, setDataFilter] = useState([]);
@@ -12,6 +17,10 @@ const SearchBar = () => {
     const [products, setProducts] = useState([]);
     const router = useRouter();
 
+     /**
+   * Handles the search input and filters the data accordingly.
+   * @param {object} event - The search input event.
+   */
     const search = (event) => {
         const query = event.query.toLowerCase().replace(/[àáâãäå]/g, 'a')
                                                   .replace(/[èéêë]/g, 'e')
@@ -27,13 +36,13 @@ const SearchBar = () => {
                                                                 .replace(/[ùúûü]/g, 'u');
             return normalizedItem.includes(query);
           });
-      
+
           return { ...group, items: filteredItems };
         }).filter(group => group.items.length);
-      
+
         setFilteredData(_filteredData);
       };
-      
+
 
     useEffect(() => {
         try{
@@ -57,6 +66,11 @@ const SearchBar = () => {
         }
     }, [stores,products]);
 
+     /**
+   * Renders the template for the grouped items in the autocomplete dropdown.
+   * @param {object} item - The item to be rendered.
+   * @returns {JSX.Element} The rendered template for the grouped item.
+   */
     const groupedItemTemplate = (item) => {
         return (
             <div className="flex align-items-center">
@@ -65,6 +79,10 @@ const SearchBar = () => {
         );
     };
 
+     /**
+   * Handles the selection of an item from the autocomplete dropdown.
+   * @param {object} e - The selection event.
+   */
     const handleSelect = (e) => {
         const {id, type} = e.value;
             router.push(`/${type}/${id}`);

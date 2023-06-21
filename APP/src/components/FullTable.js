@@ -5,15 +5,20 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import Tag from "components/Tag";
 
-const FullTable = (filter) => {
-  const [products, setProducts] = useState([]);
-  const [filterText, setFilterText] = useState("");
+/**
+ * FullTable component.
+ * Renders a table with filtering and sorting functionality.
+ * @returns {JSX.Element} The rendered component.
+ */
+const FullTable = () => {
+    const [products, setProducts] = useState([]);
+    const [filterText, setFilterText] = useState("");
 
-  useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + "/producto").then(res => {
-      setProducts(res.data);
-    });
-  }, []);
+    useEffect(() => {
+        axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + "/producto").then(res => {
+            setProducts(res.data);
+        });
+    }, []);
 
   const normalizedFilterText = filterText
     .toLowerCase()
@@ -40,9 +45,13 @@ const FullTable = (filter) => {
       .includes(normalizedFilterText)
   );
 
-  const handleFilterChange = e => {
-    setFilterText(e.target.value);
-  };
+    /**
+      * Handles the change event for the filter input.
+      * @param {Event} e - The change event object.
+      */
+    const handleFilterChange = e => {
+        setFilterText(e.target.value);
+    };
 
   const handleTagClick = tag => {
     setFilterText(tag);
@@ -69,13 +78,13 @@ const FullTable = (filter) => {
         onRowClick={handleRowClick}
         style={{ marginTop: "1em" }}
       >
-        <Column 
-          field="name" 
+        <Column
+          field="name"
           header="Nombre"
           body={row => (
             <b>
               {row.name}
-            </b> 
+            </b>
           )}
           sortable />
         <Column

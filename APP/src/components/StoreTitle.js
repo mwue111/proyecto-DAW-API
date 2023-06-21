@@ -1,5 +1,14 @@
 import React from 'react';
 
+/**
+ * StoreTitle component.
+ * Renders the title and description of a store with decorative palm tree images.
+ * @param {object} props - The component props.
+ * @param {object} props.store - The store data.
+ * @param {string} props.store.name - The name of the store.
+ * @param {string} props.store.description - The description of the store.
+ * @returns {JSX.Element} The rendered StoreTitle component.
+ */
 function StoreTitle({store}) {
   return (
     <div className="max-w-7xl">

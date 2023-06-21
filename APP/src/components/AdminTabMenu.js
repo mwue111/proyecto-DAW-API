@@ -2,11 +2,18 @@ import React, { useState } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
 import { useRouter } from 'next/router'
 
+/**
+ * Functional component representing a tab menu for administration purposes.
+ * @param {function} setContent - Callback function to set the content based on the selected tab.
+ */
 const AdminTabMenu = ({ setContent }) => {
+    // State variables
     const [activeIndex, setActiveIndex] = useState('');
 
+    // Router instance
     const router = useRouter()
 
+    // Configuration for the tab menu
     const table = [
         {label: 'Tienda', icon: 'pi pi-fw pi-shopping-bag'},
         {label: 'Producto', icon: 'pi pi-fw pi-shopping-cart'},

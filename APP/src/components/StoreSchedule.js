@@ -3,6 +3,13 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import { Button } from 'primereact/button';
 import { formatJsonHorario, formatJsonHorarioDia } from '@/helpers/helper';
 
+/**
+ * StoreSchedule component.
+ * Renders the store schedule with an overlay panel to display the complete schedule.
+ * @param {object} props - The component props.
+ * @param {object[]} props.schedule - The store schedule data.
+ * @returns {JSX.Element} The rendered StoreSchedule component.
+ */
 function StoreSchedule({schedule}) {
     const op = useRef(null);
   return (

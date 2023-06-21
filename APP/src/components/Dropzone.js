@@ -2,6 +2,11 @@ import React from "react";
 import Image from "next/image";
 import FilePreview from "./FilePreview";
 
+/**
+ * DropZone component.
+ * Renders a drop zone for selecting or dropping files.
+ * @returns {JSX.Element} The rendered component.
+ */
 const DropZone = () => {
   return (
     <>
@@ -17,6 +22,6 @@ const DropZone = () => {
       <FilePreview fileData={data} />
     </>
   );
-}; 
+};
 
 export default DropZone;

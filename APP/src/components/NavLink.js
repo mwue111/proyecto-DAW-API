@@ -1,5 +1,13 @@
 import Link from 'next/link'
 
+/**
+ * NavLink component.
+ * Renders a navigation link using Next.js's Link component.
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.active=false] - Indicates if the link is active.
+ * @param {React.ReactNode} props.children - The content to be rendered inside the link.
+ * @returns {JSX.Element} The rendered navigation link.
+ */
 const NavLink = ({ active = false, children, ...props }) => (
     <Link
         {...props}

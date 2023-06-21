@@ -5,7 +5,14 @@ import { ProgressBar } from 'primereact/progressbar';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 
-function Upload( { setProductPic } ) {
+/**
+ * Upload component.
+ * Renders a file upload functionality with progress bar and file preview.
+ * @param {object} props - The component props.
+ * @param {function} props.setProductPic - The callback function to set the uploaded product picture.
+ * @returns {JSX.Element} The rendered Upload component.
+ */
+function Upload({ setProductPic }) {
 
     const [newImage, setNewImage] = useState([]);
     const [data, setData] = useState({});
@@ -17,6 +24,11 @@ function Upload( { setProductPic } ) {
         setProductPic(newImage);
     }, [newImage, data]);
 
+    /**
+     * Function called when an image or a file is selected.
+     * It displays a total size bar and sets the newImage state filling it with the selected items.
+     * @param {object} e - The item selected.
+     */
     const onTemplateSelect = (e) => {
 
         //lo que estaba:
@@ -29,7 +41,7 @@ function Upload( { setProductPic } ) {
             fileObjects.push(file);
         });
 
-        setNewImage(prevImage => [{...prevImage, ...fileObjects}]);
+        setNewImage(prevImage => [{ ...prevImage, ...fileObjects }]);
 
         // puede que haya que cambiar el setter por algo como esto: setNewImage(prevImage => [...prevImage, fileObjects]);
 
@@ -54,15 +66,34 @@ function Upload( { setProductPic } ) {
         //setNewImage(prevImage => [{...prevImage, file: e.files[0]}]);
     }
 
+    /**
+     * Event handler for removing a file from the template.
+     * @param {object} file - The file object to be removed.
+     * @param {function} callback - The callback function to be called after removing the file.
+     * @returns {void}
+     */
     const onTemplateRemove = (file, callback) => {
         setTotalSize(totalSize - file.size);
         callback();
     }
 
+    /**
+     * Event handler for clearing the template.
+     * @returns {void}
+     */
     const onTemplateClear = () => {
         setTotalSize(0);
     }
 
+    /**
+     * Template for rendering the header section.
+     * @param {object} options - Options for the header template.
+     * @param {string} options.className - The CSS class name for the header container.
+     * @param {React.ReactNode} options.chooseButton - The button component for choosing files.
+     * @param {React.ReactNode} options.uploadButton - The button component for uploading files.
+     * @param {React.ReactNode} options.cancelButton - The button component for canceling the upload.
+     * @returns {JSX.Element} The rendered header template.
+     */
     const headerTemplate = (options) => {
         const { className, chooseButton, uploadButton, cancelButton } = options;
         const value = totalSize / 10000;
@@ -77,15 +108,21 @@ function Upload( { setProductPic } ) {
         );
     }
 
+    /**
+     * Template for rendering an item in the file upload.
+     * @param {object} file - The file object.
+     * @param {object} props - Additional props for the item template.
+     * @returns {JSX.Element} The rendered item template.
+     */
     const itemTemplate = (file, props) => {
         return (
             <div className="flex align-items-center flex-wrap">
                 <div className="flex align-items-center" style={{ width: '40%' }}>
-                <img alt={file.name} role="presentation" src={file.objectURL} width={80} />
+                    <img alt={file.name} role="presentation" src={file.objectURL} width={80} />
                     <span className="flex flex-column text-left ml-3">
                         {file.name}
                     </span>
-            </div>
+                </div>
                 <div className="flex-auto mr-2">
                     <span>
                         <small>{new Date().toLocaleDateString()}</small>
@@ -100,6 +137,10 @@ function Upload( { setProductPic } ) {
         )
     }
 
+    /**
+     * Template for rendering the empty state of the file upload.
+     * @returns {JSX.Element} The rendered empty template.
+     */
     const emptyTemplate = () => {
         return (
             <div className="flex align-items-center flex-column">
@@ -109,18 +150,24 @@ function Upload( { setProductPic } ) {
         )
     }
 
+    /**
+     * Options for the choose button in the file upload.
+     */
     const chooseOptions = {
         icon: 'pi pi-fw pi-images',
         iconOnly: true,
         className: 'custom-choose-btn p-button-rounded p-button-outlined ui-button-flat',
-        style: {width: '40px'}
+        style: { width: '40px' }
     };
 
+    /**
+     * Options for the cancel button in the file upload.
+     */
     const cancelOptions = {
         icon: 'pi pi-fw pi-times',
         iconOnly: true,
         className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined',
-        style: {width: '40px'}
+        style: { width: '40px' }
     };
 
     return (

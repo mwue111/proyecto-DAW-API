@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
+/**
+ * Functional component representing an avatar image.
+ * @param {object} props - The component props.
+ * @param {object} props.users - The user data used to fetch the avatar image.
+ * @param {string} props.table - The table from which to fetch the avatar image.
+ * @returns {JSX.Element} - The rendered avatar image or a progress spinner if the image is loading.
+ */
 function Avatar( {users, table} ) {
 
     // const oldAvatar = users.avatar[0];

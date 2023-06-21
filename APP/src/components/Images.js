@@ -2,6 +2,15 @@ import React, { useState, useEffect, Component } from 'react'
 import { Image } from 'primereact/image';
 import axios from 'axios';
 
+/**
+ * Images component.
+ * Renders a collection of images for a given table and product.
+ * @param {Object} props - The component props.
+ * @param {string} props.table - The table name.
+ * @param {Object} props.product - The product data.
+ * @param {function} props.setImagesToDelete - The function to set the images to delete.
+ * @returns {JSX.Element} The rendered component.
+ */
 function Images({ table, product, setImagesToDelete }){
     const productId = product.id;
 
@@ -41,19 +50,25 @@ function Images({ table, product, setImagesToDelete }){
 
     }, [selectedImages]);
 
+    /**
+     * Handles the avatar deletion if the table is the users table.
+     * @param {*} pic - The image selected
+     */
     const handleDeleteAvatar = (pic) => {
         setSelectedImages([pic.id]);
     }
 
+    /**
+     * Handles the images deletion if the table is not the users table.
+     * @param {*} pic - The image selected.
+     */
     const handleDelete = (pic) => {
-        // console.log('pic: ', pic)
         if(selectedImages.includes(pic)){
             setSelectedImages(selectedImages.filter((img) => img !== pic));
         }
         else{
             setSelectedImages([...selectedImages, pic]);
         }
-        // console.log('selectedImages: ', selectedImages);
     }
 
     return (
