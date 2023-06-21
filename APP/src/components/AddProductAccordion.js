@@ -9,6 +9,11 @@ import { MultiSelect } from 'primereact/multiselect';
 import { FileUpload } from 'primereact/fileupload';
 import { useAuth } from '@/hooks/auth';
 
+/**
+ * AddNewProductAccordion component.
+ * Renders an accordion for adding a new product.
+ * @param {Object} store - The store object.
+ */
 const AddNewProductAccordion = ({ store }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -30,6 +35,7 @@ const AddNewProductAccordion = ({ store }) => {
     const [brands, setBrands] = useState([]);
 
     useEffect(() => {
+        // Fetch brands data
         axios
             .get(process.env.NEXT_PUBLIC_BACKEND_URL+'/marca')
             .then((response) => {
@@ -38,6 +44,8 @@ const AddNewProductAccordion = ({ store }) => {
             .catch((error) => {
                 console.error(error);
             });
+
+        // Fetch tags data
         axios
             .get(process.env.NEXT_PUBLIC_BACKEND_URL+'/etiqueta')
             .then((response) => {
@@ -46,6 +54,8 @@ const AddNewProductAccordion = ({ store }) => {
             .catch((error) => {
                 console.error(error);
             });
+
+        // Fetch categories data
         axios
             .get(process.env.NEXT_PUBLIC_BACKEND_URL+'/categoria')
             .then((response) => {
@@ -56,10 +66,18 @@ const AddNewProductAccordion = ({ store }) => {
             });
     }, []);
 
+    /**
+     * Handles the image upload event.
+     * @param {Object} event - The image upload event.
+     */
     const handleImageUpload = (event) => {
         setFormData({ ...formData, file: event.files[0] });
     };
 
+    /**
+     * Handles the save button click event.
+     * Saves the form data to the backend.
+     */
     const handleSave = () => {
         const formDataWithImage = new FormData();
         formDataWithImage.append('name', formData.name);
@@ -74,6 +92,7 @@ const AddNewProductAccordion = ({ store }) => {
         formDataWithImage.append('unit', formData.unit);
         formDataWithImage.append('file', formData.file);
 
+        // Save the form data to the backend
         axios
             .post(process.env.NEXT_PUBLIC_BACKEND_URL+'/producto', formDataWithImage)
             .then(() => {
@@ -102,6 +121,7 @@ const AddNewProductAccordion = ({ store }) => {
             formData.append('user_id', user.id);
             formData.append('image_type', 'product_imgs');
 
+            // Upload the image file
             axios.post('/archivo', formData).then(response => {
                 console.log(response);
             }).catch(error => {
@@ -112,6 +132,10 @@ const AddNewProductAccordion = ({ store }) => {
         window.location.reload();
     };
 
+    /**
+     * Handles the cancel button click event.
+     * Resets the form data and closes the accordion.
+     */
     const handleCancel = () => {
         setFormData({
             name: '',

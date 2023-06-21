@@ -1,3 +1,10 @@
+/**
+ * A customizable button component.
+ * @param {object} props - The component props.
+ * @param {string} [props.type='submit'] - The type of the button.
+ * @param {string} props.className - The class name for styling the button.
+ * @returns {JSX.Element} - The rendered button element.
+ */
 const Button = ({ type = 'submit', className, ...props }) => (
     <button
         type={type}

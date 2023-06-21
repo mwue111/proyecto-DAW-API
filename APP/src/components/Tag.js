@@ -1,6 +1,13 @@
 import React from 'react'
 import { getTagColor } from '@/helpers/helper';
 
+/**
+ * Tag component.
+ * Renders a tag with a corresponding color based on the provided tag value.
+ * @param {object} props - The component props.
+ * @param {string} props.tag - The tag value.
+ * @returns {JSX.Element} The rendered Tag component.
+ */
 function Tag({tag}) {
   const color = getTagColor(tag);
   return (

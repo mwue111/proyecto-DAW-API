@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
+/**
+ * Dropdown component.
+ * @param {Object} props - The component props.
+ * @param {string} props.align - The alignment of the dropdown menu. (Default: 'right')
+ * @param {string} props.width - The width of the dropdown menu. (Default: 48)
+ * @param {string} props.contentClasses - The CSS classes for the dropdown content. (Default: 'py-1 bg-white')
+ * @param {React.ReactNode} props.trigger - The trigger element for the dropdown.
+ * @param {React.ReactNode} props.children - The content of the dropdown menu.
+ * @returns {JSX.Element} The rendered component.
+ */
 const Dropdown = ({
     align = 'right',
     width = 48,

@@ -13,7 +13,14 @@ import Images from './Images';
 import InputError from '@/components/InputError';
 import { Message } from 'primereact/message';
 
-const DialogUser = ({ user, errors }) => {
+/**
+ * DialogUser component.
+ * @param {Object} props - The component props.
+ * @param {Object} props.user - The user object.
+ * @param {Object} props.errors - The errors object.
+ * @returns {JSX.Element} The rendered component.
+ */
+const DialogUser = ({ user }) => {
 
     console.log('user: ', user);
 
@@ -37,6 +44,10 @@ const DialogUser = ({ user, errors }) => {
     //     dataForm['img_delete'] = data;
     // }
 
+    /**
+     * Handles the change of input values.
+     * @param {object} e - The event object.
+     */
     const handleInputChange = (e) => {
         const target = e.target;    //el elemento html <input name="X">Y</input>
         let value = target.value;   //valor del input: Y
@@ -58,6 +69,10 @@ const DialogUser = ({ user, errors }) => {
 
     }
 
+    /**
+     * Handles the upload of files.
+     * @param {Array} data - The uploaded files data.
+     */
     const uploadHandler = data => {
 
         // if(user.profile_imgs || user.files){
@@ -96,6 +111,11 @@ const DialogUser = ({ user, errors }) => {
         // }
     }
 
+    /**
+     * Handles the extraction of files from the uploaded data.
+     * @param {Array} data - The uploaded files data.
+     * @param {Array} allFiles - The array to store the extracted files.
+     */
     const handleFiles = (data, allFiles) => {
         return data.forEach(item => {
             const files = Object.values(item);
@@ -106,6 +126,10 @@ const DialogUser = ({ user, errors }) => {
         })
     }
 
+    /**
+     * Submits the form.
+     * @param {object} event - The form submission event.
+     */
     const submitForm = event => {
         event.preventDefault();
 

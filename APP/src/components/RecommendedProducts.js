@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { Carousel } from 'primereact/carousel';
 import axios from 'axios';
 
+/**
+ * RecommendedProducts component.
+ * Fetches and displays a carousel of recommended products.
+ * @returns {JSX.Element} The rendered recommended products carousel.
+ */
 function RecommendedProducts () {
   const [products, setProducts] = useState([]);
   const responsiveOptions = [
@@ -23,6 +28,10 @@ function RecommendedProducts () {
 ];
 
   useEffect(() => {
+    /**
+     * Fetches the products from the backend API.
+     * Sets the fetched products in the state.
+     */
     async function fetchProducts() {
       try {
         const response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+"/producto");
@@ -34,6 +43,10 @@ function RecommendedProducts () {
     fetchProducts();
   }, []);
 
+  /**
+   * Retrieves random products from the fetched products list.
+   * @returns {Object[]} The array of randomly selected products.
+   */
   const getRandomProducts = () => {
     const randomProducts = [];
     if (products.length > 9) {
@@ -58,6 +71,11 @@ function RecommendedProducts () {
 
   const randomProducts = getRandomProducts();
 
+  /**
+   * Renders the template for each product in the carousel.
+   * @param {Object} product - The product object to be rendered.
+   * @returns {JSX.Element} The rendered product template.
+   */
   const productTemplate = (product) => {
     return (
       <div className="product">
@@ -82,7 +100,7 @@ function RecommendedProducts () {
       </div>
     );
   };
-  
+
 
   return (
     <>

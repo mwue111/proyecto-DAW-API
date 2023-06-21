@@ -9,6 +9,18 @@ import { Dropdown } from 'primereact/dropdown';
 import Upload from './Upload';
 import Images from './Images';
 
+/**
+ * A dialog component for managing product details.
+ * @param {object} props - The component props.
+ * @param {object} props.product - The product object.
+ * @param {function} props.setItem - The function to update the item state.
+ * @param {array} props.allCategories - The list of all categories.
+ * @param {array} props.brands - The list of all brands.
+ * @param {array} props.allTags - The list of all tags.
+ * @param {string} props.table - The table name.
+ * @returns {JSX.Element} - The rendered dialog component.
+ */
+
 const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table }) => {
     const newProduct = product;
     const categoriesList = [...allCategories];
@@ -23,6 +35,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
 
     console.log('item en dialogProduct: ', product);
 
+
+    // Find brand name and id
     for(let i = 0; i < brandsList.length; i++) {
         if(product.marca === brandsList[i].name) {
             brandName = brandsList[i].name;
@@ -30,6 +44,8 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         }
     }
 
+
+    // Find category name and id
     for(let i = 0; i < categoriesList.length; i++) {
         if(product.categoria === categoriesList[i].name) {
             categoryName = categoriesList[i].name;
@@ -37,6 +53,7 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         }
     }
 
+    // Push selected tags to the selectedTags array
     if(product.tags){
         product.tags.map((tag)=>{
              selectedTags.push(tag.name);
@@ -54,10 +71,18 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         console.log('dataForm en DialogProduct: ', dataForm);
     }, [dataForm]);
 
+    /**
+     * Handles deletion of product images.
+     * @param {any} data - The data to be deleted.
+     */
     const handleDelete = (data) => {
         dataForm['img_delete'] = data;
     }
 
+    /**
+     * Handles the upload of product images.
+     * @param {any} data - The data to be uploaded.
+     */
     const uploadHandler = (data) => {
         if(product.product_img){
 
@@ -73,6 +98,10 @@ const DialogProduct = ({ product, setItem, allCategories, brands, allTags, table
         }
     }
 
+    /**
+     * Handles the change of input values.
+     * @param {object} e - The event object.
+     */
     const handleInputChange = (e) => {
         const target = e.target;
         const val = target.value;

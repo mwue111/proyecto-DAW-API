@@ -2,6 +2,12 @@ import React from 'react'
 import { Carousel } from 'primereact/carousel';
 import { Image } from 'primereact/image';
 
+/**
+ * ProductCarousel component.
+ * Renders a carousel of product images using PrimeReact Carousel and Image components.
+ * @param {Object[]} images - The array of image objects to be displayed in the carousel.
+ * @returns {JSX.Element} The rendered product carousel.
+ */
 function ProductCarousel({ images }) {
   const responsiveOptions = [
     {
@@ -10,6 +16,11 @@ function ProductCarousel({ images }) {
     }
   ];
 
+   /**
+   * Renders the template for each image in the carousel.
+   * @param {Object} image - The image object to be rendered.
+   * @returns {JSX.Element} The rendered image template.
+   */
   const imageTemplate = (image) => {
     return (
       <div className="product-item">
