@@ -326,10 +326,10 @@ const Tienda = () => {
             </div>
             <div className="mb-3">{product.description}</div>
           </div>
-          {(user == "owner" || user == "administrator") ? (
-          <div>
+          {(user.type == "owner" || user.type == "administrator") ? (
+          <div className='flex '>
             <div className="text-2xl font-bold">
-                {product.pivot.value} € / {product.pivot.unit}
+                {product.pivot.value} €/ {product.pivot.unit}
               </div>
             <Button
               icon="pi pi-minus"
@@ -338,9 +338,10 @@ const Tienda = () => {
             />
           </div>) : 
           (
+            //muestra el precio y la unidad
             <div>
               <div className="text-2xl font-bold">
-                {product.pivot.value} € / {product.pivot.unit}
+                {product.pivot.value} €/ {product.pivot.unit}
               </div>
             </div>
           )}
