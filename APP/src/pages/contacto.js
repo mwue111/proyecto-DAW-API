@@ -4,7 +4,7 @@ import AppLayout from '@/components/Layouts/AppLayout'
 const ContactPage = () => {
     return (
         <AppLayout>
-            <div className="max-w-xl mx-auto px-4 py-8">
+            <div className="max-w-xl mx-auto px-4 py-60">
                 <h1 className="text-2xl font-bold mb-4">Contacto</h1>
                 <p>¡Nos encantaría saber de ti! Si tienes alguna pregunta, comentario o consulta, no dudes en ponerte en contacto con nosotros utilizando la siguiente información:</p>
                 <div className="mt-4">

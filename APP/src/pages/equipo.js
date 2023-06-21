@@ -6,20 +6,20 @@ import { PrimeIcons } from 'primereact/api';
 
 const AboutUsPage = () => {
   const emilioMartinez = {
-    name: 'Emilio Martínez',
+    name: 'Emilio Martín Sánchez',
     position: 'Chief Executive Officer',
     photo: 'emilio.png',
-    github: 'https://github.com/emilio',
+    github: 'https://github.com/enrique-martin-s',
     gustos: ['Hacer las cosas más complicadas de lo que deben ser','Mandar'],
     backgroundImage: 'daniela-bg.jpg',
   };
 
   const danielaAyuso = {
-    name: 'Daniela Ayuso Montero',
+    name: 'Daniela Wuerich',
     position: 'President and Shotgun Owner',
     photo: '/daniela.png',
-    github: 'https://github.com/daniela',
-    instagram: 'https://www.instagram.com/daniela',
+    github: 'https://github.com/mwue111',
+    instagram: 'http://www.instagram.com/io_wuerich',
     gustos: ['Pasar tiempo en el panel de administración','Hablar con Pili'],
     backgroundImage: 'daniela-bg.jpg',
   };

@@ -61,46 +61,46 @@ export default function Home() {
             marginRight: '-1rem',
           }}
         >
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
-          Tiendas locales en Almería
+        <h2 className="text-4xl font-extrabold text-center text-gray-100 mb-8">
+          ¿Por qué comprar en grandes superficies cuando puedes hacerlo en las tiendas locales de Almería?
         </h2>
         <div className="flex items-center flex-wrap mb-20">
-          <div className="w-full md:w-1/2 pr-10">
-            <h4 className="text-3xl text-gray-800 font-bold mb-3">
-              Mercado Central de Almería
+          <div className="w-full md:w-1/2 pr-10 backdrop-filter backdrop-blur-lg bg-opacity-50 rounded-lg">
+            <h4 className="text-4xl text-gray-800 font-bold mb-3" >
+              ¿Cansado de no encontrar los productos que buscas?
             </h4>
-            <p className="text-gray-600 mb-8">
-              Visita el Mercado Central de Almería para encontrar productos frescos de calidad, como frutas, verduras, carne y pescado. Conoce a los comerciantes locales y apoya la economía de tu comunidad.
+            <p className="text-xl font-semibold text-gray-600 mb-8">
+              ¡No te preocupes! En Localmeria te ayudamos a encontrar los productos que buscas en las tiendas locales de Almería. ¡No te pierdas la oportunidad de apoyar a los pequeños negocios de la ciudad y contribuir a la economía local!
             </p>
           </div>
-          <div className="w-full md:w-1/2">
-            <img className="rounded-lg" src="https://multimedia.andalucia.org/content_images/main_image_67662.jpeg" alt="mercado central" />
+          <div className="w-80 md:w-1/2">
+            <img className="rounded-lg" src="https://img.freepik.com/foto-gratis/pensar-sintiendose-dudoso-confundido_1194-413865.jpg?w=1380&t=st=1687386065~exp=1687386665~hmac=b340545ef972f287b68d4336a7749c88eae2ae78090ba773cf00948691686dff" alt="donde comprar" />
           </div>
         </div>
         <div className="flex items-center flex-wrap mb-20">
           <div className="w-full md:w-1/2">
-            <img className="rounded-lg" src="https://media-cdn.tripadvisor.com/media/photo-s/09/a2/07/a3/el-mercado-central-de.jpg" alt="frutas" />
+            <img className="rounded-lg" src="https://img.freepik.com/foto-gratis/pequeno-carrito-supermercado-dinero-hucha_23-2147931142.jpg?w=1380&t=st=1687386167~exp=1687386767~hmac=2f9d2029477dad42e8fa6130cd177467156e3d9da10cd329b6d8d67ddac8fc50" alt="ahorro" />
           </div>
-          <div className="w-full md:w-1/2 pl-10">
-            <h4 className="text-3xl text-gray-800 font-bold mb-3">
-              Frutas y verduras locales
+          <div className="w-full md:w-1/2 pl-10 backdrop-filter backdrop-blur-lg bg-opacity-50 rounded-lg bg-blue-100">
+            <h4 className="text-4xl text-gray-800 font-bold mb-3">
+              ¡Ahorra dinero comprando en las tiendas locales de Almería!
             </h4>
-            <p className="text-gray-600 mb-8">
-              Compra frutas y verduras locales en Almería para apoyar a los agricultores y disfrutar de productos frescos y de temporada. Encuentra las mejores tiendas locales para encontrar una gran variedad de productos.
+            <p className="text-xl font-semibold text-gray-600 mb-8">
+              Almería es una ciudad que cuenta con una gran cantidad de tiendas locales que ofrecen productos únicos y de alta calidad. Desde ropa y accesorios hasta comida y artesanías, podrás encontrar una amplia variedad de productos en las tiendas locales de Almería. Además, al comprar en estas tiendas, estarás apoyando a los pequeños negocios de la ciudad y contribuyendo a la economía local. ¡No te pierdas la oportunidad de explorar lo mejor de Almería a través de sus tiendas locales!
             </p>
           </div>
         </div>
         <div className="flex items-center flex-wrap mb-20">
-          <div className="w-full md:w-1/2 pr-10">
-            <h4 className="text-3xl text-gray-800 font-bold mb-3">
+        <div className="w-full md:w-1/2 pr-10 backdrop-filter backdrop-blur-lg bg-opacity-50 rounded-lg">
+            <h4 className="text-4xl text-gray-800 font-bold mb-3">
               ¡Descubre las tiendas locales de Almería de productos frescos!
             </h4>
-            <p className="text-gray-600 mb-8">
+            <p className="text-xl font-semibold text-gray-600 mb-8">
               Almería es una ciudad que cuenta con una gran cantidad de tiendas locales que ofrecen productos únicos y de alta calidad. Desde ropa y accesorios hasta comida y artesanías, podrás encontrar una amplia variedad de productos en las tiendas locales de Almería. Además, al comprar en estas tiendas, estarás apoyando a los pequeños negocios de la ciudad y contribuyendo a la economía local. ¡No te pierdas la oportunidad de explorar lo mejor de Almería a través de sus tiendas locales!
             </p>
           </div>
           <div className="w-full md:w-1/2">
-            <img className="rounded-lg" src="https://www.barcelo.com/guia-turismo/wp-content/uploads/2020/02/mercado-central-almeria1-1.jpg" alt="Syncing" />
+            <img className="rounded-lg" src="https://img.freepik.com/foto-gratis/mano-vendedor-sosteniendo-recipiente-acero-inoxidable-mientras-cliente-compra-verduras-mercado_23-2148209790.jpg?w=1380&t=st=1687387511~exp=1687388111~hmac=89fd76d360b19807ec636b7cd1a5d36d864e100a7fda30d748205d658d13f549" alt="Syncing" />
           </div>
         </div>
       </section>
