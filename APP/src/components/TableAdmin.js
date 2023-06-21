@@ -341,7 +341,7 @@ const TableAdmin = ({ fetchUrl, table }) => {
             //     }
             // }
 
-            if(item.store_imgs || item.store_imgs.length !== oldItem.store_imgs.length) {
+            if(item.store_imgs && item.store_imgs.length !== oldItem.store_imgs.length) {
                 // console.log('hay imagen de tienda: ', item['store_imgs']);
 
                 for(let i = 0; i < item['store_imgs'].length; i++) {

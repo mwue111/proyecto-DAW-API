@@ -25,7 +25,7 @@ class FilesTableSeeder extends Seeder
 
         DB::table('files')->insert([
             'user_id' => 3,
-            'url' => 'https://latiendadejackiechan.com/foto',
+            'url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBKc3KqxWctdl_17Xv33RKdot4ABLh2F4Vxjj0ymYPBbR3oXf7H4rCz_FrP9rMmH5ldow&usqp=CAU',
             'image_type' => 'store_imgs',
             'deleted' => 0,
         ]);
