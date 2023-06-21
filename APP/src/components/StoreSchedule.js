@@ -12,7 +12,7 @@ import { formatJsonHorario, formatJsonHorarioDia } from '@/helpers/helper';
  */
 function StoreSchedule({schedule}) {
     const op = useRef(null);
-    const horario = schedule == [] ? schedule : [
+    let horario = schedule ? schedule : [
       {
         "id": 1,
         "day_of_week": 1,
@@ -126,7 +126,7 @@ function StoreSchedule({schedule}) {
     <div className="card flex justify-content-center">
       <i className='pi pi-calendar mr-2' style={{ color: 'slateblue' }}></i>
       <div onClick={(e) => op.current.toggle(e)}>
-        Ahora: {formatJsonHorarioDia(schedule)}
+        Ahora: {formatJsonHorarioDia(horario)}
         <i className="pi pi-angle-down" style={{ color: 'slateblue' }}></i>
       </div>
       <OverlayPanel ref={op}>
