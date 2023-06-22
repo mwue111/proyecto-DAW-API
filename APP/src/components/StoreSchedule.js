@@ -12,7 +12,7 @@ import { formatJsonHorario, formatJsonHorarioDia } from '@/helpers/helper';
  */
 function StoreSchedule({schedule}) {
     const op = useRef(null);
-    let horario = schedule ? schedule : [
+    let horario = schedule == [] ? schedule : [
       {
         "id": 1,
         "day_of_week": 1,
