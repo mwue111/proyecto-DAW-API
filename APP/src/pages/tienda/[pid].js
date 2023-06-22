@@ -19,7 +19,7 @@ import DialogProduct from '@/components/DialogProduct';
 
 
 const Tienda = () => {
-  
+
   const { user } = useAuth();
   const [selectedStore, setSelectedStore] = useState({});
   const router = useRouter();
@@ -64,7 +64,7 @@ const Tienda = () => {
         .catch(error => {
           console.error('Error fetching categories:', error);
         });
-    
+
       axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/marca')
         .then(response => {
           const brands = response.data;
@@ -73,7 +73,7 @@ const Tienda = () => {
         .catch(error => {
           console.error('Error fetching brands:', error);
         });
-    
+
       axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/etiqueta')
         .then(response => {
           const tags = response.data;
@@ -179,18 +179,18 @@ const Tienda = () => {
       console.log('selectedProduct: ')
       console.log(selectedProduct)
 
-  
+
       axios
         .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto`, productData)
         .then((response) => {
           console.log('Product added:', response.data);
-  
+
           if (selectedProduct.product_img) {
-            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto/${response.data.name}`) 
+            axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto/${response.data.name}`)
           .then((response) => {
             const productId = response.data.id;
             console.log('productId: ', productId);
-          
+
 
             setTimeout(() => {
                 // if(itemDB.product_img){
@@ -213,8 +213,8 @@ const Tienda = () => {
                 // }
             }, 2000);})
           }
-          
-    
+
+
 
               setSelectedStore((prevStore) => ({
                 ...prevStore,
@@ -227,14 +227,14 @@ const Tienda = () => {
               });
               setShowNewDialog(false);
             }
-            
+
         )
         .catch((error) => {
           console.error('Failed to add product:', error);
         });
     }
   };
-  
+
 
   const handleNewProduct = () => {
     setShowNewDialog(true);
@@ -260,7 +260,7 @@ const Tienda = () => {
       storeId: selectedStore.id,
       productId: selectedProductToDelete.id,
     };
-  
+
     axios
       .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tienda/productoexistente`, {
         data: requestData,
@@ -282,7 +282,7 @@ const Tienda = () => {
       .catch((error) => {
         console.error('Error deleting product:', error);
       });
-  
+
     setShowDeleteDialog(false);
   };
 
@@ -336,7 +336,7 @@ const Tienda = () => {
               className="p-button-danger"
               onClick={() => handleDeleteProduct(product)}
             />
-          </div>) : 
+          </div>) :
           (
             //muestra el precio y la unidad
             <div>
@@ -523,7 +523,8 @@ const Tienda = () => {
         }}
       >
         <div className="p-fluid">
-          <h3>Add Existing Product</h3>
+          <h3><strong>Añadir producto existente</strong></h3>
+          <br/>
           <div className="p-field">
             <label htmlFor="stockInput">Stock</label>
             <InputText
